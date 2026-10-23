@@ -1,0 +1,6 @@
+id,id_type,version,set,title,authors,licence,file,notes
+10.1002/nav.22074,doi,,pilot,Complex exponential smoothing,Ivan Svetunkov; Nikolaos Kourentzes; John Keith Ord,CC-BY-4.0,pilot/Svetunkov et al. (2022) - Complex exponential smoothing.pdf,Naval Research Logistics (2022)
+10.1111/jtsa.12843,doi,,pilot,Online Detection of Forecast Model Inadequacies Using Forecast Errors,Thomas Grundy; Rebecca Killick; Ivan Svetunkov,CC-BY-4.0,pilot/Journal Time Series Analysis - 2025 - Grundy - Online Detection of Forecast Model Inadequacies Using Forecast Errors.pdf,Journal of Time Series Analysis (2025)
+10.1016/j.ejor.2022.04.040,doi,,pilot,A new taxonomy for vector exponential smoothing and its application to seasonal time series,Ivan Svetunkov; Huijing Chen; John E. Boylan,CC-BY-4.0,pilot/1-s2.0-S037722172200354X-main.pdf,European Journal of Operational Research (2023)
+10.1007/s00180-023-01377-x,doi,,pilot,Multi-step estimators and shrinkage effect in time series models,Ivan Svetunkov; Nikolaos Kourentzes; Rebecca Killick,CC-BY-4.0,pilot/s00180-023-01377-x.pdf,Computational Statistics (2024)
+10.1093/imaman/dpad028,doi,,pilot,Staying positive: challenges and solutions in using pure multiplicative ETS models,Ivan Svetunkov; John E. Boylan,CC-BY-NC-4.0,pilot/dpad028.pdf,IMA Journal of Management Mathematics (2024); NC: never copied into the converter repository

@@ -1,0 +1,637 @@
+[p1.1] European Journal of Operational Research 304 (2023) 964–980
+
+[p1.2] Contents lists available at ScienceDirect
+
+[p1.3] European Journal of Operational Research
+
+[p1.4] journal homepage: www.elsevier.com/locate/ejor
+
+[p1.5] Production, Manufacturing, Transportation and Logistics
+
+[p1.6] A new taxonomy for vector exponential smoothing and its application to seasonal time series
+
+[p1.7] Ivan Svetunkov a , ∗, Huijing Chen b , John E. Boylan a
+
+[p1.8] a Centre for Marketing Analytics and Forecasting, Lancaster University Management School, Lancaster, LA1 4YX, UK b Operations and Systems Management, Faculty of Business and Law, University of Portsmouth, Portsmouth, PO1 3DE, UK a r t i c l e i n f o a b s t r a c t
+
+[p1.9] In short-term demand forecasting, it is often difficult to estimate seasonality accurately, owing to short data histories. However, companies usually have multiple products with similar seasonal demand patterns. A possible solution in this case is to use the components of several time series from a homogeneous family, thus estimating seasonal coefficients based on cross-sectional information. Motivated by this practical problem, we propose a new taxonomy of Parameters, Initial States and Components (PIC), which exploits homogeneous features of time series. We then apply this framework to vector exponential smoothing. We develop a model selection mechanism based on information criteria to select the appropriate PIC restrictions. We then conduct a simulation experiment and empirical analysis on retail data in order to assess the performance of point forecasts and prediction intervals of the models within this framework.
+
+[p1.10] Article history: Received 3 August 2020 Accepted 25 April 2022 Available online 18 May 2022
+
+[p1.11] Keywords: Forecasting Multivariate statistics Seasonal data Vector exponential smoothing Retailing
+
+[p1.12] © 2022 The Author(s). Published by Elsevier B.V. This is an open access article under the CC BY license ( http://creativecommons.org/licenses/by/4.0/ ) 1. Introduction
+
+[p1.13] Seasonal time series are ubiquitous. In settings such as the prediction of weather or other physical events (e.g. earthquakes), long time series are often available, containing records of many seasonal cycles. Such data are amenable to sophisticated analysis at the level of individual series. In a retail business setting, long time series are the exception rather than the norm. Products are often subject to short life cycles, owing to fast changing markets, open-ing of new retail outlets or introduction of new modes of ordering. Even when products, outlets and ordering modes are well established, records are not always retained for periods long enough to capture the seasonality accurately. Therefore, it is common for retailers to be required to forecast seasonal time series which have very few complete seasonal cycles of data. For example, accurate forecasts and prediction intervals are needed to determine cycle stock and safety stock requirements (a classic OR problem). Accuracy is not easy to attain for seasonal products when there are few observations corresponding to each period in the seasonal cycle.
+
+[p1.14] Although data histories are often short, they may be available for a large cross-section of homogeneous series, especially in a retail setting. For example, there may be many variations of an item
+
+[p1.15] ∗Corresponding author.
+
+[p1.16] E-mail address: i.svetunkov@lancaster.ac.uk (I. Svetunkov) .
+
+[p1.17] of clothing, such as size and colour. If the item is seasonal, it is often reasonable to assume that the variations share similar seasonal demand patterns. Similarly, seasonality in several geographical re-gions may often be assumed to be common. Therefore, in many cases there are readily available homogeneous groups to explore. This paper analyses such situations in depth.
+
+[p1.18] In practice, exponential smoothing is a well-established approach to short-term forecasting. It is included in many commer-cial software packages, and there are comprehensive suites of open source software available to implement the approach (see, for example, Hyndman & Khandakar, 2008; Svetunkov, 2021b ). It is more intuitive than other approaches such as Seasonal ARIMA, making it more attractive to businesses which lack personnel with well-developed skills in statistics and time series analysis. Moreover, exponential smoothing has a well-developed underpinning model framework both for a collection of univariate models (ETS – “Error-Trend-Seasonal” model proposed and then developed in Hyndman, Koehler, Ord, & Snyder, 2008; Hyndman, Koehler, Snyder, & Grose, 2002; Svetunkov, 2021c ) or to a multivariate framework ( de Silva, Hyndman, & Snyder, 2010 ).
+
+[p1.19] Univariate seasonal ETS models ( Koehler, Snyder, & Ord, 2001 ) are straightforward to apply but may be heavily parameterised. Suppose that 24 months of data are available and the model includes a trend component and monthly multiplicative seasonal indices. This requires the estimation of 11 initial seasonal indices (assuming normalisation of indices), an initial level, an initial trend
+
+[p1.20] https://doi.org/10.1016/j.ejor.2022.04.040 0377-2217/© 2022 The Author(s). Published by Elsevier B.V. This is an open access article under the CC BY license ( http://creativecommons.org/licenses/by/4.0/ )
+
+[p2.1] and three smoothing parameters (for level, trend and seasonality). This amounts to 16 parameters to be estimated on the basis of just 24 data points. This situation is not unusual in practice, and calls for consideration of alternatives.
+
+[p2.2] In this paper, we propose a taxonomy of Parameters, Initial values and Components (PIC) of models based on their commonality between time series. It is important to note that the PIC taxonomy can be applied to a multivariate model or a set of univariate models. We apply the PIC framework to Vector ETS (VETS) models to show how this leads naturally to utilising cross-sectional data for estimation, taking into account trend and seasonality in additive and multiplicative forms. Although vector models, including ETS, have previously been proposed in the literature (more details in Sections 2 and 3 ), the PIC taxonomy is an original contribution of this research. The usefulness of vector models in a retail context is often limited, because of the large number of parameters to estimate, often with short data histories. We argue and demonstrate that the PIC taxonomy affords flexibility and makes the VETS models more feasible, especially for seasonal models. Simulation experiments are conducted on synthetic data to quantify the benefits of the seasonal VETS-PIC approach and to identify the effect of such factors as group size and length of data histories. The new approach is assessed empirically using retail data from the M5 competition ( Makridakis, Spiliotis, & Assimakopoulos, 2021 ), and the paper concludes with suggestions for future research directions.
+
+[p2.3] 2. Literature review
+
+[p2.4] Armstrong (1985) pointed out that the estimation of seasonal factors is much more challenging when data history is short. Duncan, Gorr, & Szczypula (1993) developed a multivariate multiple source of error approach for hierarchical seasonal time series forecasting, demonstrating that using cross-sectional information can lead to improvements in forecasting accuracy. This conclusion was supported by Armstrong (2004) , who argued for making effective use of additional information from analogous time series.
+
+[p2.5] Early research explored the potential benefits of applying group seasonal indices (GSI), rather than the conventional individual seasonal indices (ISI). Dalhart (1974) proposed a method based on simple averages of ISIs (Dalhart’s Group Seasonal Index, DGSI). Withycombe (1989) suggested calculating seasonal indices from aggregated data, which are equivalent to weighted averages of ISIs (Withycombe’s Group Seasonal Index, WGSI). Both methods assume that seasonality is not changing over time and use classical decomposition for calculation of seasonal indices.
+
+[p2.6] Bunn & Vassilopoulos (1993) empirically compared the performance of ISI, DGSI and WGSI. They applied all three methods on 54 weekly series from five product groups, with 42 observations in each series. Assessing forecasting accuracy by Mean Squared Error (MSE) and Mean Absolute Error (MAE), the authors concluded that both DGSI and WGSI outperformed ISI, and WGSI was better than DGSI overall.
+
+[p2.7] Gorr, Olligschlaeger, & Thompson (2003) applied forecasting approaches on deseasonalised data, comparing ISI and GSI (as resea-sonalisation techniques) for crime forecasting, focussing on the city of Pittsburg and its six police precincts. Forecasting results, measured by MSE, MAE and Mean Absolute Percentage Error (MAPE) (which gave similar ranking of methods), showed that there was clear evidence that forecasts using GSI (pooled seasonality) were more accurate than forecasts using ISI. The authors recommended applying GSI to obtain seasonal estimates at the city-wide level, for use in forecasts at the spatially-disaggregated precinct level.
+
+[p2.8] Although the empirical comparisons showed potential benefits in applying the GSI methods, there was no theoretical understanding of conditions under which these methods perform better than ISI. Chen & Boylan (2007) was the first paper to address this gap.
+
+[p2.9] Assuming two simple non-trended models, for both additive and multiplicative seasonality, appropriately underpinning the ISI and GSI methods, the authors developed easily implementable rules for selection between these methods. The key insights from this research were that noisy series can “borrow strength” from less noisy ones in a seasonally homogeneous group, and that the benefits of the GSI methods are greater when data histories are shorter and/or the noise components are negatively correlated. Further empirical evidence was established in Chen & Boylan (2008) , in which the ISI and GSI methods, and the previously established selection rules, were tested on a dataset of 218 series from seven product groups. The authors found that applying the selection rules resulted in the greatest benefits in terms of forecasting accuracy, while universal application of DGSI outperformed both WGSI and ISI.
+
+[p2.10] For evolving seasonality, Dekker, Van Donselaar, & Ouwehand (2004) highlighted the poor performance of the classical Holt-Winters exponential smoothing method in an empirical study. The authors found that it failed to estimate seasonality accurately in the presence of high demand uncertainty and stochastic seasons. The Holt-Winters method showed the highest forecasting errors of all the compared methods. It was even worse than single exponential smoothing. By applying product aggregation, and estimating seasonal indices from the product family aggregate, the authors found a reduction of 12-59% in MSE.
+
+[p2.11] Ouwehand, Hyndman, de Kok, & van Donselaar (2007) defined a state space model that also utilised the idea of estimating seasonality from a group. This model extends the ETS(M,A,M) model (from the taxonomy of Hyndman et al., 2008 ) to multivariate forecasting. The seasonal component is defined as common, with common smoothing parameter and common initial seasonal indices. Level and trend are estimated individually. This model can be summarised as: y i,t = ( l i,t−1 + b i,t−1 ) s t−m ( 1 + ϵi,t ) l i,t = ( l i,t−1 + b i,t−1 ) ( 1 + αi ϵi,t ) b i,t = b i,t−1 + αi βi ( l i,t−1 + b i,t−1 ) ϵi,t � � n � 1 + γ w i ϵi,t s t = s t−m (1) i =1
+
+[p2.12] where y i,t is the actual value of the series i at time t, l i,t is the level component, b i,t is the trend component, s t is the common seasonal component, ϵi,t is the i.i.d. error term, αi , βi and γ are the smoothing parameters and n is the number of time series under consideration. Note that in this mixed model the trend can become negative (typically the error term ϵi,t is assumed to follow a normal distribution). Therefore the level and trend components can become negative as well, leading to unreasonable predictions. The mixture of multiplicative seasonality and additive trend in the model may lead to the reverse of the seasonal pattern, because in this case the negative values are multiplied by the seasonal indices.
+
+[p2.13] The assumption of normality of the error term is reasonable in many contexts and is used often in research. However, Akram, Hyndman, & Ord (2009) argued that as the normal distribution extends over the whole real line, it may cause problems if the observations need to be positive, as is the case with typical demand/sales forecasting. They found that additive and mixed ETS models (with both additive and multiplicative components) can lead to prediction intervals with negative values and, as the forecasting horizon extends, even the point forecasts may become negative. However, pure multiplicative models can guarantee a positive sample space. The authors also discussed several alternative pure multiplicative models and concluded that the most reasonable one is the model constructed on the logarithms of the original data, implying a log normal distribution of the error term in the original scale. Consistent with Akram et al. (2009) ’s definition, this research
+
+[p3.1] demonstrates that using pure multiplicative models, i.e. with all ETS elements being multiplicative, might be a more desirable approach than using the mixed ones for forecasting in context of ETS. Pure additive and multiplicative models are formally defined in the following section.
+
+[p3.2] Given that GSI approaches are applied to groups of time series, it is only logical to consider the multivariate models in this context. Interestingly, the earlier work of Duncan et al. (1993) used a multivariate state space model in order to forecast hierarchical seasonal data. This idea was adopted much later by Pennings & van Dalen (2017) who compared the model with existing hierarchical forecast reconciliation approaches and found that the proposed approach performs well in terms of MAPE. This example demonstrates that there is a connection between the hierarchical approaches and vector models. The interest in the former was stimulated by the original paper of Hyndman, Ahmed, Athanasopoulos, & Shang (2011) and has been promulgated in many ar-eas, including hierarchical forecasting of products ( Pennings & van Dalen, 2017 ), intermittent demand ( Kourentzes & Athanasopoulos, 2021; Li & Lim, 2018 ), and energy forecasting (see, for example, Taieb, Taylor, & Hyndman, 2020 ). Related research has explored temporal aggregation (examples include Athanasopoulos, Hyndman, Kourentzes, & Petropoulos, 2017; Kourentzes & Petropoulos, 2016; Kourentzes, Petropoulos, & Trapero, 2014 ), and the combination of cross-temporal hierarchies, with aggregations over different products and time buckets (see, for example, Kourentzes & Athanasopoulos, 2019; Spiliotis, Petropoulos, Kourentzes, & Assimakopoulos, 2020 ). All these papers assume that univariate models are applied to the data and their forecasts are then reconciled, but there is an apparent connection between hierarchical approaches and multivariate models, which has not been explored in the literature before. So, developing further the theory of vector models is an important topic in forecasting.
+
+[p3.3] The main limitation of conventional vector models (such as Vector Autoregression Lütkepohl, 2005 ) is that they typically re-quire more parameters to be estimated than simpler models. A typical solution for this problem in the context of VAR models is to shrink estimates of parameters and elements of the covariance matrix (see, for example, Chan, Eisenstat, & Strachan, 2020; Lee, Choi, & Kim, 2016; Schäfer & Strimmer, 2005 ). However, Vector Exponential Smoothing ( de Silva et al., 2010; Snyder, Ord, Koehler, McLaren, & Beaumont, 2017 ), having similarities with univariate exponential smoothing, allows the use of similar parameters for different time series. For example, Chen, Li, Wu, & Shen (2019) used such a multivariate forecasting model and showed that it performs better than simple models, when time series share some components.
+
+[p3.4] In this paper, we extend the existing vector exponential smoothing framework, and propose a new taxonomy to take account of components being set in common (across a range of series), or individually (for each time series). 3. Vector ETS
+
+[p3.5] When we deal with several products, we can consider the problem as multivariate, with demands on those products being repre-sented in the form of a vector: ⎛ ⎞ y 1 ,t y 2 ,t ⎜ ⎜ ⎝ ⎟ ⎟ ⎠ , (2) y t = . . . y n,t
+
+[p3.6] where n is the number of time series included in the group. In order to model the demand on these products, we will use Vector ETS (VETS). This is similar to the vector innovations structual
+
+[p3.7] time series (VISTS) framework developed by de Silva et al. (2010) , and later extended by Athanasopoulos & de Silva (2012) to include seasonality. The additive version of VETS can be formulated as: y t = Wv t−l + ϵt v t = Fv t−l + G ϵt , (3)
+
+[p3.8] where W is the measurement matrix, F is the transition matrix, G is the persistence matrix, containing smoothing parameters, v t is the vector of states for time series, and ϵ′
+
+[p3.9] � is the error term vector which, in the case of an additive model, is assumed to have a multivariate normal distribution with a mean vector of zeroes and �covariance matrix. The states for each time series may contain up to three conventional components of ETS: level, trend and seasonality. Finally, l is the vector of lags of components, which denotes that the components of the vector v t can have different lags (similar to ETS models in Svetunkov, 2021c ) and the operation t −l returns a vector of values. For example, the level component can have a lag of 1, while the seasonal component can have a lag equal to the seasonal frequency m . t = �ϵ1 ,t . . . ϵn,t
+
+[p3.10] While the additive model can be considered as appropriate in many contexts, a multiplicative form may be more useful when seasonality needs to be evaluated across different products. This is because a standard percentage increase (say 41%) in sales of a product can be considered as more natural for several products than a fixed increase (say 410 units) for all products, especially if there are widely varying scales of sales volumes and units of measurement (e.g. kilograms, units and litres). The pure multiplicative model can be achieved by taking logarithms of the data, leading to:
+
+[p3.11] log y t = W log v t−l + log ϵt log v t = F log v t−l + G log ϵt . (4)
+
+[p3.12] Note that the log function is applied element-wise. An example of a pure multiplicative VETS model is discussed in Subsection refsec:VETS-PIC-Example. The assumption for the error term in this model corresponds to the conventional in this case: log ϵt ∼ N ( 0 n , �) , where 0 n is the vector of n zeroes, and that the exponent of this variable follows the multivariate log normal distribution. Given the properties of the log normal distribution, the point forecasts from the model (4) correspond to geometric means (equal to medians in this case) rather than arithmetic means. If arithmetic means are needed, then they can be obtained via the � μlog y i ,t + � σ 2 log y i
+
+[p3.13] well known formula μy i ,t = exp , where μlog y i ,t 2
+
+[p3.14] is the geometric mean and σ 2
+
+[p3.15] log y i is the geometric variance for the
+
+[p3.16] series i ( i th element on the diagonal of �). We note at this stage that the arithmetic means will result in increasing trajectories even for the local level model due to this connection. Recalling that the point forecasts for the pure multiplicative models in the original ETS do not correspond to conditional expectations ( Hyndman et al., 2008 , p.23), we argue that it is more natural, for pure multiplicative models, to produce geometric means instead.
+
+[p3.17] In this paper, we will call the models based on (3) as pure additive and refer to them as VETS(A,N,N) / VETS(A,N,A) / VETS(A,A,N) / etc, where ‘V’ stands for ‘Vector’, while the pure multiplicative models based on (4) are referred to as VETS(M,N,N;LN) / VETS(M,N,M;LN) / VETS(M,M,N;LN) / etc. to reflect that the models are applied on log-transformed data. Note that the previous work in the vector exponential smoothing, the VISTS framework ( de Silva et al., 2010 ) and its extension ( Athanasopoulos & de Silva, 2012 ), considered pure additive models only. The letters in the brackets are taken from the taxonomy proposed by Hyndman et al. (2008) for ETS models. Our definition of pure multiplicative models differs from the original ETS framework and is in line with Akram et al. (2009) . We do not discuss mixed models (with both
+
+[p4.1] additive and multiplicative components) as they would need to be formulated differently, introducing complex interactions between the components and, as discussed earlier, may, under some cir-cumstances, lead to negative values in both prediction intervals and point forecasts. Therefore, in this research it is not our inten-tion to fully extend the univariate ETS models to a general vector framework, but rather to examine the effect of the PIC taxonomy through a subset of pure additive and multiplicative models.
+
+[p4.2] Given that we deal with the state space model in (3) and (4) , we can define different components for the vector v t and specify different structures of matrices W , F and G . This flexibility leads to a variety of VETS models, imposing different types of restrictions on the parameters and components of the model. 3.1. PIC taxonomy
+
+[p4.3] In this subsection we introduce a simple PIC taxonomy for VETS models. Although our main interest is in seasonal models, this taxonomy applies to all of the pure additive and multiplicative VETS models.
+
+[p4.4] 3.1.1. The main elements of the taxonomy The taxonomy we propose allows different forms of the VETS framework, taking into account the following aspects:
+
+[p4.5] • Parameters Traditionally, smoothing parameters are set individually for each time series. However, benefits of using common parameters have been reported in the literature. In a non-seasonal setting, Fildes, Hibon, Makridakis, & Meade (1998) examined common parameters for level and trend. They applied single exponential smoothing, Holt’s method and damped Holt’s on 261 telecommunications series previously analysed by Fildes (1992) . Their results showed common smoothing parameters to perform better than individually optimised ones, either once or every time period. This is an example of the common parameters restriction applied to a collection of univariate models. In that study, the common smoothing parameters were set arbitrarily, rather than optimised. Ouwehand et al. (2007) applied a common seasonal smoothing parameter for the common seasonal component, but the parameters for level and trend were still individual. In the proposed taxonomy, we allow all of the smoothing parameters for specific components across time series to be either individual or common, and all of them are optimised in one model. This further extends the findings of Fildes et al. (1998) and provides insights on using common smoothing parameters for similar time series. For models with damped trends, an additional damping parameter is applied. Damped trend models show good forecasting performance in a univariate setting ( Gardner & McKenzie, 2011; McKenzie & Gardner, 2010 ). But to the best of our knowledge, there is no evidence in the literature to explore the benefit of common damping parameters. In our taxonomy, damping parameters are allowed to be either individual or common, and modelled separately from smoothing parameters, to provide more flexibility.
+
+[p4.6] • Initial values All of the components need to have starting values but no previous study has considered the effect of common initial values (rather than individual starting points). In this taxonomy, initial values can also be estimated either individually or commonly. It is intuitive, for example, to allow seasonal indices to have common starting values if the group of items is indeed seasonally homogeneous. Also, estimating these initial values commonly can significantly reduce the number of parameters to estimate; this will be discussed in the next section.
+
+[p4.7] • Components In univariate models, level, trend and seasonality are all modelled at the level of the individual series. There is evidence in the literature that assuming common seasonality can improve forecasting accuracy if seasonal behaviour in a group of series is similar. Within the ETS framework, Ouwehand et al. (2007) proposed a common seasonal component for ETS(M,A,M). In our taxonomy, seasonal components can be either individual or common. This can also be extended to the level and trend components, each of which can be either individual or common. Note, however, that not all combinations of common components are reasonable. For example, it is not possible for several time series to have common levels but individual trends, because different trends will lead to the levels becoming uncommon.
+
+[p4.8] 3.1.2. Proposed taxonomy for VETS The ETS( ∗, ∗, ∗) notation can apply to a model for an individual series or for a set of series sharing a common model. However, it cannot cater for a set of series which may have some elements that are individual and others that are shared. The notation, outlined below, is designed to address this need.
+
+[p4.9] The first step is to identify the essential elements that need to be considered with regard to their commonality. We propose three categories:
+
+[p4.10] • P arameters (Smoothing constants for Level, Trend, Seasonality, and Damping parameter)
+
+[p4.11] • I nitial values (Level, Trend, Seasonality)
+
+[p4.12] • C omponents (Level, Trend, Seasonality)
+
+[p4.13] Taken together, this gives a framework of VETS( ∗, ∗, ∗)PIC( ∗, ∗, ∗) models, supporting only the pure additive and pure multiplicative models. This framework can be readily extended to cater for more general models (e.g. double seasonal models), although such models are not discussed further in this paper.
+
+[p4.14] For the P (parameters) element, ∗may take the value of ‘N’ if no parameters are in common, ‘L’ for the common level, ‘T’ for the common trend and ‘S’ for the common seasonal smoothing parameters. These three are supplemented by ‘D’, for the damping parameter. Combinations of letters indicate that more than one element is in common, e.g. ‘TS’ indicates that trend and seasonal smoothing parameters are common (but not the level), and ‘LTS’ indicates that all three smoothing parameters are in common.
+
+[p4.15] For the I (initial values) element, the options are similar to P, but without ‘D’: ‘N’ if there is no commonality in initials, ‘L’ for the common initial level, ‘T’ for the common initial trend and ‘S’ for the common initial seasonal indices between time series.
+
+[p4.16] For the C (components) element, the options are the same as for the I element.
+
+[p4.17] Using this taxonomy, for example, VETS(M,Md,M;LN)PIC(N,N,N) means all components, smoothing parameters and initial values are set individually. The main difference of this model from ETS(M,Md,M;LN) (from Akram et al., 2009 ) applied to all time series individually is the estimation procedure, discussed in Section 4.3 . VETS(M,Md,M;LN)PIC(LTSD,LTS,LTS), on the other hand, has the most restrictive form of everything being common. There are many variations in between, such as VETS(M,Md,M;LN)PIC(TS,TS,TS). This shows common components, parameters and initial values for trend and seasonality (level is individual).
+
+[p4.18] The work of Ouwehand et al. (2007) may be considered as a collection of univariate ETS(M,A,M) models with PIC(N,S,S) restrictions according to our taxonomy. Although Ouwehand et al. (2007) use the same smoothing parameter for seasonal components, they estimate individual weights for each time series, thus making the effect of smoothing individual. In their original paper they have the following for the seasonal component (from the
+
+[p5.1] Eq. (1) ): � � n � 1 + γ w i ϵi,t s t = s t−m , i =1
+
+[p5.2] which can be reformulated into: � � n � γ w i ϵi,t s t = s t−m 1 + . i =1
+
+[p5.3] This is equivalent to the model with PIC(N,S,S) restrictions, where γi = γ w i : � � n � γi ϵi,t s t = s t−m 1 + . i =1
+
+[p5.4] As noted earlier, not all variations in the taxonomy are feasible. For example, if any of the components (level, trend or seasonality) are common, then the corresponding initial values have to be common as well. Similarly individual trends cannot be combined with a common level component. So while VETS(M,N,M;LN)PIC( ∗, ∗,LS) is feasible, VETS(M,M,M;LN)PIC( ∗, ∗,LS) is not. Individual parameters can be mixed with common components, implying that the impact of different errors on the common component can be different.
+
+[p5.5] The proposed VETS taxonomy provides a conceptual contribution to the literature. Previous studies showed some evidence of the potential benefits of using common / group seasonality, but there is no work that brings together the smoothing parameters, damping parameter, initial seed values and time series components, to enable a comparison of common and individual components in a systematic way.
+
+[p5.6] The main difference between the models, in terms of their construction, is in the number of parameters requiring estimation. The following formula (5) quantifies the number ( k ) of parameters and initial values that need to be estimated, assuming likelihood estimation and n time series with a seasonal frequency of m . The formula is based on the choices of: i) not estimated because not included ( ηb
+
+[p5.7] a = 0 ), ii) estimated in common ( ηb
+
+[p5.8] a = 1 ) or iii) estimated individually ( ηb
+
+[p5.9] a = n ), where b indicates parameters ( P ) or initial values ( I), and a indicates level ( L ), or trend ( T ), or seasonality ( S), or damping ( D , for parameters only). Note that the commonality of components (C) does not change the number of estimated parameters, but rather impacts the structure of the model. � � k = n (n + 1) ηP ηI a + (m −1) ηI 2 + a + S (5) a ∈{ L,T,S,D } a ∈{ L,T }
+
+[p5.10] The first term in (5) accounts for the n variance terms and n (n −1)
+
+[p5.11] 2 covariance terms to be estimated in likelihood estimation. If it is assumed that the error terms are independent (thus making the covariance matrix diagonal), then it should be changed to n . The equation allows the calculation of the overall number of parameters to be estimated. Models are estimable if this number, per series, k
+
+[p5.12] n is lower than the number of observations in each series T (similar to VAR models studied in Lütkepohl, 2005 ).
+
+[p5.13] In some cases, the formula may need to be modified to take into account other considerations. For example, in theory, the model VETS(M,N,M;LN)PIC(N,N,N) can be applied to the data when each series has at least T > 4 + (m −1) , assuming a diagonal covariance matrix. However, in the case when T < 2 m , there may be difficulties with the estimation of the seasonal indices in such a model, and so it is advisable to have at least 2 m observations in the sample for each series, for any model. Otherwise some restrictions on components may be necessary in order to undertake cross-sectional estimation of seasonal components.
+
+[p5.14] Next we provide two contrasting examples, demonstrating the application of the matrices in (3) and (4) for a case of two time series.
+
+[p5.15] 4. Constructing VETS-PIC models
+
+[p5.16] 4.1. VETS-PIC example
+
+[p5.17] To demonstrate how specific VETS-PIC model may look like, we consider an example of a restricted model in the framework, VETS(M,Md,M;LN)PIC(LTSD,LTS,S). In this case, we assume that all the seasonal components in (4) are shared between the series, s 1 ,t = s 2 ,t = s t for all t together with the initial level, trend and seasonal components. Furthermore, the smoothing and the dampening parameters are common for all the series, α1 = α2 = α, β1 = β2 = β, γ1 = γ2 = γ , φ1 = φ2 = φ. We rewrite the original Eq. (4) in a multiplicative form to show what such model implies: y 1 ,t = l 1 ,t−1 b φ 1 ,t−1 s t−m ϵ1 ,t y 2 ,t = l 2 ,t−1 b φ 2 ,t−1 s t−m ϵ2 ,t l 1 ,t = l 1 ,t−1 b φ 1 ,t−1 ϵα 1 ,t l 2 ,t = l 2 ,t−1 b φ 2 ,t−1 ϵα 2 ,t b 1 ,t = b φ 1 ,t−1 ϵβ 1 ,t b 2 ,t = b φ 2 ,t−1 ϵβ 2 ,t s t = s t−m ( ϵ1 ,t ϵ2 ,t ) γ . (6)
+
+[p5.18] This model implies the following values in the original formulation (4) : ⎛ ⎞ ⎛ ⎞ l 1 ,t l 2 ,t b 1 ,t b 2 ,t l 1 ,t−1 l 2 ,t−1 b 1 ,t−1 b 2 ,t−1 � 1 0 φ 0 1 0 1 0 φ 1 � ⎜ ⎜ ⎝ ⎟ ⎟ ⎠ , v t−l = ⎜ ⎜ ⎝ ⎟ ⎟ ⎠ , W = , v t = s t s t−m ⎛ ⎞ ⎛ ⎞ 1 0 φ 0 0 0 1 0 φ 0 0 0 φ 0 0 0 0 0 φ 0 0 0 0 0 1 α 0 0 α β 0 0 β γ γ � ϵ1 ,t ϵ2 ,t � ⎜ ⎜ ⎝ ⎟ ⎟ ⎠ , G = ⎜ ⎜ ⎝ ⎟ ⎟ ⎠ and ϵt = F = .
+
+[p5.19] The same matrices can be rewritten in a more compact form: � I 2 φI 2 0 2 O 2 φI 2 0 2 0 ′ 2 0 ′ 2 1 � � αI 2 βI 2 γ 1 ′ � W = � I 2 φI 2 1 2 � , F = , G = , 2
+
+[p5.20] where 1 2 is the unity 2-vector (containing ones), 0 2 is the 2-vector of zeroes and ′ is the symbol of transposition.
+
+[p5.21] This example shows how a specific model looks and how it con-nects with a bigger framework. In the next subsection, we show how VETS-PIC models can be constructed using block values of matrices.
+
+[p5.22] 4.2. Constructing VETS-PIC in general
+
+[p5.23] In order to show how any of the VETS-PIC models can be constructed we introduce the following block structure for measurement, transition and persitence matrices: � F 1 , 1 F 1 , 2 F 1 , 3 F 2 , 1 F 2 , 2 F 2 , 3 F 3 , 1 F 3 , 2 F 3 , 3 � � G 1 G 2 G 3 � W = � � , F = W 1 W 2 W 3 , G = , (7)
+
+[p5.24] where each block can be a matrix, a vector or a scalar depending on the restrictions imposed on the model. The possible values of blocks are summarised in Table 1 . This table includes all feasible combinations. Note that the model with common level and individual trend components has been omitted because it does not make sense, as discussed earlier in the paper.
+
+[p6.1] Table 1 Values of block matrices for (7) , depending on imposed restrictions. ‘i’ stands for the individual, while ‘c’ stands for the common element. Note that the combination level = ‘c’ & trend = ‘i’ is not feasible and is omitted from the table.
+
+[p6.2] Type of restriction Block Values
+
+[p6.3] Restrictions on components
+
+[p6.4] level = ‘i’ F 1 , 1 = I n W 1 = I n G 1 = A trend = ‘i’ F 2 , 2 = � W 2 = � G 2 = B seasonal = ‘i’ F 3 , 3 = I n W 3 = � G 3 = � level = ‘c’ F 1 , 1 = 1 W 1 = 1 n G 1 = α′
+
+[p6.5] n trend = ‘c’ F 2 , 2 = φ W 2 = φ1 n G 2 = β′
+
+[p6.6] n seasonal = ‘c’ F 3 , 3 = 1 W 3 = 1 n G 3 = γ′
+
+[p6.7] n level = ‘i’ & trend = ‘i’ F 1 , 2 = � F 2 , 1 = O n level = ‘i’ & trend = ‘c’ F 1 , 2 = φ1 n F 2 , 1 = 0 ′
+
+[p6.8] n level = ‘c’ & trend = ‘c’ F 1 , 2 = φ F 2 , 1 = 0 level = ‘i’ & seasonal = ‘i’ F 1 , 3 = O n F 3 , 1 = O n level = ‘c’ & seasonal = ‘i’ F 1 , 3 = 0 ′
+
+[p6.9] n F 3 , 1 = 0 n level = ‘i’ & seasonal = ‘c’ F 1 , 3 = 0 n F 3 , 1 = 0 ′
+
+[p6.10] n level = ‘c’ & seasonal = ‘c’ F 1 , 3 = 0 F 3 , 1 = 0 trend = ‘i’ & seasonal = ‘i’ F 2 , 3 = O n F 3 , 2 = O n trend = ‘c’ & seasonal = ‘i’ F 2 , 3 = 0 ′
+
+[p6.11] n F 3 , 2 = 0 n trend = ‘i’ & seasonal = ‘c’ F 2 , 3 = 0 n F 3 , 2 = 0 ′
+
+[p6.12] n trend = ‘c’ & seasonal = ‘c’ F 2 , 3 = 0 F 3 , 2 = 0 Restrictions on parameters α= ‘c’ A = α1 ′ n αn = α1 n β= ‘c’ B = β1 ′ n βn = β1 n γ = ‘c’ �= γ 1 ′ n γn = γ 1 n φ= ‘c’ �= φI n φn = φ1 n
+
+[p6.13] Any VETS-PIC model with some restrictions on parameters and components of the original VETS-PIC(N,N,N) implies the use of specific block matrices values from Table 1 . In order to construct de-sired matrices for a selected VETS-PIC model, one would need to identify the specific imposed restrictions in the table and in-sert them in (7) in the style of a construction kit. For example, if we consider the combination for VETS(M,M,M;LN)PIC(LT,LT,L), then we would need to have a structure for the model with common level, individual trend and individual seasonal components. We then construct transition, measurement and persistence matrices by searching the fields level = ‘c’, trend = ‘i’ and seasonal = ‘i’ in Table 1 and inserting them in (7) . Furthermore, given the commonality of level and trend smoothing parameters, we would also need to use the rows α= ‘c’ and β= ‘c’.
+
+[p6.14] We do not provide details for state vector restrictions, noting that the following will hold for the components of the vector for all t:
+
+[p6.15] 1. If level is common, then l 1 ,t = · · · = l n,t = l t ; 2. If trend is common, then b 1 ,t = · · · = b n,t = b t ; 3. If seasonal is common, then s 1 ,t = · · · = s n,t = s t .
+
+[p6.16] These restrictions will reduce the number of components in the state vector.
+
+[p6.17] Finally, the commonality of initial states does not impact the architecture of VETS-PIC model; it will change only the number of estimated parameters. We do not aim to cover all the theoretically possible 1,428 models in this paper, but the values provided in this section should allow any of them to be constructed.
+
+[p6.18] 4.3. Estimation of VETS models
+
+[p6.19] There are different ways of estimating VETS; the most straightforward is via maximisation of the likelihood function. In case of the pure additive model, assuming that y t ∼N (0 n , �) the log-likelihood can be written as: T � � e ′ � , (8) ℓ ( θ, �| Y ) = −T
+
+[p6.20] 2 ( n log (2 π) + log | �| ) −1 2 t �−1 e t t=1
+
+[p6.21] where Y is the matrix of all actual observations, θ is the vector of all estimated parameters, e t = y t −μy,t | t −1 is the estimate of the error term, μy,t | t −1 is the one step ahead conditional expectation of the model, and �is the covariance matrix, which can be estimated via maximisation of likelihood as: T � ˆ �= 1 T e t e ′ t . (9) t=1
+
+[p6.22] Inserting (9) in (8) , similar to Snyder et al. (2017) , it can be shown that the concentrated likelihood is then:
+
+[p6.23] ℓ ( θ, ˆ �| Y ) = −T 2 � n log (2 πe ) + log | ˆ �| � . (10)
+
+[p6.24] The maximisation of the likelihood (10) implies the minimisation of the determinant of the covariance matrix ˆ �, which is sometimes called in the literature “Generalised Variance”. This typically implies that the variances of each series are minimised, but at the same time the covariances between them are increased.
+
+[p6.25] As for the pure multiplicative model, the log-likelihood will be similar to the pure additive one, but with the addition of the actual values to reflect that the original data follows a log normal distribution as in the model (4) : ℓ ( θ, �| Y ) = −T
+
+[p6.26] 2 ( n log (2 π) + log | �| ) T �
+
+[p6.27] �( log e t ) ′ �−1 log e t � − T � n � −1 log y j,t , (11) 2 t=1 t=1 j=1
+
+[p6.28] where log e t = log y t −log μy,t | t −1 and μy,t | t −1 is the vector of geometric one step ahead expectations from the model. The formula for the covariance matrix �will be the same as in (9) , only with log e t instead of e t , and the concentrated log-likelihood will be similar to (10) , but with the addition of the sum of logarithms of actual values as in (11) .
+
+[p6.29] In order to start the estimation of parameters of the model, we need to calculate the initial values of the level, trend and the seasonal indices. Linear regression of actual observations on the de-terministic trend and seasonal dummy variables for all the observations and all the series in the available group of data is used in the initialisation. After calculating the parameters of this form of regression model for each series, we either average the seasonal indices (if the seasonal indices are shared between the series) or use them for each series (if the seasonality is individual). Similarly, if the initials of level or trend are shared, the respective parameters are averaged across series. Then, the estimation procedure starts, maximising the likelihood function, which leads to a set of optimal initial values of parameters.
+
+[p6.30] We also need to make sure that the constructed models are sta-ble as defined in Hyndman et al. (2008) . In order to do so, we need to make sure that all eigenvalues of the following discount matrix lie in the unit circle: D = F −GW . (12)
+
+[p6.31] This means that some of the smoothing parameters might become negative or greater than one, which is common in ETS with admissible bounds. Note that in the case of VETS, restricting parameters to the (0, 1) interval bound is not required. The model contains many smoothing parameters and there is no reason for them to be restricted to this interval, given potential complex interactions between time series; see also, for example, Snyder et al. (2017) .
+
+[p6.32] The other important thing to note is how the model is constructed. Given the state space form, we initialise the components of the model before the start of the sample, i.e. before the obser-vation t = 1 . So, for example, we define the initial seasonal indices on the observations −m + 1 , −m + 2 , . . . , 0 , not sacrificing the first m observations, as used to be the case for the conventional seasonal exponential smoothing method ( Winters, 1960 ).
+
+[p7.1] Table 2 Simulation setup. Parameter Values
+
+[p7.2] Seasonal cycle m = 4 Initial level Selected randomly from region [4, 10] Seasonal indices Randomly chosen from (-1, 1), then normalised Number of observations T = { 24 , 64 } quarters (6 and 16 years) Holdout size 8 quarters (2 years) Forecasting horizon h = 1 , . . . , 8 quarters (up to 2 years ahead) Group sizes n = { 2 , 10 , 20 , 30 , 40 , 50 } Noise ϵi,t ∼i.i.d. N(0 , σ 2
+
+[p7.3] i ) for all i Smoothing parameters for PIC: (LS, ∗, ∗) α = 0 . 3 , γ = 0 . 1 (S, ∗, ∗) α ∈ [0 , 0 . 3] , γ = 0 . 1 (N, ∗, ∗) α ∈ [0 , 0 . 3] , γ ∈ [0 , 1 −α] Number of iterations 1000
+
+[p7.4] Table 3 Error measures used in the experiments. h is the forecast horizon.
+
+[p7.5] Error measure Formula � 1 h � h j=1 e 2
+
+[p7.6] Root Mean Squared Error (RMSE)
+
+[p7.7] t+ j Relative RMSE (rRMSE) RMSE a RMSE b Mean Absolute Error (MAE) 1 h
+
+[p7.8] � h j=1 | e t+ j | Relative MAE (rMAE) MAE a MAE b Absolute Mean Error (AME) | 1
+
+[p7.9] � h j=1 e t+ j | Relative AME (rAME) AME a AME b h
+
+[p7.10] Pinball value (pinball) (1 −τ ) � j,y t+ j <b t+ j | y t+ j −b t+ j | + τ � j,y t+ j ≥b t+ j | y t+ j −b t+ j |
+
+[p7.11] Relative pinball (rPinball) pinball a pinball b Coverage 1 h � h j=1 ⊮ (y t+ j < u t+ j ∨ y t+ j > = l t+ j )
+
+[p7.12] While it is possible to estimate VETS using other loss functions, the MLE is preferable from a statistical point of view, as it gives consistent and efficient estimates of parameters, also permitting model selection via information criteria. The criteria themselves are calculated differently than in the case of univariate models. For example, Bedrick & Tsai (1994) developed the corrected version of AIC for multivariate models on small samples, which we would recommend for model selection.
+
+[p7.13] 4.4. Model selection in VETS
+
+[p7.14] Given the number of possible variations in the VETS-PIC model framework, model selection becomes challenging. Maximum likelihood estimation, described in Section 4.3 , allows information criteria to be used for model selection.
+
+[p7.15] While there are different ways to select models in the VETS-PIC framework, we do not aim to discuss how to select the ETS part of the model. This is because in order to select the ETS components, an analyst needs to first group time series and decide, which components could potentially be common in the series. For example, some series might exhibit seasonality, and thus would form a natural group. So, there is no need to do ETS components selection in this case - it can be done in the preliminary analysis (see Section 6 for an example). Instead, we propose to focus a model selection process on the PIC part via the following procedure:
+
+[p7.16] 1. Select initial states restrictions, 2. Try different parameters restrictions, 3. Try restricted components.
+
+[p7.17] The main rationale for starting from the initial states is to reduce the number of estimated parameters. This becomes extremely important in case of seasonal models, where reducing the number of estimated seasonal initials from n × (m −1) to (m −1) might
+
+[p7.18] be critical for the next steps of the algorithm. Testing parameters is a safe next step, keeping some flexibility in the model and potentially further reducing the number of estimated parameters. As a final step, we test whether the restriction on components is needed or not. As discussed earlier in this paper, this step does not change the number of estimated parameters but changes the architecture of the model, making it as restrictive as possible. We expect that the last step would only be needed for time series that exhibit very similar patterns (e.g. seasonal shapes or trends). Much of the rationale for the sequencing in the second stage has been drawn from simulations (see Section 5 ).
+
+[p7.19] 5. Simulation experiment
+
+[p7.20] 5.1. Purposes of simulation
+
+[p7.21] From this point forward, we define (true) models as the underlying processes that describe how data is generated (DGP, Data Generating Processes). We use the term ‘methods’ to denote estimation procedures to derive forecasts (i.e. models applied to the data).
+
+[p7.22] A simulation experiment is conducted, with the following aims:
+
+[p7.23] 1. Understand the relative performance of different PIC restrictions for a given data generating process within the proposed taxonomy; 2. Evaluate the robustness of the proposed methods to mis-specification of the underlying data generating processes; 3. Quantify the benefits of seasonal VETS methods for point forecasts and prediction intervals, within controlled parameter settings; 4. Understand the effects of group size and length of data histories on the accuracy of methods.
+
+[p7.24] Given our interest in seasonal behaviour and the large number of possible variations in the taxonomy, the simulation experiment focuses on the VETS(M,N,M;LN) model and compares performances of its various PIC variations. This model is chosen following earlier discussions in Section 2 favouring pure multiplicative models. Focusing on one model in a controlled environment aids in understanding of the impact of the PIC variations. To achieve this, we focus on the application of the taxonomy to seasonal time series in the simulation experiments. This restriction is relaxed in the next section, when the full taxonomy and model selection is examined in empirical analysis.
+
+[p7.25] Even with this restriction, the PIC taxonomy can have 64 variations, because each of the PIC elements can take 4 values: N,L,S and LS. Note that some of the variations are not feasible, either because their models cannot be constructed (e.g. VETS(M,N,M;LN)PIC(N,N,S)), or are not reasonable (can be constructed but hard to find domains of application, e.g. it is difficult to motivate the commonality of the level component in VETS(M,N,M;LN)PIC(L S,L S,L S)). Since we are interested in common seasonality, we further reduce the variations by focusing on a subset of: • P : N, S, LS • I : N, S • C : N, S
+
+[p7.26] This reduces the possible variations to 9 (after removing 3 infeasible variations of PIC(N,N,S), PIC(S,N,S) and PIC(LS,N,S)), allowing for meaningful comparisons and useful insights to be gained.
+
+[p7.27] 5.2. Data generation
+
+[p7.28] In this experiment, we use the sim.ves() function from the legion package v0.1.0 ( Svetunkov & Pritularga, 2021 ) for
+
+[p8.1] Table 4 Overall Forecasting Accuracy (Benchmark PIC(N,N,N)).
+
+[p8.2] R ( Team, 2020 ) to generate the data. It was originally generated according to the VETS(A,N,A), and then exponents were taken in order to create VETS(M,N,M;LN). All the parameters of the simulation are given in Table 2 .
+
+[p8.3] In terms of seasonality, we focused on quarterly seasonality in the experiment, although monthly seasonality was checked separately as well, giving similar findings. The region [4, 10] for the initial level corresponds to the [54, 220 0 0] region after taking the exponent. This covers many real life situations for demand. A similar approach was used for the initial seasonal indices: (-1, 1) corresponds to (0.37, 2.72) for multiplicative indices in the data scale.
+
+[p8.4] We have focused on two cases for sample sizes: 6 years and 16 years of quarterly data, where the last two years (8 observations) were used for testing the performance of the models. While some of the models (e.g. PIC(LS,S,S)) can be estimated on short data histories of 2 years or even less, not all of them work in this case. As for the group sizes, in order to cover several possible real life situations, we have used groups of 2, 10, 20, 30, 40 and 50 series. This allows analysis of how the models work in case of very small groups and larger ones, when the number of products is larger than the number of observations.
+
+[p8.5] In this experiment, we have set all standard deviations for the error term equal to 0.3 and generated the errors using a normal distribution (which becomes log normal after exponentiation). We have tried lower standard deviations as well, but the results were similar to those reported in this experiment. The results we report in the following sections do not consider the case when the error terms are correlated between the series, because the parameters to be estimated easily outnumber the observations when the group sizes are large and/or histories are short. Recall from Eq. (5) that the number of parameters in a full variance-covariance matrix is n (n +1)
+
+[p8.6] 2 , which gives 1275 parameters for a group of 50 series, and 55 even for 10 series. However, we have conducted a separate small-scale experiment with cross correlations, focusing on groups of 2 and 10 series. The results were consistent with the main findings.
+
+[p8.7] Finally, we have restricted the range for the smoothing parameters α and γ as shown in Table 2 , which does not cover the whole parameter space, but is sufficient to cover common cases in practice. It is also worth pointing out that usually the smoothing parameters tend to be smaller in pure multiplicative models than in the additive ones, due to linearisation. This is because taking logarithms reduces the variability of the data, typically making it better behaved. 5.3. Error measures
+
+[p8.8] After generating data from each DGP, we have applied all 9 VETS methods via the vets() function from the legion package, measuring their performance in terms of point forecasts and prediction intervals. For point forecast accuracy, the relative Mean Absolute Error (rMAE) and the relative Root Mean Squared Error (rRMSE) have been calculated. The former is optimised on the median and is more appropriate for the multiplicative VETS models, whilst the latter is optimised on the mean and is provided just for information. Forecast bias is assessed using the relative Absolute Mean Error (rAME). Prediction interval performance is evaluated using 95% coverage (as commonly used in the statistics literature) and the relative pinball values for both the lower and upper bounds.
+
+[p8.9] Table 3 summarises the error measures used in our experiments. e t+ j is the j-steps ahead forecast error, b t+ j is the α-quantile, u t+ j is the upper bound and l t+ j is the lower bound of the prediction interval. In order to distinguish the pinball value for the lower and the upper bounds, we denote them as ‘rPinballL’ and ‘rPinballU’ respectively. The subscript a refers to the method being evaluated and b refers to the benchmark method.
+
+[p8.10] In all cases, we used either PIC(N,N,N) as a benchmark or the correct method for the DGP, the latter being explicitly specified in the text. After obtaining relative error measures for each time series, we aggregate them using geometric means over all the iterations, as proposed by Davydenko & Fildes (2013) , except for the 95% coverage, which is summarised by arithmetic means. Result tables are presented in a heat map format: the darker the grey shade is, the worse the results are.
+
+[p8.11] 5.3.1. Forecasting accuracy results We group the results based on the flexibility of the models. The first group has the most restrictive models, with shared seasonal components between the series: PIC(LS,S,S), PIC(S,S,S) and PIC(N,S,S). The second group has restrictions on the initial seasonal indices: PIC(LS,S,N), PIC(S,S,N) and PIC(N,S,N). Finally, the last group has the most flexible models with independent seasonal components and initial values: PIC(LS,N,N), PIC(S,N,N) and PIC(N,N,N).
+
+[p8.12] Table 4 summarises the performance of the methods on two types of samples: 56 quarters and 16 quarters. These are overall accuracy results summarised across all DGPs. It is apparent that the most restrictive methods perform worse than the benchmark of
+
+[p9.1] Table 5 rMAE results by models (16+8 periods) (Benchmark correct methods).
+
+[p9.2] Table 6 rRMSE results by models (16+8 periods) (Benchmark correct methods).
+
+[p9.3] PIC(N,N,N), while all other models show very similar accuracy results. This is consistent between all three measures: rMAE, rRMSE and rAME.
+
+[p9.4] To gain greater insights into the methods’ behaviour, we now proceed to show the results in more detail, examining how the methods perform on different DGPs, on different group sizes and lengths of data history.
+
+[p9.5] We start by examining the results for a small sample size, with time series aggregated over all group sizes. Tables 5 and 6 show the performance of the methods for each DGP, measured by rMAE and rRMSE respectively. In order to highlight whether the correct method is indeed performing better than the others, the method from the respective DGP is used as the benchmark (the diagonal line).
+
+[p9.6] Broadly, the correct methods perform better than the incorrect ones for each DGP. In many cases there is hardly any difference between different methods. It is interesting to notice that the top right corners of Tables 5 and 6 show much worse results than the remainder of the tables. This highlights the weakness of the most restrictive methods when the DGP is very flexible (meaning that parts of the model for each time series are different). Applying these most restrictive methods can cause significant damage in terms of accuracy. This comes mainly from the common seasonal component element. When this assumption is relaxed to individual seasonal components, even with the restrictions of smoothing parameters and initial seasonal indices (the middle block of the tables), the methods tend to perform better.
+
+[p9.7] The bottom left corners of the tables shows that applying the most flexible methods to the most restrictive DGPs also leads to
+
+[p9.8] reduced accuracy in comparison with the benchmarks. However, the loss in accuracy is much less serious in this case than in the top right corners of the tables.
+
+[p9.9] Since the two tables convey a consistent message and results are indeed very similar, we have decided to report the rMAE here-after, dropping the other two from the discussion.
+
+[p9.10] We then examine the effect of group sizes, for two contrasting models: PIC(LS,S,S) (the most restrictive) and PIC(N,N,N) (the most flexible). For consistency and ease of comparison, the method PIC(N,N,N) is used as the benchmark.
+
+[p9.11] When PIC(LS,S,S) is used as the DGP, the PIC( ∗,S,S) methods perform well, similarly to each other, as seen in the top area in Table 7 . Increasing group size from 2 to 10 helps these methods, but thereafter larger groups do not seem to have much effect. The gains over the benchmark of PIC(N,N,N) are moderate. The more flexible PIC( ∗,S,N) methods perform similarly to the most restrictive ones, especially on the data with large groups. Furthermore, there is a slight improvement in terms of accuracy when the smoothing parameters become more restrictive: the errors for PIC(N,S, ∗) are typically higher than the errors of PIC(S,S, ∗), which are slightly higher than PIC(LS,S, ∗).
+
+[p9.12] When PIC(N,N,N) is used as DGP ( Table 8 ), the most flexible methods (bottom block) perform the best, as expected. However, the PIC( ∗,S,N) methods are also performing well, showing little difference from the true ones. The PIC( ∗,S,S) methods do not perform as well. The increase in group sizes shows a similar effect to the one observed in Table 7 : more pronounced change in accuracy from 2 to 10, and stabilising after that. Both tables show that increasing group size from 10 to 50 does not have any noticeable
+
+[p10.1] Table 7 Effect of group sizes on rMAE for PIC(LS,S,S) DGP (Benchmark PIC(N,N,N)).
+
+[p10.2] Table 8 Effect of group sizes on rMAE for PIC(N,N,N) DGP (Benchmark PIC(N,N,N)).
+
+[p10.3] effect; therefore, groups larger than 50 were not included in our experiments.
+
+[p10.4] In addition, as expected, when the smoothing parameters are restricted in the models applied to PIC(N,N,N) data, there is a de-crease in the accuracy in all cases, although it is not substantial.
+
+[p10.5] In summary, although, as expected, the best performing methods tend to be those that align with the DGPs, the middle group, PIC( ∗,S,N) performs well in all the cases, being slightly less accurate than the ‘correct methods’. Based on this finding, this group of methods can be considered as the most robust for VETS(M,N,M;LN) to model mis-specification.
+
+[p10.6] 5.3.2. 95% Prediction interval results Having assessed relative accuracy of point forecasts of the methods in the proposed taxonomy, we now examine the overall performance in terms of 95% prediction intervals.
+
+[p10.7] In Table 9 , the further away from the 95% target, the darker the shading is. The coverage results are reported to three decimal places, in order to distinguish between the methods. The PIC( ∗,S,S) and PIC( ∗,S,N) methods get closer to the nominal 95% coverage, when the sample size is larger. PIC( ∗,N,N) methods on the other hand produce narrower intervals and provide a little less coverage on larger samples. This could be due to the overfitting effect, which may appear in the more flexible methods.
+
+[p10.8] As for the pinball values, the group of the most restrictive methods (top block) is worse than the benchmark of PIC(N,N,N) in
+
+[p10.9] capturing both upper and lower quantiles for longer histories. Improvements are observed in the other two groups, especially when data histories are short.
+
+[p10.10] In order to better understand why this happens, we provide a more detailed analysis on relative pinballs for the upper bound (the results for the lower bound are similar).
+
+[p10.11] Table 10 shows the relative Pinball values for the upper bound for all of the methods, with the true models as benchmarks. The PIC( ∗,S,S) and PIC( ∗,S,N) methods perform well overall, when the DGPs have similar restrictions. But again we observe poor results in the top right corner; the very restrictive common seasonal components do not do well when the underlying models are flexible. The middle block of methods also does poorly in this case, but to a lesser degree than the PIC( ∗,S,S) methods. So, simply changing the seasonal component element of the taxonomy from common to individual can bring improvements in terms of the pinball values.
+
+[p10.12] Furthermore, the bottom left corner demonstrates similar ten-dencies as in Table 5 with the rMAE: when the most flexible methods are applied to the most restrictive DGPs, they tend to perform more poorly than the PIC( ∗,S,N) and PIC( ∗,S,S) methods.
+
+[p10.13] Once again the PIC( ∗,S,N) methods seem to be robust in comparison with the other methods.
+
+[p10.14] It is also worth pointing out that, within each block of methods, there is an improvement in terms of pinball, when restrictions are imposed on the smoothing parameters: it is better to have PIC(LS, ∗, ∗) than PIC(S, ∗, ∗), which is subsequently better than
+
+[p11.1] Table 9 Overall forecasting interval results (Pinball Benchmark PIC(N,N,N)).
+
+[p11.2] Table 10 rPinballU results by models (16+8 periods) (Benchmark correct methods).
+
+[p11.3] Table 11 Overall empirical performance on M5 data in terms of rMAE: overall, on seasonal and on non-seasonal data.
+
+[p11.4] Sample size Model Overall Seasonal Non-Seasonal
+
+[p11.5] Geom Mean Median Geom Mean Median Geom Mean Median
+
+[p11.6] Long ETS LN 0.917 0.959 0.906 0.878 0.972 1.031 ETS (ADAM) 0.955 1.000 0.946 0.964 0.996 1.015 ETS 0.933 0.957 0.920 0.924 0.996 1.015 VETS D 0.894 0.934 0.878 0.888 0.975 1.029 VETS F 0.906 0.960 0.894 0.934 0.965 1.028 Short ETS LN Short 0.997 0.988 0.993 0.974 1.018 0.993 ETS (ADAM) 0.991 1.000 0.979 0.999 1.047 1.027 ETS 1.000 1.000 0.994 1.003 1.029 0.997 VETS D 0.936 0.974 0.923 0.974 0.999 0.974 VETS F 1.011 1.000 1.020 1.006 0.969 0.976
+
+[p11.7] PIC(N, ∗, ∗) methods. This finding holds for all the methods under consideration, no matter what the DGP is. An explanation for this performance is that the more restrictive methods tend not to overfit the data, because the smoothing parameters are averaged out across all the time series.
+
+[p11.8] Next we focus on two contrasting models, PIC(LS,S,S) and PIC(N,N,N), and examine the effect of group sizes on the pinball values. The corresponding tables can be found in Appendix A .
+
+[p11.9] When the DGP is PIC(LS,S,S) ( Table A.1 ), the correct method does indeed show considerable improvement over PIC(N,N,N). No-tably, PIC(LS,S,N) is performing equally well and, in several cases,
+
+[p11.10] slightly better than PIC(LS,S,S). In fact, we can see this pattern for almost all the methods in the first two blocks. Even though the differences are very small, this highlights the benefits of applying individual seasonal components. It also appears that the benefits are greater when group sizes increase: when there are 50 series in a group, the best performing method, PIC(LS,S,N), has a 35% lower pinball value than PIC(N,N,N).
+
+[p11.11] When the underlying model is PIC(N,N,N) ( Table A.2 ), we observe the opposite picture: the group of the most flexible methods performs better than PIC( ∗,S,N), which performs better than PIC( ∗,S,S). This aligns with the previous findings, that applying the
+
+[p12.1] most restrictive methods to the most flexible data leads to losses in accuracy.
+
+[p12.2] Finally, similarly to the previous parts of the experiment, we observe that restrictions on smoothing parameters tend to improve the performance of methods: PIC(S, ∗, ∗) outperforms PIC(N, ∗, ∗), with PIC(LS, ∗, ∗) being the best. This can be explained in the same way as in the case of PIC(LS,S,S): the methods with the restricted smoothing parameters tend not to overfit the data as much as the most flexible ones.
+
+[p12.3] In summary, the interval results suggest that PIC( ∗,S,S) methods can be too restrictive, and switching to PIC( ∗,S,N) leads to more robust results. Another interesting finding is that, keeping everything else the same, PIC(LS, ∗, ∗) performs better than PIC(S, ∗, ∗), which in turn is better than PIC(N, ∗, ∗). This may be due to the par-simonious nature of the PIC(LS, ∗, ∗) methods, given that the more flexible methods need more parameters to estimate, especially on larger groups of time series.
+
+[p12.4] 5.3.3. Summary of the simulation results Overall, the findings from the simulation experiment provide useful insights in understanding how to apply common smoothing parameters, initials and seasonal components. It appears that common smoothing parameters for all components bring the most benefits in terms of accuracy due to the mitigation of the overfitting effect.
+
+[p12.5] The methods with common initial seasonal indices (PIC( ∗,S,N)), overlooked in the literature, perform robustly in all the settings, being outperformed by the flexible methods (PIC( ∗,N,N)) only, when the DGP favours those methods. This means that these methods can be used in many cases, as long as the time series exhibit similar seasonal patterns. If they are substantially different, then the methods with the individual components (PIC( ∗,N,N)) should be preferred.
+
+[p12.6] Simulation results also suggest that the common seasonal components (PIC( ∗,S,S) models) can become too restrictive in some situations, and modelling seasonal components individually brings more flexibility. It is recommended to apply PIC( ∗,S,S) methods only to homogeneous time series, which exhibit very similar seasonal patterns; in the other cases these methods may perform poorly. The insights gained from the simulation experiments are helpful in informing the model selection mechanism, especially in the second stage of the algorithm from Section 4.4 .
+
+[p12.7] Finally, the simulation results show that PIC(LS,S,N) and PIC(LS,N,N) are the most robust methods from the proposed taxonomy. They perform well under a range of different conditions, in terms of both forecasting accuracy and prediction intervals. These methods achieve a good balance between accuracy and flexibility. All of these findings are valid for data with both diagonal and full covariance matrices (Appendix A).
+
+[p12.8] 6. Empirical analysis
+
+[p12.9] In order to see how VETS works on real data, we conducted an experiment on data from the M5 competition ( Makridakis et al., 2021 ). We use this data because our initial motivation came from a retail context and M5 contains data from the retail com-pany, Walmart, together with a natural hierarchy, allowing us to apply multivariate models. We aggregated the original time series to monthly frequency and to department-store level in order to avoid intermittence in the original data, which gave us 70 products, each with 63 observations. We used the adam() function from the smooth package ( Svetunkov, 2021b ) for R with bounds = ’’admissible’’ (aligning the parameter space with the one of VETS) in order to classify the data into trended and
+
+[p12.10] non-trended, seasonal and non-seasonal. This resulted in the clas-sification shown in Fig. 1 .
+
+[p12.11] As can be seen, the majority of time series (1+27+1+28 = 57) are seasonal and mainly do not exhibit trends. The trends in the two time series are not very strong, and so models with trend components have been excluded from consideration. We have classi-fied the series as seasonal and non-seasonal, keeping the original department-store groups. This resulted in the grouping of time series in Appendix B . The last group contained only one time series, and so we removed it from the experiment, as a vector model would not make sense in this situation.
+
+[p12.12] We then decided to conduct two experiments:
+
+[p12.13] 1. On the full data, using 51 observations for model estimation and withholding the last 12 observations in order to measure the accuracy of models; 2. On the short data, using the last 36 observations with 24 for model fitting and the next 12 for the accuracy measure.
+
+[p12.14] This ensures that all the results are comparable, as the same holdout sample is used in both cases.
+
+[p12.15] We have applied the VETS(M,N,M;LN) model to each group of seasonal data and VETS(M,N,N;LN) for each non-seasonal group, automatically selecting the PIC restrictions for both using the auto.vets() function from the legion package, implement-ing the algorithm described in Section 4.4 . We argue that the pure multiplicative models are more appropriate for such data, because the scale of sales for each product would differ and assuming that they would have common components (e.g. common seasonal index of 400 units each January) is unreasonable. This model is called “VETS F” further in the text, where “F” stands for “Full” covariance matrix. Given that the likelihood estimation in-volves many parameters to estimate, we also estimated VETS assuming that the covariance matrix for the error term is diagonal ( loss = ’’diagonal’’ ), implying that the errors are independent. This model is denoted “VETS D”. The grouping we have done in this section yields 11 VETS F and 11 VETS D models for our experiment. Finally, we used the ETS model ( Svetunkov, 2021c ), implemented in adam() from the smooth package, applying ETS(A,N,N) and ETS(A,N,A) to the data in logarithms with distribution = ’’dnorm’’ and then exponentiating the results, to make them consistent with a VETS approach. We denote this model as “ETS LN”. Furthermore, we have measured the performance of ETS(M,N,N) and ETS(M,N,M) models implemented in ets() function from forecast (denoted “ETS”, Hyndman & Khandakar, 2008 ) and adam() function from smooth with distribution = ’’dnorm’’ (denoted “ETS (ADAM)”) packages for R. We include ETS (ADAM) model in order to see whether the potential differences between the models are due to their implementation or due to the differences between the conventional multiplicative ETS and the one applied on data after logarithmic transformations.
+
+[p12.16] In order to measure the accuracy of models, we calculated geometric means and medians of the rMAE, taking Naïve forecasts as the benchmark, aligning the measure with the one used in Section 5 . Having both (geometric) means and medians provides some additional information about the distribution of errors: if the two are close to each other, then the distribution of rMAE is close to being symmetric. In addition, medians are more robust to potential outliers and will not be impacted by rare cases of poor performance. Furthermore, we have calculated separately rRMSE for the same setting to see whether the ranking of models would differ, but the results were similar and so we do not present them here.
+
+[p12.17] The results of accuracy performance are reported in Table 11 . For the full data, the VETS models are almost always better than
+
+[p13.1] Fig. 1. ETS models selected for M5 data by the adam function.
+
+[p13.2] Fig. 2. MCB test applied to rMAE of VETS and ETS on M5 data.
+
+[p13.3] Na ˙ove and almost always better than ETS LN, ETS (ADAM) and ETS, although the ETS LN is slightly more accurate than the other two models. For the short data, VETS typically performs better than Naive, while ETS can sometimes be slightly worse than Na ˙ove. These results indicate that using cross-sectional data for forecasting is beneficial for accuracy in this case. Focusing on the seasonal series, VETS D tends to perform better than VETS F, although the improvement is small. Finally, having longer history leads to improvements for all models in almost all categories, as may be expected. Overall, this indicates that having longer history and using VETS D is a robust option for forecasting.
+
+[p13.4] In order to see if the performance of ETS and VETS is statistically different, we conduct an MCB test ( Koning, Franses, Hibon, & Stekler, 2005 ) on rMAE using the rmcb() function from the greybox package ( Svetunkov, 2021a ).
+
+[p13.5] Figure 2 demonstrates results of the test. It is apparent that VETS F on long history of data has the lowest mean rank, but its performance is not statistically different from VETS D, ETS LN, ETS (ADAM) and ETS on the long sample and VETS D on the short history. When it comes to short histories, ETS LN, ETS (ADAM) and ETS are doing worse than the other approaches in terms of mean ranks, only outperforming VETS F on short history of data, although the difference between these approaches is not statistically significant.
+
+[p13.6] We have also measured the performance of models in terms of prediction intervals, calculating coverage and relative pinball values, similar to how it was done in Section 5 . We used prediction intervals from the ETS model on full data as a benchmark, when calculating relative pinball values. The results of this part of experiment are summarised in Table 12 .
+
+[p13.7] From Table 12 , it is immediately apparent that ETS provides lower coverage than the required 95% in all cases. The situation is worse, when it is applied to short history data. This can have serious consequences in many forecasting applications. For example, in an inventory replenishment setting, it would result in inadequate stocks and availability falling well behind targets.
+
+[p13.8] The VETS F approach performs much better than ETS in terms of coverage, producing wider prediction intervals which are, in fact, a little too wide for both long and short data. This is reflected by the high relative pinball values for VETS F. This could be due to the estimation difficulties in the model, with many more parameters to estimate than ETS.
+
+[p13.9] The VETS D Model on the other hand, performs the best in terms of coverage, getting very close to the nominal 95% on long data, and with a slightly smaller surplus coverage than VETS F on short data. On long data, VETS D clearly outperforms ETS models, with much better coverage with the cost of the slightly worse performance in terms of pinball values. On short data, VETS D has bet-
+
+[p14.1] Table 12 Performance of models in terms of interval measures on M5 data. Model Long Short
+
+[p14.2] Coverage pinballU pinballL Coverage pinballU pinballL
+
+[p14.3] ETS LN 0.934 1.000 1.000 0.854 1.061 0.895 ETS (ADAM) 0.925 0.943 1.080 0.815 1.155 0.908 ETS 0.937 0.912 1.300 0.886 0.938 1.194 VETS D 0.947 0.990 1.006 0.970 2.515 1.567 VETS F 0.982 2.383 1.494 0.972 4.414 1.804
+
+[p14.4] Table 13 Frequency of different PIC restrictions for VETS on M5 data.
+
+[p14.5] PIC N,N,N L,N,N L,L,N LS,S,N LS,S,S Frequency 1 1 2 6 1
+
+[p14.6] ter relative pinball values than VETS F, reflecting the saving in the number of parameters to be estimated. However, for short data, VETS D does not perform as well as ETS models in terms of relative pinball values. The trade-off between coverage and relative pinball values is not straightforward and will depend on the domain of application. An interesting avenue for further research would be to explore the implications of this trade off using different financial loss functions.
+
+[p14.7] In order to understand where the main benefits of VETS come from, we extracted the PIC parts of all 11 VETS D models (via modelType(object, pic = TRUE) ) and calculated the frequencies of different restrictions. These are summarised in Table 13 .
+
+[p14.8] As can be seen from the table, the most frequently imposed restriction is for the seasonal initials and common smoothing parameters for both level and seasonal, PIC(LS,S,N). This validates our simulation findings that PIC(LS,S,N) is one of the most robust models that performs consistently well across different settings. One of the seasonal groups also had more strict restrictions with common seasonal components, PIC(LS,S,S). We argue that the main benefits observed in terms of forecasting accuracy arise from these restrictions. As for the non-seasonal groups, the most common restriction is for initial level and common smoothing parameter, although this group is small, and so it is difficult to draw reliable conclusions.
+
+[p14.9] Finally, we present the results of an additional empirical evaluation, which aligns with capacity planning in retail stores. Walmart wishes to optimise allocation of retail space to their departments and product categories and, naturally, the number of units sold is an indicator they use to decide how much space to allocate ( Souza, 2017 ). The planning horizon will vary, depending on the extent of space reallocation. For illustrative purposes, we have examined de-partmental volume forecasts for 3, 6 and 12 months ahead. Effective plans depend not only on the accuracy of forecasts but also on the reliability of prediction intervals. This is important to ensure that enough space is allocated, especially in peak seasons, and to ensure appropriate contraction of those departments with antici-pated reductions in volume sales.
+
+[p14.10] We measure performance of the same set of models on the same data (both long and short samples) using the Geometric Mean Relative Absolute Error (GMRAE, Fildes, 1992 ) with Naïve forecasts for the benchmark. We also show the coverage of the forecasts but not the pinball measures, as they do not align naturally with space planning decisions. The GMRAE is used instead of rMAE measures, because the point forecasts in this case are not aggregated over the forecast horizon. The results of this experiment are shown in Table 14 .
+
+[p14.11] Table 14 GMRAE and Coverage for specific horizons for M5 data.
+
+[p14.12] Length Model GMRAE Coverage h3 h6 h12 h3 h6 h12
+
+[p14.13] Long ETS LN 0.748 0.962 1.092 0.928 0.928 0.942 ETS (ADAM) 0.716 0.942 0.988 0.855 0.899 0.913 ETS 0.888 0.827 0.939 0.899 0.899 0.928 VETS D 0.897 0.938 1.007 0.928 0.957 0.971 VETS F 0.923 0.894 0.980 0.942 0.971 0.971 Short ETS LN 1.162 1.167 0.905 0.841 0.826 0.899 ETS (ADAM) 1.170 1.198 0.926 0.826 0.797 0.841 ETS 1.058 0.946 0.936 0.870 0.855 0.913 VETS D 1.037 1.112 0.938 0.870 0.841 0.899 VETS F 1.065 1.031 0.872 0.957 0.942 0.942
+
+[p14.14] As can be seen from Table 14 , VETS models do not perform best in terms of Geometric Mean Relative Absolute Error for the specified horizons on longer time series, but on shorter ones they do much better. In these cases, the cross-sectional information helps in the estimation. Furthermore, VETS F performs consistently better than the other models, for short data history, in terms of 95% coverage. This is a strong point in its favour, given the importance of prediction intervals for space planning decisions.
+
+[p14.15] Summarising the empirical evaluation, we would recommend using VETS, estimated via likelihood with the diagonal covariance matrix (assuming that the errors of different time series are not correlated) on real data, as it is easier to estimate than VETS with the full covariance matrix or even ETS, especially on small samples. The only exception when we would not recommend using VETS would be when pinball measure is of the main importance and the available history is short. Using cross sectional information for estimation brings benefits in terms of forecasting accuracy, which comes mainly from the restrictions on the seasonal component, but assumes that the data is correctly grouped.
+
+[p14.16] 7. Conclusions and further research
+
+[p14.17] In this paper we studied the effect of cross-sectional information on the performance of forecasting models on seasonal data. Using the Vector ETS (VETS) framework for pure additive and pure multiplicative models, we proposed a PIC taxonomy to examine the forecasting accuracy effect of having common or individual P arameters, I nitial values, and C omponents. This taxonomy is general and can be applied to models with any combination of level, trend (including damped trend) and seasonality. The number of variations proposed in the taxonomy can become large; therefore, we also propose a model selection mechanism and it is tested empirically using data from the M5 competition. The advantage of the full taxonomy is that it opens up the widest pool of methods to the practitioner and invites consideration of the potential benefits of estimating, in common across series, the relevant parameters, initial values and components. However, there are some situations when some of these elements do not need any common
+
+[p15.1] treatment. In our empirical experiments, it was mainly the parameters (particularly for level and seasonality) and initial values (for seasonality) that benefited from common estimation. Only for one group were common (seasonal) components required. For all other groups, the C element could have been dropped from the PIC taxonomy and consideration restricted to PI variations. (This facility is also available in the vets() function from the legion package for R, which was used in the experiments in this paper). Our practical recommendation, to operational researchers, therefore, is to consider the full PIC framework in the first instance, but to dis-pense with any elements that are not necessary and to use a simpler framework when appropriate. In this way, the model selection process can be simplified, thus lending itself to practical implementation, with fewer models to be evaluated.
+
+[p15.2] Given our interest in applications to seasonal time series, through the simulation experiment we focused on VETS(M,N,M;LN) and examined the relative performances of nine PIC variations in point forecasts and prediction intervals. Methods with individual seasonal components and common smoothing parameters (PIC(LS, ∗,N) and PIC(S, ∗,N)) show good performance and are robust across various scenarios. This becomes especially apparent with interval results, and overall it is observed that PIC(LS, ∗,N) methods perform better than PIC(S, ∗,N) ones. These methods offer a good balance in terms of accuracy and flexibility.
+
+[p15.3] We also found that restrictions on the smoothing parameters tend to lead to improvements in terms of accuracy and prediction intervals performance for all the methods in the taxonomy. This is because the more restrictive methods lead to averaged-out smoothing parameters, which protects them from the effect of overfitting.
+
+[p15.4] The empirical analysis of the M5 data shows strong performance of the VETS models against the benchmark of univariate ETS models. It was found that VETS D (diagonal covariance matrix) performs better than VETS F (the full matrix) on both long and short samples of data. ETS performs better when there are more observations available, but, even then, VETS D outperforms it.
+
+[p15.5] The evidence from this paper suggests that using common smoothing parameters for all components has the biggest positive impact in terms of accuracy and prediction intervals performance out of the taxonomy. Common seasonal initial values are also beneficial because of increased efficiency in estimating the number of parameters. As a result, PIC(LS,S,N) performs the best in both simulations and empirical analysis (selected in 6 out of the 11 groups). In many practical settings, where data histories are short and there are many series to forecast, this approach can be particularly useful in offering parsimony and robustness, while the traditional individual approach can become too cumbersome or even infeasible.
+
+[p15.6] Our current paper makes a contribution to the forecasting literature in the area of dynamic models; it also opens up many potentially fruitful opportunities for further investigations. The more restrictive methods can be applied to shorter data histories (in theory, at least a year of data), but it is not yet clear whether this strategy would be effective. One of potential strategies for the estimation of high dimensional multivariate models on small samples is shrinkage of parameters, which could be investigated in context of VETS in future papers. In practice, many businesses are collecting data on a much more granular level, so effort s in examining seasonality in higher frequencies such as weekly or even daily patterns are needed. Additional seasonal indices and the trend element may change the dynamics of how these methods behave and reveal fresh insights. Future work can also look at pre-processing, for example, by grouping seasonally homogeneous series. In our view, this current research and its many possible exten-sions promise to deepen understanding in seasonal demand forecasting and aid better planning. The benefits of improved planning are worthy of investigation, not only at retailers, but also in many other domains of application.
+
+[p15.7] Appendix A. Pinball values for the upper bound of prediction interval from the simulation experiment
+
+[p15.8] Table A.1 rPinballU effect on group sizes PIC(LS,S,S) DGP (Benchmark PIC(N,N,N)).
+
+[p15.9] Table A.2 rPinballU effect of group sizes on PIC(N,N,N) DGP (Benchmark PIC(N,N,N)).
+
+[p16.1] Appendix B. Grouping of time series from M5 competition data
+
+[p16.2] Using the encoding from the M5 competition, we can distinguish the following groups of time series, based on the algorithm described in Section 6 : • Seasonal:
+
+[p16.3] • Group 1, Hobbies 1: CA_1_HOBBIES_1, CA_3_HOBBIES_1, TX_1_HOBBIES_1, TX_3_HOBBIES_1, WI_1_HOBBIES_1, WI_3_HOBBIES_1;
+
+[p16.4] • Group 2, Hobbies 2: CA_2_HOBBIES_2, CA_4_HOBBIES_2, TX_1_HOBBIES_2, TX_2_HOBBIES_2, TX_3_HOBBIES_2, WI_2_HOBBIES_2, WI_3_HOBBIES_2;
+
+[p16.5] • Group 3, Household 1: CA_1_HOUSEHOLD_1, CA_2_HOUSEHOLD_1, CA_3_HOUSEHOLD_1, CA_4_HOUSEHOLD_1, TX_1_HOUSEHOLD_1, TX_2_HOUSEHOLD_1, TX_3_HOUSEHOLD_1, WI_1_HOUSEHOLD_1, WI_2_HOUSEHOLD_1, WI_3_HOUSEHOLD_1;
+
+[p16.6] • Group 4, Household 2: CA_1_HOUSEHOLD_2, CA_2_HOUSEHOLD_2, CA_3_HOUSEHOLD_2, CA_4_HOUSEHOLD_2, TX_1_HOUSEHOLD_2, TX_2_HOUSEHOLD_2, TX_3_HOUSEHOLD_2, WI_1_HOUSEHOLD_2, WI_2_HOUSEHOLD_2, WI_3_HOUSEHOLD_2;
+
+[p16.7] • Group 5, Foods 1: CA_1_FOODS_1, CA_2_FOODS_1, CA_3_FOODS_1, CA_4_FOODS_1, TX_1_FOODS_1, TX_2_FOODS_1, TX_3_FOODS_1, WI_1_FOODS_1;
+
+[p16.8] • Group 6, Foods 2: CA_1_FOODS_2, CA_2_FOODS_2, CA_3_FOODS_2, TX_1_FOODS_2, TX_2_FOODS_2, TX_3_FOODS_2, WI_3_FOODS_2;
+
+[p16.9] • Group 7, Foods 3: CA_1_FOODS_3, CA_2_FOODS_3, CA_3_FOODS_3, CA_4_FOODS_3, TX_1_FOODS_3, TX_2_FOODS_3, TX_3_FOODS_3, WI_1_FOODS_3, WI_2_FOODS_3; • Non-seasonal:
+
+[p16.10] • Group 8, Hobbies 1: CA_2_HOBBIES_1, CA_4_HOBBIES_1, TX_2_HOBBIES_1, WI_2_HOBBIES_1;
+
+[p16.11] • Group 9, Hobbies 2: CA_1_HOBBIES_2, CA_3_HOBBIES_2, WI_1_HOBBIES_2;
+
+[p16.12] • Group 10, Foods 1: WI_2_FOODS_1, WI_3_FOODS_1;
+
+[p16.13] • Group 11, Foods 2: CA_4_FOODS_2, WI_1_FOODS_2, WI_2_FOODS_2;
+
+[p16.14] • Group 12, Foods 3: WI_3_FOODS_3; References
+
+[p16.15] Akram, M., Hyndman, R. J., & Ord, J. K. (2009). Exponential smoothing and non-
+
+[p16.16] negative data. Australian & New Zealand Journal of Statistics, 51 (4), 415–432. https://doi.org/10.1111/j.1467-842X.20 09.0 0555.x . Armstrong, J. (2004). Damped seasonality factors: Introduction. International Journal
+
+[p16.17] of Forecasting, 20 (4), 525–527 . Armstrong, J. S. (1985). Long-Range forecasting (2nd Edition) . Wiley . Athanasopoulos, G., Hyndman, R. J., Kourentzes, N., & Petropoulos, F. (2017). Fore-
+
+[p16.18] casting with temporal hierarchies. European Journal of Operational Research, 262 (1), 60–74. https://doi.org/10.1016/j.ejor.2017.02.046 . Athanasopoulos, G., & de Silva, A. (2012). Multivariate exponential smoothing for
+
+[p16.19] forecasting tourist arrivals. Journal of Travel Research, 51 (5), 640–652. https:// doi.org/10.1177/0047287511434115 . Bedrick, E. J., & Tsai, C.-L. (1994). Model selection for multivariate regression in
+
+[p16.20] small samples. Biometrics, 50 (1), 226. https://doi.org/10.2307/2533213 . Bunn, D. W., & Vassilopoulos, A. (1993). Using group seasonal indices in multi-item
+
+[p16.21] short-term forecasting. International Journal of Forecasting, 9 (4), 517–526 . Chan, J. C., Eisenstat, E., & Strachan, R. W. (2020). Reducing the state space di-
+
+[p16.22] mension in a large TVP-VAR. Journal of Econometrics, 218 (1), 105–118. https: //doi.org/10.1016/j.jeconom.2019.11.006 . Chen, H., & Boylan, J. E. (2007). Use of individual and group seasonal indices in sub-
+
+[p16.23] aggregate demand forecasting. Journal of the Operational Research Society, 58 (12), 1660–1671 . Chen, H., & Boylan, J. E. (2008). Empirical evidence on individual, group and shrink-
+
+[p16.24] age seasonal indices. International Journal of Forecasting, 24 (3), 525–534 .
+
+[p16.25] Chen, J. L., Li, G., Wu, D. C., & Shen, S. (2019). Forecasting seasonal tourism de-
+
+[p16.26] mand using a multiseries structural time series method. Journal of Travel Research, 58 (1), 92–103 . Dalhart, G. (1974). Class seasonality–a new approach. In American production and
+
+[p16.27] inventory control society conference proceedings (pp. 11–16) . Davydenko, A., & Fildes, R. (2013). Measuring forecasting accuracy: The case of judg-
+
+[p16.28] mental adjustments to SKU-level demand forecasts. International Journal of Forecasting, 29 (3), 510–522 . de Silva, A., Hyndman, R. J., & Snyder, R. (2010). The vector innovations structural
+
+[p16.29] time series framework. Statistical Modelling: An International Journal, 10 (4), 353– 374. https://doi.org/10.1177/1471082X09010 0 0401 . Dekker, M., Van Donselaar, K., & Ouwehand, P. (2004). How to use aggregation and
+
+[p16.30] combined forecasting to improve seasonal demand forecasts. International Journal of Production Economics, 90 (2), 151–167 . Duncan, G., Gorr, W., & Szczypula, J. (1993). Bayesian forecasting for seemingly un-
+
+[p16.31] related time series: Application to local government revenue forecasting. Management Science, 39 (3), 275–293 . Fildes, R. (1992). The evaluation of extrapolative forecasting methods. International
+
+[p16.32] Journal of Forecasting, 8 (1), 81–98 . Fildes, R., Hibon, M., Makridakis, S., & Meade, N. (1998). Generalising about uni-
+
+[p16.33] variate forecasting methods: Further empirical evidence. International Journal of Forecasting, 14 (3), 339–358 . Gardner, E. S., & McKenzie, E. (2011). Why the damped trend works. Journal of the
+
+[p16.34] Operational Research Society, 62 (6), 1177–1180. https://doi.org/10.1057/jors.2010. 37 . Gorr, W., Olligschlaeger, A., & Thompson, Y. (2003). Short-term forecasting of crime.
+
+[p16.35] International Journal of Forecasting, 19 (4), 579–594 . Hyndman, R. J., Ahmed, R. A., Athanasopoulos, G., & Shang, H. L. (2011). Optimal
+
+[p16.36] combination forecasts for hierarchical time series. Computational Statistics and Data Analysis, 55 (9), 2579–2589 . Hyndman, R. J., & Khandakar, Y. (2008). Automatic time series forecasting: The fore-
+
+[p16.37] cast package for R. Journal of Statistical Software, 26 (3), 1–22 . Hyndman, R. J., Koehler, A. B., Ord, J. K., & Snyder, R. D. (2008). Forecasting with
+
+[p16.38] exponential smoothing . Springer Berlin Heidelberg . Hyndman, R. J., Koehler, A. B., Snyder, R. D., & Grose, S. (2002). A state space frame-
+
+[p16.39] work for automatic forecasting using exponential smoothing methods. International Journal of Forecasting, 18 (3), 439–454 . Koehler, A. B., Snyder, R. D., & Ord, J. K. (2001). Forecasting models and predic-
+
+[p16.40] tion intervals for the multiplicative Holt-Winters method. International Journal of Forecasting, 17 (2), 269–286 . Koning, A. J., Franses, P. H., Hibon, M., & Stekler, H. O. (2005). The M3 competition:
+
+[p16.41] Statistical tests of the results. International Journal of Forecasting, 21 (3), 397–409. https://doi.org/10.1016/j.ijforecast.2004.10.003 . Kourentzes, N., & Athanasopoulos, G. (2019). Cross-temporal coherent forecasts for
+
+[p16.42] Australian tourism. Annals of Tourism Research, 75 , 393–409. https://doi.org/10. 1016/j.annals.2019.02.001 . Kourentzes, N., & Athanasopoulos, G. (2021). Elucidate structure in intermittent de-
+
+[p16.43] mand series. European Journal of Operational Research, 288 (1), 141–152. https: //doi.org/10.1016/j.ejor.2020.05.046 . Kourentzes, N., & Petropoulos, F. (2016). Forecasting with multivariate temporal ag-
+
+[p16.44] gregation: The case of promotional modelling. International Journal of Production Economics, 181 , 145–153. https://doi.org/10.1016/j.ijpe.2015.09.011 . Kourentzes, N., Petropoulos, F., & Trapero, J. R. (2014). Improving forecasting by esti-
+
+[p16.45] mating time series structural components across multiple frequencies. International Journal of Forecasting, 30 (2), 291–302. https://doi.org/10.1016/j.ijforecast. 2013.09.006 . Lee, N., Choi, H., & Kim, S. H. (2016). Bayes shrinkage estimation for high-
+
+[p16.46] dimensional VAR models with scale mixture of normal distributions for noise. Computational Statistics and Data Analysis, 101 , 250–276. https://doi.org/10.1016/ j.csda.2016.03.007 . Li, C., & Lim, A. (2018). A greedy aggregation-decomposition method for intermittent
+
+[p16.47] demand forecasting in fashion retailing. European Journal of Operational Research, 269 (3), 860–869 . Lütkepohl, H. (2005). New introduction to multiple time series analysis . Springer
+
+[p16.48] Berlin Heidelberg . Makridakis, S., Spiliotis, E., & Assimakopoulos, V. (2021). The M5 competition: Back-
+
+[p16.49] ground, organization, and implementation. International Journal of Forecasting , (xxxx). https://doi.org/10.1016/j.ijforecast.2021.07.007 . McKenzie, E., & Gardner, E. S. (2010). Damped trend exponential smoothing: A
+
+[p16.50] modelling viewpoint. International Journal of Forecasting, 26 (4), 661–665. https: //doi.org/10.1016/j.ijforecast.20 09.07.0 01 . Ouwehand, P., Hyndman, R. J., de Kok, T. G., & van Donselaar, K. H. (2007). A
+
+[p16.51] state space model for exponential smoothing with group seasonality. Monash Econometrics and Business Statistics Working Papers 7/07 . Monash University, Department of Econometrics and Business Statistics . https://www.ideas.repec.org/ p/msh/ebswps/2007-7.html Pennings, C. L., & van Dalen, J. (2017). Integrated hierarchical forecasting. European
+
+[p16.52] Journal of Operational Research, 263 (2), 412–418 . Schäfer, J., & Strimmer, K. (2005). A shrinkage approach to large-scale covariance
+
+[p16.53] matrix estimation and implications for functional genomics. Statistical Applications in Genetics and Molecular Biology, 4 (1), 1–30. https://doi.org/10.2202/ 1544-6115.1175 . Snyder, R. D., Ord, J. K., Koehler, A. B., McLaren, K. R., & Beaumont, A. N. (2017). Fore-
+
+[p16.54] casting compositional time series: A state space approach. International Journal of Forecasting, 33 (2), 502–512 .
+
+[p17.1] Souza, K. (2017). Walmart exec discusses store layout challenges as online retail
+
+[p17.2] grows. Talk Business and Polytics, (version: 2022-02-01), https://talkbusiness. net/2017/10/walmart- exec- discusses- store- layout- challenges- as- online- retail-grows/ . Spiliotis, E., Petropoulos, F., Kourentzes, N., & Assimakopoulos, V. (2020). Cross-
+
+[p17.3] temporal aggregation: Improving the forecast accuracy of hierarchical electricity consumption. Applied Energy, 261 (December 2019), 114339. https://doi.org/ 10.1016/j.apenergy.2019.114339 . Svetunkov, I. (2021a). greybox: Toolbox for model building and forecasting. R pack-
+
+[p17.4] age version 0.6.9, https://www.github.com/config-i1/greybox . Svetunkov, I. (2021b). smooth: Forecasting using state space models. R package ver-
+
+[p17.5] sion 3.1.1, https://www.github.com/config-i1/smooth . Svetunkov, I. (2021c). Time series analysis and forecasting with adam. OpenForecast,
+
+[p17.6] (version: 2021-04-13), https://www.openforecast.org/adam/ .
+
+[p17.7] Svetunkov, I., & Pritularga, K. F. (2021). legion: Forecasting using multivariate mod-
+
+[p17.8] els. R package version 0.1.0, https://www.github.com/config-i1/legion . Taieb, S. B., Taylor, J. W., & Hyndman, R. J. (2020). Hierarchical probabilistic fore-
+
+[p17.9] casting of electricity demand with smart meter data. Journal of the American Statistical Association, 0 (0), 1–17 . Team, R. C. (2020). R: A language and environment for statistical computing.
+
+[p17.10] R Foundation for Statistical ComputingVienna, Austria. https://www.R-project. org/ . Winters, P. R. (1960). Forecasting sales by exponentially weighted moving averages.
+
+[p17.11] Management Science, 6 (3), 324–342 . Withycombe, R. (1989). Forecasting with combined seasonal indices. International
+
+[p17.12] Journal of Forecasting, 5 (4), 547–552 .

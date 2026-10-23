@@ -1,0 +1,733 @@
+[p1.1] Computational Statistics (2024) 39:1203–1239 https://doi.org/10.1007/s00180-023-01377-x ORIGINAL PAPER
+
+[p1.2] Multi‑step estimators and shrinkage effect in time series models
+
+[p1.3] Ivan Svetunkov1,4 · Nikolaos Kourentzes2 · Rebecca Killick3
+
+[p1.4] Received: 2 April 2022 / Accepted: 9 June 2023 / Published online: 24 June 2023 © The Author(s) 2023
+
+[p1.5] Abstract Many modern statistical models are used for both insight and prediction when applied to data. When models are used for prediction one should optimise parameters through a prediction error loss function. Estimation methods based on multiple steps ahead forecast errors have been shown to lead to more robust and less biased estimates of parameters. However, a plausible explanation of why this is the case is lacking. In this paper, we provide this explanation, showing that the main benefit of these estimators is in a shrinkage effect, happening in univariate models naturally. However, this can introduce a series of limitations, due to overly aggressive shrinkage. We discuss the predictive likelihoods related to the multistep estimators and demonstrate what their usage implies to time series models. To overcome the limitations of the existing multiple steps estimators, we propose the Geometric Trace Mean Squared Error, demonstrating its advantages. We conduct a simulation experiment showing how the estimators behave with different sample sizes and forecast horizons. Finally, we carry out an empirical evaluation on real data, demonstrating the performance and advantages of the estimators. Given that the underlying process to be modelled is often unknown, we conclude that the shrinkage achieved by the GTMSE is a competitive alternative to conventional ones.
+
+[p1.6] Keywords Multi-step estimators · Shrinkage · Time series analysis · ARIMA · ETS
+
+[p1.7] * Ivan Svetunkov i.svetunkov@lancaster.ac.uk
+
+[p1.8] 1 Centre for Marketing Analytics and Forecasting, Lancaster University Management School, Lancaster LA1 4YX, UK
+
+[p1.9] 2 Skövde Artificial Intelligence Lab, School of Informatics, University of Skövde, Skövde, Sweden
+
+[p1.10] 3 Department of Mathematics and Statistics, Lancaster University, Lancaster LA1 4YF, UK
+
+[p1.11] 4 Department of Management Science, Lancaster University Management School, Lancaster, Lancashire LA1 4YX, UK Vol.:(0123456789)
+
+[p2.1] 1 Introduction
+
+[p2.2] Time series analysis and forecasting are popular research areas in statistics, with many important applications. Given a model or a method a modeller faces the question of how to estimate its parameters. In the time series literature, among the various alternative estimators, estimation using methods based on multiple steps ahead errors has been well studied by statisticians and econometricians. Many papers argue that using these estimators leads to an increase in forecast accuracy (Weiss and Andersen 1984; Chevillon and Hendry 2005; Taylor 2008; Chevillon 2009; Franses and Legerstee 2009; McElroy 2015; Chevillon 2016), especially when the model is misspecified (Proietti 2011; Xia and Tong 2011), which is often the case in practice. However, other research demonstrates that this finding may not hold universally and depends on data characteristics and the degree of misspecification of the model (Kang 2003; Marcellino et al. 2006; Proietti 2011; McElroy and Wildi 2013). Discussing the statistical properties of the estimated parameters with such methods, it has been shown that multi-step estimators are asymptotically efficient (Haywood and Tunnicliffe Wilson 1997; Ing 2003; Chevillon and Hendry 2005; Chevillon 2007), consistent, and Normal (Weiss 1991; Haywood and Tunnicliffe Wilson 1997). But at the same time, it was shown by Tiao and Xu (1993) that parameters of models become less efficient on finite samples, in comparison to the conventional one-step-ahead mean squared error estimator and that the efficiency may decrease even further when the forecast horizon increases.
+
+[p2.3] There is also a general understanding that the usage of multi-step estimators leads to more conservative and robust models (Cox 1961; Gersch and Kitagawa 1983; Tiao and Xu 1993; Marcellino et al. 2006; McElroy 2015). Still, there is no plausible and detailed explanation why this happens, although many researchers imply the obviousness of such an explanation. Several authors point out that there is a connection between multi-step estimators and the conventional Mean Squared Error (see, for example, Bhansali 1997; Haywood and Tunnicliffe Wilson 1997). But this fact is usually neglected in the discussion and not used in the analysis of the estimators. Kourentzes and Trapero (2018) attempt to provide some insights demonstrating the effect of some multi-step estimators on the parameter values for exponential smoothing.
+
+[p2.4] The distribution of multi-step forecast errors has been discussed in the context of multivariate models in Jordà and Marcellino (2010), Pesaran et al. (2010), Martinez (2017). Furthermore, Clements and Hendry (1998, p. 77) and Martinez (2017) discuss the likelihood function based on multi-step estimator and claim that if the assumptions hold then the off-diagonal elements of the covariance matrix become zero.
+
+[p2.5] The aim of this paper is to fill a gap in the field of multi-step estimators, providing a thorough explanation of what happens with any linear time series model, when multi-step estimators are used. We do that using the single source of error (SSOE) state space approach, which is flexible enough to encompass both ARIMA and exponential smoothing, two popular univariate models among both
+
+[p3.1] researchers and practitioners. As we carefully elicit these explanations, we iden-tify limitations to which we propose a new multi-step estimator, the Geometric Trace Mean Squared Error.
+
+[p3.2] The paper is organised as follows: in Sect. 2 we discuss the population properties of the existing multi-step estimators. We then discuss their properties on small samples in Sect. 3 and show what happens with estimates of parameters when they are used. We introduce a general predictive likelihood (GPL) approach for multi-step estimators in Sect. 4, which encompasses all existing multi-step estimator. In Sect. 5 a simulation is carried out, demonstrating the properties of the discussed estimators in different circumstances, providing evidence of the identified shrinkage. Finally, an example of an application of multi-step estimators is given in Sect. 6, followed by concluding remarks.
+
+[p3.3] 2 Conventional multi‑step estimators in population
+
+[p3.4] 2.1 The definitions and general properties
+
+[p3.5] Before we discuss the estimators, we define a general form of a forecasting model under consideration. We focus on the additive error models, which can be written in the following general way: yt = 휇t + 휖t,
+
+[p3.6] where yt is the actual value, 휇t is the structure of the model (e.g., covariates, sea-sonality, dependencies), 휖t is the error term (typically, normal i.i.d.) and t is an inte-ger time index. For what follows we assume that such a general model can gener-ate h-steps ahead point forecasts (conditional expectation) from the observation t denoted as 휇t+h|t.
+
+[p3.7] In this section, we discuss the asymptotic properties of several popular multi-steps estimators based on different loss functions. We start with one of the simplest and well-known loss function based on multiple steps ahead forecast error, the mean squared h-steps ahead error: ( ) (1) MSEh(yt+h) = E 휂2 , t+h|t
+
+[p3.8] where 휂t+h|t = yt+h −휇t+h|t is the conditional h steps ahead forecast error, yt+h is the actual value on the observation t + h . For convenience, in this paper we will use MSEh instead of MSEh(yt+h) , dropping the part in the brackets for estimators from all loss functions, but noting that they are functions of the observed data yt+h.
+
+[p3.9] The estimator resulting from the MSE loss function (1) is sometimes used to estimate a model several times, for each horizon from 1 to h steps ahead (Kang 2003; Chevillon and Hendry 2005; Pesaran et al. 2010), resulting in h different values of parameters for each j = 1, … , h . Such an estimator is sometimes called “direct multistep estimator” (DMS, Chevillon 2007). Naturally, the estimation process of DMS is more complex than optimising model parameters only once, but is reported to result in
+
+[p4.1] increased prediction accuracy. This happens due to the alignment of forecast objective with the loss function i.e., predictions of h steps ahead.
+
+[p4.2] Another popular loss function is based on the sum of all the MSEj for horizons from 1 to h calculated using (1), instead of using only one error on observation h (Weiss and Andersen 1984; Xia and Tong 2011). The resulting estimator, denoted as “Trace Mean Squared Error” ( TMSE ), is: ( ) h ∑ (2) TMSE = 휂2 E . t+j|t j=1
+
+[p4.3] Using TMSE simplifies the calculations in comparison to DMS, as the model is estimated only once instead of h times, while having only marginal loses in the resulting accuracy (Kourentzes and Trapero 2018).
+
+[p4.4] A further loss function that can be used is the “Mean Squared Cumulative Error” ( MSCE ), motivated from how predictions may be used, for instance in inventory control (for example, Kourentzes et al. 2019; Trapero et al. 2019; Saoud et al. 2022, and references therein), where analysts may be interested in the cumulative demand of a product over a period of time, for instance to cover demand over the supply lead time, rather than in the values for each separate observation within the same period. We thus define MSCE as follows.
+
+[p4.5] Definition 2.1 For a series of forecast errors, 휂t+j|t generated at time t, for forecast horizon j = 1, … , h , the mean squared cumulative error is: �h � (3) MSCE = E ⎛ ⎜ ⎜⎝ �2⎞ ⎟ ⎟⎠ 휂t+j�t . j=1
+
+[p4.6] It follows directly from 3 that MSCE can be represented as a sum of products of forecast errors: ( h ∑ ) h ∑ j−1 ∑ (4) MSCE = E t+j|t + 2 휂2 j=1 휂t+j|t휂t+i|t . j=2 i=1
+
+[p4.7] When the right-most sum of errors is equal to zero, MSCE reduces to TMSE . This can be possible only in the case when the respective multiple steps ahead forecast errors are not correlated with each other, a condition which is unrealistic in many cases, as we show later in this paper.
+
+[p4.8] Note that the three loss functions (1), (2) and (3) produce estimators that are equal to the variances of multiple steps ahead forecast errors, given that the error term in the population has a zero mean:
+
+[p5.1] MSEh = 휎2 h, h ∑ TMSE = 휎2 j=1 h ∑ MSCE = 휎2 j=1 j , (5) h ∑ j−1 ∑ j + 2 휎i,j, j=2 i=1
+
+[p5.2] where 휎i,j is the covariance between i and j steps ahead forecast errors and 휎2
+
+[p5.3] j is the variance of j-steps ahead forecast error. This can be shown easily for example for MSEh using (1): = E(휂t+h|t −E(휂t+h|t))2 = V(휂t+h|t) = 휎2 ( ) MSEh = E 휂2 t+h|t h,
+
+[p5.4] which holds when E(휂t+h|t) = 0 . This means that when the estimators are used in population, then they minimise the respective variances of multi-step errors. This property can be used to explain what specifically happens to time series model dynamics when these estimators are used.
+
+[p5.5] 2.2 State space approach
+
+[p5.6] In order to give a simple and concise explanation of the effect of minimisation of these loss functions on parameter estimates and model dynamics, we use the SSOE state space framework (Snyder 1985; Ord et al. 1997): {
+
+[p5.7] yt = w�vt−1 + 휀t vt = Fvt−1 + g휀t, (6)
+
+[p5.8] where vt is the state vector, F is the transition matrix, g is the persistence vector, w is the measurement vector and 휀t ∼i.i.d. N(0, 휎2
+
+[p5.9] 1) . We focus on this approach because it encompasses the commonly used ARIMA and exponential smoothing models (ETS) as shown in Snyder (1985) and Hyndman et al. (2008). So, all the discussions about the state space model (6) can be transferred to both ETS and ARIMA.
+
+[p5.10] Using (6), it can be shown that the actual value for some observation t + h (where h > 1 ) with predefined values of vt, F, w and g can be calculated using Hyndman et al. (2008, p. 95): h−1 ∑ (7) yt+h = w�Fh−1vt + where cj휀t+h−j + 휀t+h, j=1 (8) cj = w�Fj−1g
+
+[p5.11] is the scalar value that depends on the values of parameters of the model, which are in matrices w , F and g.
+
+[p6.1] The expectation on observation t + h , conditional on the information on the observation t is equal to: (9) 휇t+h|t = w�Fh−1vt.
+
+[p6.2] Substituting (9) in (7), we obtain the conditional h steps ahead forecast error: h−1 ∑ (10) 휂t+h|t = yt+h −휇t+h|t = cj휀t+j + 휀t+h. j=1
+
+[p6.3] Note that when h = 1 , 휂t+1|t = 휀t+1 . The formula (10) is essential for our analysis, as it shows how the forecast error is connected with the error term 휀t and with the parameters of the model.
+
+[p6.4] The variance of the error term (10) can be calculated using: � h−1 � 𝜎2 � c2 (11) 𝜎2 ⎧ ⎪ ⎨ ⎪⎩ 1 + h = 1 j=1 when h > 1 j , 1 when h = 1 𝜎2
+
+[p6.5] h is the variance of h steps ahead forecast error. For the derivation see Hyndman et al. (2008, p.95). Another useful property, which we will use later in this paper, follows directly from the state space model (6) and the forecast error 휂t+h|t (10). where 휎2
+
+[p6.6] Proposition 2.2 Assuming that the model errors, 휀t , are independent and homosce-dastic, the covariance 휎i,j between the ith and jth step ahead forecast errors can be decomposed as:
+
+[p6.7] �휎2 1c�i−j� when either i = 1 or j = 1 (12) 휎i,j = � otherwise . l=1 c�l−j�c�i−l� 1 � c�i−j�+ ∑i−1 휎2
+
+[p6.8] Proof See “Appendix A”. ◻
+
+[p6.9] It becomes apparent at this stage that when the multi-steps estimators are used in the case of state space models, the multi-steps ahead variance (11) is minimised, implying that cj is minimised as well, thus the estimates of parameters of the model are directly influenced by the loss function in a style similar to what regularisation techniques do. This is not new; it has been briefly discussed specific model contexts in several papers (for examples, see Bhansali 1996, 1997; Haywood and Tunnicliffe Wilson 1997), but it has not been explored further. The behaviour of multi-step estimators should not differ from the behaviour of the conventional one-step-ahead one, when the model is estimated in population, because of the Law of Large Numbers. However, the sample behaviour of these estimators may differ depending on the number of observations.
+
+[p7.1] 3 The sample behaviour of multi‑step estimators
+
+[p7.2] 3.1 The sample estimation of state space models
+
+[p7.3] When the same estimators discussed in Sect. 2.1 are used in sample, the expecta-tions are substituted by the sample means: (13) MSEh = 1 T −h T−h ∑ e2 t+h|t, t=1
+
+[p7.4] where MSEh is the sample counterpart of MSEh , et+h|t = yt+h −̂ 𝜇t+h|t is the estimate of the conditional h steps ahead forecast error 휂t+h|t , ̂𝜇t+h|t is the estimate of 휇t+h|t and T is the number of observations in sample.
+
+[p7.5] Similarly, the sample versions of other estimators can be written as: (14) TMSE = 1 T −h and h ∑ T−h ∑ e2 t+j|t, j=1 t=1 ( h ∑ )2 (15) MSCE = 1 T −h T−h ∑ et+j|t . t=1 j=1
+
+[p7.6] Coming back to the state space model (6), which is now estimated on a sample of data, the estimate of the h steps ahead variance (11) is based on the estimates of cj and 휎2
+
+[p7.7] 1 , so that the formula (11) is eventually substituted by: � h−1 � s2 � c2 (16) s2 ⎧ ⎪ ⎨ ⎪⎩ 1 + h = 1 j=1̂ when h > 1 j , 1 when h = 1 s2
+
+[p7.8] j is an estimate of the j-steps ahead variance 휎2
+
+[p7.9] j and ̂cj is the estimate of cj . It is important to note that the minimisation of MSEh in (13) implies the minimisation of the estimate of the variance (16), due to the connection between the estimators and the variance (5). This means that as both one-step-ahead variance and the squared values of parameters decrease, the variable ̂ c2 where s2
+
+[p7.10] j inevitably moves towards zero. This causes shrinkage of ̂c2
+
+[p7.11] j and its intensity increases with the increase of forecast horizon h and decreases with the increase of the sample size T. This finding helps explain results in the literature so far. For example, Tiao and Xu (1993) find, using simulations, that MA parameters tend towards one when using the MSEh loss function (the detailed explanation of shrinkage mechanism for ARIMA models is given in Sect. 3.2). This effect also explains the observed robustness of models estimated using MSEh discussed in the literature.
+
+[p8.1] A similar shrinkage happens when using TMSE, which is proportional to the sum of variances of multi-step forecast errors: h ∑ s2 j = s2 TMSE ∝ 1 + j=1 ( = s2 1 ( ) h ∑ j−1 ∑ s2 c2 1 + |j−i| 1 i=1̂ j=2 (17) ) h ∑ j−1 ∑ c2 h + . |j−i| i=1̂ j=2
+
+[p8.2] The parameters in (17) interact with the variance directly and the size of the sum in the right-hand side is at least h −1 times greater than in the simpler case of (11). But at the same time, the one-step-ahead variance in (17) is multiplied by h, which miti-gates the shrinkage effect. Taking that TMSE contains the sum of 1 to h steps ahead forecast errors, the short-term forecast errors weaken the shrinkage effect in TMSE in contrast with MSEh , especially when the forecast horizon h is large. This finding means that whenever MSEh or TMSE are used the estimates of parameters might be biased, and the amount of bias should be proportional to the forecast horizon h.
+
+[p8.3] In order to analyse MSCE, the sample estimates of covariances (12) and (11) can be used in (4): ( h ∑ MSCE ∝s2 h + 1 j=2 (̂ h ∑ j−1 ∑ j−1 ∑ h ∑ c2 |j−i| + 2 c|j−1|+ i=1̂ j=2̂ (18) )) i−1 ∑ c|i−j| + 2 j=3 i=2 c|l−j|̂c|i−l| . l=1̂
+
+[p8.4] Analysing (18), the shrinkage effect in case of MSCE is also observed, but it can be either mitigated or emphasised by the sum of covariances—depending on the values of parameters. The former may happen if some of ̂cj become negative, the latter will happen if ̂cj is always positive. In this case ̂cj will be forced to become close to zero and the shrinkage effect will be even stronger in comparison with MSEh and TMSE. The specific effect of the MSCE estimator depends on data and applied model. Some of the relevant examples will be discussed later in this section.
+
+[p8.5] We should note at this stage, that given the structure (12), the covariances between the multiple steps ahead forecast errors will be equal to zero only when ̂ cj = 0 for all j. In all the other cases the assumption of the zero correlation between the forecast errors is unrealistic (sometimes used in the literature, for example, in Martinez 2017, p. 11).
+
+[p8.6] For the case of h = 1 all loss functions discussed in this section result in equivalent estimators, and no shrinkage is imposed. Therefore, we restrict our discussions in this paper with h > 1.
+
+[p8.7] In order to see what exactly happens with state space models when different loss functions are minimised, we examine several cases. In particular, we discuss three model families: exponential smoothing, ARIMA, and regression.
+
+[p9.1] 3.2 ARIMA
+
+[p9.2] Snyder (1985) demonstrated that any ARIMA model can be represented in a single source of error state space form. Using the positive polynomials for MA: 휃(B) = 1 + 휃1B + 휃2B2 + … ,
+
+[p9.3] leads to the following components of the state space model: 휂1 Ik−1 휂1 + 휃1 (19) w = 1 0 ⋮ 0 ⎛ ⎜ ⎜ ⎜⎝ ⎞ ⎟ ⎟ ⎟⎠ ⎛ ⎜ ⎜⎝ ⋮ 휂k 0 , F = ⎞ ⎟ ⎟⎠ ⎛ ⎜ ⎜⎝ ⎞ ⎟ ⎟⎠ ⋮ 휂k + 휃k , g = ,
+
+[p9.4] here 휂i is AR polynomial (defined similar to Hyndman et al. 2008, p. 173) and 휃i is ith moving average parameter. The analysis of (19) shows that in general AR parameters should shrink towards zero, as the transition matrix gets exponentiated with each step j = 1, … , h , while MA parameters should shrink towards minus AR polynomials (recall (8)). Furthermore, with the increase of forecasting horizon the shrinkage of AR parameters becomes stronger than the shrinkage of MA parameters, because of the exponentiation of transition matrix F in (16).
+
+[p9.5] 3.2.1 Example with ARIMA(1,1,1)
+
+[p9.6] Analysis of more specific models gives a better understanding of the shrinkage mechanism in ARIMA when any multi-step loss function is minimised. For example ARIMA(1,1,1) can be represented in the state space form (6) where: ( ) ( 1 0 1 + 휙1 1 −휙1 0 w = , F = ) ( ) 1 + 휙1 + 휃1 −휙1 , g = .
+
+[p9.7] The matrix F is exponentiated in the power of j −1 when h steps ahead variance is calculated. The transition matrix decomposition shows (see “Appendix B”) that the estimated ̂cj in this case is equal to: (20)̂ cj = 1 + (̂𝜙1 +̂ 𝜃1 ) j∑ 𝜙i−1 1 . i=1̂
+
+[p9.8] Substituting (20) into the formula of h steps ahead variance (16) results in the following: � 1 + �̂ 𝜙1 +̂ 𝜃1 h−1 � � j� (21) s2 ⎛ ⎜ ⎜⎝ h = s2 1 + 1 j=1 �2⎞ ⎟ ⎟⎠ 𝜙i−1 . 1 i=1̂
+
+[p9.9] Now it can be concluded that the minimisation of (21) leads to the shrinkage of both AR and MA parameters: the sum of polynomials in the right hand side of (21) shrinks towards zero, implying the shrinkage of ̂𝜙1 towards zero as well. The speed
+
+[p10.1] of shrinkage of ̂𝜙1 increases with the increase of the forecasting horizon, due to increase of the number of elements in the sum of polynomials. In fact, the second sum in the right-hand side of (21) is the sum of geometric progression, which is equal to: �̂ 𝜃1(1 −̂ 𝜙j h−1 � (22) s2 ⎛ ⎜ ⎜⎝ h = s2 1 + 1 j=1
+
+[p10.2] The minimisation of (22) means that: • ̂ 𝜙1 →−1; • ̂ 𝜃1(1 −̂ 𝜙j 1) + 1 −̂ 𝜙j+1 1 →0. �2⎞ ⎟ ⎟⎠ 1) + 1 −̂ 𝜙j+1 1 1 −̂ 𝜙1 .
+
+[p10.3] 1−̂𝜙j+1 1 1−̂𝜙j 1 , which given (1) leads to ̂𝜃1 →−1.
+
+[p10.4] And (2) implies that ̂𝜃1 →−
+
+[p10.5] Therefore when multistep loss functions are minimised, ARIMA(1,1,1) transforms into a restricted ARIMA(1,0,0) model. In order to see that, we need to analyse the compact form of ARIMA(1,1,1): (23) (1 −B)(1 −̂ 𝜙1B)yt = (1 +̂ 𝜃1B)et.
+
+[p10.6] Taking that asymptotically with the increase of the forecast horizon ̂𝜙1 = −1 and ̂ 𝜃1 = −1 , the formula (23) transforms into: (1 −B)(1 + B)yt = (1 −B)et,
+
+[p10.7] which is equivalent to: (1 + B)yt = et,
+
+[p10.8] which is ARIMA(1,0,0) model. This shows that when multi-step loss functions are minimised for the estimation of ARIMA(1,1,1), they force it to become a degenerate model.
+
+[p10.9] 3.3 Exponential smoothing
+
+[p10.10] All of the exponential smoothing models that we discuss here use the Gardner (2006) taxonomy. We examine pure additive ETS models only, keeping in mind that the main findings can be extended to some of the multiplicative cases as well. Kourentzes and Trapero (2018) discuss the effect of MSEh and TMSE for some exponential smoothing models, but mainly focus on their effects on model parameter values and forecast accuracy. Here we provide a more exhaustive investigation, focusing on one special case, and briefly discussing the main properties of the others.
+
+[p10.11] Table 1 summarises the four pure additive ETS models, their cj values and the h steps ahead conditional variances. The other two pure additive models, namely
+
+[p11.1] Model̂ cj s2 h ETS(A,N,N)̂ 𝛼 s2
+
+[p11.2] Table 1 Parameters of ETS models. Here 훼 is the level smoothing parameter, 훽 is the smoothing parameter for the trend component, ̂𝛾 is the seasonal smoothing parameter, 휙 is the damping parameter, 1 (1 + (h −1)̂𝛼2)
+
+[p11.3] ETS(A,A,N)̂ 𝛼+̂ 𝛽j s2 1 � 1 + ∑h−1 j=1 �̂𝛼+̂ 𝛽j�2�
+
+[p11.4] ETS(A,Ad,N)̂ 𝛼+̂ 𝛽∑j jm = ⌊j−1 m ⌋ and m is the � 1 + ∑h−1 j=1 i=1̂ 𝜙i�2� �̂ 𝛼+̂ 𝛽∑j i=1̂ 𝜙i s2 1
+
+[p11.5] ETS(A,N,A)̂ 𝛼+̂ 𝛾jm s2
+
+[p11.6] periodicity of the data
+
+[p11.7] 1 � 1 + ∑h−1 j=1 (̂𝛼+̂ 𝛾jm)2�
+
+[p11.8] ETS(A,A,A) and ETS(A,Ad,A) can be considered as combinations of the models in the table and are not discussed separately.
+
+[p11.9] It can be seen from Table 1 that minimisation of any multi-step loss function leads to the shrinkage of the smoothing parameters towards zero, but the strength and sequence of shrinkage differs from model to model. For example, ̂𝛼 in ETS(A,N,N) shrinks towards zero, with an increasing speed of shrinkage for longer forecast horizons. Therefore, minimising multi-step loss functions with long term forecasts leads to models with more uniform weight distribution across observations for ETS(A,N,N). This corresponds to a model with the slower level changes that is less reactive to new information, as ̂𝛼 tends to zero. Asymptotically with the increase of h the model becomes a global level model.
+
+[p11.10] Similarly, the shrinkage effect is preserved in ETS(A,A,N), but has a different form: both smoothing parameters shrink, but ̂𝛽 shrinks faster than ̂𝛼 with the increase of h. This leads to more stable estimates of trend and allows capturing long term tendencies in time series. Asymptotically, with the increase of horizon the model becomes a deterministic trend model.
+
+[p11.11] As for ETS(A,Ad,N), given that the damping parameter 휙∈[0, 1] , it slows down the shrinkage of ̂ 𝛽 in comparison to ETS(A,A,N). Asymptotically with the increase of the horizon, ETS(A,Ad,N) becomes a model with a deterministic damped trend.
+
+[p11.12] Finally, due to the values of jm in ETS(A,N,A), the shrinkage happens in a stepwise manner, increasing as complete seasonal cycles increase: ̂ 𝛾 does not shrink when forecasting horizon is smaller than the seasonal periodicity, h ≤m . Parameter ̂𝛼 shrinks faster than ̂𝛾 on smaller horizons, but as h increases, this is inverted and ̂𝛾 shrinks faster. This happens because ̂𝛾 has higher weight corre-
+
+[p11.13] sponding to jm with higher horizons. The switch in the shrinkage speed happens
+
+[p11.14] when h > 2m , because ̂𝛾 starts prevailing in the sum in the formula in Table 1. Once again asymptotically the model becomes deterministic when h →∞.
+
+[p11.15] Other additive state space exponential smoothing models demonstrate behaviour similar to the ones discussed above. For example, the shrinkage mechanism in ETS(A,Ad,A) has features of both ETS(A,Ad,N) and ETS(A,N,A).
+
+[p11.16] It should be noted that the initial states of any ETS model influence the variance of the one-step-ahead forecast error, so the shrinkage of the smoothing parameters is
+
+[p12.1] compensated by the change of the initial states. But the initial states do not shrink on their own, their behaviour depends mainly on time series characteristics.
+
+[p12.2] Finally, as discussed above, the shrinkage effect will vary from loss function to loss function, and from model to model. However, given that the smoothing parameters of the ETS model are typically positive, the covariances between the j-steps ahead and i-steps ahead forecast errors will be positive as well. So, due to (18), the shrinkage effect in MSCE will be the strongest among all the multi-step loss functions. 3.4 Summary
+
+[p12.3] Concluding this section, estimators based on multi-step loss functions impose shrinkage on the parameters of time series models, which means that they become more robust and persistent. Asymptotically, with an increase of h, any time series model becomes deterministic if estimated using a multi-step loss function. If the forecast horizon is very high, then the parameters may become biased due to over-shrinking. They may take much more time to converge to true values in comparison with the conventional MSE1 estimator. The parameters are still asymptotically consistent (Weiss 1991) but may revert to boundary values in cases of finite samples and high values of h. This effect has been discussed in Clements and Hendry (1998) for several special cases, but the discussion presented here is more general. Overall, it may be not be advisable to use multi-step loss functions, when the sample size is small and the forecast horizon is large. This is especially important when the parameters of the model are of the main interest.
+
+[p12.4] Based on the discussion in this section, we can conclude that if a model is specified correctly, then estimators based on the multi-step loss functions might not be suitable and might lead to unnecessary shrinkage of parameters, making it become deterministic model instead of stochastic. However, when the model is misspecified, the shrinkage effect might be useful, making unnecessary parameters reach the boundary values. For example, if the local trend model is applied to the local level data, then using either MSEh , or TMSE, or MSCE can help in shrinking the smoothing parameter for the trend to zero. Nevertheless, the main problem in this situation is in regulating the strength of shrinkage, which can only be done by choosing between the loss functions, estimators and changing the forecast horizon h.
+
+[p12.5] In this section, We focused on the dynamic models. If a regression is used, then it can be shown that there is no shrinkage from multi-step loss functions. This is due to the absence of dynamic elements in conventional regression, and its persistence vector is equal to zero.
+
+[p12.6] Having discussed the properties of estimators from multi-step loss functions, the following section presents likelihood functions for some of them and briefly discusses their properties.
+
+[p13.1] 4 Predictive likelihood approach
+
+[p13.2] This section considers the derivation of the predictive likelihood functions for the loss functions when the error term follows the Normal distribution. This is presented for each of the loss functions discussed in Sects. 4.1 and 4.2 before presenting a general predictive likelihood approach in Sect. 4.3. The main motivation in doing this is because the likelihood approach typically produces consistent and asymptotically efficient estimates of parameters and can be used in model selection. Showing the connection between the multi-step loss functions, the estimators presented thus far, and predictive likelihoods allows better understanding the principles behind them and gives additional flexibility in model building. 4.1 MSEh
+
+[p13.3] We start with a predictive likelihood function for MSEh . Taking (10) into account and assuming that the original error term 휀t ∼N(0, 휎2
+
+[p13.4] 1) , we can conclude that a forecast
+
+[p13.5] error for h-steps ahead follows the 휂t+h|t ∼N(0, 휎2
+
+[p13.6] h) . Based on that we can derive a predictive likelihood for the value h steps ahead as shown in Proposition 4.1.
+
+[p13.7] Proposition 4.1 The predictive log-likelihood for h steps ahead forecast error, assuming that 휀t ∼N(0, 휎2 1) , is given by ( ) 2 (log(2휋) + log 휎2 T−h ∑ 휂2 (24) 퓁MSEh(휽, 휎2 h|y) = −T −h ) −1 t+h 휎2 , h 2 t=1 h
+
+[p13.8] where 휽 is the vector of parameters of the model and y is the vector of yt+h for all t = 1, .., T −h.
+
+[p13.9] The MLE of variance 휎2 h based on (24) is: T−h ∑ (25) s2 h = 1 T −h 휂2 t+h. t=1
+
+[p13.10] The concentrated sample log-likelihood based on (25) and (24) is then: 2 (log(2휋) + log s2 (26) 퓁MSEh(휽, s2 h|y) = −T −h h + 1),
+
+[p13.11] The maximisation of the likelihood (26) is equivalent to the minimisation of the sample estimate of variance (25), which in turn is equivalent to MSEh discussed in Sect. 3.1. The concentrated predictive log-likelihood based on (26) and (16) (in cases, when h ≠1 ) is: ( ( )) h−1 ∑ (27) 퓁MSEh(휽, s2 log(2휋e) + log s2 h|y) = −T −h 2 c2 1 + log 1 + . j j=1
+
+[p14.1] This predictive log-likelihood has similarities with the conventional one-step-ahead concentrated log-likelihood, which can be written as:
+
+[p14.2] 1|y) = −T −1 2 (log(2휋e) + log s2 (28) 퓁MSE1(휽, s2 1 ) ,
+
+[p14.3] t+1 is the MLE of the one-step-ahead variance. When maximised in sample both likelihoods will produce some estimates of parameters ̂휽h and ̂휽1 respectively. These estimates are both consistent due to the general consistency of likelihoods (see, for example, Wald 1949), so that plimT→∞̂𝛉h(T) = 𝛉∗. ∑T−1 where s2 1 = 1 T−1 t=1 e2
+
+[p14.4] Lemma 4.2 The predictive log-likelihood (24) is maximised asymptotically, with the increase of the sample size, by the vector of the true parameters 휽∗ and the true variance 휎2 1.
+
+[p14.5] Proof With the increase of the samples size the value of the estimate of the variance s2
+
+[p14.6] 1 will converge to the true value of 휎2 1 , while the vector of parameters ̂휽h will converge to 휽∗ due to the Law of Large Numbers. In addition, the linear relation between 휎2
+
+[p14.7] 1 and 휎2 h in (11) implies that the s2
+
+[p14.8] h . Given that the maximum of the likelihood (24) is reached with the estimates of parameters ̂휽h and s2
+
+[p14.9] h will converge to 휎2
+
+[p14.10] h , asymptotically the likelihood (24) will be maximised by the vector of the true parameters 휽∗ and 휎2 1 . ◻
+
+[p14.11] Note that the estimate of the one step ahead variance s2
+
+[p14.12] 1 will be in general greater in (24) than in (28), because it is not maximised directly in (25). However, they both will converge to the true value 휎2
+
+[p14.13] 1 asymptotically, with the increase of the sample size.
+
+[p14.14] For further analysis, the predictive log-likelihood (27) with estimates of parameters ̂휽h can be decomposed into two parts: conventional one-step-ahead concentrated log-likelihood and the “bias” term: ( ) h−1 ∑ (29) 퓁MSEh(̂휽h, s2 T−1퓁MSE1(̂휽h, s2 h|y) = T−h 1|y) −T−h 2 log c2 1 + j . j=1̂ T−1퓁MSE1(̂휽h, s2 = T−h 1|y) −BMSEh(̂휽h, h)
+
+[p14.15] The parameters ̂휽1 estimated via the maximisation of (28) will correspond to the vector of parameters ̂휽h only in the case when ̂cj = 0 for all j = 1, … , h −1 , implying that we deal with a deterministic model. In all the other cases the likelihoods (27) and (28) will give different estimates of parameters. The value of the first term in the sum (29) is always greater than the respective value of the (28), because T−h T−1 < 1 for h > 1 and 퓁MSE1(̂휽h, s2
+
+[p14.16] 1|y) < 0 by definition. As for the bias,
+
+[p14.17] j cannot be negative. So the value of the predic-
+
+[p14.18] BMSEh(̂휽h, h) ≥0 always, because ̂c2
+
+[p14.19] h|y) will always be less than the value of the likelihood
+
+[p14.20] tive likelihood 퓁MSEh(̂휽h, s2
+
+[p14.21] 1|y) . We argue that because of that, the second derivative of (29) with 퓁MSE1(̂휽h, s2
+
+[p15.1] respect to the parameters will be smaller in the case of MSEh likelihood than in the case of MSE1 . Therefore, we argue that in general the variances of parameters estimated using (27) will be higher than the variances of parameters of (28). However, given the discussion in this subsection, this does not hold universally and there might be some cases, when the multi step estimator will be more efficient than the conventional one. This will hold when the true parameters are such that the cj is close to zero. 4.2 MSCE and TMSE
+
+[p15.2] It is also possible to derive predictive likelihood function for MSCE, assuming the same normal distribution for the error term 휀t:
+
+[p15.3] Proposition 4.3 The predictive log-likelihood for MSCE (15), assuming that 휀t ∼N(0, 휎2 1) is given by, �∑h j=1 휂t+j�t �2
+
+[p15.4] 2 �log(2휋) + log 휍2 h T−h � (30) 퓁MSCE(휽, 휍2 h�z) = −T −h ⎛ ⎜ ⎜ ⎜⎝ ⎞ ⎟ ⎟ ⎟⎠ �−1 2 , 2휍2 h t=1
+
+[p15.5] where z is the cumulative sum of actual values, the vector of zt = ∑h
+
+[p15.6] j=1 yt+j for all t = 1, … , T −h and 휍2
+
+[p15.7] h is the variance of the cumulative error term.
+
+[p15.8] Corollary 4.4 Using (18), it can be shown that the log-likelihood (30) can be represented in terms of the conventional one-step-ahead likelihood and bias, based on the MLE ̂휽h and ̂𝜍2 h: T −1퓁MSE1(̂휽h,̂ 𝜍2 h|z) = T −h 퓁MSCE(̂휽h,̂ 𝜍2 where � BMSCE(̂휽h, h) = T−h 2 log h + �̂ h∑ j−1 ∑
+
+[p15.9] 1|y) −BMSCE(̂휽h, h), j−1 ∑ h∑ h∑ c2 �j−i�+ 2 c�j−1�+ i=1̂ j=2̂ j=2 �� . i−1 ∑ c�i−j�+ 2 j=3 i=2 c�l−j�̂c�i−l� l=1̂
+
+[p15.10] h|z) , the two likelihoods will have the same asymptotical efficiency, when:
+
+[p15.11] Comparing the MLE of 퓁MSEh(̂휽MSEh, s2
+
+[p15.12] h|y) and 퓁MSCE(̂휽MSCEh,̂ 𝜍2
+
+[p16.1] h−1 � h∑ j−1 ∑ h∑ �j−i�,MSCEh + 2 c2 c2 1 + j,MSEh = h + i=1̂ j=1̂ j=2 �̂ h∑ j−1 ∑ c�j−1�,MSCEh+ j=2̂ �. i−1 ∑ c�i−j�,MSCEh + 2 j=3 i=2
+
+[p16.2] c�l−j�,MSCEĥc�i−l�,MSCEh l=1̂
+
+[p16.3] However, there is no analytical solution for this equation, so each situation should be analysed separately for the specific values of parameters.
+
+[p16.4] In general, the bias of 퓁MSEh(̂휽MSEh, s2
+
+[p16.5] h|y) is higher than the bias of 퓁MSCE(̂휽MSCEh,̂ 𝜍2
+
+[p16.6] h|z) , when the parameters are the same and ̂ cj > 0 for all
+
+[p16.7] j = 1, … , h −1 . This implies that the MLE of MSCE is less efficient than the MLE of MSEh in that case. However, the estimates should become asymptotically as efficient, although at a slower rate than MSEh.
+
+[p16.8] As TMSE is a restricted version of MSCE, where the covariances between forecast errors are set to zero (which is an artificial condition), it is not possible to derive an appropriate likelihood for which the TMSE would be the optimal estimator. Con-sidering that it has features similar to MSCE, it can be concluded that in general it will also be inefficient on small samples, but it should asymptotically be an efficient estimator.
+
+[p16.9] 4.3 General predictive likelihood
+
+[p16.10] Following the discussion of likelihoods in the previous sections, we can derive a General Predictive Likelihood (GPL). If the actual observations are perceived as a vector of consecutive observations yt+1,..., yt+h: yt+1 yt+2 (31) Yt = ⎛ ⎜ ⎜ ⎜⎝ ⎞ ⎟ ⎟ ⎟⎠ , ⋮ yt+h
+
+[p16.11] the predictive log-likelihood for a linear model and the vector (31) can be written as (Clements and Hendry 1998, p. 77):
+
+[p16.12] (32) 퓁GPLh(휽, 횺|Y) = −T −h
+
+[p16.13] 2 (h log(2휋) + log |횺|) −1 T ∑ (퐄� ) 퐭횺−1퐄퐭 , 2 t=1
+
+[p16.14] where 횺 is the conditional covariance matrix for variable Yt , Y is the matrix consist-ing of (31) for all t = 1, … , T −h and 퐄퐭
+
+[p16.15] �= (휂t+1|t 휂t+2|t … 휂t+h|t ) is the vector of 1 to h steps ahead forecast errors. Given that 횺 is unknown, it can be estimated via the maximisation of (32): (33)̂ 횺= 1 T −h T−h ∑ 퐄퐭퐄� 퐭. t=1
+
+[p17.1] Proposition 4.5 The concentrated predictive log-likelihood based on 1, … , h steps ahead for data Y , with errors 휀t ∼N(0, 휎2 1) , is: ( )
+
+[p17.2] (34) 퓁GPLh(𝜽,̂ 횺|Y) = −T −h 2
+
+[p17.3] h log(2휋e) + log |̂횺|
+
+[p17.4] Proof Concentrating out the predictive log-likelihood, after several simplifications (see “Appendix C” for the details) we obtain the result. ◻
+
+[p17.5] Analysing (34) shows that its maximisation is equivalent to the minimisation of the determinant of the covariance matrix ̂횺 . This determinant is called “Generalised Variance”: (35) GV = |̂횺|
+
+[p17.6] For convenience of estimation, in cases of large h, the logarithm of (35) may be taken.
+
+[p17.7] It is essential to understand what elements the covariance matrix ̂횺 contains and what the minimisation of its determinant implies. The matrix has the following structure: 1 s1,2 … s1,h s1,2 s2 s2 2 … s2,h ⋮ ⋮ ⋱ ⋮ s1,h s2,h … s2 (36)̂ 횺= ⎛ ⎜ ⎜ ⎜⎝ ⎞ ⎟ ⎟ ⎟⎠ . h
+
+[p17.8] It is worth pointing out that MSEh is equal to the s2
+
+[p17.9] h in (36), TMSE is equal to the trace of the matrix and MSCE is equal to the sum of all the elements of the matrix ̂ 횺 . This makes all the estimators discussed in the previous sections special cases of (35).
+
+[p17.10] Theorem 4.6 Based on the formula for the multi-step covariances (12), the logarithm of the Generalized Variance is:
+
+[p17.11] (37) log GV = |̂횺| = log s2 where a1,1̂ a1,2 …̂ a1,ĥ a2,1̂ a2,2 …̂ a2,h ⎛ ⎜ ⎜ ⎜⎝̂ ⎞ ⎟ ⎟ ⎟⎠ A = ⋮ ⋮ ⋱ ⋮̂ ah,1̂ ah,2 …̂ ah,h 1 + log |̂A|, (38)̂ .
+
+[p17.12] 1 i = j = 1̂ ci−1, j = 1, i ≠1 or i = 1, j ≠1̂ ai−1,j−1 +̂ a1,ĵa1,i, otherwise ⎧ ⎪ ⎨ ⎪⎩ and̂ ai,j =
+
+[p18.1] Proof The proof hinges on the fact that the matrix ̂횺 can be calculated using variance of one-step-ahead error and sum of ̂c|j−i| values (see “Appendix D”). ◻
+
+[p18.2] Corollary 4.7 Using the Generalised Variance, (35), will give similar parameter estimates as the one-step-ahead estimator when the model is correctly specified.
+
+[p18.3] Proof If the model is correctly specified, then minimising (35) is equivalent to minimising (37). When we consider the determinant of ̂A , it becomes clear that it is always equal to one (see “Appendix E”). As a result the MLE of (34) will behave similar to the MLE of the conventional one-step-ahead error (28). This also means that the Generalised Variance (35) will behave similar to the conventional MSE1 . ◻
+
+[p18.4] Interestingly, corollary 4.7 demonstrates that there is no shrinkage in (35), when the model is correctly specified, because the covariances between the multiple steps ahead errors cancel out the effect. However, in cases when the model is misspecified, (37) will not necessarily hold, so the GPL may produce estimates of parameters that will differ from the conventional likelihood based on the one-step-ahead error. 4.4 Geometric TMSE
+
+[p18.5] An additional estimator can be derived from (35), if all the off-diagonal elements in 횺 are set to zero. The determinant of the matrix is then equal to the product of diagonal elements. Switching to logarithms and substituting the variances with their in-sample estimates gives us the “Geometric TMSE”: h ∑ ( ) T−h ∑ (39) GTMSE = log j=1
+
+[p18.6] Definition 4.8 This cost function is proportional to: 1 T −h e2 . t+j t=1 ( ) = h log (s2 ( ) h ∑ j−1 ∑ h ∑ (40) GTMSE ∝ s2 log j j=1 1 ) + c2 log 1 + . i i=1̂ j=2
+
+[p18.7] Due to logarithms in the estimator (40) the one-step-ahead variance is balanced out with the sum of ̂cj elements. As a result there is a shrinkage effect in models estimated using (39), but it is reduced in comparison with MSEh , TMSE or MSCE. Although, we know that the off-diagonal elements cannot be zero in real life (exclud-ing the case when ̂cj = 0 for all j = 1, … , h −1 ), we can consider this as a restric-tion on the matrix (36).
+
+[p18.8] We argue that some shrinkage of parameters can be useful in case of time series models, due to reasons outlined earlier in the Sect. 3.4. However it should not be as strong as, for example in MSEh , TMSE or MSCE. The new estimator, GTMSE, is
+
+[p19.1] more balanced in this sense, and we show how it performs in comparison with the other estimators in the next section.
+
+[p19.2] 5 Simulation experiment
+
+[p19.3] We conduct two simulation experiments in order to see the behaviour of the different estimators depending on the sample size, the forecasting horizon and the appro-priateness of the fitted model. We do not include GPL in the simulation experiment, due to Corollary 4.7, which proves that it performs similar to MSE1.
+
+[p19.4] In the first experiment the ETS(A,N,N) model with 훼= 0.2 is used as the data generating process, while in the second ARIMA(0,1,1) with 휃= 0.6 is used. In both cases 500 time series are generated, and each time series contains 5000 observations. Several sub-samples from these time series are used in order to assess the influence of the sample size on the parameter estimation, specifically 20, 50, 100, 200, 500, 1000 and 5000 observations. Four models are applied to the data: ETS(A,N,N), ETS(A,A,N), ARIMA(0,1,1) and ARIMA(1,1,1). The first model is a “true model” for the first case, and the third model is “true” for the second case. Note that these models have a direct connection, where their parameters are related as: 휃= 훼−1 (Box and Jenkins 1976, p. 107). Therefore, although they are formulated differently, we expect them to perform similarly in the two experiments. Our simulation covers the four case below:
+
+[p19.5] 1. The model is correctly specified; 2. The model is analogous to the true one (e.g., ETS(A,N,N) and ARIMA(0,1,1)); 3. The model is misspecified (e.g., ARIMA(1,1,1) and ARIMA(0,1,1)); 4. The model is wrong (e.g., ETS(A,A,N) and ARIMA(0,1,1)).
+
+[p19.6] The parameters of all these models are estimated using the MSEh , TMSE, GTMSE, MSCE and the conventional MSE1 discussed in this paper. The forecast horizon is set to 10, 20, 50, 100 and 200-steps ahead. If the sample size is equal or smaller than the forecast horizon, then the model estimation is skipped.
+
+[p19.7] All the simulations and models estimation are done using the sim.es, sim. ssarima, es and ssarima functions from the smooth package v2.5.3 (Svetunkov 2023b) in R (R Core Team 2023).
+
+[p19.8] 5.1 ETS(A,N,N) as DGP
+
+[p19.9] We start with applying ETS(A,N,N) to the data generated from ETS(A,N,N). The distribution of parameters estimated using different methods is shown in Fig. 1. Each of the boxplots corresponds to the specific sample size: 20, 50, 100, 200, 500, 1000 and 5000. There are several observations we can make from the figure:
+
+[p19.10] • All estimators are consistent, as the parameters converge to true values with the increase of sample size;
+
+[p20.1] Fig. 1 ETS(A,N,N) applied to ETS(A,N,N) data. The estimates of the parameter 훼 . The horizontal line indicates the parameter value of the DGP. Each box plot corresponds to a different sample size: 1–20, 2–50, 3–100, 4–200, 5–500, 6–1000 and 7–5000, indicated by numerical values 1 through 7
+
+[p20.2] Fig. 2 ARIMA(0,1,1) applied to ETS(A,N,N) data, h = 50. True value is 휃= −0.8 , indicated by the horizontal line. Each box plot corresponds to a different sample size: 1–20, 2–50, 3–100, 4–200, 5–500, 6–1000 and 7–5000, indicated by numerical values 1 through 7
+
+[p20.3] • The estimators have different efficiency and are in general biased; • The longer horizons lead to the larger bias for the same sample size; • The effect of shrinkage depends on the length of the forecast horizon and is neglected on larger samples. For example, the distributions of estimates look very similar for cases of h = 1 and h = 10 on large samples; • The longer horizon is, the slower the parameter converges to its true value; • GTMSE is the most unbiased and efficient estimator of the four investigated ones. It converges to the true values faster than the other estimators; • MSEh is the most biased and least efficient estimator of the four;
+
+[p21.1] Fig. 3 ETS(A,A,N) applied to ETS(A,N,N) data, h = 50. Parameter 훼 . Each box plot corresponds to a different sample size: 1–20, 2–50, 3–100, 4–200, 5–500, 6–1000 and 7–5000, indicated by numerical values 1 through 7
+
+[p21.2] Fig. 4 ETS(A,A,N) applied to ETS(A,N,N) data, h = 50. Parameter 훽 . Each box plot corresponds to a different sample size: 1–20, 2–50, 3–100, 4–200, 5–500, 6–1000 and 7–5000, indicated by numerical values 1 through 7
+
+[p21.3] • MSE1 produces more efficient and less biased estimates than any multi-step estimator.
+
+[p21.4] Since this is for the scenario that the true model is known, all differences are due to the estimators.
+
+[p21.5] Similar observations can be done for ARIMA(0,1,1). We do not present all results, because they demonstrate a similar behaviour: with the increase of horizon the estimates become more biased and inefficient, while with the increase of sample size, they converge to the true value. We restrict our demonstration for h = 50 , where our observations are most clearly seen, in Fig. 2. Note that in some cases the estimators were so inefficient that the estimated parameter was positive, while the true parameter was 휃= 0.2 −1 = −0.8 . In addition, MSEh underesti-mates the value of the parameter (e.g. median for the sample of 100 is higher than −0.8), while other estimators tend to overestimate values (e.g. median is lower than −0.8).
+
+[p21.6] In the case of ETS(A,A,N) applied to the ETS(A,N,N), we analyse how the two parameters are estimated: 훼 , which needs to be equal to 0.2 and 훽 , which is expected to be equal to zero. Again we demonstrate the case of h = 50 (Fig. 3 for 훼 parameter and Fig. 4 for 훽 parameter) as the pattern is similar for all h.
+
+[p21.7] For the 훼 parameter, we observe similar findings as before. In general, the MSE1 produces more efficient and less biased estimates than any multi-step estimator. However, when it comes to parameter 훽 , there are some cases when the parameter is estimated incorrectly on smaller samples with MSE1 , while due to the shrinkage
+
+[p22.1] Fig. 5 ARIMA(1,1,1) applied to ETS(A,N,N) data, h = 50. Parameter 휃 . Each box plot corresponds to a different sample size: 1–20, 2–50, 3–100, 4–200, 5–500, 6–1000 and 7–5000, indicated by numerical values 1 through 7
+
+[p22.2] Fig. 6 ARIMA(1,1,1) applied to ETS(A,N,N) data. Parameter 휙 . Each box plot corresponds to a different sample size: 1–20, 2–50, 3–100, 4–200, 5–500, 6–1000 and 7–5000, indicated by numerical values 1 through 7
+
+[p22.3] effect, the true value is achieved much faster for estimators based on the multi-step loss functions. We can observe that estimators based on multistep loss functions are more efficient than MSE1 on smaller samples when the true parameters is equal to zero. Therefore, we argue that estimators based on multi-step loss functions are beneficial for the removal of wrong parameters in context of ETS model, but they might overshrink the necessary parameter.
+
+[p22.4] Figure 5 shows the distribution of the estimated parameter 휃 of ARIMA(1,1,1), while Fig. 6 presents the distribution of parameter 휙 , for h = 50 . The true value of 휃 is −0.8, while 휙= 0 . Note that all the estimators but GTMSE underestimate the MA parameter. Once again, GTMSE seems to produce the most efficient and least biased estimates among the multi-step estimators.
+
+[p22.5] As for the AR part, due to the shrinkage effect, the parameter is forced to become negative in the majority of cases. GTMSE is the least biased multi-step estimator, but still all the multi-step estimators do not help in case of using a wrong model. They actually, make the situation worse, producing wrong values on small samples. This is not observed for the case of MSE1 . The results of ARIMA(1,1,1) supports our analytical derivations in Sect. 3.2.
+
+[p23.1] Fig. 7 ARIMA(0,1,1) applied to ARIMA(0,1,1) data. The estimates of the parameter 휃 . The horizontal line indicates the parameter value of the DGP. Each box plot corresponds to a different sample size: 1–20, 2–50, 3–100, 4–200, 5–500, 6–1000 and 7–5000, indicated by numerical values 1 through 7
+
+[p23.2] Fig. 8 ARIMA(1,1,1) applied to ARIMA(0,1,1) data, h = 50. Parameter 휃 . Each box plot corresponds to a different sample size: 1–20, 2–50, 3–100, 4–200, 5–500, 6–1000 and 7–5000, indicated by numerical values 1 through 7
+
+[p23.3] 5.2 ARIMA(0,1,1) as DGP
+
+[p23.4] We observe similar patterns analysing the results for the ARIMA(0,1,1) scenario. Starting from the case of using the correct model, presented in Fig. 7, in addition to the effects observed in the ETS case, we see that the multi-step loss functions produce even more biased estimates of the parameter. This is especially evi-dent on small samples, where the estimated parameter becomes negative in many
+
+[p24.1] Fig. 9 ARIMA(1,1,1) applied to ARIMA(0,1,1) data, h = 50. Parameter 휙 . Each box plot corresponds to a different sample size: 1–20, 2–50, 3–100, 4–200, 5–500, 6–1000 and 7–5000, indicated by numerical values 1 through 7
+
+[p24.2] cases, while the true parameter is positive. Only after a substantial increase of sample size, the estimates become less biased. However, in some cases, this still does not help. For example, in the case of h = 200 , the estimates are still biased and inefficient even on the samples of 5000 observations. Once again GTMSE seems to produce the least biased and most efficient estimates of parameters of all the multi-step loss functions.
+
+[p24.3] Applying the incorrect ARIMA(1,1,1) model, Fig. 8 demonstrates the distribution of the MA parameter. The patterns found here are similar to the ones discussed above for ARIMA(0,1,1). The main difference is that the estimates converge slightly faster to the true value than in case of the true model for h = 50.
+
+[p24.4] As for the AR part, in Fig. 9, different estimators have different effects on the value of the parameter. MSEh and MSCE force AR parameter to become negative on small samples, while on larger samples all the estimators produce positive
+
+[p24.5] Fig. 10 ETS(A,N,N) applied to ARIMA(0,1,1) data, h = 50. Each box plot corresponds to a different sample size: 1–20, 2–50, 3–100, 4–200, 5–500, 6–1000 and 7–5000, indicated by numerical values 1 through 7
+
+[p24.6] Fig. 11 ETS(A,A,N) applied to ARIMA(0,1,1) data, h = 50. Parameter 훼 . Each box plot corresponds to a different sample size: 1–20, 2–50, 3–100, 4–200, 5–500, 6–1000 and 7–5000, indicated by numerical values 1 through 7
+
+[p25.1] Fig. 12 ETS(A,A,N) applied to ARIMA(0,1,1) data, h = 50. Parameter 훽 . Each box plot corresponds to a different sample size: 1–20, 2–50, 3–100, 4–200, 5–500, 6–1000 and 7–5000, indicated by numerical values 1 through 7
+
+[p25.2] values and only asymptomatically converge to the true value of zero. Once again, for both of these cases, the MSE1 is the most efficient and the least biased estimator.
+
+[p25.3] We also analyse the performance of estimators for ETS(A,N,N) and ETS(A,A,N), plotting similar graphs for h = 50 . Note that in this case the true value of 휃 is 0.6, which corresponds to 훼= 1.6 . Figure 10 demonstrates the distribution of smoothing parameter 훼 for ETS(A,N,N).
+
+[p25.4] We observe that the smoothing parameter of ETS(A,N,N) is substantially reduced, especially on small samples. The shrinkage effect is the strongest for MSEh loss function and the is weakest for GTMSE.
+
+[p25.5] Finally, we study the case of an incorrect model and analyse the distribution of the 훼 and 훽 parameters of ETS(A,A,N), which are shown in Figs. 11 and 12 respectively.
+
+[p25.6] The estimates of smoothing parameter 훼 are biased and inefficient for the presented case of h = 50 for almost all the estimators based on multi-step loss functions. In this case, the value does not converge to the true 훼= 1.6 even on the larg-est sample of 5000 observations. GTMSE produces slightly more efficient estimates than the other methods on the larger sample sizes, but is outperformed by MSE1.
+
+[p25.7] However, there is an improvement in efficiency when it comes to the estimation of parameter 훽 : while the conventional MSE1 has high variance on smaller samples, the estimators based on multi-step loss functions shrink the value towards zero.
+
+[p25.8] One of the main conclusions of this simulation study is that the discussed shrinkage effect happens in univariate models no matter what the DGP is. This might be beneficial for the redundant parameters of ETS models, because they tend to shrink to zero, but this might be potentially damaging for ARIMA, as the wrong parameters are emphasised. If the parameters of the models are of the main interest, then MSE1 should be preferred to the other estimators. If a multi-step estimator is needed for a similar task, then GTMSE gives more efficient and less biased estimates than the other multi-step estimators.
+
+[p26.1] 6 Applications
+
+[p26.2] 6.1 The Mean Surface Temperature data
+
+[p26.3] In order to compare the effect of different estimators, we use the Hadley Centre/ Climatic Research Unit data of Mean Surface Temperatures, MST, (version Had-CRUT.4.5.0.0; available at http://​www.​metof​fice.​gov.​uk/​hadobs/​hadcr​ut4/​data/​curre​ nt/​downl​oad.​html). We depict the analysis for a location at 322.5◦ , 62.5◦ that is a place in Greenland. The data is organised as a monthly time series starting in Janu-ary 1849 and finishing in December 2017. The series contains 2016 observations. We withhold the last five years of data (60 data points) in order to measure the accuracy of a forecasting model estimated on the first 1956 observations.
+
+[p26.4] We use an ARIMA(1,1,2) in this experiment, because the data is non-stationary and AR(1) is commonly included on this type of data (see Beaulieu and Killick 2018, and discussion within). We estimate the model using the following six loss functions:
+
+[p26.5] 1. MSE1 (referred to as just “MSE”), 2. MSEh, 3. TMSE, 4. GTMSE, 5. MSCE, 6. GPL.
+
+[p26.6] We measure their performance using the root mean squared error (RMSE), mean absolute error (MAE) and mean error (ME): √ √ √ √1 h ∑ (41) RMSE = e2 t+j|t, h j=1 (42) MAE = 1 h h ∑ |et+j|t|, j=1 (43) ME = 1 h h ∑ et+j|t. j=1
+
+[p26.7] RMSE and MAE measure the magnitude of the errors from the mean and the median of the distribution of the target variable respectively (Kolassa 2016). ME measures the bias of the predictions.
+
+[p26.8] To fit the model we use the msarima function from the smooth v3.2.1 package (Svetunkov 2023b) for R (R Core Team 2023). Figure 13 plots model fit and forecast for the different loss functions. For MSEh we only use the model corresponding to h = 60 and not all 60 possible models, one for each horizon. Note that the model
+
+[p27.1] Fig. 13 Arima(1,1,2) with different loss functions. The vertical line marks the start of the test set. Actu-als are indicated by a solid black line, fitted values with a dashed line and the line in the test set is the h-steps ahead forecast
+
+[p27.2] Estimators RMSE MAE ME AR(1) MA(1) MA(2)
+
+[p27.3] MSE 1.217 0.849 −0.450 0.558 −1.235 0.265
+
+[p27.4] Table 2 Performance of estimators on the mean surface temperature time series. The lowest values are marked in boldface
+
+[p27.5] MSEh 1.128 0.784 0.009 −0.786 −0.130 −0.858
+
+[p27.6] TMSE 1.198 0.827 −0.402 −0.002 −0.680 −0.291
+
+[p27.7] GTMSE 1.190 0.819 −0.366 0.691 −1.291 0.305
+
+[p27.8] MSCE 1.185 0.817 −0.343 0.634 −1.059 0.077
+
+[p27.9] GPL 1.214 0.846 −0.444 0.532 −1.219 0.244
+
+[p27.10] estimated using the MSEh does not fit well to the data, as it attempts to capture a specific horizon of 60 periods ahead and as a result does not react to local changes in the data. Still, all the loss functions produce very similar forecasts (slow decline), but with a different level.
+
+[p27.11] The forecast errors and the parameters of the model with different loss functions are shown in Table 2, where the cases with the lowest errors are marked in boldface. Note that the conventional MSE estimator does not perform well on this data for any error measure. Given the sample size, GPL produces forecasts very similar to the MSE. The multi-step loss functions perform better, with MSEh being the most accurate in terms of RMSE, MAE and least biased in terms of ME. TMSE, GTMSE and MSCE perform very similar across all measures.
+
+[p27.12] Regarding the parameters in Table 2, we can note that GTMSE, MSCE and GPL produce similar estimates, demonstrating less shrinkage than the MSEh (as the AR(1) parameter is closer to −1 for the MSEh compared to the other estimators).
+
+[p28.1] Fig. 14 ETS(A,A,A) applied to Air Passengers data, estimated the losses discussed in this paper
+
+[p28.2] Climatologists argue that the AR(1) parameter should be positive, indicating that the shrinkage seen in MSEh is not producing a realistic estimate. However, all GTMSE, MSCE and GPL estimates of the AR(1) parameter are similar to the results obtained by others in the field (Hartmann et al. 2013; Cahill et al. 2015; Rahmstorf et al. 2017), indicating that the shrinkage in the parameters is beneficial and necessary when compared to the model resulting from the MSE.
+
+[p28.3] 6.2 Air passengers data
+
+[p28.4] As an additional example, we use the classical monthly Air Passengers data from Box and Jenkins (1976) to demonstrate the effect of model misspecification. Although, this series is known to have multiplicative components, we use ETS(A,A,A) model (additive error, trend, and seasonal components) and estimate it using MSE, MSEh , TMSE, GTMSE, MSCE and GPL. We set the forecasting
+
+[p28.5] Estimators RMSE MAE ME 훼 훽 훾
+
+[p28.6] Table 3 Performance of estimators on air passengers data example. The lowest values are marked in boldface
+
+[p28.7] MSE 49.423 37.115 28.369 1.000 0.000 0.000
+
+[p28.8] MSEh 77.194 57.983 54.619 0.806 0.000 0.089
+
+[p28.9] TMSE 19.266 15.616 9.739 0.126 0.000 0.798
+
+[p28.10] GTMSE 18.672 15.005 8.369 0.145 0.000 0.826
+
+[p28.11] MSCE 22.601 18.736 13.922 0.102 0.000 0.546
+
+[p28.12] GPL 20.014 16.426 11.128 0.111 0.000 0.846
+
+[p29.1] horizon to 12 (one year). The model application was done using es() function (Svetunkov 2023a) from the smooth package in R (Svetunkov 2023b).
+
+[p29.2] Figure 14 shows how the ETS(A,A,A) fits the data when different loss functions are used. We can see that with the conventional MSE, the model has difficulties fitting the data, updating the level component more often than required. The MSEh is not doing well in this example either, failing to produce adequate forecasts except for the specific point 12 observations ahead. In contrast to these two, TMSE, GTMSE, MSCE and GPL do much better, capturing the dynamics correctly and not adapting to the noise too much.
+
+[p29.3] To better understand how models did specifically and why, we present holdout sample error measures and the values of smoothing parameters for the model estimated using the discussed approaches in Table 3. The GTMSE did not overshrink the smoothing parameter 훾 as MSE and MSEh did, but it imposed some shrinkage on 훼 . This example demonstrates the benefits of using estimators based on multistep loss functions in case of model misspecification, which is very common in practice. 7 Conclusions
+
+[p29.4] Estimation methods based on multiple steps ahead forecast error have been known for several decades. Their statistical effects of forecasting performance have been documented in detail, indicating that these loss functions make time series models robust. Nonetheless, there was no explanation of why this happens.
+
+[p29.5] We show that the main reason for this robustness is the implied shrinkage, which is automatically imposed on parameters when any of these estimators are used. We discuss how the shrinkage happens in the ARIMA and ETS model families, using the state space model framework. Furthermore, we demonstrate that this type of shrinkage does not affect the coefficients of exogenous variables in regression. Therefore this constitutes a univariate form of parameter shrinkage, in contrast to the shrinkage in Ridge or LASSO regression (Tibshirani 1996). Furthermore, we indicate that there is a danger of “over-shrinking” the parameters.
+
+[p29.6] We investigate several estimators based on multi-step loss functions, showing analytically the strength of shrinkage for each, as well as their limitations. We propose predictive likelihood functions for some of them and discuss the efficiency of these estimators. Despite the fact that MSEh is in general a less efficient estimator than MSE1 , we demonstrate that there are regions of parameters, where MSEh becomes more efficient, which has never been shown in the literature before. In addition, we show that due to the dynamic structure of models, there is always a non-zero covariance between the forecast errors of different horizons. This means that when the multivariate distribution of the trace forecast is analysed, assuming that off-diagonal elements are zero is unreasonable. We introduce the General Predictive Likelihood and show how this is connected with the existing multi-step estimators and that it produces estimates similar to MSE1 . Furthermore, we propose a new multi-step estimator, the Geometric Trace MSE, which has a milder shrinkage effect than the conventional multi-step estimators.
+
+[p30.1] Using simulations we demonstrate that the shrinkage effect in all the multi-step estimators increases with the increase of the forecast horizon, matching our analytical investigation, and is compensated by large sample sizes. This can cause over-shrinkage of the model parameters, causing them to become biased and inefficient. They eventually converge to the true values, but with a very low rate. The speed of convergence is further reduced as the forecast horizon increases. However, the shrinkage effect is weakened in the proposed GTMSE, which as is found to result in more efficient, less biased and consistent estimates of parameters, compared to the other multi-step estimators. Our simulations show that when an incorrect model is used, the redundant parameters of univariate models shrink towards zero. In all the other cases, the multi-step estimators appear to unnecessarily over-shrink the parameters, potentially damaging the performance of the estimated models.
+
+[p30.2] We apply the investigated estimators on a real data example, demonstrating the advantages of the estimators based on multi-step loss functions. We find that TMSE, GTMSE and MSCE produce more accurate 1 to h-steps ahead forecasts than either MSE1 or MSEh . Furthermore, the resulting parameters for TMSE, GTMSE and MSCE match the expected values of the modelled process more closely, indicating their benefit when the underlying DGP is unknown.
+
+[p30.3] We conclude that if the parameters are of the main interest and we have some confidence in approximating well the underlying data structure, MSE1 should be preferred to estimators based on multi-step loss functions, especially on small samples. However, when the accuracy of forecasts is of the main interest, then the estimators based on multi-step loss functions can be advantageous over conventional estimators. Our analysis and results suggest that the proposed GTMSE performs very promisingly compared to existing multi-step estimators.
+
+[p30.4] We can see from the simulation and the empirical evidence that the multi-step estimators can shrink the parameters of models to the extent of potentially introduc-ing bias. This is a limitation of the approach. This bias disappears on large samples, when the ratio of T−h
+
+[p30.5] T−1 becomes close to one, however on small samples it can lead to the estimation of less stochastic and more inert models with biased (towards zero) estimates of parameters. In this respect, the multi-step estimators act similarly to LASSO and RIDGE for time series models (Pritularga et al. 2022), but without a meta parameter to regulate shrinkage, with the forecasting horizon operating as such a parameter.
+
+[p30.6] Therefore, we do not argue that the shrinkage in time series models caused by multi-step estimators is always beneficial. There will be many cases where conventional estimators will perform well. Nonetheless, being aware of their properties, an informed statistician can understand and improve the performance of their models.
+
+[p30.7] Appendix A. Covariances between the multiple steps ahead forecast errors
+
+[p30.8] Using the formula (10) the covariance between i and j steps ahead errors when j > i and i, j ≠1 can be written the following way:
+
+[p31.1] ( i−1 ∑ ) j−1 ∑ (A.1) 휎i,j = cov ci−l휀t+l + 휀t+i, l=1 cj−m휀t+m + 휀t+j . m=1
+
+[p31.2] Opening sums in (A.1) leads to the following: (
+
+[p31.3] 휎i,j = cov(휀t+i, 휀t+j) + cov 휀t+i, ( i−1 ∑ ) ) j−1 ∑ cj−m휀t+m m=1 (A.2) ( i−1 ∑ ) j−1 ∑ + cov + cov ci−l휀t+l, 휀t+j l=1 ci−l휀t+l, cj−m휀t+m . l=1 m=1
+
+[p31.4] Assuming that the error term 휀t is not autocorrelated, the first and the third covariances in (A.2) will be equal to zero. In the second covariance all the elements will be equal to zero except for one: cov(휀t+i, cj−i휀t+i) = 휎2
+
+[p31.5] 1cj−i . The last covariance in (A.2) will have i −1 non-zero elements that also become variances. All of that leads to: i−1 ∑ (A.3) 휎i,j = 휎2 1ci,j + 휎2 1 cj−lci−l. l=1
+
+[p31.6] In case when i = 1 , the formula (A.1) will have a different form: ( j−1 ∑ 휎1,j = cov 휀t+1, m=1 ) cj−m휀t+m + 휀t+j ,
+
+[p31.7] which after applying the similar approach leads to: (A.4) 휎1,j = 휎2 1cj−1.
+
+[p31.8] Finally, uniting (A.3) with (A.4), the following is obtained:
+
+[p31.9] 1c�i−j� when either i = 1 or j = 1 휎2
+
+[p31.10] c�l−j�c�i−l�) otherwise . ⎧ ⎪ ⎨ ⎪⎩ i−1 ∑ 휎i,j = 휎2 1(c�i−j�+ l=1
+
+[p31.11] Appendix B. The calculation of ̂cj for ARIMA(1,1,1) ( )
+
+[p31.12] The eigenvalues of the transition matrix F =
+
+[p31.13] the corresponding eigenvectors can be v1 = 1 +̂ 𝜙1 1 −̂𝜙1 0
+
+[p31.14] are 𝜆1 = 1, 𝜆2 =̂ 𝜙1 while ( 1 ) ( ) 1 −1 . and v2 = −̂𝜙1
+
+[p31.15] Using matrix decomposition and inserting these values into cj gives:
+
+[p32.1] (B.1)̂ cj = (1 0) ( 1 1 −̂𝜙1 −1 )j−1 ( 1 1 −̂𝜙1 −1 ) (1 0 0̂ 𝜙1 )−1 ( ) 1 +̂ 𝜙1 +̂ 𝜃1 −̂𝜙1 .
+
+[p32.2] The inverse of the matrix in the right hand side of (B.1) (when ̂𝜙1 ≠1 ) is equal to: �1 1 −̂𝜙1 −1 �−1 = ⎛ ⎜ ⎜⎝ −1̂ 𝜙1−1 −1̂ 𝜙1−1̂ 𝜙1̂ 𝜙1−1 ⎞ ⎟ ⎟⎠ (B.2) ,̂ 1̂ 𝜙1−1
+
+[p32.3] and inserting the value (B.2) into (B.1) and multiplying first two matrices leads to: cj = �1 0��1̂ 𝜙j−1 �⎛ ⎜ ⎜⎝ 1 −̂𝜙1 −̂𝜙j−1 1 � 1 +̂ 𝜙1 +̂ 𝜃1 −̂𝜙1 � . 1 1−̂𝜙1 −̂ 𝜙1 1 1−̂𝜙1 ⎞ ⎟ ⎟⎠ 1−̂𝜙1 − 1 1−̂𝜙1
+
+[p32.4] Multiplying the first two matrices one more time gives: 1 1−̂𝜙1 −̂ 𝜙1 (B.3)̂ cj = � 1 1−̂𝜙1 1̂ 𝜙j−1 1 �⎛ ⎜ ⎜⎝ � 1 +̂ 𝜙1 +̂ 𝜃1 −̂𝜙1 � . ⎞ ⎟ ⎟⎠ 1−̂𝜙1 − 1 1−̂𝜙1
+
+[p32.5] Opening the remaining brackets in (B.3) leads to: 1 +̂ 𝜃1 −̂ 𝜙j+1 1 −̂ 𝜙j (B.4)̂ cj = 1̂𝜃1 1 −̂ 𝜙1
+
+[p32.6] After regrouping elements of (B.4), formula transforms into: (B.5)̂ cj = 1 + (̂𝜙1 +̂ 𝜃1) 1 −̂ 𝜙j 1 1 −̂ 𝜙1̂
+
+[p32.7] The quotient in the right hand side of the formula (B.5) is the sum of geometric series with the ratio ̂𝜙1 ≠1 . Writing the sum instead of the quotient gives the final formula for the calculation of ̂cj: j∑ cj = 1 + (̂𝜙1 +̂ 𝜃1) 𝜙i−1 1 i=1̂
+
+[p32.8] Appendix C. Simplifying the concentrated general predictive log‑likelihood
+
+[p32.9] 퐭̂횺−1퐄퐭 will always result in a scalar. This allows to use trace function in the sum in the right hand side of the equation in the following manner:
+
+[p32.10] In function (32) the product 퐄�
+
+[p33.1] ( ) T−h ∑ 퐄� 퐭̂횺−1퐄퐭 = t=1 ( ) T−h ∑ tr(퐄� 퐭̂횺−1퐄퐭) (C.1) . t=1
+
+[p33.2] Trace function allows rearranging the right part of (C.1): ( ) ( T−h ∑ T−h ∑ (̂ ) ) T−h ∑ tr(̂횺−1퐄퐭퐄� tr(퐄� 퐭̂횺−1퐄퐭) = t=1 t=1 횺−1 퐄퐭퐄� (C.2) 퐭) = tr . 퐭 t=1
+
+[p33.3] The sum of the matrices in the right hand side of (C.2) is equal to the estimated covariance (33) multiplied by T −h . The multiplication of ̂횺−1 and ̂횺 gives the iden-tity matrix, the trace of which ist equal to h . So finally the sum (C.1) can be rewrit-ten as: ( T−h ∑ 퐄� 퐭̂횺−1퐄퐭 t=1 ) (C.3) = (T −h)h.
+
+[p33.4] Inserting (C.3) in (34) leads to the following simplified concentrated log-likelihood: ( )
+
+[p33.5] h log(2𝜋) + log |̂횺| 퓁(휽,̂ 횺|Y) = −T −h 2
+
+[p33.6] which after regrouping leads to: ( 퓁(휽,̂ 횺|Y) = −T −h 2 −T −h 2 h, )
+
+[p33.7] h log(2𝜋e) + log |̂횺| .
+
+[p33.8] Appendix D. Analytical value of generalised variance
+
+[p33.9] Inserting the covariances (12) and variances (16) in the matrix 횺 and moving the common term 휎2
+
+[p33.10] 1 outside the covariance matrix we obtain: 횺= 휎2 where a1,1 a1,2 … a1,h a2,1 a2,2 … a2,h ⎛ ⎜ ⎜ ⎜⎝ ⎞ ⎟ ⎟ ⎟⎠ A = ⋮ ⋮ ⋱ ⋮ ah,1 ah,2 … ah,h 1A, .
+
+[p33.11] 1 i = j = 1 ci−1, j = 1, i ≠1 or i = 1, j ≠1 ai−1,j−1 + a1,ja1,i, otherwise ⎧ ⎪ ⎨ ⎪⎩ and ai,j =
+
+[p33.12] The respective generalised variance in logarithms can be represented as:
+
+[p34.1] log GV = log 휎2 1 + log |A|.
+
+[p34.2] Appendix E. Calculation of the determinant of the matrix A
+
+[p34.3] Inserting the values of (38) into the matrix A gives: 1 a1,2 a1,3 … a1,h a1,2 1 + a1,2a1,2 a1,2 + a1,2a1,3 … a1,h−1 + a1,2a1,h a1,3 a1,2 + a1,2a1,3 a2,2 + a1,3a1,3 … a2,h−1 + a1,3a1,h ⋮ ⋮ ⋮ ⋱ ⋮ a1,h a1,h−1 + a1,ha1,2 a2,h−1 + a1,ha1,3 … ah−1,h−1 + a1,ha1,h (E.1) A = ⎛ ⎜ ⎜ ⎜ ⎜⎝ ⎞ ⎟ ⎟ ⎟ ⎟⎠ .
+
+[p34.4] In order to calculate the determinant of this general matrix, firstly we need to make it diagonal. This can be done in several steps. First, we multiply the first row by −a1,2 (first element of the second row) and add it to the second row: 1 a1,2 a1,3 … a1,h 0 1 a1,2 … a1,h−1 a1,3 a1,2 + a1,2a1,3 a2,2 + a1,3a1,3 … a2,h−1 + a1,3a1,h ⋮ ⋮ ⋮ ⋱ ⋮ a1,h a1,h−1 + a1,ha1,2 a2,h−1 + a1,ha1,3 … ah−1,h−1 + a1,ha1,h |||||||||| |A| = |||||||||| .
+
+[p34.5] Next step, using the similar principle we multiply first row by the minus first element of the third row and add it to the third row. After that we do the same with the first and the fourth row and so on till we reach the last row. We obtain the following matrix: 1 a1,2 a1,3 … a1,h 0 1 a1,2 … a1,h−1 0 a1,2 a2,2 … a2,h−1 ⋮ ⋮ ⋮ ⋱ ⋮ 0 a1,h−1 a2,h−1 … ah−1,h−1 |||||||||| |A| = |||||||||| .
+
+[p34.6] We iteratively multiply the first row by the minus first element of the second column and add it to the second column, then the same with the third column and so on, until the last column, so we end up with the following matrix: 1 0 0 … 0 0 1 a1,2 … a1,h−1 0 a1,2 a2,2 … a2,h−1 ⋮ ⋮ ⋮ ⋱ ⋮ 0 a1,h−1 a2,h−1 … ah−1,h−1 |||||||||| |A| = |||||||||| .
+
+[p34.7] The first row and the first column can be removed from that matrix, decreasing its dimension from h × h to h −1 × h −1:
+
+[p35.1] 1 a1,2 … a1,h−1 a1,2 a2,2 … a2,h−1 ⋮ ⋮ ⋱ ⋮ a1,h−1 a2,h−1 … ah−1,h−1 |||||||| |A| = |||||||| .
+
+[p35.2] Substituting the elements we obtain the matrix (E.1) similar to the one we had in the beginning: 1 a1,2 … a1,h−1 a1,2 1 + a1,2a1,2 … a1,h−2 + a1,2a1,h−1 ⋮ ⋮ ⋱ ⋮ a1,h−1 a1,h−2 + a1,2a1,h−1 … ah−2,h−2 + a1,h−1a1,h−1 (E.2) |A| = |||||||| |||||||| .
+
+[p35.3] The same procedure of diagonalisation of the matrix A can be applied to (E.2) in order to decrease its dimension. In fact, this procedure can be repeated until we end up with a 1 × 1 matrix, the only element of which will be equal to one. Thus the determinant of the matrix A is always equal to one.
+
+[p35.4] Acknowledgements We would like to thank Konstantinos Fokianos for his comments which helped to improve this work substantially. We would also like to thank The High End Computing facility at Lancaster University, which provided the computational power needed for the experiments, results of which are provided in this paper.
+
+[p35.5] Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons licence, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons licence, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons licence and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this licence, visit http://​creat​iveco​mmons.​org/​licen​ ses/​by/4.​0/. References
+
+[p35.6] Beaulieu C, Killick R (2018) Distinguishing trends and shifts from memory in climate data. J Clim
+
+[p35.7] 31:9519–9543 Bhansali R (1996) Asymptotically efficient autoregressive model selection for multistep prediction. Ann
+
+[p35.8] Inst Stat Math 48:577–602 Bhansali R (1997) Direct autoregressive predictors for multistep prediction: order selection and perfor-
+
+[p35.9] mance relative to the plug in predictors. Stat Sin 7:425–449 Box G, Jenkins G (1976) Time series analysis: forecasting and control. Holden-day, Oakland Cahill N, Rahmstorf S, Parnell AC (2015) Change points of global temperature. Environ Res Lett
+
+[p35.10] 10:084002 Chevillon G (2007) Direct multi-step estimation and forecasting. J Econ Surv 21:746–785 Chevillon G (2009) Multi-step forecasting in emerging economies: an investigation of the South African
+
+[p35.11] GDP. Int J Forecast 25:602–628 Chevillon G (2016) Multistep forecasting in the presence of location shifts. Int J Forecast 32:121–137 Chevillon G, Hendry DF (2005) Non-parametric direct multi-step estimation for forecasting economic
+
+[p35.12] processes. Int J Forecast 21:201–218
+
+[p36.1] Clements M, Hendry D (1998) Forecasting economic time series. Cambridge University Press,
+
+[p36.2] Cambridge Cox DR (1961) Prediction by exponentially weighted moving averages and related methods. J R Stat Soc
+
+[p36.3] B 23:414–422 Franses PH, Legerstee R (2009) A unifying view on multi-step forecasting using an autoregression. J
+
+[p36.4] Econ Surv 24:389–401 Gardner ES (2006) Exponential smoothing: the state of the art-Part II. Int J Forecast 22:637–666. https://​
+
+[p36.5] doi.​org/​10.​1016/j.​ijfor​ecast.​2006.​03.​005 Gersch W, Kitagawa G (1983) The prediction of time series with trends and seasonalities. J Bus Econ Stat
+
+[p36.6] 1:253–264 Hartmann D, Klein Tank A, Rusticucci M, Alexander L, Brönnimann S, Charabi Y, Dentener F, Dlugo-
+
+[p36.7] kencky E, Easterling D, Kaplan A, Soden B, Thorne P, Wild M, Zhai P (2013) Observations: atmos-phere and surface. Cambridge University Press, Cambridge, pp 159–254 Haywood J, Tunnicliffe Wilson G (1997) Fitting time series models by minimizing multistep-ahead
+
+[p36.8] errors: a frequency domain approach. J R Stat Soc: Ser B (Methodol) 59:237–254 Hyndman RJ, Koehler AB, Ord JK, Snyder RD (2008) Forecasting with exponential smoothing. Springer,
+
+[p36.9] Berlin Ing CK (2003) Multistep prediction in autoregressive processes. Economet Theor 19:254–279 Jordà Ò, Marcellino M (2010) Path forecast evaluation. J Appl Economet 25:635–662 Kang IB (2003) Multi-period forecasting using different models for different horizons: an application to
+
+[p36.10] U.S. economic time series data. Int J Forecast 19:387–400 Kolassa S (2016) Evaluating predictive count data distributions in retail sales forecasting. Int J Forecast
+
+[p36.11] 32:788–803 Kourentzes N, Trapero JR (2018) On the use of multi-step cost functions for generating forecasts. Depart-
+
+[p36.12] ment of Management Science Working Paper Series Kourentzes N, Li D, Strauss AK (2019) Unconstraining methods for revenue management systems under
+
+[p36.13] small demand. J Revenue Pricing Manag 18:27–41 Marcellino M, Stock JH, Watson MW (2006) A comparison of direct and iterated multistep AR methods
+
+[p36.14] for forecasting macroeconomic time series. J Econom 135:499–526 Martinez AB (2017) Testing for differences in path forecast accuracy: forecast-error dynamics matter McElroy T (2015) When are direct multi-step and iterative forecasts identical? J Forecast 34:315–336 McElroy T, Wildi M (2013) Multi-step-ahead estimation of time series models. Int J Forecast 29:378–394 Ord JK, Koehler AB, Snyder RD (1997) Estimation and prediction for a class of dynamic nonlinear sta-
+
+[p36.15] tistical models. J Am Stat Assoc 92:1621–1629 Pesaran MH, Pick A, Timmermann A (2010) Variable selection, estimation and inference for multi-
+
+[p36.16] period forecasting problems Pritularga KF, Svetunkov I, Kourentzes N (2022) Shrinkage estimator for exponential smoothing models.
+
+[p36.17] Int J Forecast. https://​doi.​org/​10.​1016/j.​ijfor​ecast.​2022.​07.​005 Proietti T (2011) Direct and iterated multistep AR methods for difference stationary processes. Int J Fore-
+
+[p36.18] cast 27:266–280 R Core Team, 2023. R: a language and environment for statistical computing. R Foundation for Statistical
+
+[p36.19] Computing, Vienna. https://​www.R-​proje​ct.​org/ Rahmstorf S, Foster G, Cahill N (2017) Global temperature evolution: recent trends and some pitfalls.
+
+[p36.20] Environ Res Lett 12:054001 Saoud P, Kourentzes N, Boylan JE (2022) Approximations for the lead time variance: a forecasting and
+
+[p36.21] inventory evaluation. Omega 110:102614. https://​doi.​org/​10.​1016/j.​omega.​2022.​102614 Snyder RD (1985) Recursive estimation of dynamic linear models. J R Stat Soc Ser B (Methodol)
+
+[p36.22] 47:272–276 Svetunkov I (2023a) Forecasting and analytics with the augmented dynamic adaptive model (ADAM).
+
+[p36.23] Chapman and Hall/CRC. https://​openf​oreca​st.​org/​adam/. https://​doi.​org/​10.​1201/​97810​03452​652 Svetunkov I (2023b) smooth: forecasting using state space models. https://​github.​com/​config-​i1/​smooth.
+
+[p36.24] r package version 3.2.1 Taylor JW (2008) An evaluation of methods for very short-term load forecasting using minute-by-minute
+
+[p36.25] British data. Int J Forecast 24:645–658 Tiao GC, Xu D (1993) Robustness of maximum likelihood estimates for multi-step predictions: the expo-
+
+[p36.26] nential smoothing case. Biometrika 80:623–641 Tibshirani R (1996) Regression shrinkage and selection via the lasso. J R Stat Soc Ser B (Methodol) 58:267–288
+
+[p37.1] Trapero JR, Cardos M, Kourentzes N (2019) Empirical safety stock estimation based on kernel and Garch
+
+[p37.2] models. Omega 84:199–211 Wald A (1949) Note on the consistency of the maximum likelihood estimate. Ann Math Stat 20:595–601 Weiss AA (1991) Multi-step estimation and forecasting in dynamic models. J Econom 48:135–149 Weiss AA, Andersen AP (1984) Estimating time series models using the relevant forecast evaluation cri-
+
+[p37.3] terion. J R Stat Soc Ser A (General) 147:484 Xia Y, Tong H (2011) Feature matching in time series modeling. Stat Sci 26:21–46. https://​doi.​org/​10.​ 1214/​10-​STS345
+
+[p37.4] Publisher’s Note Springer Nature remains neutral with regard to jurisdictional claims in published maps and institutional affiliations.

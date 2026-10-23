@@ -1,0 +1,375 @@
+[p1.1] Journal of Time Series Analysis
+
+[p1.2] SPECIAL ISSUE ARTICLE OPEN ACCESS
+
+[p1.3] Online Detection of Forecast Model Inadequacies Using Forecast Errors
+
+[p1.4] Thomas Grundy1,2 | Rebecca Killick3 | Ivan Svetunkov4
+
+[p1.5] 1STOR-i Centre for Doctoral Training, Lancaster University, Lancaster, UK | 2Peak.ai, Manchester, UK | 3School of Mathematical Sciences, Lancaster University, Lancaster, UK | 4Department of Management Science, Lancaster University, Lancaster, UK
+
+[p1.6] Correspondence: Rebecca Killick (r.killick@lancaster.ac.uk)
+
+[p1.7] Received: 30 September 2024 | Revised: 17 April 2025 | Accepted: 24 April 2025
+
+[p1.8] Keywords: changepoint | concept drift | sequential change | structural break
+
+[p1.9] ABSTRACT In many organizations, accurate forecasts are essential for making informed decisions in a variety of applications, from inventory management to staffing optimization. Whatever forecasting model is used, changes in the underlying process can lead to inaccurate forecasts, which will be damaging to decision-making. At the same time, models are becoming increasingly complex, and identifying change through direct modeling is problematic. We present a novel framework for online monitoring of forecasts to ensure they remain accurate. By utilizing sequential changepoint techniques on the forecast errors, our framework allows for the real-time identification of potential changes in the process caused by various external factors. We show theoretically that some common changes in the underlying process will manifest in the forecast errors and can be identified faster by identifying shifts in the forecast errors than within the original modeling framework. Moreover, we demonstrate the effectiveness of this framework on numerous forecasting approaches through simulations and show its effectiveness over alternative approaches. Finally, we present two concrete examples, one from Royal Mail parcel delivery volumes and one from NHS A&E admissions relating to gallstones. 1 | Introduction
+
+[p1.10] Accurate forecasting is crucial for planning and marketing decisions for many companies. For example, within inventory management, the optimization of stock levels crucially depends upon accurate supply and demand forecasts (see, for example reviews by Fildes 1985; Fildes et al. 2008; Syntetos et al. 2016). If forecasts (or prediction intervals based upon them) start performing poorly, this can have severe consequences, for example, product shortages in the retail sector. Hence, it is crucial to quickly identify when forecasting models start deteriorating in performance, to react and make necessary adjustments.
+
+[p1.11] A common cause of forecasts becoming inaccurate is due to a changepoint (also known as a structural break) occurring in the underlying process. Throughout, we call the data generated from
+
+[p1.12] the underlying process the raw data. After a changepoint in the raw data, the current forecasting model may become inappro-priate, and the model needs rebuilding. Without knowledge of changepoints, it is disputed how long forecasting models can be used before updating (Krasheninnikov et al. 2018). The solution of frequent model updating, ignoring potential changepoints, is poor data utilization and may use a mix of pre- and post-change data, therefore damaging the resulting forecasts (Chapman and Killick 2020).
+
+[p1.13] A common approach to identify changes is to add a changepoint component to the modeling paradigm; this is easier in some paradigms than others. Even when it is clear how to add changes to our modeling paradigm, if our model is sophisticated (e.g., containing seasonality, temporal dependence, exogenous variables, and/or trends), then our ability to identify a change quickly
+
+[p1.14] [This article is part of the special issue “Data Segmentation”] ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+[p1.15] This is an open access article under the terms of the Creative Commons Attribution License, which permits use, distribution and reproduction in any medium, provided the original work is properly cited.
+
+[p1.16] © 2025 The Author(s). Journal of Time Series Analysis published by John Wiley & Sons Ltd.
+
+[p1.17] Journal of Time Series Analysis, 2026; 47:715–726 715 https://doi.org/10.1111/jtsa.12843
+
+[p2.1] deteriorates with increasing complexity. In this paper, we propose a framework for sequential changepoint detection within forecast errors to detect if a model becomes inaccurate. As mentioned, the most likely cause for forecasts becoming inaccurate is a change in the raw data being forecast. A change in the mean of the raw data could result in bias in the forecast, and this would show as a mean change in the forecast errors. A change in the variance of the raw data may not cause bias in the forecasts, but could lead to miss-calibrated prediction intervals. This change would be reflected by a variance change in the forecast errors. Hence, by detecting changes in the forecast errors, we can automatically identify when the forecasting model needs to be reconstructed and/or re-estimated. This eliminates the need for manual checks of the forecasting models and allows practitioners to focus on other tasks.
+
+[p2.2] Sequential changepoint analysis aims to detect changes in a data-generating process in an online manner. As more data becomes available, they are sequentially checked to determine if the distribution of the data has changed. Sequential changepoint analysis dates back to Page (1954) and traditionally aims to identify changes in the mean of the data-generating process under the assumption of independent observations and constant variance. See Basseville and Nikiforov (1993), Csörgö and Horváth (1997) and Tartakovsky et al. (2014) for overviews. Our approach to sequential changepoint detection stems from the work of Chu et al. (1996), where sequential changepoint procedures are considered in two phases. In phase 1, we assume a fixed amount of data is readily available and is generated from the same distribution; we call this the training data. The training data are used to estimate the data-generating process. Sequential monitoring begins in phase 2, that is, when the forecasting model goes live. As more data becomes available, we make a decision whether the new data is still being generated from the same distribution as Phase 1. If the new data significantly differs from the data in Phase 1, then we deem a changepoint to have occurred and flag that model recalibration is required. Hence, here our model is trained once using the fixed amount of training data and is not re-trained; either a changepoint is detected and the monitoring stops, or the monitoring continues indefinitely.
+
+[p2.3] The work of Chu et al. (1996) has been extended in various ways, including sequential monitoring of linear models (Horváth et al. 2004); autoregressive processes (Gombay and Serban 2009); and financial time series (Aue et al. 2009). Here, we utilize sequential changepoint methods to detect changes in forecast errors to quickly identify when forecasts become inaccurate. In particular, we examine one-step-ahead forecast errors, which, within models with an additive error structure, are the model residuals. There has been previous work utilizing the residuals of a model to detect changepoints. In particular, Horváth et al. (2004) uses the residuals from estimated linear models to detect changes in regression coefficients. Furthermore, Aue et al. (2015) uses the residuals from estimated ARMA processes to detect changes in mean, variance, or regressive parameters. Moreover, within the streaming classification literature, numerous methods use classification errors to detect when changes have occurred (Gama et al. 2004; Ross et al. 2012). In the offline changepoint setting where all data is available a priori, Robbins et al. (2011) proposed using residuals within the CUSUM proce-dure and showed that this gave an improved performance over
+
+[p2.4] using the raw data when temporal dependence was present. All the methods mentioned above assume a specified, known forecasting model. Our framework is far more general, as any forecasting approach could be used, including model-based, machine learning, and expert judgment forecasts—we only require the forecast errors and some assumptions on their properties.
+
+[p2.5] The novelty of our work is twofold. From a forecasting viewpoint, by combining forecasts and sequential changepoint detection, we create a novel framework for automatically identifying when a forecasting model needs re-evaluating. Moreover, we show theoretically how some common changes in raw data (which are a likely cause of inaccurate forecasts) manifest in the forecast errors and therefore can be detected within our framework. From a sequential changepoint viewpoint, this approach can provide an improved performance over model-based sequential changepoint techniques. If the data-generating process is sophisticated, then large amounts of data are needed to get an adequate model. Hence, after a change has occurred, we would expect a longer detection delay before signaling a change, as more data is required to model the post-change distribution. In con-trast, performing sequential changepoint detection on the forecast errors is a much simpler task, as the post-change modeling issues are eradicated by the forecasting model.
+
+[p2.6] The paper proceeds as follows. In Section 2, we introduce our framework for monitoring forecast errors and show theoretically how different changes in potentially sophisticated models manifest in these forecast errors. Readers unfamiliar with sequential changepoint detection can reference Section A in the Supporting Information for background details. Section 3, shows how two common forecasting models fit into our framework before Section 4, demonstrates the improved performance of monitoring the forecast errors over monitoring the raw data in a number of simulated examples. Finally, Section 5 shows the effectiveness of our method in two applications: One to NHS A&E admissions data, and the other to Royal Mail delivery volumes, before Section 7 gives concluding remarks and suggests some future research directions.
+
+[p2.7] 2 | Monitoring Forecast Errors
+
+[p2.8] The main aim of this paper is to introduce a framework that can quickly identify if a forecasting model becomes inaccurate. A common cause of inaccurate forecasts is a change in the potentially sophisticated raw data. For simple data, we can detect mean changes by performing sequential changepoint detection on the data, namely Page’s CUSUM detector, as described in Section A of the Supporting Information. We can also adapt this detector to detect variance changes by monitoring the (centered) squared data as described in Inclan and Tiao (1994). Yet, it is increasingly common for data to exhibit more sophisticated patterns than this setting allows. Some common examples of such structure include seasonality, exogenous relationships, and trend in the data. Moreover, if the data exhibit temporal dependence, then convergence to the limiting distributions in Section A is slow, and the performance of the detector deteriorates. There has been some work to identify changepoints in some specific models such as data exhibiting trend (Horváth et al. 2004) and ARMA models (Aue et al. 2015), however, our
+
+[p3.1] work is more general and encompasses these models and more by allowing for a generic forecasting model, which could include artificial neural networks, a blend of experts, or ensemble approaches.
+
+[p3.2] Alternatively, model-based sequential changepoint techniques could be used for more sophisticated models. These fit a model to the data before and after a potential changepoint and use a likelihood ratio style approach to determine if a changepoint has occurred. Even if the model is known, this approach has a number of drawbacks. Firstly, we need to have at least as many observations as parameters in the model. This means if we have seasonality in the model, we require at least one full season’s worth of data just to fit the post-change model; this can greatly increase the detection delay before a change is identified, espe-cially in high-frequency processes with low-frequency compo-nents, for example, daily data with yearly seasonality. Additionally, the computation time required to fit more sophisticated models increases with complexity. Furthermore, as we get more data points, there are more potential changepoint locations to check for a change, thus further increasing the computational time. Finally, the choice of threshold in sophisticated models is non-trivial, so identifying changepoints while controlling the false alarm rate is challenging.
+
+[p3.3] Our framework bypasses the above issues by monitoring forecast errors, instead of the raw data, for changepoints. The intu-ition behind this is that the forecast model should capture the sophistication of the data, and thus the errors should be largely free of structure. We show theoretically that mean and variance changes in these potentially sophisticated raw data structures will manifest in the forecast errors (under certain assumptions on the forecasting model). Furthermore, we adapt Page’s CUSUM detector (Section A) to detect the manifested changes in the forecast errors. The detection of a mean change in the forecast errors indicates that the forecasting model needs re-evaluating as it has become biased, while a variance change indicates that prediction intervals from the forecasting model will no longer be precise and would need to be re-constructed.
+
+[p3.4] Let {𝑌𝑡∶𝑡= 1, 2, . . . } be a univariate time series with 𝑌𝑡|𝑦𝑡−1, 𝑦𝑡−2, . . . following some unknown conditional distribution, 𝐹, with an associated forecasting model, . We define a forecasting model as a principled approach to take in observed data {𝑦𝑡} and produce a prediction of the future data either in point form or as a distribution. Assuming a known forecasting model, , we define the point forecast for time point 𝑡made ℎ time steps previously as,̂ [𝑌𝑡|𝑦𝑡−ℎ, . . . , 𝑦1 ] (1) 𝑦𝑡(ℎ) = 𝔼
+
+[p3.5] where 𝑦𝑡−ℎ, . . . , 𝑦1 are the previously observed realizations from the random process 𝑌𝑡. Without loss of generality, we focus on one-step-ahead forecasts; hence,̂ 𝑦𝑡(1) is the forecast for time point 𝑡made at time point 𝑡−1. Using (1), we define the forecast errors, 𝑒𝑡, as 𝑒𝑡= 𝑌𝑡−̂ 𝑦𝑡(1)
+
+[p3.6] First, we consider theoretically how mean changes in the potentially sophisticated raw data manifest in the forecast errors. We highlight the desirable properties of the forecast errors and
+
+[p3.7] describe how we can incorporate them into Page’s CUSUM detector. Secondly, we consider the more general setting where mean and/or variance changes in the raw data can occur. Again, we show theoretically how these changes manifest in the forecast errors and describe an alternative adaptation of Page’s CUSUM detector to detect these changes. 2.1 | Mean Changes
+
+[p3.8] First, we consider how mean changes in potentially sophisticated raw data manifest in the forecast errors. Assume there is a changepoint at some unknown location 𝑘∗,
+
+[p3.9] 𝑌𝑡|𝑦𝑡−1, . . . , 𝑦1 ∼𝐹, for 𝑡= 1, . . . , 𝑚+ 𝑘∗
+
+[p3.10] 𝑌𝑡|𝑦𝑡−1, . . . , 𝑦1 ∼𝐺, for 𝑡= 𝑚+ 𝑘∗+ 1, 𝑚+ 𝑘∗+ 2, . . . (2)
+
+[p3.11] where 𝐹and 𝐺differ in expectation, [𝑌𝑡|𝑡> 𝑚+ 𝑘∗, 𝑦𝑡−1, . . . , 𝑦1 ] 𝔼𝐺 [𝑌𝑡|𝑡≤𝑚+ 𝑘∗𝑦𝑡−1, . . . , 𝑦1 ] = 𝛿𝜇,𝑚≠0 (3) −𝔼𝐹
+
+[p3.12] To ease notation, we writẽ 𝑦𝑡to represent the entire past upon which 𝑌𝑡is dependent. Moreover, the relevant pre- and post-changepoint times are inferred from the distribution with respect to which we are taking expectations. Note that (2) encompasses the mean change model in (A1) from Supporting Information and additionally allows the raw data to have many different properties, including but not limited to being temporally dependent, exhibiting trends, including exogenous variables, or containing seasonality.
+
+[p3.13] For the mean change in Equation (3) to manifest in the forecast errors, we must place the following assumptions on the forecasting model being used.
+
+[p3.14] Assumption 1. We have a forecasting model, , such that [𝑌𝑡|̃𝑦𝑡 ] −𝔼 [𝑌𝑡|̃𝑦𝑡
+
+[p3.15] ] = 𝑏𝜇 for 𝑡= 1, . . . , 𝑚+ 𝑘∗ 𝔼𝐹
+
+[p3.16] where 𝑏𝜇is some unknown (potentially zero) bias in the forecasts.
+
+[p3.17] Assumption 2. For a forecasting model, , and data that follows (2) then, [𝑌𝑡|̃𝑦𝑡 ] −𝔼 [𝑌𝑡|̃𝑦𝑡 ] = 𝑏𝜇+ 𝑓(𝛿𝜇,𝑚) = 𝑏𝜇+ Δ𝜇,𝑚 𝔼𝐺
+
+[p3.18] for 𝑡= 𝑚+ 𝑘∗+ 1, 𝑚+ 𝑘∗+ 2, . . .
+
+[p3.19] where Δ𝜇,𝑚≠0 and is some function of the change size in the raw data.
+
+[p3.20] For generality, these assumptions state that, in the pre-change regime, the forecasting model has a constant bias, 𝑏𝜇, which, in practice, would ideally be equal to zero. When a change in the raw data occurs, many forecasting models will adjust in some way to try and account for this change. For example, in an AR(1) model with autoregressive parameter, 𝜙, a change size of 𝛿𝜇,𝑚in the raw data would result in a change size of Δ𝜇,𝑚= 𝛿𝜇,𝑚(1 −𝜙) in the forecast errors after one time point; assuming a perfectly specified forecasting model. Assumption 2 states that, like the AR(1)
+
+[p4.1] example above, the forecasting model cannot fully adjust to the change in the raw data and some constant change size still exists. This seems intuitive because if the forecasting model fully adjusts to the changepoint, then we would not want to signal a changepoint as the forecasting model has adapted to the change and is still performing well.
+
+[p4.2] Under Assumptions 1 and 2, the change in mean in Equation (2) will result in a change in expectation in the forecast errors that is similar to the original Page-CUSUM (A1), that is, 𝑌𝑡−̂ 𝑦𝑡(1) = 𝑒𝑡 { 𝑏𝜇+ 𝜖𝜇,𝑡, 𝑡= 1, . . . , 𝑚+ 𝑘∗, = 𝑏𝜇+ 𝜖𝜇,𝑡+ Δ𝜇,𝑚, 𝑡= 𝑚+ 𝑘∗+ 1, 𝑚+ 𝑘∗+ 2, . . .
+
+[p4.3] with relevant null (𝐻0:Δ𝜇,𝑚= 0) and alternative (𝐻𝐴:Δ𝜇,𝑚≠0) hypothesis formally defined in Supplementary (A2) and (A3) with Δ𝑚= Δ𝜇,𝑚.
+
+[p4.4] As the forecasting model accounts for the dependence in the raw data, the zero-mean random variables {𝜖𝜇,𝑡∶𝑡= 1, 2, . . . } will be sufficiently independent to satisfy a weak invariance principle. These 𝜖𝜇,𝑡are essentially the residuals after accounting for the bias in the forecast model. Note, even if the forecasting model is misspecified, the general assumptions on {𝜖𝑡∶𝑡= 1, 2, . . . } given in Supporting Information Assumptions A and B are likely to hold.
+
+[p4.5] To detect the manifested mean change in the forecast errors, we use Page’s CUSUM detector defined in Supporting Information (A4), on the forecast errors, that is, 𝑚+𝑘 ∑ 𝑚 ∑ 𝑒𝑡−𝑘 𝑄𝜇(𝑚, 𝑘) = 𝑒𝑡 𝑚 𝑡=𝑚+1 𝑡=1 0≤𝑖≤𝑘 |||𝑄𝜇(𝑚, 𝑘) −𝑄𝜇(𝑚, 𝑖)||| 𝐷𝜇(𝑚, 𝑘) = max
+
+[p4.6] with the corresponding stopping time,
+
+[p4.7] 𝜏𝜇,𝑚= min {𝑘≥1 ∶𝐷𝜇(𝑚, 𝑘) ≥̂ 𝜎𝜇,𝑚𝑐𝜇,𝛼𝑔(𝑚, 𝑘, 𝛾)}
+
+[p4.8] Here we distinguish from the original CUSUM detector, 𝐷(𝑚, 𝑘) defined on 𝑌𝑡, and our CUSUM detector, 𝐷𝜇(𝑚, 𝑘) defined on the forecast errors. The original 𝐷(𝑚, 𝑘) can be obtained by replacing 𝜖𝑡with 𝑦𝑡in 𝐷𝜇(𝑚, 𝑘) as shown in the Supporting Information.
+
+[p4.9] As the random variables, {𝜖𝑡∶𝑡= 1, 2, . . . }, are i.i.d,̂ 𝜎𝜇,𝑚, can be estimated using the traditional estimate of the standard deviation of the forecast errors within the Phase I (training) period. The weight function, 𝑔(𝑚, 𝑘, 𝛾) is defined as in (A5) in the Supporting Information and the critical constant, 𝑐𝜇,𝛼can be derived from the limiting distribution of the stopping time under both the null and alternative hypotheses, due to Corollaries 1 and 2 detailed in the Supporting Information. These corollaries demonstrate that as long as we have a forecasting model that satisfies the given assumptions, a mean change in potentially sophisticated raw data will manifest as mean changes in the forecast errors and will be detectable under our framework.
+
+[p4.10] 2.2 | Mean and Variance Changes
+
+[p4.11] Thus far, we have considered detecting mean changes using Page’s CUSUM detector. Inclan and Tiao (1994) extend this to detect variance changes by considering the CUSUM detector of the (centered) squared data. This can be viewed as searching for a mean change in the variance estimates of the data. Here we employ a similar idea and show that mean and/or variance changes in the raw data will manifest as mean changes in the (centered) squared forecast errors.
+
+[p4.12] We extend the mean change model in Equation (2) to allow for mean and variance changes.
+
+[p4.13] Definition 1. Again, assume there is a changepoint at some unknown location, 𝑘∗,
+
+[p4.14] 𝑌𝑡|𝑦𝑡−1, . . . , 𝑦1 ∼𝐹, for 𝑡= 1, . . . , 𝑚+ 𝑘∗
+
+[p4.15] 𝑌𝑡|𝑦𝑡−1, . . . , 𝑦1 ∼𝐺′, for 𝑡= 𝑚+ 𝑘∗+ 1, 𝑚+ 𝑘∗+ 2, . . .
+
+[p4.16] where 𝐹and 𝐺′ differ in expectation and variance, [𝑌𝑡|𝑡> 𝑚+ 𝑘∗, 𝑦𝑡−1, . . . , 𝑦1 ] 𝔼𝐺′ [ ] 𝑌𝑡|𝑡≤𝑚+ 𝑘∗𝑦𝑡−1, . . . , 𝑦1 −𝔼𝐹 = 𝛿𝜇,𝑚, [ ] 𝑌𝑡|𝑡> 𝑚+ 𝑘∗, 𝑦𝑡−1, . . . , 𝑦1 Var𝐺′ [ ] 𝑌𝑡|𝑡≤𝑚+ 𝑘∗𝑦𝑡−1, . . . , 𝑦1 −Var𝐹 = 𝛿𝜉,𝑚
+
+[p4.17] Under Assumption 1, the change in mean and/or variance will result in a mean change in the squared forecast errors, (𝑌𝑡−̂ 𝑦𝑡(1) −𝑏𝜇 )2 = (𝑒𝑡−𝑏𝜇 )2 { 𝑏𝜉+ 𝜖𝜉,𝑡, 𝑡= 1, . . . , 𝑚+ 𝑘∗, = 𝑏𝜉+ 𝜖𝜉,𝑡+ Δ𝜉,𝑚, 𝑡= 𝑚+ 𝑘∗+ 1, 𝑚+ 𝑘∗+ 2, . . . where 𝑏𝜉= 𝔼[𝜖2
+
+[p4.18] 𝜇,𝑡] is the bias that may remain in the forecasts and {𝜖𝜉,𝑡∶𝑡= 1, 2, . . . } are zero-mean random variables. Again, due to the forecasting model accounting for the dependence structure in the raw data, {𝜖𝜉,𝑡∶𝑡= 1, 2, . . . }, will be i.i.d.
+
+[p4.19] The change size in the (centered) squared forecast errors, Δ𝜉,𝑚, can be shown to be a combination of the mean and/or variance change in the raw data.
+
+[p4.20] Proposition 1. Let {𝑌𝑡∶𝑡= 1, 2, . . . } follow the model in Definition 1 with 𝛿𝜇,𝑚= 0 and be a forecasting model that satisfies Assumption 1. Then, [𝑌𝑡|̃𝑦𝑡 ] −Var𝐹 [𝑌𝑡|̃𝑦𝑡 ] (4) Δ𝜉,𝑚= Var𝐺′
+
+[p4.21] Moreover, if 𝛿𝜇,𝑚≠0 and Assumption 2 holds, then [ ] [ ] + Δ2 𝑌𝑡|̃𝑦𝑡 𝑌𝑡|̃𝑦𝑡 Δ𝜉,𝑚= Var𝐺′ −Var𝐹 𝜇,𝑚 (5)
+
+[p4.22] Proof. We start by noting that the change size, Δ𝜉,𝑚, is the dif-ference between the expectation of the squared forecast errors assuming the post-change distribution 𝐺′ and the pre-change distribution 𝐹. From this, we can show the equivalences given in
+
+[p5.1] Proposition 1 by substituting relevant definitions of the forecast errors and using Assumption 1. More formally, we can describe this as follows. Note that, to ease notation, we assume 𝑌𝑡is dependent on its past throughout, and the relevant time-points (pre- or post-change) are clear from the distribution with respect to which the expectations are taken. We begin with the case where 𝛿𝜇,𝑚= 0, [ (𝑒𝑡−𝑏𝜇)2] [ (𝑒𝑡−𝑏𝜇)2] Δ𝜉,𝑚= 𝔼𝐺′ −𝔼𝐹 [( )2] [( )2] [ ] [ ] = 𝔼𝐺′ 𝑌𝑡−𝔼 𝑌𝑡 −𝑏𝜇 −𝔼𝐹 𝑌𝑡−𝔼 𝑌𝑡 −𝑏𝜇 [(𝑌𝑡−𝔼𝐹 ])2] [(𝑌𝑡−𝔼𝐹 )2] [𝑌𝑡 [𝑌𝑡 ] + 𝑏𝜇−𝑏𝜇 = 𝔼𝐺′ −𝔼𝐹 [(𝑌𝑡−𝔼𝐺′ )2] [(𝑌𝑡−𝔼𝐹 ])2] [𝑌𝑡 ] −𝛿𝜇,𝑚 [𝑌𝑡 = 𝔼𝐺′ −𝔼𝐹 [𝑌𝑡 ] −Var𝐹 [𝑌𝑡 ] = Var𝐺
+
+[p5.2] If 𝛿𝜇,𝑚≠0 and Assumption 2 holds, then [ (𝑒𝑡−𝑏𝜇)2] [ (𝑒𝑡−𝑏𝜇)2] Δ𝜉,𝑚= 𝔼𝐺 −𝔼𝐹 [(𝑌𝑡−𝔼 )2] [(𝑌𝑡−𝔼 )2] [𝑌𝑡 ] −𝑏𝜇 [𝑌𝑡 ] −𝑏𝜇 = 𝔼𝐺 −𝔼𝐹 [(𝑌𝑡−𝔼𝐺 )2] [𝑌𝑡 ] + 𝑏𝜇+ Δ𝜇,𝑚) −𝑏𝜇 = 𝔼𝐺 [(𝑌𝑡−𝔼𝐹 )2] [𝑌𝑡 ] + 𝑏𝜇−𝑏𝜇 −𝔼𝐹 [( ] [( ])2] [ ])2 + Δ2 [ = 𝔼𝐺 𝑌𝑡−𝔼𝐺 𝑌𝑡 −𝔼𝐹 𝑌𝑡−𝔼𝐹 𝑌𝑡 𝜇,𝑚 [ ] [ ] + Δ2 𝑌𝑡 𝑌𝑡 = Var𝐺 −Var𝐹 𝜇,𝑚 ◽
+
+[p5.3] To detect the manifested changes in the centered squared forecast errors, we can again adapt Page’s CUSUM detector, 𝑚+𝑘 ∑ 𝑚 ∑ (𝑒𝑡−̂ 𝑏𝜇,𝑚 )2 −𝑘 (𝑒𝑡−̂ 𝑏𝜇,𝑚 ), 𝑄𝜉(𝑚, 𝑘) = 𝑚 𝑡=𝑚+1 𝑡=1 0≤𝑖≤𝑘 |||𝑄𝜉(𝑚, 𝑘) −𝑄𝜉(𝑚, 𝑖)||| 𝐷𝜉(𝑚, 𝑘) = max
+
+[p5.4] with the corresponding stopping time,
+
+[p5.5] 𝜏𝜉,𝑚= min {𝑘≥1 ∶𝐷𝜉(𝑚, 𝑘) ≥̂ 𝜎𝜉,𝑚𝑐𝜉,𝛼𝑔(𝑚, 𝑘, 𝛾)}.
+
+[p5.6] Herê 𝑏𝜇,𝑚is the mean estimate of the forecast errors in the 𝑚 Phase I (training) samples and̂ 𝜎𝜉,𝑚is the traditional estimate of the standard deviation of the centered squared forecast errors within the Phase I (training) period. Again, 𝑔(𝑚, 𝑘, 𝛾) is defined as in (A5) from the Supporting Information and the critical constant 𝑐𝜉,𝛼can be derived from the limiting distribution of the stopping time under 𝐻0, which is known due to the following corollary.
+
+[p5.7] Corollary 1 (Following from Theorem 1 in Supporting Information). Let {𝑌𝑡∶𝑡= 1, 2, . . . } follow the model in Definition 1 and be a forecasting model that satisfies Assumption 1. Under 𝐻0, the limit distribution in Theorem 1 from the Supporting Information, holds for 𝐷(𝑚, 𝑘) = 𝐷𝜉(𝑚, 𝑘) and̂ 𝜎𝑚=̂ 𝜎𝜉,𝑚.
+
+[p5.8] Using Proposition 1, we gain the limiting distribution of 𝜏𝜉,𝑚 under 𝐻𝐴from the following proposition.
+
+[p5.9] Proposition 2. Let {𝑌𝑡∶𝑡= 1, 2, . . . } follow the model in Definition 1 with 𝛿𝜇,𝑚= 0 and be a forecasting model that satisfies Assumption 1. Furthermore, assume Δ𝜉,𝑚in Equation (4) from Proposition 1 satisfies Assumptions C-E from the Supporting Information. Then under 𝐻𝐴, the limit distribution in Theorem 2 from the Supporting Information, holds with 𝜏𝑚= 𝜏𝜉,𝑚and 𝑐𝛼= 𝑐𝜉,𝛼. Moreover, if 𝛿𝜇,𝑚≠0 and also satisfies Assumption 2 with Δ𝜉,𝑚in Equation (5) from Proposition 1 (satisfying Assumptions C-E from the Supporting Information) the statistic 𝐷𝜉(𝑚, 𝑘) converges weakly with limiting distribution given in Theorem 2 from the Supporting Information.
+
+[p5.10] Proof. From Proposition 1, given a certain change size in the raw data, we know the change size in the forecast errors. This, in combination with Theorem 2 from the Supporting Information, yields the above result. ◽
+
+[p5.11] Propositions 1 and 2, and Corollary 2, show that, provided the mean and variance changes in the potentially sophisticated raw data are large enough, they will result in a mean change in the squared forecast errors that is detectable using our framework.
+
+[p5.12] 3 | Common Forecasting Models
+
+[p5.13] Here we investigate some common forecasting models and show how these can be used within our framework to detect different types of changes. We consider ARMA and ETS forecasting models, showing when they satisfy our forecasting model assumptions and give two introductory simulation examples illustrating the effectiveness of their forecast errors for detecting changepoints. Note that a more detailed simulation study is presented in Section 4. 3.1 | ARMA Models
+
+[p5.14] We denote {𝑌𝑡∶𝑡= 1, 2, . . . } by the ARMA(𝑝, 𝑞) process, 𝜙(𝐵)(𝑌𝑡−𝜆𝑡) = 𝜃(𝐵)𝜖𝑡, 𝑡= 1, 2, . . . (6)
+
+[p5.15] where 𝜆𝑡are the mean parameters, 𝜙(𝐵) = 1 −𝜙1𝐵−· · · −𝜙𝑝𝐵𝑝
+
+[p5.16] and 𝜃(𝐵) = 1 + 𝜃1𝐵+ · · · + 𝜃𝑞𝐵𝑞are the autoregressive and moving average polynomials respectively and 𝐵is the back-shift operator. The error terms, 𝜖𝑡, are assumed to be independent, zero-mean random variables with variance 𝜎2
+
+[p5.17] 𝑡. We assume the ARMA process is causal and invertible, meaning . . .
+
+[p5.18] 𝜙(𝑥) ≠0 and 𝜃(𝑥) ≠0 for all |𝑥| ≤1
+
+[p5.19] Interest lies in testing whether the time-dependent parameters (specifically 𝜆𝑡and 𝜎𝑡) remain constant or change at some time point. A change in 𝜆𝑡corresponds to a mean change in the data, while a change in 𝜎𝑡corresponds to a variance change. Here we investigate how an ARMA forecasting model would react to changes in 𝜆𝑡and 𝜎𝑡.
+
+[p5.20] First, we present a small simulated example to display the effectiveness of using forecast errors to detect a mean change in an ARMA(1,1) model. For details on how the data was generated and the creation of the forecasting model, see Section 4. Figure 1
+
+[p6.1] 2.5 0.0 −2.5 4 2 Value 0 −2 cpt=119 at Time=419 200 100 0 Data et D�(m,k) 0 100 200 300 400 500 Time
+
+[p6.2] FIGURE 1 | Data generated from an ARMA(1,1) model with a change in mean at time point 400; the resulting forecasting errors when using an ARMA forecasting model; and the detector, 𝐷𝜇(𝑚, 𝑘), where the dashed line shows the associated threshold for detecting a change. The vertical dotted line represents the start of the monitoring period.
+
+[p6.3] shows some raw data generated from an ARMA(1,1) model with 𝜆= 0, 𝜙= −0.8, 𝜃= 0.2, and a change in mean at time point 400. Using an ARMA forecasting model and sequentially pro-ducing one-step-ahead forecasts, we obtain the forecast errors shown. These forecast errors appear to be i.i.d. and clearly display the changepoint in the raw data. Moreover, the detector (here 𝐷𝜇(𝑚, 𝑘) with 𝑚= 300) rises sharply after the changepoint and hits the required threshold (the dashed line) to detect the change just 19 time points after it has occurred. Figure 1 demonstrates that mean changes in ARMA models will manifest in the forecast errors. Additionally, as the forecast errors are i.i.d., this makes detecting the changepoint easier using 𝐷𝜇(𝑚, 𝑘) than using 𝐷(𝑚, 𝑘) on the raw data. This is demonstrated further in Section 4.
+
+[p6.4] Detecting changes in ARMA model parameters was also considered in Aue et al. (2015). They proposed monitoring 𝜖𝑡and 𝜖2
+
+[p6.5] 𝑡as changes in the ARMA model parameters would manifest in 𝜖𝑡and 𝜖2
+
+[p6.6] 𝑡. This approach is similar to ours, as under a perfectly estimated ARMA model, the residuals and forecast errors would be identi-cal. Note that the method in Aue et al. (2015) is exclusively for ARMA models, whereas our framework is more general and can be used with many different forecasting models.
+
+[p6.7] In the mean change scenario, Aue et al. (2015) showed that a change size of 𝛿𝜇,𝑚in the mean parameter 𝜆would manifest in 𝜖𝑡(and therefore our forecast errors) as ( ) ∞ ∑ 𝑝 ∑ Δ𝜇,𝑚= 𝛿𝜇,𝑚 𝜙𝑗 𝜓𝑙(𝜃) 1 − 𝑗=1 𝑙=0 where ∞ ∑ 1 𝜃(𝑧) = 𝜓𝑙(𝜃) 𝑙=0
+
+[p6.8] Therefore, Assumptions 1 and 2 are satisfied and assuming Δ𝜇,𝑚 satisfies Assumptions C-E from the Supporting Information, then
+
+[p6.9] Corollaries 1 and 2 hold, giving us the limit distribution of the stopping times under 𝐻0 and 𝐻𝐴.
+
+[p6.10] Similarly, for a change in variance in the data of size 𝛿𝜉,𝑚, Aue et al. (2015) showed this would produce a change size in 𝜖2
+
+[p6.11] 𝑡(and therefore our squared forecasting errors) as Δ𝜉,𝑚= 𝛿𝜉,𝑚. Note that, as expected, this matches with Proposition 1. Again, if Δ𝜉,𝑚sat-isfies Assumptions C-E from the Supporting Information and Δ𝜇,𝑚= 0, then Corollary 2 and Proposition 2 hold. 3.2 | ETS Models
+
+[p6.12] ETS models cover a wide range of model structures. Here we show that generally ETS forecasting models do not satisfy Assumption 2 when detecting mean changes, however our methodology will still allow for the detection of variance changes. For demonstration purposes, for the mean change setting, we consider the local level model, ETS(A,N,N), with an additive error structure, no trend, and no seasonality. We can produce one-step-ahead forecasts using the ETS(A,N,N) model by the recursive relation,̂
+
+[p6.13] 𝑦𝑡(1) =̂ 𝑦𝑡−1(1) + 𝛼𝑒𝑡−1 (7)
+
+[p6.14] where 𝑒𝑡−1 is the forecast error at time point 𝑡−1 and 0 < 𝛼< 1 is the smoothing parameter. A larger value of 𝛼will cause the model to adapt to the new data more quickly, while a smaller value will place more weight on historical values, making the model less sensitive to recent data.
+
+[p6.15] ETS models adapt well to mean changes in raw data, and in the majority of scenarios, return to being unbiased after a few time steps, as shown in the following proposition.
+
+[p6.16] Proposition 3. Let {𝑌𝑡∶𝑡= 1, 2, . . . } follow the change in mean model in Equation (2) and be a forecasting model that follows (7). Assuming 𝔼𝐹 [𝑌𝑡|̃𝑦𝑡
+
+[p6.17] ] = 𝜆, the expectation of the forecast
+
+[p7.1] 105 100 60 40 Value 20 0 600 cpt=107 at Time=407 400 200 0 Data et 2 D�(m,k) 0 100 200 300 400 500 Time
+
+[p7.2] FIGURE 2 | Data with a variance change at time point 400, with dashed lines showing prediction intervals from an ETS forecasting model. The squared forecast errors are shown along with the Detector, with the dashed line being the threshold. The vertical dotted line shows the start of the monitoring period.
+
+[p7.3] errors, after the changepoint, is ⎧ ⎪ ⎨ ⎪⎩ 𝛿𝜇,𝑚 for 𝑠= 1 ( 1 −∑𝑠−2 𝑖=0𝛼(1 −𝛼)𝑖) [ ] 𝔼 𝑒𝑘∗+𝑠 = (𝜆+ 𝛿𝜇,𝑚) ( 𝛼(1 −𝛼)𝑠−1 −(1 −𝛼)𝑠) −𝜆 for 𝑠= 2, 3, . . .
+
+[p7.4] Proof. This follows from the repeated substitution of the previous forecast errors into (7) until the pre-change regime is reached. ◽
+
+[p7.5] Proposition 3 shows that as 𝑠increases, the forecast errors will return to zero assuming 𝛼> 0. Hence, Assumption 2 is not satisfied unless 𝛼= 0. Moreover, we can see that for larger 𝛼, this convergence to zero will occur faster.
+
+[p7.6] Thus, mean changes in the raw data will only manifest in the forecast errors if 𝛼is small. This is one of the advantages of the ETS model—it adapts to non-stationarity in the mean. However, our framework can still be used to detect variance changes in the raw data. These variance changes will affect the prediction interval resulting from the ETS model. Here we show a small example illustrating how a variance change in raw data can make the prediction interval poor and how this can be detected using the squared forecast errors from an ETS model.
+
+[p7.7] Figure 2 shows raw data that exhibits a trend and a variance change at time point 400. We use an ETS(A,A,N) model to forecast this data, and the prediction interval (based on ±2 standard errors) is shown by the dashed lines. Clearly, after the changepoint, there are many data points lying outside the prediction interval, and hence we need to detect the change in variance so that the prediction interval can be re-calibrated. The squared forecast errors show a clear mean change after the variance change in the data has occurred and the detector (here 𝐷𝜉(𝑚, 𝑘) with 𝑚= 300) reaches the threshold, shown by the dashed line, just 7 time points after the change has occurred.
+
+[p7.8] This means a change in the squared forecast errors is to be expected due to Proposition 1. Hence, assuming the variance change size in the raw data, 𝛿𝜉,𝑚, satisfies Assumptions C-E from the Supporting Information, then the limit distribution of the stopping time under 𝐻0 and 𝐻𝐴is given in Corollary 2 and Proposition 2. 4 | Simulation
+
+[p7.9] We now examine the performance of our framework in a selec-tion of simulation examples. We present changes in mean, trend, and autoregressive parameters within seasonal data. Simpler model structures are given in the Supporting Information. Note that Assumptions 1 and 2 required for the theoretical validity of the stopping rule are not necessarily satisfied in all scenarios, however, we still show satisfactory performance.
+
+[p7.10] We compare the detector 𝐷𝜉(𝑚, 𝑘) with the squared forecast errors from an appropriate (1) ARMA and (2) ETS model against (3) the detector 𝐷(𝑚, 𝑘) with the (centered) squared raw data as in Inclan and Tiao (1994). Throughout we will refer to 𝐷(𝑚, 𝑘) based upon the raw data as Raw CUSUM; 𝐷⋅(𝑚, 𝑘) based upon the ARMA forecast errors as ARMA Forecast Errors; and 𝐷⋅(𝑚, 𝑘) based upon the ETS model forecast errors as ETS Forecast Errors with the choice of 𝐷𝜇(𝑚, 𝑘) or 𝐷𝜉(𝑚, 𝑘) dependent on the type of change.
+
+[p7.11] The forecasting models are trained on an initial proportion of the data of length 𝑛train = 300. Then the forecasting models sequentially produce one-step-ahead forecasts yielding the required forecast errors. To generate the ARMA forecasting models, we use the Arima function within the forecast R package (Hyndman et al. 2021), and for the ETS forecasting model, we use the es function within the smooth R package (Svetunkov 2024). To determine when a change has occurred, we use the theoretical thresholds from Theorem 1 from the Supporting Information and
+
+[p8.1] Corollaries 1 and 2 with 𝛾= 0 and false alarm rate set at 0.05. For the Raw CUSUM, to estimatê 𝜎𝑚within the threshold, we use the Bartlett long run variance estimator (Andrews 1991) from the sandwich R package (Zeileis et al. 2020). For the ARMA Forecast Errors and ETS Forecast Errors, we assume the forecast errors are i.i.d., so the traditional standard deviation estimator is used. Throughout, we repeat each scenario 1,000 times and report the average detection delay (ADD) with error bars showing 2 empir-ical standard errors on either side of the mean; detection probability (DP) and false detection probability (FDP). The ADD is the mean of the detection delays given that a change was sig-naled within the length of the data. The DP is the proportion of simulations where a change was detected within the length of the monitoring data. Finally, the FDP is the proportion of simulations where a change was detected before the true change had occurred. Hence, we seek an ADD as close to 0 as possible; a DP close to 1, and an FDP close to 0. Unless otherwise specified, we assume the random errors (innovations) are nor-mally distributed, but note our framework does not require this assumption.
+
+[p8.2] Throughout, we generate data with an ARMA error structure introduced in Equation (6). In practice, it is rare to know the exact data-generating process, and this raises questions regarding the misspecification of our forecasting model. Clearly, given that the data-generating process is ARMA, the most appropriate forecasting model should be an ARMA model with the same order. However, we use the auto.arima function from the forecast package to pick the order of the ARMA model as well as estimate the model parameters. This means the forecasting model used to generate the ARMA Forecast Errors may also be misspecified. We show that despite these misspecifications, a good forecasting model generally still produces better detection results than using the Raw CUSUM.
+
+[p8.3] 4.1 | Mean and Trend Changes in Seasonal Data
+
+[p8.4] We examine two different scenarios, one where a mean shift occurs and one where a trend (drift) emerges in the underlying data that includes a seasonal component, to mimic applications. For the mean change scenario, we generate errors that follow an ARMA(2,1) model with 𝜙= (−0.6, 0.3), 𝜃= −0.3, 𝜆= 0, and 𝜎2 = 1. We add a changepoint of size 𝛿𝜇at time point 𝑘∗= 100. We add a seasonal component to the data with a frequency 12, mimicking monthly data. Within each season, the data follows the curve 𝑦= 10 sin(𝑥) with 𝑥∈[0, 𝜋], so the mean of each seasonal component is taken from 12 equally spaced points along this curve.
+
+[p8.5] For the trend change scenario, we simulate errors, 𝜖𝑡, following an ARMA(1,1) model with 𝜙= 0.2, 𝜃= 0.2, 𝜆= 0 and 𝜎2 = 1. We simulate the data with the form 𝑦𝑡= 1[𝑡> 𝑚+ 𝑘∗]𝛽𝑡+ 𝜖𝑡for vary-ing gradients 𝛽. Hence, the pre-change data has no trend, and the post-change data has a trend with specified gradient, 𝛽. Moreover, we add a seasonal component to the data with frequency 7, mimicking daily data with day of the week effects. Each 7-time point cycle follows the curve 𝑦= 10 cos(𝑥) with 𝑥∈[0, 2𝜋], so the mean of each seasonal component is taken from 7 equally spaced points along this curve.
+
+[p8.6] Due to the added seasonal component, we can no longer specify the exact models for the ARMA Forecast Errors, without using dummy regressors or Fourier expansions. In practice, it is common to use the auto.arima function from the forecast package for the ARMA Forecast Errors. We estimate the seasonal ARMA forecasting model, specifying that the model should have no differencing. This function estimates the most appropriate seasonal ARMA model using AIC.
+
+[p8.7] Figure 3 shows some interesting results. For the mean change scenario, ARMA Forecast Errors has a high DP and extremely low ADD across all scenarios and outperforms the Raw CUSUM. In the change in trend scenario, both ARMA Forecast Errors and Raw CUSUM have extremely high DP; however, the ARMA Forecast Errors has a lower ADD across all change sizes. The FDP is low across all scenarios.
+
+[p8.8] 4.2 | Change in Autoregressive Parameter in Seasonal Data
+
+[p8.9] We now examine scenarios where we have data with AR(1)-generated errors that undergo a change in their autoregressive parameter at the specified changepoint. For this section, we include seasonality with a frequency of 4, mimicking quar-terly data. The length of the data, training sizes, etc., remain the same as in the previous scenarios, and we test two scenarios:
+
+[p8.10] 1. The pre-change data has AR(1) errors with 𝜙pre = 0.2 and 𝜆= 0. The post-change errors remain AR(1) but with vary-ing parameters, 𝜙post.
+
+[p8.11] 2. The pre-change data has AR(1) errors with 𝜙pre = 0.8 and 𝜆= 0. The post-change errors remain AR(1) but with vary-ing parameters, 𝜙post.
+
+[p8.12] The seasonality is created by adding dummy variables, making the mean of each quarter (−2, 5, 7, −10) respectively. We use the auto.arima function from the forecast package to fit a seasonal ARMA model, and we specify that the model should have no differencing. For the ETS Forecast Errors we use an ETS(A,N,A) model with smoothing parameters to be estimated.
+
+[p8.13] Figure 4 shows that the DP and ADD are better for all methods when the dependence increases after the change. In all scenarios, using forecast errors gives better results than the Raw CUSUM. This is not unexpected as the Raw CUSUM does not take the seasonality into account, which results in an overestimation of the variance in the Phase I (training) period. A larger variance estimate makes changes much harder to detect. The FDP is con-servative for all methods (< 0.075). 5 | Application
+
+[p8.14] We now apply this approach to two different applications. Firstly, we seek to determine a change in mail volumes indicating the start of the Christmas peak season within a Royal Mail delivery office by examining the forecast errors of the number of parcels being delivered each day. This is an example where only the forecast errors are known, and the underlying data and forecasts
+
+[p9.1] 1.00 0.05 0.04 0.75 0.03 FDP DP 0.50 0.02 0.25 0.01 0.00 0.00 300 ADD 200 100 0
+
+[p9.2] 0.5 1.0 1.5 2.0 2.5 Change Size
+
+[p9.3] 0.5 1.0 1.5 2.0 2.5 Change Size 1.0 0.20 0.15 0.8 FDP DP 0.10 0.6 0.05 0.00
+
+[p9.4] 0.5 1.0 1.5 2.0 2.5 Change Size 150 ADD 100 50 0.008 0.017 0.025 0.033 0.042 � 0.008 0.017 0.025 0.033 0.042 � 0.008 0.017 0.025 0.033 0.042 �
+
+[p9.5] Method ARMA Forecast Errors ETS Forecast Errors Raw CUSUM
+
+[p9.6] FIGURE 3 | Detection Probability (DP), False Detection Probability (FDP), and Average Detection Delay (ADD), with error bars (barely visible) showing 2 standard errors either side of the mean, for two scenarios; top, a change in mean and bottom, a change in trend within seasonal data.
+
+[p9.7] are unknown to us. Secondly, we monitor NHS A&E admissions for Gallstone-related pathology (GRP) and seek to identify any changepoints by fitting an appropriate ARMA forecasting model.
+
+[p9.8] 5.1 | Parcel Delivery Volumes
+
+[p9.9] Each day, Royal Mail forecasts the number of parcels that need to be delivered from each delivery office across the UK. With accurate forecasts, the Delivery Office managers can make informed decisions for each day, such as ensuring there are enough staff on a shift to meet demand. Each year, the number of parcels being delivered increases around the Christmas period; however, the exact date can differ from year to year and between different delivery offices. Hence, to maintain accurate staffing levels, Royal Mail needs to quickly identify when the Christmas peak season begins.
+
+[p9.10] Here we aim to identify the start of the Christmas peak season in one specific delivery office. We take the forecast errors received from Royal Mail, which date from the 1st July 2020 through to 31st December 2020. We perform our analysis assuming we receive the data in a sequential fashion and aim to identify the changepoint as soon as possible. The Christmas peak season can start anytime from the start of November, hence we will use the data from July to October as our Phase I (training) sample and begin monitoring the forecast errors from 1st November. We will use both detectors 𝐷𝜇(𝑚, 𝑘) and 𝐷𝜉(𝑚, 𝑘) with the theoretical
+
+[p9.11] thresholds from Corollaries 1 and 2 to determine when a change has occurred.
+
+[p9.12] Figure 5 shows the forecast errors along with the detectors 𝐷𝜇(𝑚, 𝑘) and 𝐷𝜉(𝑚, 𝑘). Both detectors identify a changepoint on the 2nd of December, and looking at the forecast errors, this cor-responds to a rise in the mean and variance, indicating the start of the Christmas peak season.
+
+[p9.13] Using this information, Royal Mail would be able to adjust its forecasting model to account for the increase in parcels being delivered around the Christmas period, knowing that the Christmas peak season has begun. These forecasts feed into weekly scheduling of staff, thus avoiding staff shortages. 6 | GRP Admissions
+
+[p9.14] We examine the proportion of A&E admissions related to Gallstone-related pathology (GRP) from a number of partici-pating hospitals across England. This dataset is based on NHS Hospital Episode statistics and was initially analyzed in Taib et al. (2021). The data consists of the monthly proportion of GRP A&E admissions and is shown in the top panel of Figure 6. There is a clear changepoint in the trend that we wish to identify, which is marked by the vertical dashed line. The analysis of this dataset in Taib et al. (2021) was performed retrospectively after all the
+
+[p10.1] 1.00 0.20 0.75 0.15 FDP DP 0.50 0.10 0.25 0.05 0.00 0.00 ADD 200 100 0.5 0.6 0.7 0.8 0.9 �1 0.5 0.6 0.7 0.8 0.9 �1 1.00 0.20 0.75 0.15 FDP DP 0.50 0.10 0.25 0.05 0.00 0.00 0.5 0.6 0.7 0.8 0.9 �1 250 200 ADD 150 −0.1 0.0 0.1 0.2 0.3 �1 −0.1 0.0 0.1 0.2 0.3 �1 −0.1 0.0 0.1 0.2 0.3 �1
+
+[p10.2] Method ARMA Forecast Errors ETS Forecast Errors Raw CUSUM
+
+[p10.3] FIGURE 4 | Detection Probability (DP), False Detection Probability (FDP), and Average Detection Delay (ADD), with error bars showing 2 standard errors either side of the mean, for two scenarios with a change in autoregressive parameter of different sizes; top 𝜙0 = 0.2, bottom 𝜙0 = 0.8. cpt=2020−12−02 cpt=2020−12−02 et D�(m,k) D�(m,k)
+
+[p10.4] Sep Oct Nov Dec Jan Delivery Date
+
+[p10.5] FIGURE 5 | Forecast errors for the number of parcels to be delivered from a specific Royal Mail delivery office in 2020; the detectors 𝐷𝜇(𝑚, 𝑘) and 𝐷𝜉(𝑚, 𝑘) with associated thresholds shown by the dashed lines.
+
+[p11.1] 1.7 1.6 1.5 1.4 0.1 0.0 −0.1 Value −0.2 0 1 2 3 4 5 cpt=2017−07−01 0.6 cpt=2017−05−01 0.4 0.2 0.0
+
+[p11.2] Data et D�(m,k) D�(m,k) 2013 2014 2015 2016 2017 2018 2019 2020 Date
+
+[p11.3] FIGURE 6 | Data showing the proportion of GRP A&E admissions; the forecast errors from a SARIMA(1, 0, 0)(1, 0, 0)12 model; and the detectors 𝐷𝜇(𝑚, 𝑘) and 𝐷𝜉(𝑚, 𝑘) with associated thresholds shown by the horizontal dashed lines. The dotted line represents the start of the monitoring period, and the vertical dashed line indicates a changepoint identified in the retrospective analysis.
+
+[p11.4] data from 2010 to 2020 was available. However, to allow for accurate forecasting, using a sequential changepoint method could detect this changepoint in a timely manner.
+
+[p11.5] Taib et al. (2021) found that a SARMA(1, 0, 0)(1, 0, 0)12 model was appropriate for the data with a time regressor to account for the trend. To identify a change in a sequential manner, using a model-based approach, would require at least two years’ worth of data to account for the yearly seasonality—this could be far too long and result in poor forecasts of GRP admissions.
+
+[p11.6] We demonstrate the effectiveness of our method by fitting a SARMA(1, 0, 0)(1, 0, 0)12 on the data up to 2013 and use this as our forecasting model. We used this forecasting model to generate one-step-ahead forecasts for the remaining data up to 2020. We used the data from 2013 to 2016 as our Phase I (training) data of size 𝑚= 36 and performed our analysis using both detectors 𝐷𝜇(𝑚, 𝑘) and 𝐷𝜉(𝑚, 𝑘) with monitoring beginning in 2016.
+
+[p11.7] Figure 6 shows the forecast errors and the detectors along with the associated theoretical thresholds from Corollaries 1 and 2. We can see that the changepoint is identified in 𝐷𝜇(𝑚, 𝑘) just four data points after a changepoint identified in Taib et al. (2021) (marked by the dashed line). Additionally, 𝐷𝜉(𝑚, 𝑘) identified the changepoint just 2 time points after the change occurred. Both of these detectors have a much shorter detection delay than using a model-based sequential changepoint algorithm, which has a minimum possible detection delay of 24 months due to the yearly seasonality in the data. 7 | Conclusion
+
+[p11.8] This paper presents a new framework for monitoring forecasting models through the use of sequential changepoint detection. We have shown that common changepoints in underlying, potentially complex, data-generating processes manifest in the one-step-ahead forecast errors under certain assumptions and
+
+[p11.9] can, therefore, be detected using sequential changepoint analysis. Moreover, we have shown that by monitoring the forecast errors rather than the raw data for changepoints, we can greatly reduce the detection delay of changepoints while maintaining a low false positive rate. When using ARMA forecasting models, we have shown that changes in mean and variance in the underlying data can be detected. ETS models often adapt to mean changes, but can still be used to detect variance changes, which can cause prediction intervals to become miscalibrated. Applying our framework to delivery volume forecast errors from a Royal Mail delivery office allowed for the rapid detection of the Christmas peak season, thus allowing future forecasts and staffing to be appropriately adjusted. Furthermore, we showed that using a forecasting model on NHS A&E admission data allowed us to detect a changepoint in the proportion of GRP admissions in a shorter time frame than would be possible using retrospective analysis or a model-based sequential changepoint approach.
+
+[p11.10] There are a number of extensions that could be made to this framework. Firstly, it is becoming increasingly common for multivariate forecasts to be made where many variables/products are forecasted at once. Incorporating a multivariate sequential changepoint algorithm on the resulting vector of forecast errors would be an interesting extension, but raises additional questions, such as the sparsity of the change, and is therefore left as future work. Additionally, here we focused on one-step-ahead forecast errors, but the framework is general for ℎ-steps ahead. Combining information from multiple forecast horizons would be an interesting extension. Acknowledgments
+
+[p11.11] Grundy is grateful for the support of the Engineering and Physical Sciences Research Council (grant number EP/L015692/1) and Royal Mail Group Ltd. Killick is grateful for the support of the UK Research Councils through grants EP/T014105/1, EP/T021020/1, EP/R01860X/1, and NE/T012307/1.
+
+[p12.1] Conflicts of Interest
+
+[p12.2] Grundy’s PhD project was co-sponsored by Royal Mail.
+
+[p12.3] Data Availability Statement
+
+[p12.4] The data from the A&E example is available from the corresponding author upon reasonable request. The data for the Royal Mail example is not available. References
+
+[p12.5] Andrews, D. W. K. 1991. “Heteroskedasticity and Autocorrelation Consis-tent Covariance Matrix Estimation.” Econometrica 59, no. 3: 817.
+
+[p12.6] Aue, A., C. Dienes, S. Fremdt, and J. Steinebach. 2015. “Reaction Times of Monitoring Schemes for ARMA Time Series.” Bernoulli 21, no. 2: 1238–1259.
+
+[p12.7] Aue, A., L. Horváth, and M. L. Reimherr. 2009. “Delay Times of Sequential Procedures for Multiple Time Series Regression Models.” Journal of Econometrics 149, no. 2: 174–190.
+
+[p12.8] Basseville, M., and I. V. Nikiforov. 1993. Detection of Abrupt Changes: Theory and Application. 104th ed. Englewood Cliffs.
+
+[p12.9] Chapman, J.-L., and R. Killick. 2020. “An Assessment of Practitioners Approaches to Forecasting in the Presence of Changepoints.” Quality and Reliability Engineering International 36, no. 8: 2676–2687.
+
+[p12.10] Chu, C.-S. J., M. Stinchcombe, and H. White. 1996. “Monitoring Structural Change.” Econometrica 64, no. 5: 1045.
+
+[p12.11] Csörgö, M., and L. Horváth. 1997. Limit Theorems in Change-Point Analysis, Wiley Series in Probability and Statistics. John Wiley & Sons.
+
+[p12.12] Fildes, R. 1985. “Quantitative Forecasting-The State of the Art: Economet-ric Models.” Journal of the Operational Research Society 36, no. 7: 549.
+
+[p12.13] Fildes, R., K. Nikolopoulos, S. F. Crone, and A. A. Syntetos. 2008. “Forecasting and Operational Research: A Review.” Journal of the Operational Research Society 59, no. 9: 1150–1172.
+
+[p12.14] Gama, J., P. Medas, G. Castillo, and P. Rodrigues. 2004. “Learning With Drift Detection.” In Advances in Artificial Intelligence – SBIA 2004, edited by A. L. C. Bazzan and S. Labidi, 286–295. Springer.
+
+[p12.15] Gombay, E., and D. Serban. 2009. “Monitoring Parameter Change in AR(p) Time Series Models.” Journal of Multivariate Analysis 100, no. 4: 715–725.
+
+[p12.16] Horváth, L., M. Hušková, P. Kokoszka, and J. Steinebach. 2004. “Monitoring Changes in Linear Models.” Journal of Statistical Planning and Inference 126, no. 1: 225–251.
+
+[p12.17] Hyndman, R., G. Athanasopoulos, C. Bergmeir, et al. 2021. “Forecast: Forecasting Function for Time Series and Linear Models”.
+
+[p12.18] Inclan, C., and G. C. Tiao. 1994. “Use of Cumulative Sums of Squares for Retrospective Detection of Changes of Variance.” Journal of the American Statistical Association 89, no. 427: 913.
+
+[p12.19] Krasheninnikov, V. R., V. N. Klyachkin, and Y. E. Kuvayskova. 2018. “Models Updating for Technical Objects State Forecasting.” In Proceed-ings of the 2018 3rd Russian-Pacific Conference on Computer Technology and Applications (RPC), 1–4. IEEE.
+
+[p12.20] Page, E. S. 1954. “Continuous Inspection Schemes.” Biometrika 41, no. 1/2: 100.
+
+[p12.21] Robbins, M., C. Gallagher, R. Lund, and A. Aue. 2011. “Mean Shift Testing in Correlated Data.” Journal of Time Series Analysis 32, no. 5: 498–511.
+
+[p12.22] Ross, G. J., N. M. Adams, D. K. Tasoulis, and D. J. Hand. 2012. “Expo-nentially Weighted Moving Average Charts for Detecting Concept Drift.” Pattern Recognition Letters 33, no. 2: 191–198.
+
+[p12.23] Svetunkov, I. 2024. Smooth: Forecasting Using State Space Models. R package version 4.0.2. https://CRAN.R-project.org/package=smooth.
+
+[p12.24] Syntetos, A. A., Z. Babai, J. E. Boylan, S. Kolassa, and K. Nikolopoulos. 2016. “Supply Chain Forecasting: Theory, Practice, Their Gap and the Future.” European Journal of Operational Research 252, no. 1: 1–26.
+
+[p12.25] Taib, A., R. Killick, K. Hussain, H. Patel, and M. R. Obeidallah. 2021. “Is There Seasonal Variation in Gallstone Related Admissions in England?” HPB: The Official Journal of the International Hepato Pancreato Biliary Association 23, no. 11: 1732–1743. https://doi.org/10.1016/j.hpb.2021.04. 009.
+
+[p12.26] Tartakovsky, A., I. V. Nikiforov, and M. Basseville. 2014. Sequential Analysis: Hypothesis Testing and Changepoint Detection. CRC Press.
+
+[p12.27] Zeileis, A., S. Köll, and N. Graham. 2020. “Various Versatile Variances: An Object-Oriented Implementation of Clustered Covariances in R.” Journal of Statistical Software 95, no. 1: 1–36.
+
+[p12.28] Supporting Information
+
+[p12.29] Additional supporting information can be found online in the Supporting Information section. Data S1. Supporting Information.

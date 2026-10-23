@@ -1,0 +1,433 @@
+[p1.1] IMA Journal of Management Mathematics (2024) 35, 403–425 https://doi.org/10.1093/imaman/dpad028 Advance Access publication on 15 December 2023
+
+[p1.2] Staying positive: challenges and solutions in using pure multiplicative ETS models
+
+[p1.3] IVAN SVETUNKOV† AND JOHN E. BOYLAN Centre for Marketing Analytics and Forecasting, Department of Management Science, Lancaster
+
+[p1.4] University, Lancaster University Management School, Lancaster LA1 4YX, UK
+
+[p1.5] †Corresponding author. Email: i.svetunkov@lancaster.ac.uk
+
+[p1.6] [Received on 21 May 2023; accepted on 6 January 2023]
+
+[p1.7] Accepted by: Zied Babai
+
+[p1.8] Exponential smoothing in state space form (ETS) is a popular forecasting technique, widely used in research and practice. While the additive error ETS models have been well studied, the multiplicative error ones have received much less attention in forecasting literature. Still, these models can be useful in cases, when one deals with positive data, because they are supposed to work in such situations. Unfortunately, the classical assumption of normality for the error term might break this property and lead to non-positive forecasts on positive data. In order to address this issue, we propose using Log-Normal, Gamma and Inverse Gaussian distributions, which are defined for positive values only. We demonstrate what happens with ETS(M,∗,∗) models in this case, discuss conditional moments of ETS with these distribution and show that they are more natural for the models than the Normal one. We conduct the simulation experiments in order to study the bias introduced by point forecasts in these models and then compare the models with different distributions. We finish the paper with an example of application, showing how pure multiplicative ETS with a positive distribution works.
+
+[p1.9] Keywords: exponential smoothing; forecasting; state space model. 1. Introduction
+
+[p1.10] Exponential smoothing is one of the most popular models used for demand forecasting in practice (Weller & Crone, 2012). It was originally proposed by Brown (1956) and Holt (2004), developed over the years by Snyder (1985) and Keith Ord et al. (1997) as a Single Source of Error model and finally presented as a holistic framework by Hyndman et al. (2002). This framework includes Error, Trend and Seasonal components, thus being called ‘ETS’. Different components of the model can be ‘A’—additive, ‘M’— multiplicative or ‘N’—none (with exception of the error term, which can only be either ‘A’ or ‘M’, and the trend component, which can also be ‘Ad’—damped additive and ‘Md’—damped multiplicative). The developed taxonomy presents 30 models based on different types of components, making the framework flexible and applicable to a wide variety of time series including positive, negative and mixed data. Since then, the ETS model has become popular in forecasting community, performing well in different competitions (Athanasopoulos et al., 2011; Makridakis et al., 2020) and being used as the base model for development of new approaches (see, for example, Kourentzes et al., 2014; Osman & King, 2015; Svetunkov & Boylan, 2023; Svetunkov et al., 2022, 2023) and as one of the common benchmarks (for example, Thomakos & Nikolopoulos, 2014; Ramos et al., 2015; Babai et al., 2020).
+
+[p1.11] However, one of the main limitations of the approach of Hyndman et al. (2008) is that it is built on the assumption of normality of the error term for both additive and multiplicative models. As a result,
+
+[p1.12] © The Author(s) 2024. Published by Oxford University Press on behalf of the Institute of Mathematics and its Applications. All rights reserved.
+
+[p1.13] This is an Open Access article distributed under the terms of the Creative Commons Attribution Non-Commercial License (https://creativecommons.org/licenses/by-nc/4.0/), which permits non-commercial re-use, distribution, and reproduction in any medium, provided
+
+[p1.14] the original work is properly cited. For commercial re-use, please contact journals.permissions@oup.com
+
+[p2.1] the latter form is applicable only to the data with high positive values—in this case, the variance of the error term becomes small enough for the forecast values in the multiplicative error models not to become negative. Unfortunately, in case of the lower volume data (e.g. not thousands of units, but tens), the variance of the error term might become large, which might lead to issues with the model, making it produce unrealistic forecasts in some cases and completely inapplicable in the others. For example, this impacts the prediction intervals and might lead to negative point forecasts even if the data are strictly positive.
+
+[p2.2] The pure multiplicative error models have been studied by Akram et al. (2009), who mentioned that there were several possibilities for the distributions of the error term, including Normal, Truncated Normal, Log-Normal and Gamma. The authors never investigated the idea further and instead of developing the ETS(M,∗,∗) model with these distributions, proposed a modified ETS (a model in logarithms) and focused on investigating its properties. While this is a solution to the problem, it sidesteps the original ETS taxonomy, introducing the new group of models. This means that the mixed models in the original ETS framework do not benefit from the fix introduced by Akram et al. (2009). Furthermore, the approach expands the number of possible ETS models that can be used, making the model selection even more challenging. We argue that modifying the original ETS instead of introducing new models is a more sustainable approach, as it simplifies the model extension and the process of the model selection. There are no other papers on the subject, and the issue with normality has never been fully investigated in the literature. ETS(M,∗,∗) have been overlooked in terms of theoretical problems and practical implementations. These models are particularly important, when we observe skewness, especially with lower volume data in such contexts as supply chain and retail, where the normality assumption becomes unreasonable.
+
+[p2.3] In this paper, we propose using several positive distributions in the original ETS(M,∗,∗) models, showing how the models work with them. We study their properties and discuss how to estimate ETS model with them and then use in forecasting. But before moving to the distributions in ETS(M,∗,∗), we discuss the properties of pure multiplicative ETS models to understand what their main limitations are and how they might impact the applicability of the proposed assumption. We finish the paper with an example of application and a discussion of the managerial implications of the pure multiplicative ETS models.
+
+[p2.4] 2. Properties of multiplicative error ETS models
+
+[p2.5] While the main properties of ETS models are well studies in Hyndman et al. (2008), several important elements have been neglected over the years. These mainly apply to the conditional expectation of the models.
+
+[p2.6] Discussing all the 30 ETS models, Hyndman et al. (2008) mention on page 23 that, when either the trend or the seasonal components are multiplicative, the point forecasts for the horizon h > 1, produced by models, might differ from the conditional expectations (Hyndman et al., 2008, pages 21 and 22). In order to investigate this issue further, we start by studying the properties of pure multiplicative models, reformulating them using logarithms via the following state space equations (Svetunkov, 2023b, Chapter 6):
+
+[p2.7] log yt =w′ log(vt−l) + log(1 + ϵt) , (2.1)
+
+[p2.8] log vt =F log vt−l + log(1k + gϵt)
+
+[p2.9] where yt is the actual value on observation t, w is the measurement vector, vt is the state vector, F is the transition matrix, g is the persistence vector, ϵt is the error term, l is the lag vector, 1k is the vector of ones
+
+[p3.1] of the size k and log is the natural logarithm. Note that the logarithm and exponent in the formulae (2.1) are taken element-wise. This formulation differs from the original Hyndman et al. (2008) one, because we use the lags of components l, while the original one uses a bigger transition matrix, tracking how the seasonality changes from one observation to another. The reason for this formulation is its compactness, because the transition matrix in the model (2.1) contains only up to 32 elements versus the (2 + m)2 in the original formulation of the ETS. At the same time, this compactness does not impact specific models, which do not differ between the approach (2.1) and the conventional one. An example of a model that can be written in the state space form based on (2.1) is ETS(M,Md,M) (originally proposed by Taylor, 2003) log yt = log lt−1 + φ log bt−1 + log st−m + log � 1 + ϵt �
+
+[p3.2] log lt = log lt−1 + φ log bt−1 + log(1 + αϵt) , (2.2)
+
+[p3.3] log bt = φ log bt−1 + log(1 + βϵt)
+
+[p3.4] log st = log st−m + log(1 + γ ϵt) for which ⎛ ⎞ ⎛ ⎞ ⎛ ⎞ ⎛ 1 φ lt bt 1 1 m ⎝ ⎠, vt = ⎝ ⎠, l = ⎝ ⎠, vt−l = ⎝ w = 1 st ⎞ ⎛ ⎞ ⎛ ⎞ ⎛ ⎞ lt−1 bt−1 st−m 1 φ 0 0 φ 0 0 0 1 α β γ 1 1 1 ⎠, F = ⎝ ⎠, g = ⎝ ⎠, 1k = ⎝ ⎠.
+
+[p3.5] In this case, lt is the level, bt is the trend, st is the seasonal components, φ is the dampening parameter, α, β and γ are the smoothing parameters and m is the seasonal lag. The model (2.2) also shows that there is a connection between the pure multiplicative ETS models and the pure additive ones applied to the data in logarithms, because in case of low values of smoothing parameters and the variance of the error term, the following approximation holds:
+
+[p3.6] log(1k + gϵt) ≈gϵt. (2.3)
+
+[p3.7] Note that by taking exponent in the model (2.2), we obtain the original model as formulated by Hyndman et al. (2008) yt =lt−1bφ lt =lt−1bφ � 1 + ϵt � t−1st−m t−1(1 + αϵt) . (2.4) t−1(1 + βϵt) bt =bφ st =st−m(1 + γ ϵt)
+
+[p3.8] In order to obtain the conditional h steps ahead expectation (given the information on the observation t), we need to have the following recursive formula, obtained directly from (2.1): h−1 �
+
+[p3.9] 1Fj−1 1 log(1k + g1ϵt+h−j) log yt+h = w′ 1Fh−1 1 log vt + w′ j=1 ⌈h m ⌉−1 � ⌈h m ⌉−1 m log vt + + w′ w′ mFj−1 mF j=1 (2.5) m log(1k + gmϵt+m⌈h
+
+[p3.10] m ⌉−j) + log(1 + ϵt+h),
+
+[p4.1] where ⌈·⌉is the ceiling function, the subscript 1 corresponds to the non-seasonal part of the model and m corresponds to the seasonal ones (e.g. the vector gm contains zeroes for α and β and non-zero γ if the seasonal model is under consideration). An example for the same ETS(M,Md,M) model is ⎛ ⎞ ⎛ ⎞ ⎛ ⎞ ⎛ ⎞ ⎛ ⎞ ⎛ ⎞ ⎠, Fm = 1 1 0 0 0 1 1 1 0 0 1 0 0 0 0 ⎝ ⎠, wm = ⎝ ⎠, F1 = ⎝ w1 = 0 0 0 0 0 0 0 0 1 α β 0 0 γ ⎝ ⎠, g1 = ⎝ ⎠, gm = ⎝ ⎠. 0
+
+[p4.2] Assuming that the error term is homoscedastic, not serially correlated and that log(1 + ϵt) = 0, the conditional expectation of the logarithm of the actual value h steps ahead based on (2.5) is h−1 � 1Fj−1 1 E E(log yt+h|t) = w′ 1Fh−1 1 log vt + w′ j=1 ⌈h m ⌉−1 � ⌈h m ⌉−1 m log vt + + w′ mF j=1 � log � 1k + g1ϵt+h−j �� (2.6) � log
+
+[p4.3] � 1k + gmϵt+m⌈h m ⌉−j �� . w′ mFj−1 m E
+
+[p4.4] Its exponent is the geometric mean conditional on the information on the observation t. The main issue with the expectation (2.6) is that in general, in case, when g contains non-zero elements, we cannot assume that
+
+[p4.5] E(log(1k + gϵt+h−j)) = 0k, (2.7)
+
+[p4.6] where 0k is the vector of zeroes. Therefore, the expectation (2.6) cannot be simplified any further. Even if we assume that all elements of gi are zero in (2.7), making it hold, the conditional expectation of yt+h will be greater than the exponent of the expectation (2.6) due to Jensen’s inequality. At the same time, according to Hyndman et al. (2008), the point forecast from the pure multiplicative models can be calculated as (based on our formulation) 1Fh−1 1 + w′ �� w′ ˆyt+h = exp � log vt � , (2.8) ⌈h m ⌉−1 m mF
+
+[p4.7] which does not correspond to any known statistics of a distribution. In a very special case, when g = 0k, the point forecast (2.8) coincides with the conditional geometric expectation rather than the arithmetic one. Another thing to note is that the geometric expectation (2.6) is in general less than or equal to the point conditional expectation. On the other hand, it will coincide with the point forecast only, when condition (2.7) is satisfied. In all the other cases, the geometric mean will be larger because the elements of g will be greater than zero. This means that the following condition should hold:
+
+[p4.8] ˆyt+h ≤ˇyt+h ≤μy,t+h, (2.9)
+
+[p4.9] where μy,t+h is the conditional h steps ahead expectation and ˇyt+h is the conditional h steps ahead geometric expectation. The are only three special cases, when the point forecast (2.8) will coincide with the geometric and the arithmetic expectations
+
+[p5.1] 1. When h = 1 for all models;
+
+[p5.2] 2. When h ≤m for the non-trended models with multiplicative seasonality;
+
+[p5.3] 3. For a special case, the model ETS(M,N,N).
+
+[p5.4] Case (1) is important for the construction of the model, where the fitted values coincide with the one-step-ahead forecast. Case (3) becomes apparent, when studying the following recursion for the ETS(M,N,N) model (based on the exponent of (2.5)):
+
+[p5.5] � 1 + αϵt+j � (1 + ϵt+h), (2.10) h−1 � yt+h = lt j=1
+
+[p5.6] the expectation of which is equal to lt, as long as E(1 + ϵt) = 1, (2.11)
+
+[p5.7] and the error term is i.i.d. The assumption about the expectation of the error term becomes important in ETS, because it guarantees that the one-step-ahead point forecasts correspond to the expectations of models. This is necessary for the construction of the model, where the fitted value is equal to one-step-ahead point forecast and is required to start the recursion. Furthermore, if it does not hold, then the transition equation in the holdout will differ from the typically assumed one, implying that the expectation of products of random variables needs to be calculated.
+
+[p5.8] While Hyndman et al. (2008) acknowledge the issue with the multiplicative error models, they claim that the difference between the point forecast and the expectation will in general be negligible. In order to counter this claim, we propose to consider the following example of time series N2703 from M3 competition data (Makridakis & Hibon, 2000). The series itself is shown in Fig. 1a and exhibits a negative trend, which can be modelled using ETS(M,M,N). This model is then applied to the data via adam() function from smooth package v3.2.0 (Svetunkov, 2023a) for R (R Core Team, 2020), producing 1 to 18 steps ahead forecasts. Figure 1b demonstrates the difference between the point forecast (using equation 2.9) and the simulated conditional expectation of the model on this series. It becomes apparent that on shorter horizons, the difference between the two values is negligible, but with the increase of the horizon, the difference between them grows exponentially. This example shows that in general, the conventional formula (2.8) should not be used for point forecasts generation—the simulations should be done instead.
+
+[p5.9] Analysing the formulae (2.6), (2.8) and (2.9), we argue that there are several elements that impact the conditional expectation, influencing the bias of the point forecasts of the model.
+
+[p5.10] • With the increase of the values of smoothing parameters α, β and γ , the bias of point forecasts should increase;
+
+[p5.11] • The distance between the conditional expectation and the point forecast will be larger for the larger values of the variance of the error term σ 2;
+
+[p5.12] • Finally, the difference between the two will increase with the increase of the forecast horizon h.
+
+[p5.13] As a side note, some of mixed ETS(M,∗,∗) models have been studied by Hyndman et al. (2008) more thoroughly than the others. For example, ETS(M,A,M) and ETS(M,Ad,M) are discussed in Chapter 6
+
+[p6.1] FIG. 1. An example of ETS(M,M,N) on the Series 2703 from M3 data.
+
+[p6.2] of their monograph. The authors suggest approximations for them, based on the assumption that the variance of the error term σ 2 is small. However, this assumption might be violated if one deals with low volume data, so the approximations proposed in the textbook might not be appropriate as well. As for the other mixed ETS(M,∗,∗) models, the conditional expectations for them do not have closed forms.
+
+[p6.3] As a conclusion from this section, we argue that conditional expectation from the multiplicative error models should be produced using simulations, not relying on the conventional point forecasts formulae, because the latter might be misleading.
+
+[p6.4] 3. Simulation experiment 1: bias of point forecasts
+
+[p6.5] In order to better understand what impacts the difference between the point forecast and the conditional expectation, we conduct a simulation experiment, investigating the influence of scale parameter, forecast horizon and values of smoothing parameters on the difference. We use ETS(M,Md,N) model, as it potentially exhibits the highest deviation of point forecasts from the conditional expectation. We consider the following options:
+
+[p6.6] • Scale σ = {0.01, 0.05, 0.1, 0.5, 1};
+
+[p6.7] • Smoothing parameters: α, β = {0.1, 0.2, 0.5};
+
+[p6.8] • Forecast horizon h = {10, 50, 100};
+
+[p6.9] • Dampening parameter for trend φ = {0.5, 0.9, 0.95, 1}.
+
+[p6.10] We then generated 100 observations from ETS(M,Md,N) model with an inverse Gaussian distribution (see discussion of distributions in Section 4) using the sim.es() function from the smooth package v3.2.0 for R (Svetunkov, 2023a) and applied the same model with the known parameters on the data, producing point forecasts and conditional expectations. We then calculate the percentage difference
+
+[p7.1] FIG. 2. Violinplot for the distribution of the percentage difference. The black vertical line corresponds to the median of the distribution, while the white dot is the mean value. between the two PD = μt+h −ˆyt+h , (3.1) μt+h
+
+[p7.2] thus measuring the deviation of the point forecasts from the conditional expectation. The value (3.1) will always lie between 0 and 1 due to the inequality (2.9) and has a simple interpretation, i.e. the conditional expectation is PD×100% higher than the point forecast. We then aggregate it over the forecast horizon (i.e. from h = 1 to the selected value) and repeat this experiment for 10,000 iterations in order to get a better understanding of the performance of the ETS(M,Md,N) model.
+
+[p7.3] The distribution of the variable (3.1) is shown on Fig. 2. We can see that the percentage difference has two modes: one corresponds to the lower values of σ, α, β and horizon, while the upper corresponds to the higher values of these variables. In order to summarize the results and see the impact of these variables on the bias of point forecasts, we fit the regression model on percentage differences, taking the scale, smoothing parameters and horizon (scaled in order to lie between 0 and 1, similar to the other variables) as independent variables (using alm function from greybox package v1.0.3 for R, Svetunkov, 2021). Before fitting the model, we transform the response variable into odds via odds = PD 1 −PD,
+
+[p7.4] in order to change its domain from (0, 1) to (0, ∞) and then do Box-Cox transformation, selecting λ that maximises the likelihood function (this is done automatically in alm function with the parameters distribution="dbcnorm"). All these transformations were needed in order to ensure that the model fits the data adequately and captures well the relations, which are non-linear in their nature in the original scale. The parameters of this model are summarized in Table 1, together with their standard errors and 99.9% confidence intervals. We need to note that the aim of this exercise is not to create the most suitable model for purposes of prediction or interpretation, but rather to capture complex relations between the variables and see, whether the bias is affected positively or negatively by them and what is the impact of each separate variable on it.
+
+[p7.5] The analysis of Table 1 shows that with the increase of any of these variables, the percentage difference between the conditional expectation and the point forecasts increases: all parameters are
+
+[p8.1] TABLE 1. Regression output for the bias of point forecasts data, experiment 1. Box-Cox parameter λ = 0.146
+
+[p8.2] Variables Estimate Std. Error Lower 0.05% Upper 99.95%
+
+[p8.3] (Intercept) −9.222 0.006 −9.242 −9.202 ∗ σ 2.755 0.003 2.745 2.765 ∗ horizon 3.656 0.003 3.646 3.667 ∗ α 1.578 0.007 1.555 1.600 ∗ β 3.739 0.007 3.716 3.762 ∗ φ 6.167 0.006 6.148 6.187 ∗ R2 = 0.986 Number of degrees of freedom: 534,884
+
+[p8.4] positive and their confidence intervals do not include zero values, so we can be sure about the values of the parameters on 99.9% confidence level. We have selected such a high confidence level to make sure that there is a small margin for the error. This meets our expectations and supports the earlier discussions in Section 2. Given that all the variables in the model lie between 0 and 1, we can also conclude that the increase of the parameter φ leads to the highest increase in bias among all variables, followed by β and then forecast horizon, while the impact of α on bias is the smallest. The specific values of parameters are difficult to interpret, and they do not provide any useful information.
+
+[p8.5] 4. Distributional assumptions in ETS framework
+
+[p8.6] After discussing some general properties of multiplicative error models, we can now move to the distributional assumptions of the model.
+
+[p8.7] 4.1 Potential distributions for ETS(M,∗,∗) model
+
+[p8.8] We argue that in order for the distribution to be efficiently used in ETS(M,∗∗), it needs to have the following properties.
+
+[p8.9] 1. Ease of use. Ideally, the distribution should have a simple location and scale parameters, which should have direct connection to the expectation and variance. This would simplify the inference with the distribution;
+
+[p8.10] 2. Flexible skewness and kurtosis. In order to cover different real life situation, the distribution should have skewness and kurtosis regulated using simple parameters (preferably location and scale in order not to introduce additional parameters);
+
+[p8.11] 3. Relation to the Normal distribution. It should have some relation to Normal distribution, preferably converging to it under some circumstances, i.e. increase of level of series. In this case, the multiplicative error models would behave similar to the additive error ones on high volume data;
+
+[p8.12] 4. Convexity of the likelihood function. This is a desired property, which guarantees consistency of the estimator (Newey & McFadden, 1994). If the function is not convex then this introduces additional complications in the estimation and makes the distribution less desirable.
+
+[p9.1] TABLE 2. Comparison of main statistics of several distributions. μ is the location, σ 2 is the scale, ξ is the shape parameter and ς is the standard deviation of the error term
+
+[p9.2] N (μ, σ 2) I G (μ, σ 2) log N (μ, σ 2) Γ (ξ, σ 2)
+
+[p9.3] Support (−∞, ∞) (0, ∞) (0, ∞) (0, ∞)
+
+[p9.4] Mean, E(1 + ϵt) μ μ eμ+ σ2 2 ξσ 2 μ = 1 μ = 1 μ = −σ 2
+
+[p9.5] Parameters restrictions in ETS 2 ξ = 1 σ 2
+
+[p9.6] Variance, V(1 + ϵt) = ς2 σ 2 σ 2 eσ 2 −1 σ 2
+
+[p9.7] Skewness 0 3ς ς3 + 3ς 2ς Kurtosis 3 15ς2 � (ς2 + 3)(ς2 + 1) + 3 � (ς2 + 1)2 6ς2
+
+[p9.8] TABLE 3. The log-likelihoods for ETS(M,∗,∗) models, where θ is the vector of all estimated parameters, except for the scale σ 2; y is the vector of actual values, μy,t is the one step ahead conditional expectation of the model and T is the sample size
+
+[p9.9] Distribution of 1 + ϵt log-likelihood
+
+[p9.10] 2 log � 2πσ 2� − 1 2σ 2 �T t=1 ϵ2
+
+[p9.11] t=1 log μy,t I G (1, σ 2) ℓ � θ, σ 2|y � = −T N (1, σ 2) ℓ t −�T
+
+[p9.12] 2 log � 2πσ 2� − 1 2σ 2 �T t=1 � θ, σ 2|y � = −T
+
+[p9.13] t 1+ϵt −3 2 �T t=1 log yt ϵ2
+
+[p9.14] 2 log � 2πσ 2� − 1 2σ 2 �T t=1 � −σ 2 2 , σ 2� ℓ � θ, σ 2|y � = −T log N � σ −2, σ 2� � θ, σ 2|y � = −T log Γ � σ −2� Γ ℓ � log(1 + ϵt) + σ 2 2 �2 −�T t=1 log yt � 1+ϵt exp(1+ϵt) � −�T �T t=1 log −T σ 2 log σ 2+ 1 t=1 log yt σ 2
+
+[p9.15] The candidate distributions for the error term (1 + ϵt) in ETS(M,∗,∗) models, as mentioned earlier (and in Akram et al., 2009), are Normal (N ), Log-Normal (log N ), Gamma (Γ ) and truncated Normal. We also point out that Inverse Gaussian (I G , Tweedie, 1957) can be considered as a viable candidate distribution. We drop truncated Normal from the consideration, because its statistics are too complicated to summarize, which makes it very difficult to use in ETS framework (thus violating the property (1)). In order to understand the potential limitations of the other distributions, we summarize their main properties in Table 2 based on Kotz et al. (1988).
+
+[p9.16] In order for these distributions to work in ETS model, we need to make sure that the expectation of the error term (1 + ϵt) is equal to 1 (as mentioned in Section 2), which is easily achievable in I G by setting μ = 1. In case of LogN distribution, the condition E(x) = 1 implies that μ = −σ 2
+
+[p9.17] 2 , while in case of Γ , it is: ξ = 1 σ 2 . All these restrictions will affect the log-likelihood functions for the ETS(M,∗,∗) models with different assumptions, which are presented in Table 3 and are obtained directly from the probability density functions of respective distributions with the mentioned restrictions (the case of the Normal distribution was derived in Hyndman et al., 2008, p.68).
+
+[p9.18] The Maximum Likelihood Estimate (MLE) of the scale parameter is straightforward for N and I G and is obtained directly from the log-likelihoods in Table 3 by taking derivatives with respect to σ 2 �T t=1 ϵ2 • N : ˆσ 2 = 1 t ; T
+
+[p10.1] �T t=1 ϵ2t 1+ϵt ; • I G : ˆσ 2 = 1 T
+
+[p10.2] The case with log N is more complicated because of the restriction on the location parameter, but still tractable � 1 ± � 1 −1 T �T t=1 log2(1 + ϵt) • log N : ˆσ 2 = 2 � .
+
+[p10.3] �T t=1 log2(1+ϵt) ≤1— assuming that the scale can only be a positive real number. In the other cases, it would need to be estimated directly using numerical optimisation. Also note that the formula will produce two roots, only one of which (the smaller one) will corresponds to the local maximum of the likelihood. However, given that the derivative of the log-likelihood has two roots, the likelihood itself is not convex, which might imply that identification and compactness assumptions for the likelihood are violated, making the estimates of parameters potentially inconsistent (Newey & McFadden, 1994). Having said that, the analysis of the likelihood function shows that the first root (for the case of subtraction in the formula above) should correspond to the local maximum, while the second one (addition in the formula) should correspond to the local minimum of the likelihood function. This means that the subtraction should be used in order to get the local maximum of the likelihood function. All of this means that, while log N can be considered as a possible option for the ETS(M,∗,∗) models, it has issues in the estimation of the scale and should be used with care.
+
+[p10.4] The main issue with this estimate is that it can only be used in the case of 1 T
+
+[p10.5] Finally, in case of Γ distribution, the maximum likelihood estimate of scale does not have a closed form, because of the imposed restrictions in Table 2. A numerical optimization would need to be used in order to estimate it, which makes it less desirable than other distributions due to the property (1) discussed in the beginning of this section. However, the scale can be estimated using method of moments, based on how the mean and variance can be calculated in Γ distribution (Table 2)—given the parameters restriction the estimate of scale is as follows: �T t=1 ϵ2 • Γ : ˆσ 2 = V(1 + ϵt) = 1 t . T
+
+[p10.6] This does not guarantee that the likelihood is maximized, but at least allows estimating the model. Furthermore, this estimate can be used as a starting point in the estimation of the scale of Γ distribution via maximization of likelihood.
+
+[p10.7] Another important property of all the distributions from Table 2 is scalability, meaning that
+
+[p10.8] if1 + ϵt ∼N (1, σ 2), thenk(1 + ϵt) ∼N � k, k2σ 2� �
+
+[p10.9] if1 + ϵt ∼I G (1, σ 2), thenk(1 + ϵt) ∼I G � k, σ 2 k
+
+[p10.10] 2 , σ 2 � , thenk(1 + ϵt) ∼logN � −σ 2 if1 + ϵt ∼logN (4.1) � log(k) −σ 2 2 , σ 2 �
+
+[p10.11] if1 + ϵt ∼Γ (σ −2, σ 2), thenk(1 + ϵt) ∼Γ (σ −2, kσ 2).
+
+[p10.12] This property is useful, when we need to consider the distribution of the variable yt in the ETS(M,∗,∗) model.
+
+[p11.1] When it comes to the convolution, it is not well defined for logN but is well defined for N , i.i.d. I G and i.i.d. Γ random variables. The situation with the product distribution is the opposite: it is well defined for logN but does not have a closed form for either N , I G or Γ . These two properties are necessary for the derivation of the conditional h steps ahead distribution of a variable from the ETS(M,∗,∗) model. Unfortunately, none of the discussed distributions supports both of them. Therefore, the conditional h-steps-ahead distribution does not have closed form for any of them.
+
+[p11.2] If only one distribution between the four needs to be selected, in addition to the discussion above, some findings from literature can be used. Folks & Chhikara (1978) argued after investigating a set of data that they can be equally well described by Log-Normal, Gamma and Inverse Gaussian distributions, so the choice of the distribution might be based on convenience of working with it. We argue that the Inverse Gaussian is more convenient than its competitors. However, it is still possible to have all the discussed distributions in the ETS(M,∗,∗) model. Furthermore, it is also possible to select the most appropriate distribution automatically using information criteria (this will be discussed in Section 4.3).
+
+[p11.3] 4.2 ETS(M,N,N) model with different distributions
+
+[p11.4] The model with multiplicative error, no trend and no seasonality, ETS(M,N,N), can be considered as a model of a special interest, because, as discussed in Section 2, it has closed forms for the conditional moment, so we briefly discuss it in this section. It is formulated in the following way: yt = lt−1 � 1 + ϵt � . (4.2) lt = lt−1(1 + αϵt)
+
+[p11.5] The classical assumption about this model (Keith Ord et al., 1997) is that ϵt ∼N (0, σ 2). Akram et al. (2009) proposed rewriting this model in the following way: yt = lt−1εt , (4.3)
+
+[p11.6] lt = lt−1(1 −α + αεt)
+
+[p11.7] where εt = 1 + ϵt ∼N (1, σ 2). The form (4.3) demonstrates why the distributional assumptions should be imposed on 1 + ϵt rather than ϵt, although the models (4.2) and (4.3) are identical.
+
+[p11.8] The main limitation of the model (4.2) is that, when the level of the data is low, the assumption of normality might not be reasonable anymore, because the model may produce negative values even if the data are strictly positive. As discussed in Section 4.1, a more natural distribution for the model is either the Inverse Gaussian, or the Log-Normal, or Gamma, implying one of the following: 1 + ϵt ∼I G (1, σ 2) 1 + ϵt ∼logN � −σ 2 2 , σ 2 � . (4.4) 1 + ϵt ∼Γ (σ −2, σ 2)
+
+[p11.9] Note that due to the restrictions on the expectation in (4.4), the conditional h steps ahead mean and variance of the ETS(M,N,N) model can be calculated using the same formulae as in the conventional
+
+[p12.1] ETS(M,N,N) relying on the normality assumption (Hyndman et al., 2008) ⎛ h � ⎝lt E(lt+h|t) = E j=1 ������ lt ⎞ ⎠= lt, (1 + αϵt+j) (4.5) �� 1 + α2σ 2�h −1 V(lt+h|t) = l2 t � .
+
+[p12.2] In addition, the one-step-ahead actual value from this model can be obtained using the scalability property (4.1) � lt, σ 2 I G : yt+1 ∼I G logN : yt+1 ∼logN
+
+[p12.3] Γ : yt+1 ∼Γ (σ −2, ltσ 2) � lt � log(lt) −σ 2 2 , σ 2 � . (4.6)
+
+[p12.4] Based on the discussion from Section 4.1, related to convolution and product distribution, we can conclude that ETS(M,N,N) does not have a closed form for the h-steps ahead conditional distribution and thus cannot be easily characterized using the parameters of distributions. This means that in order to obtain the h-steps ahead prediction distribution from ETS(M,N,N) with any of the distributions above, the simulations need to be used. This aligns with what we have discussed for the general case of ETS(M,∗,∗) in Section 2.
+
+[p12.5] Furthermore, it can be shown that the properties of the distributions and the multiplicative model also restrict the smoothing parameter with the interval [0, 1]. Assuming that the smoothing parameter is always positive, the inequality (1 + ϵt) > 0 implies that
+
+[p12.6] ϵt > −1 αϵt > −α 1 + αϵt > 1 −α. (4.7)
+
+[p12.7] The ETS(M,N,N) model makes sense only when 1 + αϵt > 0. Therefore, if α > 1, then 1 + αϵt may become negative, which breaks the model, because the level may become negative. The model however still makes sense for boundary values of α: when α = 0, the level is not updated, while in the case of α = 1, the level has the dynamics of a random walk process. While there may be some cases when even with α > 1 the value of (1 + αϵt) will be greater than zero, this cannot be guaranteed universally. Therefore, the condition for the smoothing parameter in ETS(M,N,N) is α ∈[0, 1].
+
+[p12.8] As we see, the case of ETS(M,N,N) is interesting, because this is the only pure multiplicative ETS model that has closed forms for the expectation and variance for any horizon h. The more complicated pure multiplicative ETS models will not have the analytical solutions for the moments of distribution (as discussed in Section 2), but they will share the main properties with the ETS(M,N,N). For example, all the smoothing parameters should have restrictions similar to (4.7) for the reasons discussed above.
+
+[p13.1] 4.3 Distribution selection
+
+[p13.2] Based on the discussions in previous sections, we can conclude that there are several possible options for the ETS(M,∗,∗) models in terms of distributions. Given that the models are formulated similarly, we can calculate the values of the likelihood functions in their maxima and use them in the model selection via information criteria, for example, using Akaike’s Information Criterion (Akaike, 1974) � θ, σ 2|y � , (4.8) AIC = 2k −2ℓ
+
+[p13.3] � is the value of the log-likelihood function from Table 3. The procedure in this case is straightforward: select the most appropriate ETS model for each distribution, then compare them with each other and select the one with the lowest information criterion. Other criteria can be used in the place of AIC to select the appropriate models. For example, AICc by Sugiura (1978) is typically recommended instead of AIC on small samples.
+
+[p13.4] where k is the number of all estimated parameters and ℓ � θ, σ 2|y
+
+[p13.5] 5. Simulation experiment 2: distributional assumptions
+
+[p13.6] In order to assess the performance of models in terms of their predictive distributions, we conduct another simulation experiment, generating 10,000 time series from ETS(M,Md,M) model with the distributions discussed in Section 4.1 1. Normal,
+
+[p13.7] 2. Inverse Gaussian, 3. Gamma, 4. Log-Normal.
+
+[p13.8] We have also included the DGP ETS(A,Ad,A) with the Normal distribution, the data of which were then exponentiated to get the model similar to the one in Akram et al. (2009). We called this DGP ‘Akram’ (by the surname of the first author of the original paper).
+
+[p13.9] Each series contained 500 observations, in every case the standard deviation of the error term was set to 0.1, while the smoothing parameters were set to α = 0.1, β = 0.05, γ = 0.2, while φ = 0.95, l0 = 100, b0 = 1 and the initial seasonal indices were randomly generated and normalized. The data generation was done using the sim.es() function from the smooth package for R (Svetunkov, 2023a). We then applied ETS(M,Md,M) model with each of the distributions (and one with AICc-based selected distribution), using the adam() and auto.adam() functions from the smooth package, and produced quantile forecasts for the next 48 observations. We also applied the ETS(A,Ad,A) to the logarithms of the generated data to get the values from the model proposed in Akram et al. (2009) (method called ‘Akram’ in the results below).
+
+[p13.10] After that we assessed the generated quantiles via scaled pinball score (Koenker, 1978), calculated using the following formula: ⎛ � ⎞ � |yt+j −qt+j| + τ sPS = 1 ⎝(1 −τ) ¯y yt+j<qt+j,j=1,...,h ⎠, |yt+j −qt+j| yt+j≥qt+j,j=1,...,h
+
+[p14.1] TABLE 4. Mean scaled pinball scores for the ETS(M,Md,M) model with various distributions Applied DGP
+
+[p14.2] Model N I G Γ logN Akram
+
+[p14.3] N 5.255 5.204 5.193 9.417 5.192 I G 5.300 5.221 5.224 9.464 5.229 Γ 5.287 5.192 5.231 9.388 5.214 logN 5.295 5.215 5.224 9.423 5.220 Akram 5.110 5.052 5.074 9.180 5.089 Auto 5.258 5.175 5.208 9.332 5.178
+
+[p14.4] where ¯y is the in-sample mean of actual values and τ is the level of probability for the specific quantile. The scaling in pinball score is needed in order to make the values comparable across different generated time series. In addition, we calculated the quantile coverage to measure how good the quantiles are estimated by the models. This is based on the calculation of the percentage of cases below each of quantiles. Quantiles were produced for τ = {0.01, 0.02, . . . , 0.99} levels.
+
+[p14.5] Table 4 summarizes the overall performance of the models under consideration. The lowest values are marked in boldface. The pinball scores are very close to each other across the different applied models, although Akram’s approach seems to be doing consistently better on average than the others. This is probably due to computational complexities arising in estimation of the pure multiplicative models. Interestingly enough, specific distributions applied to the data of the same type (e.g. model with I G distribution on I G DGP) do not necessarily perform the best, although the difference between different models is typically small and not statistically significant (on 5% significance level), with the exception of Akram’s approach.
+
+[p14.6] We also calculated the average quantile bias and quantile precision to assess the predictive distributions of the models from a different angle. Table 5 summarizes performance of models in terms of the quantile bias (mean of all quantile coverages minus the nominal values) and the quantile precision (mean absolute value of quantile coverages minus the nominal values). The values of quantile bias can be interpreted as average percentage points below (in case of negative) or above (in case of positive values) the nominal values of quantiles. Therefore, for example, the value of 0.008 for the Gamma distribution on the I G data in quantile bias tells us that it tends to produce quantiles that cover 0.8% more observations than expected on average (across all the confidence levels). The quantile precision shows the average deviation from the nominal value for each of the approaches.
+
+[p14.7] Judging by the results in Table 5, we can conclude that all the approaches perform very similar and that there is no obvious winner: all values are small and close to zero, showing that the approaches are well calibrated, irrespective of the data they are applied to.
+
+[p14.8] Finally, we produce the pinball and quantile coverage plots to see how the approaches perform specifically for each confidence level. Figures 3, A7, A8, A9 and A10 summarize the performance of the approaches for each of the DGPs in the form of reliability diagrams. Given that the performance of models for different DGPs is very similar, we focus on the case of Normal distribution, Fig. 3, leaving the rest in Appendix.
+
+[p14.9] Judging by the pinball values in Fig. 3, we can conclude that all approaches perform very similar for the lower and higher quantiles (below 0.2 and above 0.8), while Akram’s model does slightly better in the middle of levels (i.e. between 0.2 and 0.8). Arguably, the tails are more important in practice than
+
+[p15.1] TABLE 5. Quantile bias and precision values for the ETS(M,Md,M) model with various distributions Applied DGP
+
+[p15.2] Model N I G Γ logN Akram Quantile bias
+
+[p15.3] N −0.002 0.011 0.003 0.007 −0.010 I G −0.004 0.009 0.001 0.001 −0.013 Γ −0.004 0.008 0.001 0.003 −0.012 logN −0.005 0.008 0.000 0.001 −0.013 Akram 0.000 0.010 0.004 0.006 −0.007 Auto −0.003 0.008 0.000 0.002 −0.012 Quantile precision
+
+[p15.4] N 0.007 0.011 0.005 0.009 0.010 I G 0.009 0.009 0.006 0.009 0.015 Γ 0.011 0.009 0.005 0.008 0.014 logN 0.008 0.008 0.004 0.004 0.014 Akram 0.004 0.010 0.005 0.008 0.007 Auto 0.008 0.009 0.004 0.007 0.013
+
+[p15.5] FIG. 3. Pinball and quantile coverage values for DGP with the Normal distribution.
+
+[p15.6] the middle because they correspond to prediction intervals and the decisions are typically made based on the higher confidence levels (e.g. 90%, 95% or 99%). Furthermore, we can see that the performance of approaches is indeed very similar for different levels in terms of quantile coverage: the fluctuations around the horizontal line are random, and a new run of the experiment produced different shapes, with lines having different curvatures. This means that all the models under consideration are well calibrated, and that the decision, which one to use, comes to personal preferences of the analyst.
+
+[p16.1] As a conclusion from this simulation experiment, we see that ETS can be used efficiently with all discussed distributions, meaning that there is no reason to always use the Normal one, especially given its restrictions, discussed in Section 4.1. Furthermore, the AIC-based selection between the distributions looks as a robust option for the usage of ETS with the discussed distributions. Finally, Akram’s approach does better in terms of mean pinball values, but this comes mainly because of the good performance for the target levels in the middle, which are not practically useful. At the same time, it does very similar to other approaches in the tails of distributions, meaning that it does not have any obvious practical benefit in comparison with the ETS with the positive distributions. Given that this approach is detached from the ETS framework and makes it impossible to introduce mixed ETS models, we argue that the approaches proposed in this paper are competitive and can be used efficiently in practice.
+
+[p16.2] 6. Real-life demonstration
+
+[p16.3] Finally, to demonstrate how the pure multiplicative ETS works in the case of non-normal distributions, we apply the model to the data of electric vehicles (EV) charging from a company that tracks the amount of electricity used by such vehicles. This is a daily data on a high aggregation level (EV users in a geographical area) containing 511 observations. The data are strictly positive but start with a very low volume, demonstrating the situation when the demand builds up over time. It exhibits a multiplicative seasonal pattern (repeating every 7 days) and probably should be modelled with an ETS with multiplicative error term.
+
+[p16.4] We keep the last 14 observations (2 weeks) for the model evaluation and use the rest of the sample for the model fitting and selection. We conduct the selection based on AICc in two dimensions
+
+[p16.5] 1. Selection of components of ETS models from the pool of pure multiplicative ones;
+
+[p16.6] 2. Selection of the appropriate distribution.
+
+[p16.7] This was done using auto.adam() function from the smooth package for R. As a result, the ETS(M,Md,M) with Gamma distribution had the lowest AICc of 6,398.570. The model had the following parameters: ˆα = 0.1683, ˆβ = 0.0000, ˆγ = 0.0013, ˆφ = 0.9925, ˆσ = 0.276, implying that the seasonality does not change abruptly and that the trend component is not updated over time. This is reflected in dynamics of components shown in Fig. 4, where the trend component declines over time due to the dampening and seasonality changes slowly.
+
+[p16.8] Figure 5 shows the model fit, the conditional expectation and the 95% prediction interval from the model. This example demonstrates how pure multiplicative ETS model with non-normal distribution can be efficiently used for time series analysis and forecasting in practice.
+
+[p16.9] To compare the pure multiplicative ETS model with the pure additive one, we have also fitted ETS(A,Ad,A) model to the data, assuming Normal distribution of the residuals. The resulting model had AICc of 6418.296 versus 6398.570 of the pure multiplicative ETS with the Gamma distribution. This indicates that the pure multiplicative model is more appropriate for this type of data than the additive one.
+
+[p16.10] Finally, we fit the ETS(M,Md,M) model to the first 49 observations only, keeping the last 14 of them for the holdout evaluation to demonstrate what happens on low volume data when the pure multiplicative model with normality is used against the model with a positive distribution (Gamma in this example). Figure 6 shows the point forecasts and the 95% prediction intervals for the two cases. It becomes apparent that although the data are strictly positive in this example, the model with the Normal distribution generates an unrealistic prediction interval, covering the negative values. In contrast, the ETS with the
+
+[p17.1] FIG. 4. Time series decomposition according to ETS(M,Md,M) with the Gamma distribution.
+
+[p17.2] FIG. 5. An example of application of ETS model to the EV charging data. ETS(M,Md,M) with the Gamma distribution.
+
+[p17.3] Gamma distribution generates a reasonable prediction interval. This demonstrates the advantage of the proposed approach in comparison with the conventional ETS.
+
+[p17.4] 7. Managerial implications
+
+[p17.5] Pure multiplicative ETS models discussed in this paper not only have theoretical interest but also have important practical implications. Given that now they can work with the positive distributions discussed in this paper (Log-Normal, Gamma and Inverse Gaussian), they become useful in such contexts as supply
+
+[p18.1] FIG. 6. An example of application of pure multiplicative ETS to a shorter sample of data. The left plot shows forecasts generated by the model with the Normal distribution (with ˆσ = 0.471), while the right one shows the one with Gamma (with ˆσ = 0.493).
+
+[p18.2] chain, retail, healthcare and energy. In these cases, the values typically exhibit asymmetry, making the conventional normality assumption inappropriate. Given that ETS(M,∗,∗) is a proper statistical model, it is possible to generate predictive distributions for several steps ahead from it. adam() function from the smooth package in R allows doing that, generating different types of forecasts, including the cumulative over the lead time ones.
+
+[p18.3] In supply chain and retail, the demand is typically non-negative (Li & Lim, 2018), and the decisions are typically made on weekly or daily basis, making the multiplicative ETS especially useful. In this context, the stocking decisions are usually made based on the cumulative demand over the lead time, forecasts for which can be done using the ETS(M,∗,∗) models. The generated quantile forecasts can then be used directly to define the safety stock levels.
+
+[p18.4] The pure mutliplicative ETS models can even be used on intermittent data as shown in Svetunkov & Boylan (2023). The authors have amended the conventional ETS model to deal with zeroes and used multiplicative ETS to capture the non-zero demands. The approach works well both in terms of forecasting accuracy and in terms of reducing inventory costs.
+
+[p18.5] Another example of application would be electricity demand forecasting (Taylor, 2010), where the demand is always non-negative, making the multiplicative models especially useful. In that context, ETS needs to be extended to multiple seasonalities and possibly be modified to deal with potential zeroes in the data (as done by Svetunkov & Boylan, 2023). But fundamentally, a pure multiplicative ETS would allow producing predictive distributions for several steps ahead, which then can be used to determine how much electricity needs to be generated and/or sent to specific substations.
+
+[p18.6] Finally, the pure multiplicative ETS models can be used in healthcare, for example, for forecasting Emergency Department attendance. That demand is typically count and non-negative. While it might seem that continuous models, such as ETS, would be not as appropriate as count models (e.g. Poisson regression) in this situation, it has been shown that the continuous distributions, such as Truncated Normal and Gamma, perform well in that context (Rostami-Tabar et al., 2023). This makes the multiplicative ETS models with distributions discussed in this paper especially attractive.
+
+[p19.1] All in all, the pure multiplicative ETS models with positive distributions can be useful in a variety of contexts, making them practically appealing. 8. Conclusion
+
+[p19.2] In this paper, we had a new look at the pure multiplicative ETS models, discussed the statistical properties of these models and showed that the point forecasts from them typically do not coincide with the conditional expectations. While this is not a new result in the literature, it has been neglected by many researchers and is worth mentioning. We also showed the relation between the point forecasts, geometric and arithmetic conditional means in such models. In general, due to the multiplicative nature of the model, the three statistics do not coincide. Aligned to this, we conducted a simulation experiment, showing what impacts the difference between the point forecast and the conditional expectation. We found that the dampening parameter φ has the highest impact on it, which is then followed by the smoothing parameter of the trend, β and the variance of the error term of the model. We also demonstrated that the difference increases with the increase of the forecasting horizon. This has serious practical implications: if the analyst needs conditional expectations from a pure multiplicative ETS model, they should in general use simulations, because point forecast will not coincide with the expectation.
+
+[p19.3] After that we proposed using several positively defined distributions in pure multiplicative ETS models, showing how they should be used, and what restrictions should be imposed on their parameters. We derived the concentrated log-likelihoods for each distribution and showed how their scales can be calculated. We then conducted a simulation experiment, showing how ETS models with different distributions can be applied to the data generated from similar ETS models but with other distributions. We found that all considered models perform very similar, with automatic selection based on AICc performing well in the majority of cases. This means that in practice, one can use such procedure to select the most appropriate distribution for their ETS model and that in general, there is no need to use the Normal distribution.
+
+[p19.4] Finally, we showed how the appropriate pure multiplicative ETS model with the most fitting distribution can be selected on an example of EVs charging data. The proposed approach is already implemented in the auto.adam() function from the smooth package (Svetunkov, 2023a) for R.
+
+[p19.5] We should acknowledge at this stage that the simplest benchmark we used in this paper was the Akram et al.’s model (Akram et al., 2009). We did not include Simple Exponential Smoothing, Naïve or any other simple forecasting method like that intentionally. This is because we focused our investigation on predictive distributions, and models with the additive error term would not be appropriate for the low volume purely positive data.
+
+[p19.6] As for the future works, given the discussion of multiplicative trend models in the paper, we feel that the development of a new model, which would have properties of a pure multiplicative model but would not exhibit explosive trends, is an important direction of future research. It is not clear how such model can be formulated, but having it instead of ETS(M,M,∗) models would make the pure multiplicative models more attractive. Data availability
+
+[p19.7] The data from Sections 4 and 5 were generated using the sim.es() function from the smooth package in R. The source code will be shared on reasonable request to the corresponding author. The data from Section 6 cannot be shared publicly due to non-disclosure agreement.
+
+[p20.1] REFERENCES
+
+[p20.2] AKAIKE, H. (1974) A new look at the statistical model identification. IEEE Trans. Autom. Control., 19, 716–723. AKRAM, M., HYNDMAN, R. J. & ORD, J. K. (2009) Exponential smoothing and non-negative data. Aust. N. Z. J. Stat.,
+
+[p20.3] 51, 415–432. ATHANASOPOULOS, G., HYNDMAN, R. J., SONG, H. & WU, D. C. (2011) The tourism forecasting competition. Int. J.
+
+[p20.4] Forecast., 27, 822–844. BABAI, M. Z., TSADIRAS, A. & PAPADOPOULOS, C. (2020) On the empirical performance of some new neural network
+
+[p20.5] methods for forecasting intermittent demand. IMA J. Manag. Math., 31, 281–305. BROWN, R. G. (1956) Exponential Smoothing for Predicting Demand, Arthur D. Cambridge 42, Massachusetts:
+
+[p20.6] Little, Inc. HOLT, C. C. (2004) Forecasting seasonals and trends by exponentially weighted moving averages. Int. J. Forecast.,
+
+[p20.7] 20, 5–10. FOLKS, J. L. & CHHIKARA, R. S. (1978) The inverse Gaussian distribution and its statistical application–a review. J.
+
+[p20.8] R. Stat. Soc. Ser. B Methodol., 40, 263–275. HYNDMAN, R. J., KOEHLER, A. B., SNYDER, R. D. & GROSE, S. (2002) A state space framework for automatic forecasting
+
+[p20.9] using exponential smoothing methods. Int. J. Forecast., 18, 439–454. HYNDMAN, R. J., KOEHLER, A. B., KEITH ORD, J. & SNYDER, R. D. (2008) Forecasting with Exponential Smoothing.
+
+[p20.10] Berlin Heidelberg: Springer. TAYLOR, J. W. (2003) Exponential smoothing with a damped multiplicative trend. Int. J. Forecast., 19, 715–725. TAYLOR, J. W. (2010) Triple seasonal methods for short-term electricity demand forecasting. Eur. J. Oper. Res., 204,
+
+[p20.11] 139–152. KEITH ORD, J., KOEHLER, A. B. & SNYDER, R. D. (1997) Estimation and prediction for a class of dynamic nonlinear
+
+[p20.12] statistical models. J. Amer. Statist. Assoc., 92, 1621–1629. KOENKER, R. & BASSETT, G. (1978) Regression quantiles. Econometrica, 46, 33. KOTZ, S., JOHNSON, N. L. & READ, C. B. (1988) Encyclopedia of Statistical Sciences, vol. 2. Wiley. KOURENTZES, N., PETROPOULOS, F. & TRAPERO, J. R. (2014) Improving forecasting by estimating time series structural
+
+[p20.13] components across multiple frequencies. Int. J. Forecast., 30, 291–302. LI, C. & LIM, A. (2018) A greedy aggregation–decomposition method for intermittent demand forecasting in fashion
+
+[p20.14] retailing. Eur. J. Oper. Res., 269, 860–869. MAKRIDAKIS, S. & HIBON, M. (2000) The M3-competition: results, conclusions and implications. Int. J. Forecast.,
+
+[p20.15] 16, 451–476. MAKRIDAKIS, S., SPILIOTIS, E. & ASSIMAKOPOULOS, V. (2020) The M4 competition: 100,000 time series and 61
+
+[p20.16] forecasting methods. Int. J. Forecast., 36, 54–74. OSMAN, A. F. & KING, M. L. (2015) A new approach to forecasting based on exponential smoothing with independent
+
+[p20.17] regressors, Department of Econometrics and Business Statistics. no. 02/15. R Core Team (2020) R: A Language and Environment for Statistical Computing. Vienna, Austria: R Foundation for
+
+[p20.18] Statistical Computing. https://www.R-project.org/. SNYDER, R. D. (1985) Recursive estimation of dynamic linear models. J. R. Stat. Soc. Ser. B Methodol., 47, 272–276. RAMOS, P., SANTOS, N. & REBELO, R. (2015) Performance of state space and ARIMA models for consumer retail sales
+
+[p20.19] forecasting. Robot. Comput.-Integr. Manuf., 34, 151–163. ROSTAMI-TABAR, B., BROWELL, J. & SVETUNKOV, I. (2023) Probabilistic forecasting of hourly emergency department
+
+[p20.20] arrivals. Health Syst., 00, 1–17. SUGIURA, N. (1978) Further analysis of the data by Akaike’s information criterion and the finite corrections. Commun.
+
+[p20.21] Stat. Theor. Meth., 7, 13–26. SVETUNKOV, I. (2021) Toolbox for Model Building and Forecasting. R package version 1.0.3. https://github.com/
+
+[p20.22] config-i1/greybox. SVETUNKOV, I. (2023a) Forecasting Using State Space Models. R package version 3.2.0. https://github.com/config- i1/smooth.
+
+[p21.1] SVETUNKOV, I. (2023b) Forecasting and analytics with the augmented dynamic adaptive model (ADAM). Chapman
+
+[p21.2] and Hall/CRC. ISBN: 978-1-003-45265-2. https://openforecast.org/adam/. SVETUNKOV, I. & BOYLAN, J. E. (2023) iETS: state space model for intermittent demand forecasting. Int. J. Prod.
+
+[p21.3] Econ., 265, 109013. SVETUNKOV, I., KOURENTZES, N. & ORD, J. K. (2022) Complex Exponential Smoothing, Naval Research Logistics
+
+[p21.4] (NRL), vol. 31. SVETUNKOV, I., KOURENTZES, N. & KILLICK, R. (2023) Multi-step estimators and shrinkage effect in time series models.
+
+[p21.5] Comput. Stat., 1–43. THOMAKOS, D. & NIKOLOPOULOS, K. (2014) Fathoming the theta method for a unit root process. IMA J. Manag. Math.,
+
+[p21.6] 25, 105–124. TWEEDIE, M. C. K. (1957) Statistical properties of inverse Gaussian distributions. I. Ann. Math. Stat., 28, 362–377. WELLER, M. & CRONE, S. (2012) Supply Chain Forecasting: Best Practices and Benchmarking Study. Lancaster
+
+[p21.7] Centre for Forecasting. Lancaster University, UK. NEWEY, W. K. & MCFADDEN, D. (1994) Large sample estimation and hypothesis testing, Handbook of Econometrics,
+
+[p21.8] vol. 4. Elsevier, pp. 2111–2245.
+
+[p22.1] A. Pinball and quantile coverage values
+
+[p22.2] FIG. A1. Pinball and quantile coverage values for DGP with the Inverse Gaussian distribution.
+
+[p22.3] FIG. A2. Pinball and quantile coverage values for DGP with the Gamma distribution.
+
+[p23.1] FIG. A3. Pinball and quantile coverage values for DGP with the Log-Normal distribution.
+
+[p23.2] FIG. A4. Pinball and quantile coverage values for DGP with the model from Akram et al. (2009).
