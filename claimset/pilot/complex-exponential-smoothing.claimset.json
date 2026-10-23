@@ -12,7 +12,6 @@
    ]
   },
   "contributions": [
-   "C1",
    "C2",
    "C3",
    "C4",
@@ -146,28 +145,39 @@
  ],
  "claims": [
   {
-   "id": "C1",
-   "statement": "[[D1:CES]] represents each past observation and its forecast error as one complex variable and forecasts with one [[D2:complex smoothing parameter]], that is two real parameters, without selecting among the level and trend forms of exponential smoothing.",
-   "type": "methodological",
+   "id": "C2",
+   "statement": "Depending on the value of its [[D2:complex smoothing parameter]], [[D1:CES]] is a stationary or a non-stationary model and passes from one to the other continuously as the parameter changes, without the discontinuous switch between models that ARIMA imposes, whereas ETS models are always non-stationary.",
+   "type": "formal",
    "role": "principal",
    "novelty": "extension",
    "support": [
     {
-     "kind": "argument",
-     "warrant": "W1"
+     "kind": "formal_proof",
+     "evidence": "E3"
     }
    ],
-   "warrant": "W1",
+   "verification": "unchecked",
    "depends_on": [
-    "C7",
-    "C14"
+    "C9",
+    "C10",
+    "C11",
+    "C12",
+    "C13",
+    "C15"
    ],
    "assumptions": [
-    "C32"
+    "C35"
    ],
-   "limitations": [
-    "L4"
+   "source_spans": [
+    "p1.6",
+    "p3.2",
+    "p4.17",
+    "p4.20",
+    "p5.6",
+    "p6.4",
+    "p11.24"
    ],
+   "provenance": "extracted",
    "relations": [
     {
      "type": "extends",
@@ -197,51 +207,7 @@
      "self": true,
      "note": "Even when the components of exponential smoothing are identified correctly, the estimated smoothing parameters and the weights they imply can give poor forecasts."
     }
-   ],
-   "source_spans": [
-    "p1.6",
-    "p2.4",
-    "p3.2",
-    "p3.9-p3.14",
-    "p4.1-p4.3",
-    "p11.23-p11.24"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C2",
-   "statement": "Depending on the value of its [[D2:complex smoothing parameter]], [[D1:CES]] is a stationary or a non-stationary model and passes from one to the other continuously as the parameter changes, without the discontinuous switch between models that ARIMA imposes, whereas ETS models are always non-stationary.",
-   "type": "formal",
-   "role": "principal",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E3"
-    }
-   ],
-   "verification": "unchecked",
-   "depends_on": [
-    "C9",
-    "C10",
-    "C11",
-    "C12",
-    "C13",
-    "C15"
-   ],
-   "assumptions": [
-    "C35"
-   ],
-   "source_spans": [
-    "p1.6",
-    "p3.2",
-    "p4.17",
-    "p4.20",
-    "p5.6",
-    "p6.4",
-    "p11.24"
-   ],
-   "provenance": "extracted"
+   ]
   },
   {
    "id": "C3",
@@ -284,10 +250,8 @@
    ],
    "warrant": "W2",
    "depends_on": [
-    "C8",
-    "C16",
-    "C17",
-    "C18"
+    "C24",
+    "C17"
    ],
    "limitations": [
     "L2"
@@ -428,7 +392,7 @@
    "id": "C8",
    "statement": "Because the error term of the [[D1:CES]] state-space model is additive, the CES likelihood has the same Gaussian form as that of additive exponential smoothing models, so the Akaike information criterion can be computed for seasonal and non-seasonal CES.",
    "type": "methodological",
-   "role": "supporting",
+   "role": "secondary",
    "novelty": "no_prior_found",
    "support": [
     {
@@ -553,7 +517,7 @@
    "id": "C14",
    "statement": "The conditional variance of [[D1:CES]] $h$ steps ahead, given the level and the nonlinear trend component, can be calculated from its state-space form in the same way as for pure additive ETS models.",
    "type": "formal",
-   "role": "supporting",
+   "role": "secondary",
    "novelty": "no_prior_found",
    "support": [
     {
@@ -566,7 +530,10 @@
    "source_spans": [
     "p5.14"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "depends_on": [
+    "C7"
+   ]
   },
   {
    "id": "C15",
@@ -600,7 +567,7 @@
    "id": "C16",
    "statement": "[[D4:seasonal CES]] has an underlying SARIMA(2,0,2m+2)(2,0,0)$_m$ model, which is stationary or not depending on its complex smoothing parameters.",
    "type": "formal",
-   "role": "supporting",
+   "role": "secondary",
    "novelty": "no_prior_found",
    "support": [
     {
@@ -613,7 +580,10 @@
     "p7.2",
     "p16.2-p16.28"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "depends_on": [
+    "C4"
+   ]
   },
   {
    "id": "C17",
@@ -632,13 +602,16 @@
     "p7.3",
     "p11.26"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "depends_on": [
+    "C13"
+   ]
   },
   {
    "id": "C18",
    "statement": "Non-seasonal [[D1:CES]] has 5 estimated parameters, two smoothing parameters, two initial states and the error variance, and [[D4:seasonal CES]] has $4 + 2m + 2 + 1$: four smoothing parameters, $2m$ initial lagged values, two initial non-seasonal states and the error variance.",
    "type": "methodological",
-   "role": "supporting",
+   "role": "secondary",
    "novelty": "no_prior_found",
    "support": [
     {
@@ -750,7 +723,7 @@
    "id": "C22",
    "statement": "On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median RMSSE and MASE than ETS(A,N,N), ETS(A,A,N), ETS(M,M,N) and ETS(M,Md,N), but higher mean RMSSE and MASE and higher median MASE and MSIS than ETS(A,Ad,N), the lowest median RMSSE of the six models, and a higher mean MSIS than every ETS model except ETS(M,M,N).",
    "type": "descriptive",
-   "role": "secondary",
+   "role": "supporting",
    "novelty": "no_prior_found",
    "support": [
     {
@@ -807,7 +780,7 @@
    "id": "C24",
    "statement": "[[D1:CES]] encompasses level and multiplicative trend processes and approximates additive trend processes well.",
    "type": "methodological",
-   "role": "secondary",
+   "role": "supporting",
    "novelty": "no_prior_found",
    "support": [
     {
@@ -998,7 +971,7 @@
    "id": "C33",
    "statement": "The error term $\\varepsilon_t$ of [[D1:CES]] is normally distributed.",
    "type": "descriptive",
-   "role": "supporting",
+   "role": "secondary",
    "support": [
     {
      "kind": "assumption"
@@ -1052,7 +1025,7 @@
    "id": "C36",
    "statement": "ETS model selection with es() from the smooth package identifies correctly which series of the [[D7:M1, M3 and tourism data]] are seasonal.",
    "type": "descriptive",
-   "role": "secondary",
+   "role": "supporting",
    "support": [
     {
      "kind": "assumption"
@@ -1711,27 +1684,21 @@
  ],
  "warrants": [
   {
-   "id": "W1",
-   "reasoning": "deductive",
-   "premises": [
-    "C7"
-   ],
-   "text": "CES replaces the real observations, smoothing parameter and constant in the weighted-average form of simple exponential smoothing with complex ones, so that one complex smoothing parameter yields exponentially, oscillating or harmonically declining weights on past observations and errors. Because the model does not split the series into a level and a separate trend, there is no set of trend forms to choose among."
-  },
-  {
    "id": "W2",
    "reasoning": "deductive",
    "premises": [
-    "C16",
-    "C18"
+    "C24",
+    "C17"
    ],
-   "text": "The seasonal model takes the level and nonlinear trend states at lag m instead of carrying a set of seasonal components, so there are no seasonal indices to renormalise. Since non-seasonal CES needs no choice of trend form, the only choice left is whether to include the lag-m states, which an information criterion makes."
+   "text": "The seasonal model takes the level and nonlinear trend states at lag m instead of carrying a set of seasonal components, so there are no seasonal indices to renormalise. Since non-seasonal CES captures both level and trend series without a choice of trend form, the only choice left is whether to include the lag-m states."
   },
   {
    "id": "W3",
    "reasoning": "deductive",
-   "premises": [],
-   "text": "In seasonal CES the non-seasonal level can become negative while the lagged level stays positive, and the two levels evolve independently, so the seasonal part can change its amplitude and shape without any change in the level of the series."
+   "premises": [
+    "C13"
+   ],
+   "text": "Seasonal CES consists of two CES parts, one at lag 1 and one at lag m, and each part follows one of the CES forecast trajectories, so the seasonal part can grow, decline or oscillate in its own way. The non-seasonal level can become negative while the lagged level stays positive, and the two levels evolve independently, so the seasonal part can change its amplitude and shape without any change in the level of the series."
   },
   {
    "id": "W4",
@@ -1845,7 +1812,7 @@
    "category": "model_specification",
    "statement": "CES is formulated only with an additive error term; a version with a multiplicative error term is not developed.",
    "affects": [
-    "C1"
+    "C7"
    ],
    "impact": "reduces_transferability",
    "mitigation": "none",
