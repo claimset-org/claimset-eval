@@ -1,5 +1,5 @@
 CLAIMSET Complex exponential smoothing
-licence CC-BY-4.0; converted from 10.1002/nav.22074 version of record by Ivan Svetunkov, Nikolaos Kourentzes, John Keith Ord; contributions C2, C3, C4, C5, C6
+licence CC-BY-4.0; converted from 10.1002/nav.22074 version of record by Ivan Svetunkov, Nikolaos Kourentzes, John Keith Ord; contributions C2, C3, C4, C19, C21, C6, C41
 
 DEFINITIONS
 D1 CES: Complex exponential smoothing: a forecasting method that combines each past observation $y_t$ and its forecast error $e_t$ into the complex variable $y_t + i e_t$ and forecasts with an exponentially weighted sum of these values, the weights being powers of $1 + i - (\alpha_0 + i\alpha_1)$ times the complex smoothing parameter $\alpha_0 + i\alpha_1$.
@@ -27,7 +27,7 @@ D22 Nemenyi test: Post hoc Nemenyi test on the ranks of an error measure across 
 
 CLAIMS
 C2 [formal; principal; extension; support: formal_proof E3; uses C9, C10, C11, C12, C13, C15, C35, C40; verification unchecked]
-  Depending on the value of its [[D2:complex smoothing parameter]], [[D1:CES]] is a stationary or a non-stationary model and passes from one to the other continuously as the parameter changes, without the discontinuous switch between models that ARIMA imposes, whereas ETS models are always non-stationary.
+  Depending on the value of its [[D2:complex smoothing parameter]], [[D1:CES]] is a stationary or a non-stationary model and passes from one to the other continuously as the parameter changes.
   extends B1, own earlier work: Exponential smoothing in a state space framework (ETS) gives 30 models with no, additive or multiplicative error, trend and seasonal components, among which a model is selected by an information criterion.
   addresses B3, own earlier work: Identifying the presence and type of trend in exponential smoothing often leads to misidentification and poorly performing long-term forecasts.
   addresses B2: The diverse trend alternatives of exponential smoothing in a state space framework make the selection of a model difficult.
@@ -37,12 +37,18 @@ C3 [formal; principal; support: formal_proof E5; assumes C34; uses C7; verificat
   [[D1:CES]] has an underlying ARMA(2,2) model whose coefficients $\phi_1 = 2 - \alpha_0$, $\phi_2 = \alpha_0 + \alpha_1 - 2$, $\theta_1 = 2 - 2\alpha_0 + \alpha_1$ and $\theta_2 = 3\alpha_0 + \alpha_1 - 2 - \alpha_0^2 - \alpha_1^2$ are nonlinear functions of the same two parameters, so that its parameter space differs from that of the general ARMA(2,2) model and is not restricted to stationary models.
 C4 [methodological; principal; support: argument W2; uses C24, C17; limitations L2; warrant W2]
   [[D4:seasonal CES]] models seasonality with lag-$m$ level and nonlinear trend states instead of seasonal indices, so that no seasonal indices need renormalising and model selection for CES reduces to choosing between the seasonal and the non-seasonal model.
-C5 [descriptive; principal; support: empirical_quant E2 (E2.T1), empirical_quant E8 (E8.T1); uses C19, C20, C21; limitations L1, L3, L5]
-  On the [[D7:M1, M3 and tourism data]] and on the M4 competition data, CES has lower mean and median [[D11:RMSSE]] than [[D8:ETS]], [[D9:ARIMA]] and the [[D10:Theta method]], while on mean [[D13:MSIS]] it is beaten by at least two of them on both data sets and on mean [[D12:MASE]] by ETS and the Theta method on the M1, M3 and tourism data.
-  scope: population: time series of the M1, M3, tourism and M4 forecasting competitions | conditions: forecast horizons of the competitions; seasonal or non-seasonal CES selected by AICc | excludes: 10 M4 series on which ETS broke down
-C6 [descriptive; principal; support: empirical_quant E2 (E2.T1.r5, E2.T1.r6), empirical_quant E8 (E8.T1.r5, E8.T1.r6); limitations L3, L5]
-  Adding CES to the median combination of [[D8:ETS]], [[D9:ARIMA]] and [[D10:Theta method]] forecasts lowers its errors: on the M4 data [[D5:SCUM]] has lower mean and median [[D12:MASE]], [[D11:RMSSE]] and [[D13:MSIS]] than [[D6:SCUM(noCES)]], and on the [[D7:M1, M3 and tourism data]] it has lower mean and median RMSSE and MASE and lower median MSIS but higher mean MSIS (2.333 against 2.223), and is statistically significantly better than every other method on RMSSE, MASE and MSIS in Nemenyi tests at the 5% level.
-  scope: population: time series of the M1, M3, tourism and M4 forecasting competitions | conditions: forecast horizons of the competitions; Nemenyi tests on the M1, M3 and tourism data only, significance level 0.05 | excludes: 10 M4 series on which ETS broke down
+C6 [descriptive; principal; support: empirical_quant E2 (E2.T1.r5, E2.T1.r6); uses C42; limitations L3]
+  On the [[D7:M1, M3 and tourism data]], [[D5:SCUM]] has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than [[D6:SCUM(noCES)]], but higher mean MSIS (2.333 against 2.223).
+  scope: population: time series of the M1, M3 and tourism forecasting competitions
+C19 [descriptive; principal; support: empirical_quant E2 (E2.T1.r1, E2.T1.r2, E2.T1.r3, E2.T1.r4); uses C20; limitations L1, L3]
+  On the [[D7:M1, M3 and tourism data]], among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES, CES has the lowest mean [[D11:RMSSE]] and the lowest median RMSSE, [[D12:MASE]] and [[D13:MSIS]], but a higher mean MASE than the Theta method and ETS and the highest mean MSIS (3.465).
+  scope: population: time series of the M1, M3 and tourism forecasting competitions | conditions: seasonal or non-seasonal CES selected by AICc
+C21 [descriptive; principal; support: empirical_quant E8 (E8.T1.r1, E8.T1.r2, E8.T1.r3, E8.T1.r4); limitations L3, L5]
+  On the M4 competition data, among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES, CES has the lowest mean and median [[D12:MASE]] and [[D11:RMSSE]] and the lowest median [[D13:MSIS]], but a higher mean MSIS than ARIMA and the Theta method.
+  scope: population: M4 competition time series | excludes: 10 series on which ETS broke down
+C41 [descriptive; principal; support: empirical_quant E8 (E8.T1.r5, E8.T1.r6); limitations L3, L5]
+  On the [[D17:M4 data without 10 series]], [[D5:SCUM]] has lower mean and median [[D12:MASE]], [[D11:RMSSE]] and [[D13:MSIS]] than [[D6:SCUM(noCES)]].
+  scope: population: M4 competition time series | excludes: 10 series on which ETS broke down
 C7 [formal; supporting; support: formal_proof E1; assumes C32, C34; verification unchecked]
   [[D1:CES]] has the single-source-of-error state-space form $y_t = l_{t-1} + \varepsilon_t$, $l_t = l_{t-1} - (1 - \alpha_1) c_{t-1} + (\alpha_0 - \alpha_1) \varepsilon_t$, $c_t = l_{t-1} + (1 - \alpha_0) c_{t-1} + (\alpha_0 + \alpha_1) \varepsilon_t$, with level $l_t$ and [[D3:nonlinear trend component]] $c_t$, whose transition matrix contains the smoothing parameters.
 C9 [formal; supporting; support: formal_proof E3; verification unchecked]
@@ -58,15 +64,9 @@ C13 [formal; supporting; support: formal_proof E3; verification unchecked]
 C15 [descriptive; supporting; support: empirical_quant E7 (E7.R1, E7.R2)]
   On M3 series 1664, which graphical analysis and ADF and KPSS tests indicate is stationary, [[D1:CES]] estimates the stationary $\alpha_0 + i\alpha_1 = 0.99999 + 0.99884i$, and all holdout observations lie inside its 95% prediction interval.
   scope: conditions: prediction interval level 0.95
-C19 [descriptive; supporting; support: empirical_quant E2 (E2.T1.r1, E2.T1.r2, E2.T1.r3, E2.T1.r4); limitations L1]
-  On the [[D7:M1, M3 and tourism data]], among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES, CES has the lowest mean [[D11:RMSSE]] and the lowest median RMSSE, [[D12:MASE]] and [[D13:MSIS]], but a higher mean MASE than the Theta method and ETS and the highest mean MSIS (3.465).
-  scope: conditions: seasonal or non-seasonal CES selected by AICc
 C20 [descriptive; supporting; support: empirical_quant E2]
   On the [[D7:M1, M3 and tourism data]], in Nemenyi tests at the 5% level CES has the best mean rank among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES on [[D11:RMSSE]] and on [[D12:MASE]], though not all of the differences are statistically significant, and on [[D13:MSIS]] it ranks second of all six methods, behind SCUM.
   scope: conditions: Nemenyi test on ranks of the error measures, significance level 0.05
-C21 [descriptive; supporting; support: empirical_quant E8 (E8.T1.r1, E8.T1.r2, E8.T1.r3, E8.T1.r4); limitations L5]
-  On the M4 competition data, among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES, CES has the lowest mean and median [[D12:MASE]] and [[D11:RMSSE]] and the lowest median [[D13:MSIS]], but a higher mean MSIS than ARIMA and the Theta method.
-  scope: population: M4 competition time series | excludes: 10 series on which ETS broke down
 C22 [descriptive; supporting; support: empirical_quant E9 (E9.T1); assumes C36; limitations L1]
   On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] than ETS(A,N,N), ETS(A,A,N), ETS(M,M,N) and ETS(M,Md,N), but higher mean RMSSE and MASE and higher median MASE and [[D13:MSIS]] than ETS(A,Ad,N), the lowest median RMSSE of the six models, and a higher mean MSIS than every ETS model except ETS(M,M,N).
 C32 [descriptive; supporting; assumption (statistical, unchecked)]
@@ -79,6 +79,9 @@ C36 [descriptive; supporting; assumption (methodological, unchecked)]
   ETS model selection with es() from the smooth package identifies correctly which series of the [[D7:M1, M3 and tourism data]] are seasonal.
 C40 [descriptive; supporting; support: empirical_quant E7 (E7.R3, E7.R4)]
   On the trended M3 series 2721, [[D1:CES]] estimates the non-stationary $\alpha_0 + i\alpha_1 = 1.48098 + 1.00346i$.
+C42 [descriptive; supporting; support: empirical_quant E2]
+  On the [[D7:M1, M3 and tourism data]], in [[D22:Nemenyi test]]s at the 5% level [[D5:SCUM]] is statistically significantly better than every other method, including [[D6:SCUM(noCES)]], on RMSSE, MASE and MSIS.
+  scope: conditions: Nemenyi test on ranks of the error measures, significance level 0.05
 C8 [methodological; secondary; support: cited B1, at p. 68, own earlier work; assumes C32, C33]
   The Akaike information criterion of seasonal and non-seasonal [[D1:CES]] can be computed from a Gaussian likelihood of the same form as that of additive exponential smoothing models.
 C14 [formal; secondary; support: cited B1, at p. 96, own earlier work; assumes C32, C37, C38; uses C7]
@@ -187,11 +190,11 @@ W10 [inductive] CES, which has no separate trend forms, has lower RMSSE than ETS
 W11 [analogical; premises C16, C3] Non-seasonal CES has an underlying ARMA(2,2) model that is stationary or not depending on its complex smoothing parameter; by analogy, the authors state the same of the SARIMA model underlying seasonal CES. No stationarity condition is derived for seasonal CES.
 
 LIMITATIONS
-L1 [model_specification; affects C5, C19, C22; could_bias_magnitude; mitigation none] CES produces very large errors on a few series: on M1 series 47 it fails to identify the trend and its MSIS is 523.034 against 25.590 for ETS(M,N,N), which inflates its mean MSIS, and on the non-seasonal subset it fails on two series.
+L1 [model_specification; affects C19, C22; could_bias_magnitude; mitigation none] CES produces very large errors on a few series: on M1 series 47 it fails to identify the trend and its MSIS is 523.034 against 25.590 for ETS(M,N,N), which inflates its mean MSIS, and on the non-seasonal subset it fails on two series.
 L2 [model_specification; affects C4, C16; reduces_precision; mitigation none] The parameter restrictions under which seasonal CES is stable are not derived.
-L3 [sample_size; affects C5, C6; reduces_transferability; mitigation none] The effect of the length of a time series on the accuracy of CES is not analysed.
+L3 [sample_size; affects C19, C21, C6, C41; reduces_transferability; mitigation none] The effect of the length of a time series on the accuracy of CES is not analysed.
 L4 [model_specification; affects C7; reduces_transferability; mitigation none] CES is formulated only with an additive error term; a version with a multiplicative error term is not developed.
-L5 [sampling; affects C5, C6, C21; could_bias_magnitude; mitigation none] The 10 M4 series on which ETS broke down were excluded from the M4 comparison, so the series were selected on the failure of one of the compared methods.
+L5 [sampling; affects C21, C41; could_bias_magnitude; mitigation none] The 10 M4 series on which ETS broke down were excluded from the M4 comparison, so the series were selected on the failure of one of the compared methods.
 
 ARTEFACTS
 A1 [data] M1 competition data

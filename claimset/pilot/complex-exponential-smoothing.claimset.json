@@ -15,8 +15,10 @@
    "C2",
    "C3",
    "C4",
-   "C5",
-   "C6"
+   "C19",
+   "C21",
+   "C6",
+   "C41"
   ],
   "contribution_record": "complete",
   "origin": "converted",
@@ -231,7 +233,7 @@
  "claims": [
   {
    "id": "C2",
-   "statement": "Depending on the value of its [[D2:complex smoothing parameter]], [[D1:CES]] is a stationary or a non-stationary model and passes from one to the other continuously as the parameter changes, without the discontinuous switch between models that ARIMA imposes, whereas ETS models are always non-stationary.",
+   "statement": "Depending on the value of its [[D2:complex smoothing parameter]], [[D1:CES]] is a stationary or a non-stationary model and passes from one to the other continuously as the parameter changes.",
    "type": "formal",
    "role": "principal",
    "novelty": "extension",
@@ -348,73 +350,13 @@
    "provenance": "extracted"
   },
   {
-   "id": "C5",
-   "statement": "On the [[D7:M1, M3 and tourism data]] and on the M4 competition data, CES has lower mean and median [[D11:RMSSE]] than [[D8:ETS]], [[D9:ARIMA]] and the [[D10:Theta method]], while on mean [[D13:MSIS]] it is beaten by at least two of them on both data sets and on mean [[D12:MASE]] by ETS and the Theta method on the M1, M3 and tourism data.",
-   "type": "descriptive",
-   "role": "principal",
-   "novelty": "no_prior_found",
-   "scope": {
-    "population": "time series of the M1, M3, tourism and M4 forecasting competitions",
-    "conditions": [
-     "forecast horizons of the competitions",
-     "seasonal or non-seasonal CES selected by AICc"
-    ],
-    "excludes": [
-     "10 M4 series on which ETS broke down"
-    ]
-   },
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E2",
-     "results": [
-      "E2.T1"
-     ]
-    },
-    {
-     "kind": "empirical_quant",
-     "evidence": "E8",
-     "results": [
-      "E8.T1"
-     ]
-    }
-   ],
-   "depends_on": [
-    "C19",
-    "C20",
-    "C21"
-   ],
-   "limitations": [
-    "L1",
-    "L3",
-    "L5"
-   ],
-   "field_provenance": {
-    "statement": "inferred"
-   },
-   "source_spans": [
-    "p1.6",
-    "p9.16",
-    "p10.9",
-    "p11.27"
-   ],
-   "provenance": "extracted"
-  },
-  {
    "id": "C6",
-   "statement": "Adding CES to the median combination of [[D8:ETS]], [[D9:ARIMA]] and [[D10:Theta method]] forecasts lowers its errors: on the M4 data [[D5:SCUM]] has lower mean and median [[D12:MASE]], [[D11:RMSSE]] and [[D13:MSIS]] than [[D6:SCUM(noCES)]], and on the [[D7:M1, M3 and tourism data]] it has lower mean and median RMSSE and MASE and lower median MSIS but higher mean MSIS (2.333 against 2.223), and is statistically significantly better than every other method on RMSSE, MASE and MSIS in Nemenyi tests at the 5% level.",
+   "statement": "On the [[D7:M1, M3 and tourism data]], [[D5:SCUM]] has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than [[D6:SCUM(noCES)]], but higher mean MSIS (2.333 against 2.223).",
    "type": "descriptive",
    "role": "principal",
    "novelty": "no_prior_found",
    "scope": {
-    "population": "time series of the M1, M3, tourism and M4 forecasting competitions",
-    "conditions": [
-     "forecast horizons of the competitions",
-     "Nemenyi tests on the M1, M3 and tourism data only, significance level 0.05"
-    ],
-    "excludes": [
-     "10 M4 series on which ETS broke down"
-    ]
+    "population": "time series of the M1, M3 and tourism forecasting competitions"
    },
    "support": [
     {
@@ -424,30 +366,23 @@
       "E2.T1.r5",
       "E2.T1.r6"
      ]
-    },
-    {
-     "kind": "empirical_quant",
-     "evidence": "E8",
-     "results": [
-      "E8.T1.r5",
-      "E8.T1.r6"
-     ]
     }
    ],
    "limitations": [
-    "L3",
-    "L5"
+    "L3"
    ],
    "field_provenance": {
     "statement": "inferred"
    },
    "source_spans": [
     "p9.16",
-    "p9.20-p9.21",
-    "p10.9",
+    "p9.21",
     "p11.27"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "depends_on": [
+    "C42"
+   ]
   },
   {
    "id": "C7",
@@ -718,9 +653,10 @@
    "id": "C19",
    "statement": "On the [[D7:M1, M3 and tourism data]], among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES, CES has the lowest mean [[D11:RMSSE]] and the lowest median RMSSE, [[D12:MASE]] and [[D13:MSIS]], but a higher mean MASE than the Theta method and ETS and the highest mean MSIS (3.465).",
    "type": "descriptive",
-   "role": "supporting",
+   "role": "principal",
    "novelty": "no_prior_found",
    "scope": {
+    "population": "time series of the M1, M3 and tourism forecasting competitions",
     "conditions": [
      "seasonal or non-seasonal CES selected by AICc"
     ]
@@ -738,16 +674,22 @@
     }
    ],
    "limitations": [
-    "L1"
+    "L1",
+    "L3"
    ],
    "field_provenance": {
     "statement": "inferred"
    },
    "source_spans": [
+    "p1.6",
     "p9.15-p9.16",
-    "p9.18"
+    "p9.18",
+    "p11.27"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "depends_on": [
+    "C20"
+   ]
   },
   {
    "id": "C20",
@@ -777,7 +719,7 @@
    "id": "C21",
    "statement": "On the M4 competition data, among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES, CES has the lowest mean and median [[D12:MASE]] and [[D11:RMSSE]] and the lowest median [[D13:MSIS]], but a higher mean MSIS than ARIMA and the Theta method.",
    "type": "descriptive",
-   "role": "supporting",
+   "role": "principal",
    "novelty": "no_prior_found",
    "scope": {
     "population": "M4 competition time series",
@@ -798,13 +740,16 @@
     }
    ],
    "limitations": [
+    "L3",
     "L5"
    ],
    "field_provenance": {
     "statement": "inferred"
    },
    "source_spans": [
-    "p9.22-p10.9"
+    "p1.6",
+    "p9.22-p10.9",
+    "p11.27"
    ],
    "provenance": "extracted"
   },
@@ -1195,6 +1140,64 @@
    ],
    "source_spans": [
     "p7.2"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C41",
+   "statement": "On the [[D17:M4 data without 10 series]], [[D5:SCUM]] has lower mean and median [[D12:MASE]], [[D11:RMSSE]] and [[D13:MSIS]] than [[D6:SCUM(noCES)]].",
+   "type": "descriptive",
+   "role": "principal",
+   "novelty": "no_prior_found",
+   "scope": {
+    "population": "M4 competition time series",
+    "excludes": [
+     "10 series on which ETS broke down"
+    ]
+   },
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E8",
+     "results": [
+      "E8.T1.r5",
+      "E8.T1.r6"
+     ]
+    }
+   ],
+   "limitations": [
+    "L3",
+    "L5"
+   ],
+   "field_provenance": {
+    "statement": "inferred"
+   },
+   "source_spans": [
+    "p10.9",
+    "p11.27"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C42",
+   "statement": "On the [[D7:M1, M3 and tourism data]], in [[D22:Nemenyi test]]s at the 5% level [[D5:SCUM]] is statistically significantly better than every other method, including [[D6:SCUM(noCES)]], on RMSSE, MASE and MSIS.",
+   "type": "descriptive",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "scope": {
+    "conditions": [
+     "Nemenyi test on ranks of the error measures, significance level 0.05"
+    ]
+   },
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E2"
+    }
+   ],
+   "source_spans": [
+    "p9.20-p9.21",
+    "p10.3"
    ],
    "provenance": "extracted"
   }
@@ -1970,7 +1973,6 @@
    "category": "model_specification",
    "statement": "CES produces very large errors on a few series: on M1 series 47 it fails to identify the trend and its MSIS is 523.034 against 25.590 for ETS(M,N,N), which inflates its mean MSIS, and on the non-seasonal subset it fails on two series.",
    "affects": [
-    "C5",
     "C19",
     "C22"
    ],
@@ -2003,8 +2005,10 @@
    "category": "sample_size",
    "statement": "The effect of the length of a time series on the accuracy of CES is not analysed.",
    "affects": [
-    "C5",
-    "C6"
+    "C19",
+    "C21",
+    "C6",
+    "C41"
    ],
    "impact": "reduces_transferability",
    "mitigation": "none",
@@ -2032,9 +2036,8 @@
    "category": "sampling",
    "statement": "The 10 M4 series on which ETS broke down were excluded from the M4 comparison, so the series were selected on the failure of one of the compared methods.",
    "affects": [
-    "C5",
-    "C6",
-    "C21"
+    "C21",
+    "C41"
    ],
    "impact": "could_bias_magnitude",
    "mitigation": "none",
