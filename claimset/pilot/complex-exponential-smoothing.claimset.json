@@ -163,9 +163,7 @@
     "C11",
     "C12",
     "C13",
-    "C15"
-   ],
-   "assumptions": [
+    "C15",
     "C35"
    ],
    "source_spans": [
@@ -533,6 +531,11 @@
    "provenance": "extracted",
    "depends_on": [
     "C7"
+   ],
+   "assumptions": [
+    "C32",
+    "C37",
+    "C38"
    ]
   },
   {
@@ -817,23 +820,21 @@
    "source_spans": [
     "p6.5-p6.10"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "depends_on": [
+    "C11"
+   ]
   },
   {
    "id": "C26",
-   "statement": "CES improves the accuracy of the SCUM combination because it captures long-term relations better than ETS, ARIMA and the Theta method and captures nonlinear trends without separating the series into level and trend.",
-   "type": "interpretive",
+   "statement": "CES captures long-term relations better than ETS, ARIMA and the Theta method, and captures nonlinear trends without separating the series into level and trend.",
+   "type": "methodological",
    "role": "secondary",
    "novelty": "no_prior_found",
    "support": [
     {
-     "kind": "argument",
-     "warrant": "W6"
+     "kind": "unstated"
     }
-   ],
-   "warrant": "W6",
-   "depends_on": [
-    "C6"
    ],
    "source_spans": [
     "p9.16-p9.17",
@@ -850,37 +851,21 @@
    "novelty": "no_prior_found",
    "support": [
     {
+     "kind": "empirical_quant",
+     "evidence": "E9",
+     "results": [
+      "E9.T2"
+     ]
+    },
+    {
      "kind": "argument",
      "warrant": "W7"
     }
    ],
    "warrant": "W7",
-   "depends_on": [
-    "C23"
-   ],
    "source_spans": [
     "p11.22",
     "p11.26"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C28",
-   "statement": "On the [[D7:M1, M3 and tourism data]], the mean RMSSE, MASE and MSIS of every method are much larger than its median values, which suggests outlying errors.",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E2",
-     "results": [
-      "E2.T1"
-     ]
-    }
-   ],
-   "source_spans": [
-    "p9.15"
    ],
    "provenance": "extracted"
   },
@@ -892,39 +877,27 @@
    "novelty": "no_prior_found",
    "support": [
     {
+     "kind": "empirical_quant",
+     "evidence": "E2",
+     "results": [
+      "E2.T1"
+     ]
+    },
+    {
+     "kind": "empirical_quant",
+     "evidence": "E8",
+     "results": [
+      "E8.T1"
+     ]
+    },
+    {
      "kind": "argument",
      "warrant": "W8"
     }
    ],
    "warrant": "W8",
-   "depends_on": [
-    "C5",
-    "C6"
-   ],
    "source_spans": [
     "p11.28"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C30",
-   "statement": "CES brings value and performs well in practice.",
-   "type": "interpretive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "argument",
-     "warrant": "W9"
-    }
-   ],
-   "warrant": "W9",
-   "depends_on": [
-    "C21",
-    "C6"
-   ],
-   "source_spans": [
-    "p10.9"
    ],
    "provenance": "extracted"
   },
@@ -936,14 +909,25 @@
    "novelty": "no_prior_found",
    "support": [
     {
+     "kind": "empirical_quant",
+     "evidence": "E2",
+     "results": [
+      "E2.T1"
+     ]
+    },
+    {
+     "kind": "empirical_quant",
+     "evidence": "E8",
+     "results": [
+      "E8.T1"
+     ]
+    },
+    {
      "kind": "argument",
      "warrant": "W10"
     }
    ],
    "warrant": "W10",
-   "depends_on": [
-    "C5"
-   ],
    "source_spans": [
     "p11.27"
    ],
@@ -1004,22 +988,28 @@
   },
   {
    "id": "C35",
-   "statement": "An exponential smoothing model needs to be stable, or at least forecastable, but not stationary.",
-   "type": "descriptive",
+   "statement": "[[D1:CES]] is required to be stable but not stationary, because an exponential smoothing model needs to be stable, or at least forecastable, but not stationary.",
+   "type": "methodological",
    "role": "supporting",
    "support": [
     {
-     "kind": "assumption"
+     "kind": "cited",
+     "reference": "B14",
+     "self": true
+    },
+    {
+     "kind": "cited",
+     "reference": "B1",
+     "self": true
     }
    ],
-   "assumption_category": "methodological",
-   "check": "untestable",
    "source_spans": [
     "p4.20",
     "p5.4",
     "p5.20"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "novelty": "no_prior_found"
   },
   {
    "id": "C36",
@@ -1038,6 +1028,42 @@
     "p11.22"
    ],
    "provenance": "extracted"
+  },
+  {
+   "id": "C37",
+   "statement": "The error term $\\varepsilon_t$ of [[D1:CES]] has no autocorrelation.",
+   "type": "descriptive",
+   "role": "secondary",
+   "support": [
+    {
+     "kind": "assumption"
+    }
+   ],
+   "assumption_category": "statistical",
+   "check": "unchecked",
+   "source_spans": [
+    "p4.5",
+    "p5.14"
+   ],
+   "provenance": "inferred"
+  },
+  {
+   "id": "C38",
+   "statement": "The error term $\\varepsilon_t$ of [[D1:CES]] has constant variance.",
+   "type": "descriptive",
+   "role": "secondary",
+   "support": [
+    {
+     "kind": "assumption"
+    }
+   ],
+   "assumption_category": "statistical",
+   "check": "unchecked",
+   "source_spans": [
+    "p4.5",
+    "p5.14"
+   ],
+   "provenance": "inferred"
   }
  ],
  "evidence": [
@@ -1228,9 +1254,6 @@
    "profile": "formal",
    "description": "Derivation of the stability region of CES from the invertibility conditions of its underlying ARMA(2,2) model.",
    "foundation": "Invertibility conditions of ARMA(2,2) models; algebra of inequalities",
-   "assumptions": [
-    "C35"
-   ],
    "source_spans": [
     "p4.21-p5.6",
     "p15.12-p16.1"
@@ -1716,46 +1739,22 @@
    "text": "With the imaginary part of the smoothing parameter equal to one CES is the local level model ETS(A,N,N); with it above one the forecasts grow exponentially, as in multiplicative trend models; and the flexibility of its trajectories lets it follow trends that the level and trend classification of exponential smoothing captures only with separate models."
   },
   {
-   "id": "W6",
-   "reasoning": "abductive",
-   "premises": [
-    "C6"
-   ],
-   "text": "Including CES in the combination lowers its errors; the authors attribute this to CES capturing long-term relations and nonlinear trends that ETS, ARIMA and the Theta method, which separate or difference level and trend, do not capture."
-  },
-  {
    "id": "W7",
    "reasoning": "inductive",
-   "premises": [
-    "C23"
-   ],
-   "text": "On the seasonal subset, CES with the seasonal or non-seasonal form chosen by the information criterion is more accurate on RMSSE and MASE than every seasonal ETS model, which the authors take to show that the criterion chooses the seasonal form when it is needed."
+   "premises": [],
+   "text": "On the seasonal subset of the M1, M3 and tourism data, CES with its seasonal or non-seasonal form chosen by AICc has lower RMSSE and MASE than every seasonal ETS model, which the authors take to show that the criterion chooses the seasonal form when it is needed. This is an argument from the accuracy results only: no experiment compares the selection by information criteria with other ways of choosing between seasonal and non-seasonal CES."
   },
   {
    "id": "W8",
    "reasoning": "inductive",
-   "premises": [
-    "C5",
-    "C6"
-   ],
-   "text": "CES is accurate on RMSSE across the M1, M3, tourism and M4 data and improves the combination in which it is included, which the authors take as evidence that it is robust, while acknowledging that it does not suit every forecasting scenario."
-  },
-  {
-   "id": "W9",
-   "reasoning": "inductive",
-   "premises": [
-    "C21",
-    "C6"
-   ],
-   "text": "On the M4 data, as on the earlier competition data, CES has the lowest MASE and RMSSE among the univariate methods and the combination with CES is more accurate than the one without it."
+   "premises": [],
+   "text": "CES has lower RMSSE than ETS, ARIMA and the Theta method on the M1, M3, tourism and M4 data and lowers the errors of the combination it is included in, which the authors take as evidence that it is robust, while acknowledging that it does not suit every forecasting scenario. Robustness itself is not defined or tested: no experiment examines how the accuracy of CES varies across conditions or departures from its assumptions."
   },
   {
    "id": "W10",
    "reasoning": "inductive",
-   "premises": [
-    "C5"
-   ],
-   "text": "CES, which has no separate trend forms, is more accurate on RMSSE than ETS, which selects among trend forms, on data that contain both level and trended series, which the authors take to validate that CES handles both kinds of series by its smooth transition between trajectories."
+   "premises": [],
+   "text": "CES, which has no separate trend forms, has lower RMSSE than ETS, which selects among trend forms, on competition data that contain both level and trended series, which the authors take to validate that CES handles both kinds of series by its smooth transition between trajectories. No experiment separates level from trended series to test this: the comparison is on the pooled competition data."
   }
  ],
  "limitations": [
@@ -1952,6 +1951,11 @@
    "id": "B13",
    "id_type": "reference",
    "target": "Petropoulos, F., & Svetunkov, I. (2020). A simple combination of univariate models. International Journal of Forecasting, 36(1), 110–115."
+  },
+  {
+   "id": "B14",
+   "id_type": "reference",
+   "target": "Ord, K., Koehler, A. B., & Snyder, R. D. (1997). Estimation and prediction for a class of dynamic nonlinear statistical models. Journal of the American Statistical Association, 92(440), 1621–1629."
   }
  ]
 }
