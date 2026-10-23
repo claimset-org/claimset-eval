@@ -1,0 +1,228 @@
+CLAIMSET Complex exponential smoothing
+licence CC-BY-4.0; converted from 10.1002/nav.22074 version of record by Ivan Svetunkov, Nikolaos Kourentzes, John Keith Ord; contributions C2, C3, C4, C19, C21, C6, C41
+
+DEFINITIONS
+D1 CES: Complex exponential smoothing: a forecasting method that combines each past observation $y_t$ and its forecast error $e_t$ into the complex variable $y_t + i e_t$ and forecasts with an exponentially weighted sum of these values, the weights being powers of $1 + i - (\alpha_0 + i\alpha_1)$ times the complex smoothing parameter $\alpha_0 + i\alpha_1$.
+D2 complex smoothing parameter: The smoothing parameter of CES, the complex number $\alpha_0 + i\alpha_1$; its real part $\alpha_0$ and imaginary part $\alpha_1$ are the two real parameters estimated, and they set how much of the past observations and of the past forecast errors is carried into the forecast.
+D3 nonlinear trend component: The state $c_t$ of the CES state-space model, which carries information on both its own previous value $c_{t-1}$ and the previous level $l_{t-1}$; it does not correspond to the trend component of exponential smoothing.
+D4 seasonal CES: CES extended with a second pair of level and nonlinear trend states taken at lag $m$, the seasonal period, with its own complex smoothing parameter $\beta_0 + i\beta_1$: $y_t = l_{0,t-1} + l_{1,t-m} + \varepsilon_t$, where $l_{0,t}, c_{0,t}$ follow the non-seasonal CES equations at lag 1 and $l_{1,t}, c_{1,t}$ the same equations at lag $m$.
+D5 SCUM: Simple combination of univariate models: the median of the forecasts of ETS, ARIMA, the Theta method and CES. [source B13]
+D6 SCUM(noCES): The median of the forecasts of ETS, ARIMA and the Theta method: SCUM without CES.
+D7 M1, M3 and tourism data: The 5,315 yearly, quarterly, monthly and other time series of the M1, M3 and tourism forecasting competitions.
+D8 ETS: Exponential smoothing in a state space framework with automatic selection among its models; here es() from the smooth package with model ZXZ, selecting by AICc. [source B2]
+D9 ARIMA: Automatic state space ARIMA; here auto.ssarima() from the smooth package. [source B15]
+D10 Theta method: The Theta method of forecasting; here thetaf() from the forecast package 8.14. [source B16]
+D11 RMSSE: Root mean squared scaled error: the root mean squared forecast error over the horizon, scaled by the mean absolute first difference of the in-sample data; reported as its mean and median over the series. [source B17]
+D12 MASE: Mean absolute scaled error: the mean absolute forecast error over the horizon, scaled by the mean absolute first difference of the in-sample data; reported as its mean and median over the series. [source B18]
+D13 MSIS: Mean scaled interval score: the interval score of a prediction interval averaged over the horizon and scaled by the mean absolute first difference of the in-sample data; here of the 95% prediction interval, reported as its mean and median over the series. [source B19]
+D14 CES with automatic seasonal selection: CES fitted by auto.ces() from the smooth package 3.1.2, which chooses between seasonal and non-seasonal CES by AICc.
+D15 non-seasonal special cases of ETS: The ETS models ETS(A,N,N), ETS(A,A,N), ETS(A,Ad,N), ETS(M,M,N) and ETS(M,Md,N), each fitted without model selection. [source B1]
+D16 seasonal special cases of ETS: The ETS models ETS(A,N,A), ETS(A,A,A), ETS(A,Ad,A), ETS(M,M,M) and ETS(M,Md,M), each fitted without model selection. [source B1]
+D17 M4 data without 10 series: The 100,000 series of the M4 competition (23,000 yearly, 24,000 quarterly, 48,000 monthly, 359 weekly, 4,227 daily and 414 hourly) except series 19357, 43160, 51552, 62738, 92370, 92435, 93159, 93196, 93412 and 93491, whose influential outliers and structural breaks made ETS break down. [source B9]
+D18 non-seasonal subset: The 3,262 series of the M1, M3 and tourism data for which ETS model selection by es() from the smooth package chooses a non-seasonal model.
+D19 seasonal subset: The 2,053 series of the M1, M3 and tourism data for which ETS model selection by es() from the smooth package chooses a seasonal model.
+D20 holdout at the M1, M3 and tourism horizons: Each series split into an in-sample part and a holdout of the length used in its competition: 6 observations for yearly, 8 for quarterly and other, and 18 for monthly series; forecasts made from the end of the in-sample part.
+D21 holdout at the M4 horizons: Each series split into an in-sample part and a holdout of the length used in the M4 competition: 6 observations for yearly, 8 for quarterly, 18 for monthly, 13 for weekly, 14 for daily and 48 for hourly series; forecasts made from the end of the in-sample part.
+D22 Nemenyi test: Post hoc Nemenyi test on the ranks of an error measure across series, comparing all methods at the 5% level; here rmcb() from the greybox package. [source B20]
+
+CLAIMS
+C2 [formal; principal; extension; support: formal_proof E3; uses C9, C10, C11, C12, C13, C15, C35, C40; verification unchecked]
+  Depending on the value of its [[D2:complex smoothing parameter]], [[D1:CES]] is a stationary or a non-stationary model and passes from one to the other continuously as the parameter changes.
+  extends B1, own earlier work: Exponential smoothing in a state space framework (ETS) gives 30 models with no, additive or multiplicative error, trend and seasonal components, among which a model is selected by an information criterion.
+  addresses B3, own earlier work: Identifying the presence and type of trend in exponential smoothing often leads to misidentification and poorly performing long-term forecasts.
+  addresses B2: The diverse trend alternatives of exponential smoothing in a state space framework make the selection of a model difficult.
+  addresses B4: Selecting the most appropriate exponential smoothing model is a challenging task.
+  addresses B5, own earlier work: Even when the components of exponential smoothing are identified correctly, the estimated smoothing parameters and the weights they imply can give poor forecasts.
+C3 [formal; principal; support: formal_proof E5; assumes C34; uses C7; verification unchecked]
+  [[D1:CES]] has an underlying ARMA(2,2) model whose coefficients $\phi_1 = 2 - \alpha_0$, $\phi_2 = \alpha_0 + \alpha_1 - 2$, $\theta_1 = 2 - 2\alpha_0 + \alpha_1$ and $\theta_2 = 3\alpha_0 + \alpha_1 - 2 - \alpha_0^2 - \alpha_1^2$ are nonlinear functions of the same two parameters, so that its parameter space differs from that of the general ARMA(2,2) model and is not restricted to stationary models.
+C4 [methodological; principal; support: argument W2; uses C24, C17; limitations L2; warrant W2]
+  [[D4:seasonal CES]] models seasonality with lag-$m$ level and nonlinear trend states instead of seasonal indices, so that no seasonal indices need renormalising and model selection for CES reduces to choosing between the seasonal and the non-seasonal model.
+C6 [descriptive; principal; support: empirical_quant E2 (E2.T1.r5, E2.T1.r6); uses C42; limitations L3]
+  On the [[D7:M1, M3 and tourism data]], [[D5:SCUM]] has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than [[D6:SCUM(noCES)]], but higher mean MSIS (2.333 against 2.223).
+  scope: population: time series of the M1, M3 and tourism forecasting competitions
+C19 [descriptive; principal; support: empirical_quant E2 (E2.T1.r1, E2.T1.r2, E2.T1.r3, E2.T1.r4); uses C20; limitations L1, L3]
+  On the [[D7:M1, M3 and tourism data]], among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES, CES has the lowest mean [[D11:RMSSE]] and the lowest median RMSSE, [[D12:MASE]] and [[D13:MSIS]], but a higher mean MASE than the Theta method and ETS and the highest mean MSIS (3.465).
+  scope: population: time series of the M1, M3 and tourism forecasting competitions | conditions: seasonal or non-seasonal CES selected by AICc
+C21 [descriptive; principal; support: empirical_quant E8 (E8.T1.r1, E8.T1.r2, E8.T1.r3, E8.T1.r4); limitations L3, L5]
+  On the M4 competition data, among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES, CES has the lowest mean and median [[D12:MASE]] and [[D11:RMSSE]] and the lowest median [[D13:MSIS]], but a higher mean MSIS than ARIMA and the Theta method.
+  scope: population: M4 competition time series | excludes: 10 series on which ETS broke down
+C41 [descriptive; principal; support: empirical_quant E8 (E8.T1.r5, E8.T1.r6); limitations L3, L5]
+  On the [[D17:M4 data without 10 series]], [[D5:SCUM]] has lower mean and median [[D12:MASE]], [[D11:RMSSE]] and [[D13:MSIS]] than [[D6:SCUM(noCES)]].
+  scope: population: M4 competition time series | excludes: 10 series on which ETS broke down
+C7 [formal; supporting; support: formal_proof E1; assumes C32, C34; verification unchecked]
+  [[D1:CES]] has the single-source-of-error state-space form $y_t = l_{t-1} + \varepsilon_t$, $l_t = l_{t-1} - (1 - \alpha_1) c_{t-1} + (\alpha_0 - \alpha_1) \varepsilon_t$, $c_t = l_{t-1} + (1 - \alpha_0) c_{t-1} + (\alpha_0 + \alpha_1) \varepsilon_t$, with level $l_t$ and [[D3:nonlinear trend component]] $c_t$, whose transition matrix contains the smoothing parameters.
+C9 [formal; supporting; support: formal_proof E3; verification unchecked]
+  [[D1:CES]] is stationary, with both eigenvalues of its transition matrix inside the unit circle, when $\alpha_1 < 5 - 2\alpha_0$, $\alpha_1 < 1$ and $\alpha_1 > 1 - \alpha_0$.
+C10 [formal; supporting; support: formal_proof E3; verification unchecked]
+  When $\alpha_1 > 1$, both eigenvalues of the [[D1:CES]] transition matrix are real and one of them is greater than one, so CES produces a non-stationary trajectory.
+C11 [formal; supporting; support: formal_proof E3; verification unchecked]
+  When $\alpha_1 = 1$, [[D1:CES]] is equivalent to ETS(A,N,N).
+C12 [formal; supporting; support: formal_proof E4, cited B1, at pp. 172-173, own earlier work; verification unchecked]
+  [[D1:CES]] is stable, with all eigenvalues of its discount matrix inside the unit circle, when $(\alpha_0 - 2.5)^2 + \alpha_1^2 > 1.25$, $(\alpha_0 - 0.5)^2 + (\alpha_1 - 1)^2 > 0.25$ and $(\alpha_0 - 1.5)^2 + (\alpha_1 - 0.5)^2 < 1.5$, and the stable region contains both stationary and non-stationary values of the [[D2:complex smoothing parameter]].
+C13 [formal; supporting; support: formal_proof E3; verification unchecked]
+  The [[D1:CES]] point forecast $w'F^{h-1}v_t$ follows one of five trajectories set by the [[D2:complex smoothing parameter]]: a flat line when $\alpha_1 = 1$, exponential growth when $\alpha_1 > 1$, exponential decline when $(4 - \alpha_0^2)/4 < \alpha_1 < 1$, harmonic oscillation converging to zero when $1 - \alpha_0 < \alpha_1 < (4 - \alpha_0^2)/4$, and diverging harmonic oscillation when $0 < \alpha_1 < 1 - \alpha_0$.
+C15 [descriptive; supporting; support: empirical_quant E7 (E7.R1, E7.R2)]
+  On M3 series 1664, which graphical analysis and ADF and KPSS tests indicate is stationary, [[D1:CES]] estimates the stationary $\alpha_0 + i\alpha_1 = 0.99999 + 0.99884i$, and all holdout observations lie inside its 95% prediction interval.
+  scope: conditions: prediction interval level 0.95
+C20 [descriptive; supporting; support: empirical_quant E2]
+  On the [[D7:M1, M3 and tourism data]], in Nemenyi tests at the 5% level CES has the best mean rank among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES on [[D11:RMSSE]] and on [[D12:MASE]], though not all of the differences are statistically significant, and on [[D13:MSIS]] it ranks second of all six methods, behind SCUM.
+  scope: conditions: Nemenyi test on ranks of the error measures, significance level 0.05
+C22 [descriptive; supporting; support: empirical_quant E9 (E9.T1); assumes C36; limitations L1]
+  On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] than ETS(A,N,N), ETS(A,A,N), ETS(M,M,N) and ETS(M,Md,N), but higher mean RMSSE and MASE and higher median MASE and [[D13:MSIS]] than ETS(A,Ad,N), the lowest median RMSSE of the six models, and a higher mean MSIS than every ETS model except ETS(M,M,N).
+C32 [descriptive; supporting; assumption (statistical, unchecked)]
+  The error term $\varepsilon_t$ of [[D1:CES]] is additive white noise.
+C34 [descriptive; supporting; assumption (theoretical, untestable)]
+  There is no misspecification error, so the forecast error $e_t$ of [[D1:CES]] equals the model error $\varepsilon_t$.
+C35 [methodological; supporting; support: cited B14, own earlier work, cited B1, own earlier work]
+  [[D1:CES]] is required to be stable, or at least forecastable, but not stationary.
+C36 [descriptive; supporting; assumption (methodological, unchecked)]
+  ETS model selection with es() from the smooth package identifies correctly which series of the [[D7:M1, M3 and tourism data]] are seasonal.
+C40 [descriptive; supporting; support: empirical_quant E7 (E7.R3, E7.R4)]
+  On the trended M3 series 2721, [[D1:CES]] estimates the non-stationary $\alpha_0 + i\alpha_1 = 1.48098 + 1.00346i$.
+C42 [descriptive; supporting; support: empirical_quant E2]
+  On the [[D7:M1, M3 and tourism data]], in [[D22:Nemenyi test]]s at the 5% level [[D5:SCUM]] is statistically significantly better than every other method, including [[D6:SCUM(noCES)]], on RMSSE, MASE and MSIS.
+  scope: conditions: Nemenyi test on ranks of the error measures, significance level 0.05
+C8 [methodological; secondary; support: cited B1, at p. 68, own earlier work; assumes C32, C33]
+  The Akaike information criterion of seasonal and non-seasonal [[D1:CES]] can be computed from a Gaussian likelihood of the same form as that of additive exponential smoothing models.
+C14 [formal; secondary; support: cited B1, at p. 96, own earlier work; assumes C32, C37, C38; uses C7]
+  The conditional variance of [[D1:CES]] $h$ steps ahead, given the level and the nonlinear trend component, can be calculated from its state-space form in the same way as for pure additive ETS models.
+C16 [formal; secondary; support: formal_proof E6; uses C4; verification unchecked]
+  [[D4:seasonal CES]] has an underlying SARIMA(2,0,2m+2)(2,0,0)$_m$ model.
+C23 [descriptive; secondary; support: empirical_quant E9 (E9.T2); assumes C36]
+  On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(A,N,A), ETS(A,A,A), ETS(A,Ad,A), ETS(M,M,M) and ETS(M,Md,M), but a higher mean MSIS than every one of them except ETS(A,A,A).
+C25 [formal; secondary; support: formal_proof E3; uses C11; verification unchecked]
+  When $\alpha_1$ is close to 1, [[D1:CES]] behaves like simple exponential smoothing with smoothing parameter $\alpha_0 - 1$, so $\alpha_0$ is close to 1 for a stationary series, for which the simple exponential smoothing parameter would be close to 0, and close to 2 for a random walk.
+C27 [interpretive; secondary; support: empirical_quant E9 (E9.T2), argument W7; warrant W7]
+  Information criteria identify effectively when to switch between seasonal and non-seasonal [[D1:CES]].
+C29 [interpretive; secondary; support: empirical_quant E2 (E2.T1), empirical_quant E8 (E8.T1), argument W8; warrant W8]
+  CES is a robust forecasting approach, although it is not appropriate for every forecasting scenario.
+C31 [interpretive; secondary; support: empirical_quant E2 (E2.T1), empirical_quant E8 (E8.T1), argument W10; warrant W10]
+  The benchmark results show that CES can capture both level and trend time series without the selection between trend types that ETS requires.
+C33 [descriptive; secondary; assumption (statistical, unchecked)]
+  The error term $\varepsilon_t$ of [[D1:CES]] is normally distributed.
+C37 [descriptive; secondary; assumption (statistical, unchecked)]
+  The error term $\varepsilon_t$ of [[D1:CES]] has no autocorrelation.
+C38 [descriptive; secondary; assumption (statistical, unchecked)]
+  The error term $\varepsilon_t$ of [[D1:CES]] has constant variance.
+
+CLAIMS WITHOUT EVIDENCE
+C17 [methodological; supporting; support: argument W3; uses C13; warrant W3]
+  [[D4:seasonal CES]] can produce seasonality whose amplitude changes nonlinearly, together with all the trajectories of non-seasonal CES, and can model multiplicative or other shapes of seasonality when the level of the series does not change.
+C18 [methodological; secondary; support: argument W4; warrant W4]
+  Non-seasonal [[D1:CES]] has 5 estimated parameters, two smoothing parameters, two initial states and the error variance, and [[D4:seasonal CES]] has $4 + 2m + 2 + 1$: four smoothing parameters, $2m$ initial lagged values, two initial non-seasonal states and the error variance.
+C24 [methodological; supporting; support: argument W5; uses C11, C13, C22; warrant W5]
+  [[D1:CES]] encompasses level and multiplicative trend processes and approximates additive trend processes well.
+C26 [methodological; secondary; support: unstated]
+  CES captures long-term relations better than ETS, ARIMA and the Theta method, and captures nonlinear trends without separating the series into level and trend.
+C39 [formal; secondary; support: argument W11; uses C16; limitations L2; warrant W11; verification unchecked]
+  [[D4:seasonal CES]] is a stationary or a non-stationary model depending on the values of its complex smoothing parameters.
+
+EVIDENCE
+E1 [formal; foundation Complex numbers represented as real 2x2 matrices; linear algebra] Derivation of the state-space form of CES from the complex-valued method, representing complex variables as real vectors and matrices.
+  assumes C32, C34
+  derivation: in the source
+E2 [quant; design benchmark; data_origin secondary; n 5315] [[D14:CES with automatic seasonal selection]] compared with ETS, ARIMA, the Theta method, SCUM and SCUM(noCES) on the [[D7:M1, M3 and tourism data]], by error measures on a single holdout per series, with Nemenyi tests of the differences.
+  setup: compared D14, D8, D9, D10, D5, D6; data D7; design D20, D22; measures D11, D12, D13
+  E2.R1 MSIS of CES on M1 series 47 = 523.034 {series: M1 series 47, method: CES}
+  E2.R2 MSIS of ETS(M,N,N) on M1 series 47 = 25.59 {series: M1 series 47, method: ETS(M,N,N)}
+  E2.T1 Mean and median RMSSE, MASE and MSIS of six methods over the 5,315 series of the M1, M3 and tourism competitions
+  | row | method | mean RMSSE | mean MASE | mean MSIS | median RMSSE | median MASE | median MSIS |
+  | r1 | CES | 1.959 | 2.272 | 3.465 | 1.17 | 1.298 | 0.869 |
+  | r2 | ETS | 1.97 | 2.263 | 2.258 | 1.181 | 1.323 | 0.925 |
+  | r3 | ARIMA | 2.134 | 2.482 | 3.335 | 1.271 | 1.419 | 0.988 |
+  | r4 | Theta | 1.965 | 2.252 | 2.531 | 1.238 | 1.377 | 0.895 |
+  | r5 | SCUM | 1.867 | 2.146 | 2.333 | 1.128 | 1.256 | 0.844 |
+  | r6 | SCUM(noCES) | 1.911 | 2.191 | 2.223 | 1.143 | 1.279 | 0.859 |
+E3 [formal; foundation Linear algebra: eigenvalues of the transition matrix of a linear state-space model] Analysis of the eigenvalues of the CES transition matrix: the stationarity condition, the non-stationary case, the special case equivalent to ETS(A,N,N), the five forecast trajectories and the connection with simple exponential smoothing.
+  assumes C34
+  derivation: in the source
+E4 [formal; foundation Invertibility conditions of ARMA(2,2) models; algebra of inequalities] Derivation of the stability region of CES from the invertibility conditions of its underlying ARMA(2,2) model.
+  assumes C34
+  derivation: in the source
+E5 [formal; foundation Algebra of backshift-operator polynomials] Derivation of the ARMA(2,2) model underlying CES from its state-space form, by eliminating the nonlinear trend component.
+  assumes C34
+  derivation: in the source
+E6 [formal; foundation Algebra of backshift-operator polynomials and matrix inversion] Derivation of the SARIMA model underlying seasonal CES from its state-space form.
+  assumes C34
+  derivation: in the source
+E7 [quant; design other; data_origin secondary; n 2] CES fitted with ces() from smooth to M3 series 1664 and 2721, each split into in-sample and holdout parts; stationarity of each series assessed by graphical analysis and ADF and KPSS tests; point forecasts and 95% prediction intervals.
+  E7.R1 real part alpha_0 of the estimated complex smoothing parameter = 0.99999 {series: M3 series 1664}
+  E7.R2 imaginary part alpha_1 of the estimated complex smoothing parameter = 0.99884 {series: M3 series 1664}
+  E7.R3 real part alpha_0 of the estimated complex smoothing parameter = 1.48098 {series: M3 series 2721}
+  E7.R4 imaginary part alpha_1 of the estimated complex smoothing parameter = 1.00346 {series: M3 series 2721}
+E8 [quant; design benchmark; data_origin secondary; n 99990] The same six methods compared on the [[D17:M4 data without 10 series]] by error measures on a single holdout per series, without a significance test.
+  setup: compared D14, D8, D9, D10, D5, D6; data D17; design D21; measures D12, D11, D13
+  E8.T1 Mean and median MASE, RMSSE and MSIS of six methods on the M4 competition data, excluding 10 series
+  | row | method | mean MASE | mean RMSSE | mean MSIS | median MASE | median RMSSE | median MSIS |
+  | r1 | CES | 2.921 | 2.339 | 2.379 | 1.803 | 1.529 | 0.592 |
+  | r2 | ETS | 3.31 | 2.688 | 4.751 | 1.831 | 1.542 | 0.632 |
+  | r3 | ARIMA | 3.037 | 2.436 | 2.272 | 1.903 | 1.606 | 0.617 |
+  | r4 | Theta | 2.98 | 2.394 | 2.13 | 1.865 | 1.574 | 0.597 |
+  | r5 | SCUM | 2.737 | 2.198 | 1.751 | 1.742 | 1.475 | 0.568 |
+  | r6 | SCUM(noCES) | 2.784 | 2.241 | 1.798 | 1.769 | 1.498 | 0.583 |
+E9 [quant; design benchmark; data_origin secondary; n 5315] [[D14:CES with automatic seasonal selection]] compared with the [[D15:non-seasonal special cases of ETS]] on the [[D18:non-seasonal subset]] and with the [[D16:seasonal special cases of ETS]] on the [[D19:seasonal subset]], by error measures on a single holdout per series.
+  setup: compared D14, D15, D16; data D18, D19; design D20; measures D11, D12, D13
+  E9.T1 Mean and median RMSSE, MASE and MSIS of CES and five non-seasonal ETS models on the non-seasonal subset of the M1, M3 and tourism series {subset: non-seasonal series, series: 3262}
+  | row | method | mean RMSSE | mean MASE | mean MSIS | median RMSSE | median MASE | median MSIS |
+  | r1 | CES | 2.534 | 2.949 | 4.269 | 1.654 | 1.88 | 0.863 |
+  | r2 | ETS(A,N,N) | 2.823 | 3.234 | 3.104 | 1.95 | 2.228 | 0.917 |
+  | r3 | ETS(A,A,N) | 2.67 | 3.095 | 3.785 | 1.694 | 1.919 | 0.907 |
+  | r4 | ETS(A,Ad,N) | 2.502 | 2.907 | 3.769 | 1.66 | 1.863 | 0.854 |
+  | r5 | ETS(M,M,N) | 3.185 | 3.698 | 4.768 | 1.875 | 2.09 | 0.96 |
+  | r6 | ETS(M,Md,N) | 2.691 | 3.16 | 3.546 | 1.773 | 1.975 | 0.971 |
+  E9.T2 Mean and median RMSSE, MASE and MSIS of CES and five seasonal ETS models on the seasonal subset of the M1, M3 and tourism series {subset: seasonal series, series: 2053}
+  | row | method | mean RMSSE | mean MASE | mean MSIS | median RMSSE | median MASE | median MSIS |
+  | r1 | CES | 1.044 | 1.196 | 2.188 | 0.756 | 0.844 | 0.877 |
+  | r2 | ETS(A,N,A) | 1.142 | 1.297 | 2.037 | 0.803 | 0.894 | 0.92 |
+  | r3 | ETS(A,A,A) | 1.135 | 1.295 | 2.247 | 0.802 | 0.877 | 0.934 |
+  | r4 | ETS(A,Ad,A) | 1.094 | 1.245 | 2.155 | 0.797 | 0.876 | 0.946 |
+  | r5 | ETS(M,M,M) | 1.171 | 1.352 | 2.153 | 0.806 | 0.875 | 1.057 |
+  | r6 | ETS(M,Md,M) | 1.103 | 1.26 | 1.934 | 0.789 | 0.875 | 1.006 |
+
+WARRANTS
+W2 [deductive; premises C24, C17] The seasonal model takes the level and nonlinear trend states at lag m instead of carrying a set of seasonal components, so there are no seasonal indices to renormalise. Since non-seasonal CES captures both level and trend series without a choice of trend form, the only choice left is whether to include the lag-m states.
+W3 [deductive; premises C13] Seasonal CES consists of two CES parts, one at lag 1 and one at lag m, and each part follows one of the CES forecast trajectories, so the seasonal part can grow, decline or oscillate in its own way. The non-seasonal level can become negative while the lagged level stays positive, and the two levels evolve independently, so the seasonal part can change its amplitude and shape without any change in the level of the series.
+W4 [deductive] The count follows from the model equations: each complex smoothing parameter has two real parts, each pair of level and nonlinear trend states needs initial values (m of each for the lag-m pair), and the error variance is estimated.
+W5 [deductive; premises C11, C13] With the imaginary part of the smoothing parameter equal to one CES is the local level model ETS(A,N,N); with it above one the forecasts grow exponentially, as in multiplicative trend models; and the flexibility of its trajectories lets it follow trends that the level and trend classification of exponential smoothing captures only with separate models.
+W7 [inductive] On the seasonal subset of the M1, M3 and tourism data, CES with its seasonal or non-seasonal form chosen by AICc has lower RMSSE and MASE than every seasonal ETS model, which the authors take to show that the criterion chooses the seasonal form when it is needed. This is an argument from the accuracy results only: no experiment compares the selection by information criteria with other ways of choosing between seasonal and non-seasonal CES.
+W8 [inductive] CES has lower RMSSE than ETS, ARIMA and the Theta method on the M1, M3, tourism and M4 data and lowers the errors of the combination it is included in, which the authors take as evidence that it is robust, while acknowledging that it does not suit every forecasting scenario. Robustness itself is not defined or tested: no experiment examines how the accuracy of CES varies across conditions or departures from its assumptions.
+W10 [inductive] CES, which has no separate trend forms, has lower RMSSE than ETS, which selects among trend forms, on competition data that contain both level and trended series, which the authors take to validate that CES handles both kinds of series by its smooth transition between trajectories. No experiment separates level from trended series to test this: the comparison is on the pooled competition data.
+W11 [analogical; premises C16, C3] Non-seasonal CES has an underlying ARMA(2,2) model that is stationary or not depending on its complex smoothing parameter; by analogy, the authors state the same of the SARIMA model underlying seasonal CES. No stationarity condition is derived for seasonal CES.
+
+LIMITATIONS
+L1 [model_specification; affects C19, C22; could_bias_magnitude; mitigation none] CES produces very large errors on a few series: on M1 series 47 it fails to identify the trend and its MSIS is 523.034 against 25.590 for ETS(M,N,N), which inflates its mean MSIS, and on the non-seasonal subset it fails on two series.
+L2 [model_specification; affects C4, C16; reduces_precision; mitigation none] The parameter restrictions under which seasonal CES is stable are not derived.
+L3 [sample_size; affects C19, C21, C6, C41; reduces_transferability; mitigation none] The effect of the length of a time series on the accuracy of CES is not analysed.
+L4 [model_specification; affects C7; reduces_transferability; mitigation none] CES is formulated only with an additive error term; a version with a multiplicative error term is not developed.
+L5 [sampling; affects C21, C41; could_bias_magnitude; mitigation none] The 10 M4 series on which ETS broke down were excluded from the M4 comparison, so the series were selected on the failure of one of the compared methods.
+
+ARTEFACTS
+A1 [data] M1 competition data
+A2 [data] M3 competition data
+A3 [data] Tourism forecasting competition data
+A4 [software] smooth package for R (ces, auto.ces, es, auto.ssarima)
+A5 [software] forecast package for R (thetaf)
+A6 [software] greybox package for R (rmcb, Nemenyi test)
+A7 [data] M4 competition data
+
+REFERENCES
+B1 Hyndman, R. J., Koehler, A. B., Ord, J. K., & Snyder, R. D. (2008). Forecasting with exponential smoothing: The state space approach. Springer-Verlag.
+B2 Hyndman, R. J., Koehler, A. B., Snyder, R. D., & Grose, S. (2002). A state space framework for automatic forecasting using exponential smoothing methods. International Journal of Forecasting, 18(3), 439–454.
+B3 Kourentzes, N., Petropoulos, F., & Trapero, J. R. (2014). Improving forecasting by estimating time series structural components across multiple frequencies. International Journal of Forecasting, 30(2), 291–302.
+B4 Kolassa, S. (2011). Combining exponential smoothing forecasts using Akaike weights. International Journal of Forecasting, 27(2), 238–251.
+B5 Barrow, D., Kourentzes, N., Sandberg, R., & Niklewski, J. (2020). Automatic robust estimation for exponential smoothing: Perspectives from statistics and machine learning. Expert Systems with Applications, 160, 113637.
+B6 Makridakis, S., Andersen, A. P., Carbone, R., Fildes, R., Hibon, M., Lewandowski, R., Newton, J., Parzen, E., & Winkler, R. L. (1982). The accuracy of extrapolation (time series) methods: Results of a forecasting competition. Journal of Forecasting, 1(2), 111–153.
+B7 Makridakis, S., & Hibon, M. (2000). The M3-competition: Results, conclusions and implications. International Journal of Forecasting, 16(4), 451–476.
+B8 Athanasopoulos, G., Hyndman, R. J., Song, H., & Wu, D. C. (2011). The tourism forecasting competition. International Journal of Forecasting, 27(3), 822–844.
+B9 Makridakis, S., Spiliotis, E., & Assimakopoulos, V. (2020). The M4 competition: 100,000 time series and 61 forecasting methods. International Journal of Forecasting, 36(1), 54–74.
+B10 Svetunkov, I. (2021b). Smooth: Forecasting using state space models. R package version 3.1.2 https://github.com/config-i1/smooth
+B11 Hyndman, R. J., & Khandakar, Y. (2008). Automatic time series forecasting: The forecast package for R. Journal of Statistical Software, 27(3), 1–22.
+B12 Svetunkov, I. (2021a). Greybox: Toolbox for model building and forecasting. R package version 0.7.0 https://github.com/config-i1/greybox
+B13 Petropoulos, F., & Svetunkov, I. (2020). A simple combination of univariate models. International Journal of Forecasting, 36(1), 110–115.
+B14 Ord, K., Koehler, A. B., & Snyder, R. D. (1997). Estimation and prediction for a class of dynamic nonlinear statistical models. Journal of the American Statistical Association, 92(440), 1621–1629.
+B15 Svetunkov, I., & Boylan, J. E. (2020). State-space ARIMA for supply-chain forecasting. International Journal of Production Research, 58(3), 818–827.
+B16 Assimakopoulos, V., & Nikolopoulos, K. (2000). The theta model: A decomposition approach to forecasting. International Journal of Forecasting, 16, 521–530.
+B17 10.1016/j.ijforecast.2021.11.013 (doi)
+B18 Hyndman, R. J., & Koehler, A. B. (2006). Another look at measures of forecast accuracy. International Journal of Forecasting, 22(4), 679–688.
+B19 Gneiting, T., & Raftery, A. E. (2007). Strictly proper scoring rules, prediction, and estimation. Journal of the American Statistical Association, 102(477), 359–378.
+B20 Demšar, J. (2006). Statistical comparisons of classifiers over multiple data sets. The Journal of Machine Learning Research, 7, 1–30.
