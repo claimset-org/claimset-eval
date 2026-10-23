@@ -2,7 +2,7 @@ CLAIMSET Complex exponential smoothing
 licence CC-BY-4.0; converted from 10.1002/nav.22074 version of record by Ivan Svetunkov, Nikolaos Kourentzes, John Keith Ord; contributions C2, C3, C4, C5, C6
 
 DEFINITIONS
-D1 CES: Complex exponential smoothing: a forecasting model that combines each past observation $y_t$ and its forecast error $e_t$ into the complex variable $y_t + i e_t$ and forecasts with an exponentially weighted sum of these values, the weights being powers of $1 + i - (\alpha_0 + i\alpha_1)$ times the complex smoothing parameter $\alpha_0 + i\alpha_1$.
+D1 CES: Complex exponential smoothing: a forecasting method that combines each past observation $y_t$ and its forecast error $e_t$ into the complex variable $y_t + i e_t$ and forecasts with an exponentially weighted sum of these values, the weights being powers of $1 + i - (\alpha_0 + i\alpha_1)$ times the complex smoothing parameter $\alpha_0 + i\alpha_1$.
 D2 complex smoothing parameter: The smoothing parameter of CES, the complex number $\alpha_0 + i\alpha_1$; its real part $\alpha_0$ and imaginary part $\alpha_1$ are the two real parameters estimated, and they set how much of the past observations and of the past forecast errors is carried into the forecast.
 D3 nonlinear trend component: The state $c_t$ of the CES state-space model, which carries information on both its own previous value $c_{t-1}$ and the previous level $l_{t-1}$; it does not correspond to the trend component of exponential smoothing.
 D4 seasonal CES: CES extended with a second pair of level and nonlinear trend states taken at lag $m$, the seasonal period, with its own complex smoothing parameter $\beta_0 + i\beta_1$: $y_t = l_{0,t-1} + l_{1,t-m} + \varepsilon_t$, where $l_{0,t}, c_{0,t}$ follow the non-seasonal CES equations at lag 1 and $l_{1,t}, c_{1,t}$ the same equations at lag $m$.
@@ -120,6 +120,7 @@ E3 [formal; foundation Linear algebra: eigenvalues of the transition matrix of a
   assumes C34
   derivation: in the source
 E4 [formal; foundation Invertibility conditions of ARMA(2,2) models; algebra of inequalities] Derivation of the stability region of CES from the invertibility conditions of its underlying ARMA(2,2) model.
+  assumes C34
   derivation: in the source
 E5 [formal; foundation Algebra of backshift-operator polynomials] Derivation of the ARMA(2,2) model underlying CES from its state-space form, by eliminating the nonlinear trend component.
   assumes C34

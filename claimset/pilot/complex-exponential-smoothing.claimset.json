@@ -109,7 +109,7 @@
   {
    "id": "D1",
    "term": "CES",
-   "definition": "Complex exponential smoothing: a forecasting model that combines each past observation $y_t$ and its forecast error $e_t$ into the complex variable $y_t + i e_t$ and forecasts with an exponentially weighted sum of these values, the weights being powers of $1 + i - (\\alpha_0 + i\\alpha_1)$ times the complex smoothing parameter $\\alpha_0 + i\\alpha_1$."
+   "definition": "Complex exponential smoothing: a forecasting method that combines each past observation $y_t$ and its forecast error $e_t$ into the complex variable $y_t + i e_t$ and forecasts with an exponentially weighted sum of these values, the weights being powers of $1 + i - (\\alpha_0 + i\\alpha_1)$ times the complex smoothing parameter $\\alpha_0 + i\\alpha_1$."
   },
   {
    "id": "D2",
@@ -1296,7 +1296,10 @@
    ],
    "availability": {
     "level": "public"
-   }
+   },
+   "assumptions": [
+    "C34"
+   ]
   },
   {
    "id": "E5",
