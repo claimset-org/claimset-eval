@@ -141,6 +141,42 @@
    "id": "D7",
    "term": "M1, M3 and tourism data",
    "definition": "The 5,315 yearly, quarterly, monthly and other time series of the M1, M3 and tourism forecasting competitions, forecast at the competitions' horizons: 6 steps ahead for yearly, 8 for quarterly and other, and 18 for monthly series."
+  },
+  {
+   "id": "D8",
+   "term": "ETS",
+   "definition": "Exponential smoothing in a state space framework with automatic selection among its models; here es() from the smooth package with model ZXZ, selecting by AICc.",
+   "source": "B2"
+  },
+  {
+   "id": "D9",
+   "term": "ARIMA",
+   "definition": "Automatic state space ARIMA; here auto.ssarima() from the smooth package.",
+   "source": "B15"
+  },
+  {
+   "id": "D10",
+   "term": "Theta method",
+   "definition": "The Theta method of forecasting; here thetaf() from the forecast package 8.14.",
+   "source": "B16"
+  },
+  {
+   "id": "D11",
+   "term": "RMSSE",
+   "definition": "Root mean squared scaled error: the root mean squared forecast error over the horizon, scaled by the mean absolute first difference of the in-sample data.",
+   "source": "B17"
+  },
+  {
+   "id": "D12",
+   "term": "MASE",
+   "definition": "Mean absolute scaled error: the mean absolute forecast error over the horizon, scaled by the mean absolute first difference of the in-sample data.",
+   "source": "B18"
+  },
+  {
+   "id": "D13",
+   "term": "MSIS",
+   "definition": "Mean scaled interval score: the interval score of a prediction interval averaged over the horizon and scaled by the mean absolute first difference of the in-sample data; here of the 95% prediction interval.",
+   "source": "B19"
   }
  ],
  "claims": [
@@ -263,7 +299,7 @@
   },
   {
    "id": "C5",
-   "statement": "On the [[D7:M1, M3 and tourism data]] and on the M4 competition data, CES has lower mean and median RMSSE than ETS, ARIMA and the Theta method, while on mean MSIS it is beaten by at least two of them on both data sets and on mean MASE by ETS and the Theta method on the M1, M3 and tourism data.",
+   "statement": "On the [[D7:M1, M3 and tourism data]] and on the M4 competition data, CES has lower mean and median [[D11:RMSSE]] than [[D8:ETS]], [[D9:ARIMA]] and the [[D10:Theta method]], while on mean [[D13:MSIS]] it is beaten by at least two of them on both data sets and on mean [[D12:MASE]] by ETS and the Theta method on the M1, M3 and tourism data.",
    "type": "descriptive",
    "role": "principal",
    "novelty": "no_prior_found",
@@ -316,7 +352,7 @@
   },
   {
    "id": "C6",
-   "statement": "Adding CES to the median combination of ETS, ARIMA and Theta forecasts lowers its errors: on the M4 data [[D5:SCUM]] has lower mean and median MASE, RMSSE and MSIS than [[D6:SCUM(noCES)]], and on the [[D7:M1, M3 and tourism data]] it has lower mean and median RMSSE and MASE and lower median MSIS but higher mean MSIS (2.333 against 2.223), and is statistically significantly better than every other method on RMSSE, MASE and MSIS in Nemenyi tests at the 5% level.",
+   "statement": "Adding CES to the median combination of [[D8:ETS]], [[D9:ARIMA]] and [[D10:Theta method]] forecasts lowers its errors: on the M4 data [[D5:SCUM]] has lower mean and median [[D12:MASE]], [[D11:RMSSE]] and [[D13:MSIS]] than [[D6:SCUM(noCES)]], and on the [[D7:M1, M3 and tourism data]] it has lower mean and median RMSSE and MASE and lower median MSIS but higher mean MSIS (2.333 against 2.223), and is statistically significantly better than every other method on RMSSE, MASE and MSIS in Nemenyi tests at the 5% level.",
    "type": "descriptive",
    "role": "principal",
    "novelty": "no_prior_found",
@@ -630,7 +666,7 @@
   },
   {
    "id": "C19",
-   "statement": "On the [[D7:M1, M3 and tourism data]], among ETS, ARIMA, the Theta method and CES, CES has the lowest mean RMSSE and the lowest median RMSSE, MASE and MSIS, but a higher mean MASE than the Theta method and ETS and the highest mean MSIS (3.465).",
+   "statement": "On the [[D7:M1, M3 and tourism data]], among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES, CES has the lowest mean [[D11:RMSSE]] and the lowest median RMSSE, [[D12:MASE]] and [[D13:MSIS]], but a higher mean MASE than the Theta method and ETS and the highest mean MSIS (3.465).",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -665,7 +701,7 @@
   },
   {
    "id": "C20",
-   "statement": "On the [[D7:M1, M3 and tourism data]], in Nemenyi tests at the 5% level CES has the best mean rank among ETS, ARIMA, the Theta method and CES on RMSSE and on MASE, though not all of the differences are statistically significant, and on MSIS it ranks second of all six methods, behind SCUM.",
+   "statement": "On the [[D7:M1, M3 and tourism data]], in Nemenyi tests at the 5% level CES has the best mean rank among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES on [[D11:RMSSE]] and on [[D12:MASE]], though not all of the differences are statistically significant, and on [[D13:MSIS]] it ranks second of all six methods, behind SCUM.",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -689,7 +725,7 @@
   },
   {
    "id": "C21",
-   "statement": "On the M4 competition data, among ETS, ARIMA, the Theta method and CES, CES has the lowest mean and median MASE and RMSSE and the lowest median MSIS, but a higher mean MSIS than ARIMA and the Theta method.",
+   "statement": "On the M4 competition data, among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES, CES has the lowest mean and median [[D12:MASE]] and [[D11:RMSSE]] and the lowest median [[D13:MSIS]], but a higher mean MSIS than ARIMA and the Theta method.",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -724,7 +760,7 @@
   },
   {
    "id": "C22",
-   "statement": "On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median RMSSE and MASE than ETS(A,N,N), ETS(A,A,N), ETS(M,M,N) and ETS(M,Md,N), but higher mean RMSSE and MASE and higher median MASE and MSIS than ETS(A,Ad,N), the lowest median RMSSE of the six models, and a higher mean MSIS than every ETS model except ETS(M,M,N).",
+   "statement": "On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] than ETS(A,N,N), ETS(A,A,N), ETS(M,M,N) and ETS(M,Md,N), but higher mean RMSSE and MASE and higher median MASE and [[D13:MSIS]] than ETS(A,Ad,N), the lowest median RMSSE of the six models, and a higher mean MSIS than every ETS model except ETS(M,M,N).",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -755,7 +791,7 @@
   },
   {
    "id": "C23",
-   "statement": "On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median RMSSE and MASE and lower median MSIS than ETS(A,N,A), ETS(A,A,A), ETS(A,Ad,A), ETS(M,M,M) and ETS(M,Md,M), but a higher mean MSIS than every one of them except ETS(A,A,A).",
+   "statement": "On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(A,N,A), ETS(A,A,A), ETS(A,Ad,A), ETS(M,M,M) and ETS(M,Md,M), but a higher mean MSIS than every one of them except ETS(A,A,A).",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1091,7 +1127,7 @@
    "data_origin": "secondary",
    "preregistered": false,
    "n": 5315,
-   "description": "Benchmark on the 5,315 series of the M1, M3 and tourism competitions at the competitions' horizons. CES by auto.ces() in smooth 3.1.2, choosing seasonal or non-seasonal CES by AICc; ETS by es() in smooth with model ZXZ and AICc selection; ARIMA by auto.ssarima() in smooth; Theta by thetaf() in forecast 8.14; SCUM and SCUM(noCES) as medians of the forecasts. Accuracy by RMSSE, MASE and MSIS of the 95% prediction interval; differences tested by the Nemenyi test at the 5% level with rmcb() in greybox.",
+   "description": "Benchmark of [[D1:CES]] (auto.ces() in smooth 3.1.2, seasonal or non-seasonal CES chosen by AICc) against [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]], [[D5:SCUM]] and [[D6:SCUM(noCES)]] on the [[D7:M1, M3 and tourism data]], by [[D11:RMSSE]], [[D12:MASE]] and [[D13:MSIS]]; differences tested by the Nemenyi test at the 5% level (rmcb() in greybox).",
    "artefacts": [
     "A1",
     "A2",
@@ -1351,7 +1387,7 @@
    "data_origin": "secondary",
    "preregistered": false,
    "n": 99990,
-   "description": "Benchmark of the same six methods on the M4 competition data (100,000 yearly, quarterly, monthly, weekly, daily and hourly series, forecast 6, 8, 18, 13, 14 and 48 steps ahead), excluding series 19357, 43160, 51552, 62738, 92370, 92435, 93159, 93196, 93412 and 93491, whose influential outliers and structural breaks made ETS break down. Accuracy by MASE, RMSSE and MSIS; no significance test.",
+   "description": "Benchmark of the same six methods on the M4 competition data (100,000 yearly, quarterly, monthly, weekly, daily and hourly series, forecast 6, 8, 18, 13, 14 and 48 steps ahead), excluding series 19357, 43160, 51552, 62738, 92370, 92435, 93159, 93196, 93412 and 93491, whose influential outliers and structural breaks made ETS break down; by [[D12:MASE]], [[D11:RMSSE]] and [[D13:MSIS]]; no significance test.",
    "artefacts": [
     "A7",
     "A4",
@@ -1474,7 +1510,7 @@
    "data_origin": "secondary",
    "preregistered": false,
    "n": 5315,
-   "description": "The M1, M3 and tourism series split by ETS model selection (es() in smooth) into 3,262 non-seasonal and 2,053 seasonal series; CES, choosing seasonal or non-seasonal CES by AICc, compared on each subset with five special cases of ETS, non-seasonal on the first and seasonal on the second, by RMSSE, MASE and MSIS.",
+   "description": "The [[D7:M1, M3 and tourism data]] split by ETS model selection (es() in smooth) into 3,262 non-seasonal and 2,053 seasonal series; [[D1:CES]], seasonal or non-seasonal chosen by AICc, compared on each subset with five special cases of ETS, non-seasonal on the first and seasonal on the second, by [[D11:RMSSE]], [[D12:MASE]] and [[D13:MSIS]].",
    "artefacts": [
     "A1",
     "A2",
@@ -1779,7 +1815,7 @@
   {
    "id": "L2",
    "category": "model_specification",
-   "statement": "The parameter restrictions under which seasonal CES is stable are not derived; they are too complicated to analyse, and stability can only be checked numerically from the eigenvalues of its discount matrix.",
+   "statement": "The parameter restrictions under which seasonal CES is stable are not derived.",
    "affects": [
     "C4",
     "C16"
@@ -1956,6 +1992,31 @@
    "id": "B14",
    "id_type": "reference",
    "target": "Ord, K., Koehler, A. B., & Snyder, R. D. (1997). Estimation and prediction for a class of dynamic nonlinear statistical models. Journal of the American Statistical Association, 92(440), 1621–1629."
+  },
+  {
+   "id": "B15",
+   "id_type": "reference",
+   "target": "Svetunkov, I., & Boylan, J. E. (2020). State-space ARIMA for supply-chain forecasting. International Journal of Production Research, 58(3), 818–827."
+  },
+  {
+   "id": "B16",
+   "id_type": "reference",
+   "target": "Assimakopoulos, V., & Nikolopoulos, K. (2000). The theta model: A decomposition approach to forecasting. International Journal of Forecasting, 16, 521–530."
+  },
+  {
+   "id": "B17",
+   "id_type": "doi",
+   "target": "10.1016/j.ijforecast.2021.11.013"
+  },
+  {
+   "id": "B18",
+   "id_type": "reference",
+   "target": "Hyndman, R. J., & Koehler, A. B. (2006). Another look at measures of forecast accuracy. International Journal of Forecasting, 22(4), 679–688."
+  },
+  {
+   "id": "B19",
+   "id_type": "reference",
+   "target": "Gneiting, T., & Raftery, A. E. (2007). Strictly proper scoring rules, prediction, and estimation. Journal of the American Statistical Association, 102(477), 359–378."
   }
  ]
 }
