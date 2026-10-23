@@ -249,7 +249,8 @@
     "C12",
     "C13",
     "C15",
-    "C35"
+    "C35",
+    "C40"
    ],
    "source_spans": [
     "p1.6",
@@ -473,7 +474,7 @@
   },
   {
    "id": "C8",
-   "statement": "Because the error term of the [[D1:CES]] state-space model is additive, the CES likelihood has the same Gaussian form as that of additive exponential smoothing models, so the Akaike information criterion can be computed for seasonal and non-seasonal CES.",
+   "statement": "The Akaike information criterion of seasonal and non-seasonal [[D1:CES]] can be computed from a Gaussian likelihood of the same form as that of additive exponential smoothing models.",
    "type": "methodological",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -625,7 +626,7 @@
   },
   {
    "id": "C15",
-   "statement": "On M3 series 1664, which graphical analysis and ADF and KPSS tests indicate is stationary, [[D1:CES]] estimates $\\alpha_0 + i\\alpha_1 = 0.99999 + 0.99884i$, a stationary model, and all holdout observations lie inside its 95% prediction interval, while on the trended M3 series 2721 it estimates $\\alpha_0 + i\\alpha_1 = 1.48098 + 1.00346i$, a non-stationary model.",
+   "statement": "On M3 series 1664, which graphical analysis and ADF and KPSS tests indicate is stationary, [[D1:CES]] estimates the stationary $\\alpha_0 + i\\alpha_1 = 0.99999 + 0.99884i$, and all holdout observations lie inside its 95% prediction interval.",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -635,14 +636,14 @@
      "evidence": "E7",
      "results": [
       "E7.R1",
-      "E7.R2",
-      "E7.R3",
-      "E7.R4"
+      "E7.R2"
      ]
     }
    ],
    "source_spans": [
-    "p7.10-p8.4"
+    "p7.11-p7.12",
+    "p8.1-p8.2",
+    "p8.4"
    ],
    "provenance": "extracted",
    "scope": {
@@ -653,7 +654,7 @@
   },
   {
    "id": "C16",
-   "statement": "[[D4:seasonal CES]] has an underlying SARIMA(2,0,2m+2)(2,0,0)$_m$ model, which is stationary or not depending on its complex smoothing parameters.",
+   "statement": "[[D4:seasonal CES]] has an underlying SARIMA(2,0,2m+2)(2,0,0)$_m$ model.",
    "type": "formal",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -988,7 +989,7 @@
   },
   {
    "id": "C31",
-   "statement": "The benchmark results show that CES can capture both level and trend time series without the selection between trend types that ETS requires, which forces abrupt changes between trend cases.",
+   "statement": "The benchmark results show that CES can capture both level and trend time series without the selection between trend types that ETS requires.",
    "type": "interpretive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1073,7 +1074,7 @@
   },
   {
    "id": "C35",
-   "statement": "[[D1:CES]] is required to be stable but not stationary, because an exponential smoothing model needs to be stable, or at least forecastable, but not stationary.",
+   "statement": "[[D1:CES]] is required to be stable, or at least forecastable, but not stationary.",
    "type": "methodological",
    "role": "supporting",
    "support": [
@@ -1149,6 +1150,53 @@
     "p5.14"
    ],
    "provenance": "inferred"
+  },
+  {
+   "id": "C40",
+   "statement": "On the trended M3 series 2721, [[D1:CES]] estimates the non-stationary $\\alpha_0 + i\\alpha_1 = 1.48098 + 1.00346i$.",
+   "type": "descriptive",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E7",
+     "results": [
+      "E7.R3",
+      "E7.R4"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p7.11",
+    "p7.13-p8.4"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C39",
+   "statement": "[[D4:seasonal CES]] is a stationary or a non-stationary model depending on the values of its complex smoothing parameters.",
+   "type": "formal",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "argument",
+     "warrant": "W11"
+    }
+   ],
+   "warrant": "W11",
+   "verification": "unchecked",
+   "depends_on": [
+    "C16"
+   ],
+   "limitations": [
+    "L2"
+   ],
+   "source_spans": [
+    "p7.2"
+   ],
+   "provenance": "extracted"
   }
  ],
  "evidence": [
@@ -1905,6 +1953,15 @@
    "reasoning": "inductive",
    "premises": [],
    "text": "CES, which has no separate trend forms, has lower RMSSE than ETS, which selects among trend forms, on competition data that contain both level and trended series, which the authors take to validate that CES handles both kinds of series by its smooth transition between trajectories. No experiment separates level from trended series to test this: the comparison is on the pooled competition data."
+  },
+  {
+   "id": "W11",
+   "reasoning": "analogical",
+   "premises": [
+    "C16",
+    "C3"
+   ],
+   "text": "Non-seasonal CES has an underlying ARMA(2,2) model that is stationary or not depending on its complex smoothing parameter; by analogy, the authors state the same of the SARIMA model underlying seasonal CES. No stationarity condition is derived for seasonal CES."
   }
  ],
  "limitations": [

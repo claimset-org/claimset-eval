@@ -26,7 +26,7 @@ D21 holdout at the M4 horizons: Each series split into an in-sample part and a h
 D22 Nemenyi test: Post hoc Nemenyi test on the ranks of an error measure across series, comparing all methods at the 5% level; here rmcb() from the greybox package. [source B20]
 
 CLAIMS
-C2 [formal; principal; extension; support: formal_proof E3; uses C9, C10, C11, C12, C13, C15, C35; verification unchecked]
+C2 [formal; principal; extension; support: formal_proof E3; uses C9, C10, C11, C12, C13, C15, C35, C40; verification unchecked]
   Depending on the value of its [[D2:complex smoothing parameter]], [[D1:CES]] is a stationary or a non-stationary model and passes from one to the other continuously as the parameter changes, without the discontinuous switch between models that ARIMA imposes, whereas ETS models are always non-stationary.
   extends B1, own earlier work: Exponential smoothing in a state space framework (ETS) gives 30 models with no, additive or multiplicative error, trend and seasonal components, among which a model is selected by an information criterion.
   addresses B3, own earlier work: Identifying the presence and type of trend in exponential smoothing often leads to misidentification and poorly performing long-term forecasts.
@@ -55,8 +55,8 @@ C12 [formal; supporting; support: formal_proof E4, cited B1, at pp. 172-173, own
   [[D1:CES]] is stable, with all eigenvalues of its discount matrix inside the unit circle, when $(\alpha_0 - 2.5)^2 + \alpha_1^2 > 1.25$, $(\alpha_0 - 0.5)^2 + (\alpha_1 - 1)^2 > 0.25$ and $(\alpha_0 - 1.5)^2 + (\alpha_1 - 0.5)^2 < 1.5$, and the stable region contains both stationary and non-stationary values of the [[D2:complex smoothing parameter]].
 C13 [formal; supporting; support: formal_proof E3; verification unchecked]
   The [[D1:CES]] point forecast $w'F^{h-1}v_t$ follows one of five trajectories set by the [[D2:complex smoothing parameter]]: a flat line when $\alpha_1 = 1$, exponential growth when $\alpha_1 > 1$, exponential decline when $(4 - \alpha_0^2)/4 < \alpha_1 < 1$, harmonic oscillation converging to zero when $1 - \alpha_0 < \alpha_1 < (4 - \alpha_0^2)/4$, and diverging harmonic oscillation when $0 < \alpha_1 < 1 - \alpha_0$.
-C15 [descriptive; supporting; support: empirical_quant E7 (E7.R1, E7.R2, E7.R3, E7.R4)]
-  On M3 series 1664, which graphical analysis and ADF and KPSS tests indicate is stationary, [[D1:CES]] estimates $\alpha_0 + i\alpha_1 = 0.99999 + 0.99884i$, a stationary model, and all holdout observations lie inside its 95% prediction interval, while on the trended M3 series 2721 it estimates $\alpha_0 + i\alpha_1 = 1.48098 + 1.00346i$, a non-stationary model.
+C15 [descriptive; supporting; support: empirical_quant E7 (E7.R1, E7.R2)]
+  On M3 series 1664, which graphical analysis and ADF and KPSS tests indicate is stationary, [[D1:CES]] estimates the stationary $\alpha_0 + i\alpha_1 = 0.99999 + 0.99884i$, and all holdout observations lie inside its 95% prediction interval.
   scope: conditions: prediction interval level 0.95
 C19 [descriptive; supporting; support: empirical_quant E2 (E2.T1.r1, E2.T1.r2, E2.T1.r3, E2.T1.r4); limitations L1]
   On the [[D7:M1, M3 and tourism data]], among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES, CES has the lowest mean [[D11:RMSSE]] and the lowest median RMSSE, [[D12:MASE]] and [[D13:MSIS]], but a higher mean MASE than the Theta method and ETS and the highest mean MSIS (3.465).
@@ -74,15 +74,17 @@ C32 [descriptive; supporting; assumption (statistical, unchecked)]
 C34 [descriptive; supporting; assumption (theoretical, untestable)]
   There is no misspecification error, so the forecast error $e_t$ of [[D1:CES]] equals the model error $\varepsilon_t$.
 C35 [methodological; supporting; support: cited B14, own earlier work, cited B1, own earlier work]
-  [[D1:CES]] is required to be stable but not stationary, because an exponential smoothing model needs to be stable, or at least forecastable, but not stationary.
+  [[D1:CES]] is required to be stable, or at least forecastable, but not stationary.
 C36 [descriptive; supporting; assumption (methodological, unchecked)]
   ETS model selection with es() from the smooth package identifies correctly which series of the [[D7:M1, M3 and tourism data]] are seasonal.
+C40 [descriptive; supporting; support: empirical_quant E7 (E7.R3, E7.R4)]
+  On the trended M3 series 2721, [[D1:CES]] estimates the non-stationary $\alpha_0 + i\alpha_1 = 1.48098 + 1.00346i$.
 C8 [methodological; secondary; support: cited B1, at p. 68, own earlier work; assumes C32, C33]
-  Because the error term of the [[D1:CES]] state-space model is additive, the CES likelihood has the same Gaussian form as that of additive exponential smoothing models, so the Akaike information criterion can be computed for seasonal and non-seasonal CES.
+  The Akaike information criterion of seasonal and non-seasonal [[D1:CES]] can be computed from a Gaussian likelihood of the same form as that of additive exponential smoothing models.
 C14 [formal; secondary; support: cited B1, at p. 96, own earlier work; assumes C32, C37, C38; uses C7]
   The conditional variance of [[D1:CES]] $h$ steps ahead, given the level and the nonlinear trend component, can be calculated from its state-space form in the same way as for pure additive ETS models.
 C16 [formal; secondary; support: formal_proof E6; uses C4; verification unchecked]
-  [[D4:seasonal CES]] has an underlying SARIMA(2,0,2m+2)(2,0,0)$_m$ model, which is stationary or not depending on its complex smoothing parameters.
+  [[D4:seasonal CES]] has an underlying SARIMA(2,0,2m+2)(2,0,0)$_m$ model.
 C23 [descriptive; secondary; support: empirical_quant E9 (E9.T2); assumes C36]
   On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(A,N,A), ETS(A,A,A), ETS(A,Ad,A), ETS(M,M,M) and ETS(M,Md,M), but a higher mean MSIS than every one of them except ETS(A,A,A).
 C25 [formal; secondary; support: formal_proof E3; uses C11; verification unchecked]
@@ -92,7 +94,7 @@ C27 [interpretive; secondary; support: empirical_quant E9 (E9.T2), argument W7; 
 C29 [interpretive; secondary; support: empirical_quant E2 (E2.T1), empirical_quant E8 (E8.T1), argument W8; warrant W8]
   CES is a robust forecasting approach, although it is not appropriate for every forecasting scenario.
 C31 [interpretive; secondary; support: empirical_quant E2 (E2.T1), empirical_quant E8 (E8.T1), argument W10; warrant W10]
-  The benchmark results show that CES can capture both level and trend time series without the selection between trend types that ETS requires, which forces abrupt changes between trend cases.
+  The benchmark results show that CES can capture both level and trend time series without the selection between trend types that ETS requires.
 C33 [descriptive; secondary; assumption (statistical, unchecked)]
   The error term $\varepsilon_t$ of [[D1:CES]] is normally distributed.
 C37 [descriptive; secondary; assumption (statistical, unchecked)]
@@ -109,6 +111,8 @@ C24 [methodological; supporting; support: argument W5; uses C11, C13, C22; warra
   [[D1:CES]] encompasses level and multiplicative trend processes and approximates additive trend processes well.
 C26 [methodological; secondary; support: unstated]
   CES captures long-term relations better than ETS, ARIMA and the Theta method, and captures nonlinear trends without separating the series into level and trend.
+C39 [formal; secondary; support: argument W11; uses C16; limitations L2; warrant W11; verification unchecked]
+  [[D4:seasonal CES]] is a stationary or a non-stationary model depending on the values of its complex smoothing parameters.
 
 EVIDENCE
 E1 [formal; foundation Complex numbers represented as real 2x2 matrices; linear algebra] Derivation of the state-space form of CES from the complex-valued method, representing complex variables as real vectors and matrices.
@@ -180,6 +184,7 @@ W5 [deductive; premises C11, C13] With the imaginary part of the smoothing param
 W7 [inductive] On the seasonal subset of the M1, M3 and tourism data, CES with its seasonal or non-seasonal form chosen by AICc has lower RMSSE and MASE than every seasonal ETS model, which the authors take to show that the criterion chooses the seasonal form when it is needed. This is an argument from the accuracy results only: no experiment compares the selection by information criteria with other ways of choosing between seasonal and non-seasonal CES.
 W8 [inductive] CES has lower RMSSE than ETS, ARIMA and the Theta method on the M1, M3, tourism and M4 data and lowers the errors of the combination it is included in, which the authors take as evidence that it is robust, while acknowledging that it does not suit every forecasting scenario. Robustness itself is not defined or tested: no experiment examines how the accuracy of CES varies across conditions or departures from its assumptions.
 W10 [inductive] CES, which has no separate trend forms, has lower RMSSE than ETS, which selects among trend forms, on competition data that contain both level and trended series, which the authors take to validate that CES handles both kinds of series by its smooth transition between trajectories. No experiment separates level from trended series to test this: the comparison is on the pooled competition data.
+W11 [analogical; premises C16, C3] Non-seasonal CES has an underlying ARMA(2,2) model that is stationary or not depending on its complex smoothing parameter; by analogy, the authors state the same of the SARIMA model underlying seasonal CES. No stationarity condition is derived for seasonal CES.
 
 LIMITATIONS
 L1 [model_specification; affects C5, C19, C22; could_bias_magnitude; mitigation none] CES produces very large errors on a few series: on M1 series 47 it fails to identify the trend and its MSIS is 523.034 against 25.590 for ETS(M,N,N), which inflates its mean MSIS, and on the non-seasonal subset it fails on two series.
