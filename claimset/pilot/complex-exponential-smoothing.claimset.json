@@ -1,5 +1,5 @@
 {
- "schema_version": "0.22",
+ "schema_version": "0.23",
  "paper": {
   "title": "Complex exponential smoothing",
   "licence": "CC-BY-4.0",
@@ -140,7 +140,7 @@
   {
    "id": "D7",
    "term": "M1, M3 and tourism data",
-   "definition": "The 5,315 yearly, quarterly, monthly and other time series of the M1, M3 and tourism forecasting competitions, forecast at the competitions' horizons: 6 steps ahead for yearly, 8 for quarterly and other, and 18 for monthly series."
+   "definition": "The 5,315 yearly, quarterly, monthly and other time series of the M1, M3 and tourism forecasting competitions."
   },
   {
    "id": "D8",
@@ -163,20 +163,69 @@
   {
    "id": "D11",
    "term": "RMSSE",
-   "definition": "Root mean squared scaled error: the root mean squared forecast error over the horizon, scaled by the mean absolute first difference of the in-sample data.",
+   "definition": "Root mean squared scaled error: the root mean squared forecast error over the horizon, scaled by the mean absolute first difference of the in-sample data; reported as its mean and median over the series.",
    "source": "B17"
   },
   {
    "id": "D12",
    "term": "MASE",
-   "definition": "Mean absolute scaled error: the mean absolute forecast error over the horizon, scaled by the mean absolute first difference of the in-sample data.",
+   "definition": "Mean absolute scaled error: the mean absolute forecast error over the horizon, scaled by the mean absolute first difference of the in-sample data; reported as its mean and median over the series.",
    "source": "B18"
   },
   {
    "id": "D13",
    "term": "MSIS",
-   "definition": "Mean scaled interval score: the interval score of a prediction interval averaged over the horizon and scaled by the mean absolute first difference of the in-sample data; here of the 95% prediction interval.",
+   "definition": "Mean scaled interval score: the interval score of a prediction interval averaged over the horizon and scaled by the mean absolute first difference of the in-sample data; here of the 95% prediction interval, reported as its mean and median over the series.",
    "source": "B19"
+  },
+  {
+   "id": "D14",
+   "term": "CES with automatic seasonal selection",
+   "definition": "CES fitted by auto.ces() from the smooth package 3.1.2, which chooses between seasonal and non-seasonal CES by AICc."
+  },
+  {
+   "id": "D15",
+   "term": "non-seasonal special cases of ETS",
+   "definition": "The ETS models ETS(A,N,N), ETS(A,A,N), ETS(A,Ad,N), ETS(M,M,N) and ETS(M,Md,N), each fitted without model selection.",
+   "source": "B1"
+  },
+  {
+   "id": "D16",
+   "term": "seasonal special cases of ETS",
+   "definition": "The ETS models ETS(A,N,A), ETS(A,A,A), ETS(A,Ad,A), ETS(M,M,M) and ETS(M,Md,M), each fitted without model selection.",
+   "source": "B1"
+  },
+  {
+   "id": "D17",
+   "term": "M4 data without 10 series",
+   "definition": "The 100,000 series of the M4 competition (23,000 yearly, 24,000 quarterly, 48,000 monthly, 359 weekly, 4,227 daily and 414 hourly) except series 19357, 43160, 51552, 62738, 92370, 92435, 93159, 93196, 93412 and 93491, whose influential outliers and structural breaks made ETS break down.",
+   "source": "B9"
+  },
+  {
+   "id": "D18",
+   "term": "non-seasonal subset",
+   "definition": "The 3,262 series of the M1, M3 and tourism data for which ETS model selection by es() from the smooth package chooses a non-seasonal model."
+  },
+  {
+   "id": "D19",
+   "term": "seasonal subset",
+   "definition": "The 2,053 series of the M1, M3 and tourism data for which ETS model selection by es() from the smooth package chooses a seasonal model."
+  },
+  {
+   "id": "D20",
+   "term": "holdout at the M1, M3 and tourism horizons",
+   "definition": "Each series split into an in-sample part and a holdout of the length used in its competition: 6 observations for yearly, 8 for quarterly and other, and 18 for monthly series; forecasts made from the end of the in-sample part."
+  },
+  {
+   "id": "D21",
+   "term": "holdout at the M4 horizons",
+   "definition": "Each series split into an in-sample part and a holdout of the length used in the M4 competition: 6 observations for yearly, 8 for quarterly, 18 for monthly, 13 for weekly, 14 for daily and 48 for hourly series; forecasts made from the end of the in-sample part."
+  },
+  {
+   "id": "D22",
+   "term": "Nemenyi test",
+   "definition": "Post hoc Nemenyi test on the ranks of an error measure across series, comparing all methods at the 5% level; here rmcb() from the greybox package.",
+   "source": "B20"
   }
  ],
  "claims": [
@@ -1127,7 +1176,7 @@
    "data_origin": "secondary",
    "preregistered": false,
    "n": 5315,
-   "description": "Benchmark of [[D1:CES]] (auto.ces() in smooth 3.1.2, seasonal or non-seasonal CES chosen by AICc) against [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]], [[D5:SCUM]] and [[D6:SCUM(noCES)]] on the [[D7:M1, M3 and tourism data]], by [[D11:RMSSE]], [[D12:MASE]] and [[D13:MSIS]]; differences tested by the Nemenyi test at the 5% level (rmcb() in greybox).",
+   "description": "[[D14:CES with automatic seasonal selection]] compared with ETS, ARIMA, the Theta method, SCUM and SCUM(noCES) on the [[D7:M1, M3 and tourism data]], by error measures on a single holdout per series, with Nemenyi tests of the differences.",
    "artefacts": [
     "A1",
     "A2",
@@ -1265,7 +1314,29 @@
    "source_spans": [
     "p8.5-p9.21",
     "p10.1-p10.3"
-   ]
+   ],
+   "setup": {
+    "compared": [
+     "D14",
+     "D8",
+     "D9",
+     "D10",
+     "D5",
+     "D6"
+    ],
+    "data": [
+     "D7"
+    ],
+    "design": [
+     "D20",
+     "D22"
+    ],
+    "measures": [
+     "D11",
+     "D12",
+     "D13"
+    ]
+   }
   },
   {
    "id": "E3",
@@ -1390,7 +1461,7 @@
    "data_origin": "secondary",
    "preregistered": false,
    "n": 99990,
-   "description": "Benchmark of the same six methods on the M4 competition data (100,000 yearly, quarterly, monthly, weekly, daily and hourly series, forecast 6, 8, 18, 13, 14 and 48 steps ahead), excluding series 19357, 43160, 51552, 62738, 92370, 92435, 93159, 93196, 93412 and 93491, whose influential outliers and structural breaks made ETS break down; by [[D12:MASE]], [[D11:RMSSE]] and [[D13:MSIS]]; no significance test.",
+   "description": "The same six methods compared on the [[D17:M4 data without 10 series]] by error measures on a single holdout per series, without a significance test.",
    "artefacts": [
     "A7",
     "A4",
@@ -1504,7 +1575,28 @@
    ],
    "source_spans": [
     "p9.22-p10.9"
-   ]
+   ],
+   "setup": {
+    "compared": [
+     "D14",
+     "D8",
+     "D9",
+     "D10",
+     "D5",
+     "D6"
+    ],
+    "data": [
+     "D17"
+    ],
+    "design": [
+     "D21"
+    ],
+    "measures": [
+     "D12",
+     "D11",
+     "D13"
+    ]
+   }
   },
   {
    "id": "E9",
@@ -1513,7 +1605,7 @@
    "data_origin": "secondary",
    "preregistered": false,
    "n": 5315,
-   "description": "The [[D7:M1, M3 and tourism data]] split by ETS model selection (es() in smooth) into 3,262 non-seasonal and 2,053 seasonal series; [[D1:CES]], seasonal or non-seasonal chosen by AICc, compared on each subset with five special cases of ETS, non-seasonal on the first and seasonal on the second, by [[D11:RMSSE]], [[D12:MASE]] and [[D13:MSIS]].",
+   "description": "[[D14:CES with automatic seasonal selection]] compared with the [[D15:non-seasonal special cases of ETS]] on the [[D18:non-seasonal subset]] and with the [[D16:seasonal special cases of ETS]] on the [[D19:seasonal subset]], by error measures on a single holdout per series.",
    "artefacts": [
     "A1",
     "A2",
@@ -1523,7 +1615,7 @@
    "tables": [
     {
      "id": "T1",
-     "description": "Mean and median RMSSE, MASE and MSIS of CES and five non-seasonal ETS models on the 3,262 non-seasonal series of the M1, M3 and tourism competitions",
+     "description": "Mean and median RMSSE, MASE and MSIS of CES and five non-seasonal ETS models on the non-seasonal subset of the M1, M3 and tourism series",
      "conditions": {
       "subset": "non-seasonal series",
       "series": 3262
@@ -1631,7 +1723,7 @@
     },
     {
      "id": "T2",
-     "description": "Mean and median RMSSE, MASE and MSIS of CES and five seasonal ETS models on the 2,053 seasonal series of the M1, M3 and tourism competitions",
+     "description": "Mean and median RMSSE, MASE and MSIS of CES and five seasonal ETS models on the seasonal subset of the M1, M3 and tourism series",
      "conditions": {
       "subset": "seasonal series",
       "series": 2053
@@ -1741,7 +1833,26 @@
    "source_spans": [
     "p10.10",
     "p10.21-p11.22"
-   ]
+   ],
+   "setup": {
+    "compared": [
+     "D14",
+     "D15",
+     "D16"
+    ],
+    "data": [
+     "D18",
+     "D19"
+    ],
+    "design": [
+     "D20"
+    ],
+    "measures": [
+     "D11",
+     "D12",
+     "D13"
+    ]
+   }
   }
  ],
  "warrants": [
@@ -2020,6 +2131,11 @@
    "id": "B19",
    "id_type": "reference",
    "target": "Gneiting, T., & Raftery, A. E. (2007). Strictly proper scoring rules, prediction, and estimation. Journal of the American Statistical Association, 102(477), 359–378."
+  },
+  {
+   "id": "B20",
+   "id_type": "reference",
+   "target": "Demšar, J. (2006). Statistical comparisons of classifiers over multiple data sets. The Journal of Machine Learning Research, 7, 1–30."
   }
  ]
 }
