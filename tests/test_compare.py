@@ -8,8 +8,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "tools"))
 import compare  # noqa: E402
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
-GOLD = os.path.join(ROOT, "claimset", "pilot", "complex-exponential-smoothing.claimset.json")
-TEXT = os.path.join(ROOT, "papers", "text", "nav.22074.txt")
+FIXTURES = os.path.join(os.path.dirname(__file__), "fixtures")
+GOLD = os.path.join(FIXTURES, "invented.claimset.json")      # an invented paper, independent of the pilot papers
+TEXT = os.path.join(FIXTURES, "invented.txt")
 
 
 def load():
@@ -57,6 +58,18 @@ class CompareTest(unittest.TestCase):
         self.assertIn(dropped["id"], [m["id"] for m in rep["claims"]["missed"]])
         self.assertLess(rep["claims"]["all"]["recall"], 1.0)
         self.assertEqual(len(rep["claims"]["coding differences"]), 1)
+
+    def test_bundled_claim_counts_as_present(self):
+        cand = copy.deepcopy(self.gold)
+        c1, c3 = cand["claims"][0], cand["claims"][2]
+        c1["statement"] += " The pruning objective of SEP is monotone submodular."
+        c1["source_spans"] = c1["source_spans"] + c3["source_spans"]
+        c1["depends_on"] = []
+        cand["claims"].remove(c3)
+        rep = compare.compare(self.gold, cand, self.text)
+        self.assertIn("C3", [m["id"] for m in rep["claims"]["missed"]])
+        self.assertNotIn("C3", rep["claims"]["coverage"]["not covered"])
+        self.assertEqual(rep["claims"]["coverage"]["bundles"], {"C1": ["C1", "C3"]})
 
     def test_hungarian_assignment(self):
         self.assertEqual(compare.hungarian([[0.9, 0.1], [0.2, 0.8]]), {0: 1, 1: 0})

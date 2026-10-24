@@ -1,0 +1,52 @@
+{
+ "schema_version": "0.23",
+ "paper": {"title": "Sparse ensemble pruning", "licence": "CC-BY-4.0", "contributions": ["C1", "C2"], "origin": "converted"},
+ "definitions": [
+  {"id": "D1", "term": "SEP", "definition": "Sparse ensemble pruning: an ensemble reduced to the members that maximise a submodular objective."},
+  {"id": "D2", "term": "SEP with 20 members", "definition": "SEP keeping 20 members."},
+  {"id": "D3", "term": "UCI-40 collection", "definition": "The 40 classification data sets of the invented UCI-40 collection."},
+  {"id": "D4", "term": "random forest", "definition": "A random forest of 500 trees."},
+  {"id": "D5", "term": "10-fold cross-validation", "definition": "Each data set split into ten folds, each fold held out once."},
+  {"id": "D6", "term": "Brier score", "definition": "Mean squared difference between predicted probabilities and outcomes, averaged over data sets.", "source": "B2"}
+ ],
+ "claims": [
+  {"id": "C1", "statement": "The expected loss of the pruned [[D1:SEP]] ensemble is within a factor $1+\\epsilon$ of the full ensemble's.",
+   "type": "formal", "role": "principal", "novelty": "no_prior_found", "support": [{"kind": "formal_proof", "evidence": "E2"}],
+   "depends_on": ["C3"], "assumptions": ["C5"],
+   "relations": [{"type": "addresses", "reference": "B1", "note": "Greedy pruning has no guarantee on the loss."}],
+   "source_spans": ["p1.2", "p4.2"]},
+  {"id": "C2", "statement": "On the [[D3:UCI-40 collection]], [[D2:SEP with 20 members]] has a lower [[D6:Brier score]] than [[D4:random forest]] and gradient boosting, but a lower accuracy than gradient boosting.",
+   "type": "descriptive", "role": "principal", "novelty": "no_prior_found",
+   "support": [{"kind": "empirical_quant", "evidence": "E1", "results": ["E1.T1"]}], "limitations": ["L1"],
+   "source_spans": ["p1.2", "p8.1"]},
+  {"id": "C3", "statement": "The pruning objective of [[D1:SEP]] is monotone submodular.",
+   "type": "formal", "role": "supporting", "novelty": "no_prior_found", "support": [{"kind": "formal_proof", "evidence": "E2"}],
+   "source_spans": ["p3.2"]},
+  {"id": "C4", "statement": "[[D1:SEP]] predicts four times faster than the full ensemble.",
+   "type": "descriptive", "role": "secondary", "novelty": "no_prior_found",
+   "support": [{"kind": "empirical_quant", "evidence": "E1"}], "source_spans": ["p8.2"]},
+  {"id": "C5", "statement": "The losses of the ensemble members are bounded in $[0, 1]$.",
+   "type": "descriptive", "role": "supporting", "support": [{"kind": "assumption"}],
+   "assumption_category": "theorem_condition", "check": "untestable", "source_spans": ["p4.1"]}
+ ],
+ "evidence": [
+  {"id": "E1", "profile": "quant", "design": "benchmark", "description": "SEP with 20 members compared with random forest and gradient boosting on the UCI-40 collection by 10-fold cross-validation.",
+   "setup": {"compared": ["D2", "D4"], "data": ["D3"], "design": ["D5"], "measures": ["D6"]},
+   "tables": [{"id": "T1", "description": "Brier score and accuracy of three methods on the UCI-40 collection", "row_labels": ["method"],
+               "columns": ["Brier score", "accuracy"],
+               "rows": [{"id": "r1", "label": ["SEP"], "values": [0.112, 0.861]},
+                        {"id": "r2", "label": ["random forest"], "values": [0.121, 0.855]},
+                        {"id": "r3", "label": ["gradient boosting"], "values": [0.118, 0.866]}]}],
+   "source_spans": ["p7.1", "p8.1"]},
+  {"id": "E2", "profile": "formal", "description": "Proof of the loss bound.", "foundation": "Probability theory", "assumptions": ["C5"],
+   "source_spans": ["p4.2"]}
+ ],
+ "limitations": [
+  {"id": "L1", "category": "sample_size", "statement": "Each data set was run once, so no spread is reported.", "affects": ["C2"],
+   "impact": "reduces_precision", "mitigation": "none", "source_spans": ["p9.1"]}
+ ],
+ "references": [
+  {"id": "B1", "id_type": "reference", "target": "Moreau, A. (2019). Greedy pruning of ensembles. Invented Journal, 1, 1-10."},
+  {"id": "B2", "id_type": "reference", "target": "Okafor, B. (2020). Proper scores for classifiers. Invented Journal, 2, 11-20."}
+ ]
+}
