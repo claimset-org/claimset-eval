@@ -307,15 +307,17 @@ def pct(x):
 def print_report(rep, out=sys.stdout):
     w = out.write
     c = rep["claims"]
-    w(f"CLAIMS  matched {c['all']['matched']} of {c['all']['gold']} gold, {c['all']['candidate']} candidate"
-      f"  recall {pct(c['all']['recall'])}  precision {pct(c['all']['precision'])}\n")
+    w("The gold is one good conversion among several possible; differences are for a person to judge.\n\n")
+    cv = c["coverage"]
+    w(f"CONTENT  gold claims present in some form {cv['gold covered']} of {c['all']['gold']}"
+      f"  ({pct(cv['recall'])}); bundled: " + (", ".join(f"{k} holds {'+'.join(v)}" for k, v in cv["bundles"].items())
+                                            or "none") + "\n")
+    w(f"CLAIMS (one-to-one, diagnostic)  matched {c['all']['matched']} of {c['all']['gold']} gold, "
+      f"{c['all']['candidate']} candidate  recall {pct(c['all']['recall'])}  precision {pct(c['all']['precision'])}\n")
     for cat in ("principal", "supporting", "secondary", "assumption"):
         x = c[cat]
         w(f"  {cat:<11} gold {x['gold']:>3}  candidate {x['candidate']:>3}  gold found {x['gold found']:>3}"
           f"  recall {pct(x['recall'])}\n")
-    cv = c["coverage"]
-    w(f"  coverage (many-to-one) {cv['gold covered']} of {c['all']['gold']} gold  recall {pct(cv['recall'])}"
-      f"; bundles: " + (", ".join(f"{k} covers {'+'.join(v)}" for k, v in cv["bundles"].items()) or "none") + "\n")
     w("  agreement on matched pairs: " + ", ".join(f"{k} {pct(v)}" for k, v in c["agreement on matched"].items()) + "\n")
     for name in ("links", "definitions", "evidence", "limitations", "references", "relations"):
         x = rep[name]
