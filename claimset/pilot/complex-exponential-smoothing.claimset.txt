@@ -24,6 +24,9 @@ D19 seasonal subset: The 2,053 series of the M1, M3 and tourism data for which E
 D20 holdout at the M1, M3 and tourism horizons: Each series split into an in-sample part and a holdout of the length used in its competition: 6 observations for yearly, 8 for quarterly and other, and 18 for monthly series; forecasts made from the end of the in-sample part.
 D21 holdout at the M4 horizons: Each series split into an in-sample part and a holdout of the length used in the M4 competition: 6 observations for yearly, 8 for quarterly, 18 for monthly, 13 for weekly, 14 for daily and 48 for hourly series; forecasts made from the end of the in-sample part.
 D22 Nemenyi test: Post hoc Nemenyi test on the ranks of an error measure across series, comparing all methods at the 5% level; here rmcb() from the greybox package. [source B20]
+D23 Akaike information criterion: A criterion for choosing among models fitted by maximum likelihood that penalises the maximised log-likelihood by the number of estimated parameters. [source B21]
+D24 ADF test: Augmented Dickey-Fuller test of the null hypothesis that a time series has a unit root. [source B22]
+D25 KPSS test: Kwiatkowski-Phillips-Schmidt-Shin test of the null hypothesis that a time series is stationary. [source B23]
 
 CLAIMS
 C2 [formal; principal; extension; support: formal_proof E3; uses C9, C10, C11, C12, C13, C15, C35, C40; verification unchecked]
@@ -51,7 +54,7 @@ C41 [descriptive; principal; support: empirical_quant E8 (E8.T1.r5, E8.T1.r6); l
   scope: population: M4 competition time series | excludes: 10 series on which ETS broke down
 C7 [formal; supporting; support: formal_proof E1; assumes C32, C34; verification unchecked]
   [[D1:CES]] has the single-source-of-error state-space form $y_t = l_{t-1} + \varepsilon_t$, $l_t = l_{t-1} - (1 - \alpha_1) c_{t-1} + (\alpha_0 - \alpha_1) \varepsilon_t$, $c_t = l_{t-1} + (1 - \alpha_0) c_{t-1} + (\alpha_0 + \alpha_1) \varepsilon_t$, with level $l_t$ and [[D3:nonlinear trend component]] $c_t$, whose transition matrix contains the smoothing parameters.
-C9 [formal; supporting; support: formal_proof E3; verification unchecked]
+C9 [formal; supporting; support: formal_proof E3, cited B1, at p. 38, own earlier work; verification unchecked]
   [[D1:CES]] is stationary, with both eigenvalues of its transition matrix inside the unit circle, when $\alpha_1 < 5 - 2\alpha_0$, $\alpha_1 < 1$ and $\alpha_1 > 1 - \alpha_0$.
 C10 [formal; supporting; support: formal_proof E3; verification unchecked]
   When $\alpha_1 > 1$, both eigenvalues of the [[D1:CES]] transition matrix are real and one of them is greater than one, so CES produces a non-stationary trajectory.
@@ -62,7 +65,7 @@ C12 [formal; supporting; support: formal_proof E4, cited B1, at pp. 172-173, own
 C13 [formal; supporting; support: formal_proof E3; verification unchecked]
   The [[D1:CES]] point forecast $w'F^{h-1}v_t$ follows one of five trajectories set by the [[D2:complex smoothing parameter]]: a flat line when $\alpha_1 = 1$, exponential growth when $\alpha_1 > 1$, exponential decline when $(4 - \alpha_0^2)/4 < \alpha_1 < 1$, harmonic oscillation converging to zero when $1 - \alpha_0 < \alpha_1 < (4 - \alpha_0^2)/4$, and diverging harmonic oscillation when $0 < \alpha_1 < 1 - \alpha_0$.
 C15 [descriptive; supporting; support: empirical_quant E7 (E7.R1, E7.R2)]
-  On M3 series 1664, which graphical analysis and ADF and KPSS tests indicate is stationary, [[D1:CES]] estimates the stationary $\alpha_0 + i\alpha_1 = 0.99999 + 0.99884i$, and all holdout observations lie inside its 95% prediction interval.
+  On M3 series 1664, which graphical analysis and [[D24:ADF test]] and [[D25:KPSS test]] indicate is stationary, [[D1:CES]] estimates the stationary $\alpha_0 + i\alpha_1 = 0.99999 + 0.99884i$, and all holdout observations lie inside its 95% prediction interval.
   scope: conditions: prediction interval level 0.95
 C20 [descriptive; supporting; support: empirical_quant E2]
   On the [[D7:M1, M3 and tourism data]], in Nemenyi tests at the 5% level CES has the best mean rank among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES on [[D11:RMSSE]] and on [[D12:MASE]], though not all of the differences are statistically significant, and on [[D13:MSIS]] it ranks second of all six methods, behind SCUM.
@@ -83,7 +86,7 @@ C42 [descriptive; supporting; support: empirical_quant E2]
   On the [[D7:M1, M3 and tourism data]], in [[D22:Nemenyi test]]s at the 5% level [[D5:SCUM]] is statistically significantly better than every other method, including [[D6:SCUM(noCES)]], on RMSSE, MASE and MSIS.
   scope: conditions: Nemenyi test on ranks of the error measures, significance level 0.05
 C8 [methodological; secondary; support: cited B1, at p. 68, own earlier work; assumes C32, C33]
-  The Akaike information criterion of seasonal and non-seasonal [[D1:CES]] can be computed from a Gaussian likelihood of the same form as that of additive exponential smoothing models.
+  The [[D23:Akaike information criterion]] of seasonal and non-seasonal [[D1:CES]] can be computed from a Gaussian likelihood of the same form as that of additive exponential smoothing models.
 C14 [formal; secondary; support: cited B1, at p. 96, own earlier work; assumes C32, C37, C38; uses C7]
   The conditional variance of [[D1:CES]] $h$ steps ahead, given the level and the nonlinear trend component, can be calculated from its state-space form in the same way as for pure additive ETS models.
 C16 [formal; secondary; support: formal_proof E6; uses C4; verification unchecked]
@@ -145,7 +148,7 @@ E5 [formal; foundation Algebra of backshift-operator polynomials] Derivation of 
 E6 [formal; foundation Algebra of backshift-operator polynomials and matrix inversion] Derivation of the SARIMA model underlying seasonal CES from its state-space form.
   assumes C34
   derivation: in the source
-E7 [quant; design other; data_origin secondary; n 2] CES fitted with ces() from smooth to M3 series 1664 and 2721, each split into in-sample and holdout parts; stationarity of each series assessed by graphical analysis and ADF and KPSS tests; point forecasts and 95% prediction intervals.
+E7 [quant; design other; data_origin secondary; n 2] CES fitted with ces() from smooth to M3 series 1664 and 2721, each split into in-sample and holdout parts; stationarity of each series assessed by graphical analysis and [[D24:ADF test]] and [[D25:KPSS test]]; point forecasts and 95% prediction intervals.
   E7.R1 real part alpha_0 of the estimated complex smoothing parameter = 0.99999 {series: M3 series 1664}
   E7.R2 imaginary part alpha_1 of the estimated complex smoothing parameter = 0.99884 {series: M3 series 1664}
   E7.R3 real part alpha_0 of the estimated complex smoothing parameter = 1.48098 {series: M3 series 2721}
@@ -204,6 +207,7 @@ A4 [software] smooth package for R (ces, auto.ces, es, auto.ssarima)
 A5 [software] forecast package for R (thetaf)
 A6 [software] greybox package for R (rmcb, Nemenyi test)
 A7 [data] M4 competition data
+A8 [software] R, the environment for statistical computing in which the experiments were run
 
 REFERENCES
 B1 Hyndman, R. J., Koehler, A. B., Ord, J. K., & Snyder, R. D. (2008). Forecasting with exponential smoothing: The state space approach. Springer-Verlag.
@@ -226,3 +230,7 @@ B17 10.1016/j.ijforecast.2021.11.013 (doi)
 B18 Hyndman, R. J., & Koehler, A. B. (2006). Another look at measures of forecast accuracy. International Journal of Forecasting, 22(4), 679–688.
 B19 Gneiting, T., & Raftery, A. E. (2007). Strictly proper scoring rules, prediction, and estimation. Journal of the American Statistical Association, 102(477), 359–378.
 B20 Demšar, J. (2006). Statistical comparisons of classifiers over multiple data sets. The Journal of Machine Learning Research, 7, 1–30.
+B21 Akaike, H. (1974). A new look at the statistical model identification. IEEE Transactions on Automatic Control, 19(6), 716–723.
+B22 Dickey, D. A., & Fuller, W. A. (1979). Distribution of the estimators for autoregressive time series with a unit root. Journal of the American Statistical Association, 74(366a), 427–431.
+B23 Kwiatkowski, D., Phillips, P. C. B., Schmidt, P., & Shin, Y. (1992). Testing the null hypothesis of stationarity against the alternative of a unit root: How sure are we that economic time series are nonstationary? Journal of Econometrics, 54, 159–178.
+B24 R Core Team (2021). R: A language and environment for statistical computing. R Foundation for Statistical Computing. https://www.R-project.org/

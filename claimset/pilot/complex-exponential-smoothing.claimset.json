@@ -228,6 +228,24 @@
    "term": "Nemenyi test",
    "definition": "Post hoc Nemenyi test on the ranks of an error measure across series, comparing all methods at the 5% level; here rmcb() from the greybox package.",
    "source": "B20"
+  },
+  {
+   "id": "D23",
+   "term": "Akaike information criterion",
+   "definition": "A criterion for choosing among models fitted by maximum likelihood that penalises the maximised log-likelihood by the number of estimated parameters.",
+   "source": "B21"
+  },
+  {
+   "id": "D24",
+   "term": "ADF test",
+   "definition": "Augmented Dickey-Fuller test of the null hypothesis that a time series has a unit root.",
+   "source": "B22"
+  },
+  {
+   "id": "D25",
+   "term": "KPSS test",
+   "definition": "Kwiatkowski-Phillips-Schmidt-Shin test of the null hypothesis that a time series is stationary.",
+   "source": "B23"
   }
  ],
  "claims": [
@@ -409,7 +427,7 @@
   },
   {
    "id": "C8",
-   "statement": "The Akaike information criterion of seasonal and non-seasonal [[D1:CES]] can be computed from a Gaussian likelihood of the same form as that of additive exponential smoothing models.",
+   "statement": "The [[D23:Akaike information criterion]] of seasonal and non-seasonal [[D1:CES]] can be computed from a Gaussian likelihood of the same form as that of additive exponential smoothing models.",
    "type": "methodological",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -441,6 +459,12 @@
     {
      "kind": "formal_proof",
      "evidence": "E3"
+    },
+    {
+     "kind": "cited",
+     "reference": "B1",
+     "locator": "p. 38",
+     "self": true
     }
    ],
    "verification": "unchecked",
@@ -561,7 +585,7 @@
   },
   {
    "id": "C15",
-   "statement": "On M3 series 1664, which graphical analysis and ADF and KPSS tests indicate is stationary, [[D1:CES]] estimates the stationary $\\alpha_0 + i\\alpha_1 = 0.99999 + 0.99884i$, and all holdout observations lie inside its 95% prediction interval.",
+   "statement": "On M3 series 1664, which graphical analysis and [[D24:ADF test]] and [[D25:KPSS test]] indicate is stationary, [[D1:CES]] estimates the stationary $\\alpha_0 + i\\alpha_1 = 0.99999 + 0.99884i$, and all holdout observations lie inside its 95% prediction interval.",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1234,7 +1258,8 @@
     "A3",
     "A4",
     "A5",
-    "A6"
+    "A6",
+    "A8"
    ],
    "tables": [
     {
@@ -1462,10 +1487,11 @@
    "data_origin": "secondary",
    "preregistered": false,
    "n": 2,
-   "description": "CES fitted with ces() from smooth to M3 series 1664 and 2721, each split into in-sample and holdout parts; stationarity of each series assessed by graphical analysis and ADF and KPSS tests; point forecasts and 95% prediction intervals.",
+   "description": "CES fitted with ces() from smooth to M3 series 1664 and 2721, each split into in-sample and holdout parts; stationarity of each series assessed by graphical analysis and [[D24:ADF test]] and [[D25:KPSS test]]; point forecasts and 95% prediction intervals.",
    "artefacts": [
     "A2",
-    "A4"
+    "A4",
+    "A8"
    ],
    "results": [
     {
@@ -1516,7 +1542,8 @@
    "artefacts": [
     "A7",
     "A4",
-    "A5"
+    "A5",
+    "A8"
    ],
    "tables": [
     {
@@ -1661,7 +1688,8 @@
     "A1",
     "A2",
     "A3",
-    "A4"
+    "A4",
+    "A8"
    ],
    "tables": [
     {
@@ -2094,6 +2122,13 @@
    "kind": "data",
    "description": "M4 competition data",
    "reference": "B9"
+  },
+  {
+   "id": "A8",
+   "kind": "software",
+   "description": "R, the environment for statistical computing in which the experiments were run",
+   "uri": "https://www.R-project.org/",
+   "reference": "B24"
   }
  ],
  "references": [
@@ -2196,6 +2231,26 @@
    "id": "B20",
    "id_type": "reference",
    "target": "Demšar, J. (2006). Statistical comparisons of classifiers over multiple data sets. The Journal of Machine Learning Research, 7, 1–30."
+  },
+  {
+   "id": "B21",
+   "id_type": "reference",
+   "target": "Akaike, H. (1974). A new look at the statistical model identification. IEEE Transactions on Automatic Control, 19(6), 716–723."
+  },
+  {
+   "id": "B22",
+   "id_type": "reference",
+   "target": "Dickey, D. A., & Fuller, W. A. (1979). Distribution of the estimators for autoregressive time series with a unit root. Journal of the American Statistical Association, 74(366a), 427–431."
+  },
+  {
+   "id": "B23",
+   "id_type": "reference",
+   "target": "Kwiatkowski, D., Phillips, P. C. B., Schmidt, P., & Shin, Y. (1992). Testing the null hypothesis of stationarity against the alternative of a unit root: How sure are we that economic time series are nonstationary? Journal of Econometrics, 54, 159–178."
+  },
+  {
+   "id": "B24",
+   "id_type": "reference",
+   "target": "R Core Team (2021). R: A language and environment for statistical computing. R Foundation for Statistical Computing. https://www.R-project.org/"
   }
  ]
 }
