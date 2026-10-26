@@ -1,5 +1,5 @@
 {
- "schema_version": "0.27",
+ "schema_version": "0.28",
  "paper": {
   "title": "A new taxonomy for vector exponential smoothing and its application to seasonal time series",
   "licence": "CC-BY-4.0",
