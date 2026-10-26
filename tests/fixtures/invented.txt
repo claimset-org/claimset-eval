@@ -1,0 +1,27 @@
+[p1.1] Sparse ensemble pruning
+
+[p1.2] We propose sparse ensemble pruning (SEP), which keeps a small subset of an ensemble. We prove that the pruned ensemble's loss is within a factor 1+eps of the full ensemble's, and on the UCI-40 collection SEP with 20 members has a lower Brier score than random forest.
+
+[p2.1] Greedy pruning has no guarantee on the loss (Moreau, 2019).
+
+[p3.1] SEP selects members by maximising a submodular objective.
+
+[p3.2] The pruning objective is monotone submodular.
+
+[p4.1] Member losses are assumed to be bounded in [0, 1].
+
+[p4.2] Theorem 1. The pruned ensemble's expected loss is within a factor 1+eps of the full ensemble's.
+
+[p7.1] We use the 40 data sets of the UCI-40 collection with 10-fold cross-validation and the Brier score (Okafor, 2020).
+
+[p8.1] Table 2. Brier score: SEP 0.112, random forest 0.121, gradient boosting 0.118. Accuracy: SEP 0.861, random forest 0.855, gradient boosting 0.866.
+
+[p8.2] SEP predicts four times faster than the full ensemble.
+
+[p9.1] Each data set was run once, so no spread is reported.
+
+[p10.1] References
+
+[p10.2] Moreau, A. (2019). Greedy pruning of ensembles. Invented Journal, 1, 1-10.
+
+[p10.3] Okafor, B. (2020). Proper scores for classifiers. Invented Journal, 2, 11-20.
