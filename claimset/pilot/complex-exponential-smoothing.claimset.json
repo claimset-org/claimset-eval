@@ -1,5 +1,5 @@
 {
- "schema_version": "0.23",
+ "schema_version": "0.24",
  "paper": {
   "title": "Complex exponential smoothing",
   "licence": "CC-BY-4.0",
@@ -369,7 +369,7 @@
   },
   {
    "id": "C6",
-   "statement": "On the [[D7:M1, M3 and tourism data]], [[D5:SCUM]] has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than [[D6:SCUM(noCES)]], but higher mean MSIS (2.333 against 2.223).",
+   "statement": "On the [[D7:M1, M3 and tourism data]], [[D5:SCUM]] has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than [[D6:SCUM(noCES)]], but higher mean MSIS.",
    "type": "descriptive",
    "role": "principal",
    "novelty": "no_prior_found",
@@ -675,7 +675,7 @@
   },
   {
    "id": "C19",
-   "statement": "On the [[D7:M1, M3 and tourism data]], among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES, CES has the lowest mean [[D11:RMSSE]] and the lowest median RMSSE, [[D12:MASE]] and [[D13:MSIS]], but a higher mean MASE than the Theta method and ETS and the highest mean MSIS (3.465).",
+   "statement": "On the [[D7:M1, M3 and tourism data]], among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES, CES has the lowest mean [[D11:RMSSE]] and the lowest median RMSSE, [[D12:MASE]] and [[D13:MSIS]], but a higher mean MASE than the Theta method and ETS and the highest mean MSIS.",
    "type": "descriptive",
    "role": "principal",
    "novelty": "no_prior_found",

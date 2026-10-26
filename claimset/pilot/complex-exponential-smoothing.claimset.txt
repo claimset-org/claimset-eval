@@ -41,10 +41,10 @@ C3 [formal; principal; support: formal_proof E5; assumes C34; uses C7; verificat
 C4 [methodological; principal; support: argument W2; uses C24, C17; limitations L2; warrant W2]
   [[D4:seasonal CES]] models seasonality with lag-$m$ level and nonlinear trend states instead of seasonal indices, so that no seasonal indices need renormalising and model selection for CES reduces to choosing between the seasonal and the non-seasonal model.
 C6 [descriptive; principal; support: empirical_quant E2 (E2.T1.r5, E2.T1.r6); uses C42; limitations L3]
-  On the [[D7:M1, M3 and tourism data]], [[D5:SCUM]] has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than [[D6:SCUM(noCES)]], but higher mean MSIS (2.333 against 2.223).
+  On the [[D7:M1, M3 and tourism data]], [[D5:SCUM]] has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than [[D6:SCUM(noCES)]], but higher mean MSIS.
   scope: population: time series of the M1, M3 and tourism forecasting competitions
 C19 [descriptive; principal; support: empirical_quant E2 (E2.T1.r1, E2.T1.r2, E2.T1.r3, E2.T1.r4); uses C20; limitations L1, L3]
-  On the [[D7:M1, M3 and tourism data]], among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES, CES has the lowest mean [[D11:RMSSE]] and the lowest median RMSSE, [[D12:MASE]] and [[D13:MSIS]], but a higher mean MASE than the Theta method and ETS and the highest mean MSIS (3.465).
+  On the [[D7:M1, M3 and tourism data]], among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES, CES has the lowest mean [[D11:RMSSE]] and the lowest median RMSSE, [[D12:MASE]] and [[D13:MSIS]], but a higher mean MASE than the Theta method and ETS and the highest mean MSIS.
   scope: population: time series of the M1, M3 and tourism forecasting competitions | conditions: seasonal or non-seasonal CES selected by AICc
 C21 [descriptive; principal; support: empirical_quant E8 (E8.T1.r1, E8.T1.r2, E8.T1.r3, E8.T1.r4); limitations L3, L5]
   On the M4 competition data, among [[D8:ETS]], [[D9:ARIMA]], the [[D10:Theta method]] and CES, CES has the lowest mean and median [[D12:MASE]] and [[D11:RMSSE]] and the lowest median [[D13:MSIS]], but a higher mean MSIS than ARIMA and the Theta method.

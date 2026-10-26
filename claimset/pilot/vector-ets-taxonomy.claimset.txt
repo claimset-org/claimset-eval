@@ -31,14 +31,14 @@ C1 [formal; principal; extension; support: formal_proof E1; uses C8, C9, C55; li
   Every feasible model of the [[D2:PIC taxonomy]] for pure additive and pure multiplicative [[D1:VETS]] can be built by inserting the block values for its restrictions on components and parameters into the block measurement, transition and persistence matrices.
   extends B6: The vector innovations structural time series framework formulates vector exponential smoothing for pure additive models.
   extends B2: Vector exponential smoothing is extended to seasonal series, for pure additive models.
-C2 [descriptive; principal; support: simulation E2 (E2.T2, E2.T6) artefacts A2; uses C19, C22; limitations L3, L4, L6, L7, L8]
-  In the simulation, the PIC(*,S,N) variants of VETS(M,N,M;LN), with common initial seasonal indices and individual seasonal components, have [[D16:rMAE]] at most 1.07 times that of the correct method on data from every variant, against up to 1.70 for PIC(*,S,S) and 1.11 for PIC(*,N,N), but on data with individual initial seasonal indices their [[D19:rPinballU]] is 1.19 to 1.78 times that of the correct method, more than for PIC(*,N,N).
-C3 [descriptive; principal; extension; support: simulation E2 (E2.T7) artefacts A2; uses C22, C23; limitations L3, L4, L6, L7, L8]
+C2 [descriptive; principal; support: simulation E2 (E2.T2, E2.T6) artefacts A2; uses C19; limitations L3, L4, L6, L7, L8]
+  In the simulation, the PIC(*,S,N) variants of VETS(M,N,M;LN), with common initial seasonal indices and individual seasonal components, have [[D16:rMAE]] close to that of the correct method on data from every variant, unlike PIC(*,S,S), which is much worse on data with individual seasonal components, and PIC(*,N,N), which is somewhat worse on data with common ones, but on data with individual initial seasonal indices their [[D19:rPinballU]] is well above that of the correct method, more so than for PIC(*,N,N).
+C3 [descriptive; principal; extension; support: simulation E2 (E2.T7) artefacts A2; uses C23; limitations L3, L4, L6, L7, L8]
   In the simulation on 16 in-sample quarters, common smoothing parameters lower the [[D19:rPinballU]] of the [[D2:PIC taxonomy]] variants of VETS(M,N,M;LN) on data from every PIC variant: within each group of variants with the same initial-value and component restrictions, PIC(LS,*,*) is below PIC(S,*,*), which is at or below PIC(N,*,*).
   scope: conditions: 16 in-sample quarters and 8 held out
   extends B9: Common smoothing parameters for level and trend, set arbitrarily rather than optimised, forecast non-seasonal telecommunications series better than individually optimised ones.
 C4 [descriptive; principal; support: simulation E2 (E2.T2.r1, E2.T2.r2, E2.T2.r3) artefacts A2; uses C18, C19; limitations L3, L4, L7, L8]
-  In the simulation, VETS(M,N,M;LN) with common seasonal components, PIC(*,S,S), has [[D16:rMAE]] 1.55 to 1.70 times that of the correct method on data with individual seasonal components and initial values, PIC(*,N,N), and 1.15 to 1.16 times on PIC(N,S,N) data.
+  In the simulation, VETS(M,N,M;LN) with common seasonal components, PIC(*,S,S), has much higher [[D16:rMAE]] than the correct method on data with individual seasonal components and initial values, PIC(*,N,N), and higher rMAE on PIC(N,S,N) data.
 C5 [descriptive; principal; support: empirical_quant E3 (E3.T1.r4, E3.T1.r9); assumes C50, C51, C52; uses C32; limitations L5, L8, L9]
   On the [[D12:M5 departmental data]], [[D8:VETS D]] has the lowest geometric mean and median [[D16:rMAE]] of the five models over all series, on long and on short histories, although in the [[D15:MCB test]] its differences from the other models are not statistically significant.
 C6 [descriptive; principal; support: empirical_quant E3 (E3.T2); assumes C50, C51, C52; uses C35, C36, C37; limitations L5, L8, L9]
@@ -47,23 +47,20 @@ C7 [descriptive; principal; support: empirical_quant E3 (E3.T3); assumes C51, C5
   On the [[D12:M5 departmental data]], the [[D3:VETS-PIC selection procedure]] chooses PIC(LS,S,N) for 6 of the 11 groups of [[D8:VETS D]], PIC(L,L,N) for 2, and PIC(N,N,N), PIC(L,N,N) and PIC(LS,S,S) for one each.
   scope: population: 11 groups of M5 departmental series
 C18 [descriptive; supporting; support: simulation E2 (E2.T1) artefacts A2]
-  Across all simulated data, the PIC(*,S,S) variants of VETS(M,N,M;LN) have [[D16:rMAE]] 1.23 to 1.24 on 56 in-sample quarters and 1.17 on 16, relative to PIC(N,N,N), with similar [[D17:rRMSE]] and smaller excess in [[D18:rAME]], while all other variants are between 0.98 and 1.02 on all three measures.
+  Across all simulated data, the PIC(*,S,S) variants of VETS(M,N,M;LN) have higher [[D16:rMAE]], [[D17:rRMSE]] and [[D18:rAME]] than PIC(N,N,N) on both history lengths, while all other variants are about as accurate as PIC(N,N,N).
   scope: conditions: 56 or 16 in-sample quarters and 8 held out
 C19 [descriptive; supporting; support: simulation E2 (E2.T2, E2.T3) artefacts A2]
-  On 16 in-sample quarters, the correct variant has the lowest or nearly the lowest [[D16:rMAE]] and [[D17:rRMSE]] for each simulated PIC variant; the PIC(*,S,S) variants reach 1.70 times the correct variant on data with individual seasonal components, and the PIC(*,N,N) variants 1.11 times on data with common seasonal components.
+  When the variants are applied to data from other variants, the flexible PIC(*,N,N) variants lose much less [[D16:rMAE]] and [[D17:rRMSE]] on data with common seasonal components than the PIC(*,S,S) variants lose on data with individual ones.
   scope: conditions: 16 in-sample quarters and 8 held out
-C22 [descriptive; supporting; support: simulation E2 (E2.T7) artefacts A2]
-  On 16 in-sample quarters, the [[D19:rPinballU]] of PIC(*,S,S) variants is 1.70 to 2.05 times that of the correct variant on data with individual seasonal components and initial values, and of PIC(*,N,N) variants 0.92 to 1.39 times on data with common seasonal initial values, while PIC(*,S,N) variants are within 0.89 to 1.11 on data with common seasonal initial values.
-  scope: conditions: 16 in-sample quarters and 8 held out
-C23 [descriptive; supporting; support: simulation E2 (E2.T8, E2.T9) artefacts A2]
-  On data generated by PIC(LS,S,S), the [[D19:rPinballU]] of PIC(LS,S,N) falls from 0.87 for 2 series to 0.65 for 50, relative to PIC(N,N,N), and on data generated by PIC(N,N,N) the PIC(*,N,N) variants have rPinballU 0.79 to 1.00, the PIC(*,S,N) variants 1.15 to 1.74 and the PIC(*,S,S) variants 1.60 to 2.07.
+C23 [descriptive; supporting; support: simulation E2 (E2.T8, E2.T9, E2.R1) artefacts A2]
+  On data generated by PIC(LS,S,S), the advantage of PIC(LS,S,N) over PIC(N,N,N) in [[D19:rPinballU]] grows with group size, to a 35% lower value at 50 series, while on data generated by PIC(N,N,N) the PIC(*,N,N) variants have the lowest rPinballU, then PIC(*,S,N), then PIC(*,S,S).
   scope: conditions: groups of 2, 10, 20, 30, 40 and 50 series
 C32 [descriptive; supporting; support: empirical_quant E3; assumes C51, C52]
   On the [[D12:M5 departmental data]], in the [[D15:MCB test]] on [[D16:rMAE]], [[D7:VETS F]] on long histories has the lowest mean rank but does not differ significantly from VETS D, ETS LN, ETS (ADAM) and ETS on long histories and VETS D on short histories, and on short histories the three ETS models have worse mean ranks and outperform only VETS F, not significantly.
 C35 [descriptive; supporting; support: empirical_quant E3 (E3.T2.r1, E3.T2.r2, E3.T2.r3)]
   On the [[D12:M5 departmental data]], the [[D21:coverage]] of the 95% prediction interval of ETS LN, ETS (ADAM) and ETS is below the nominal level on long and on short histories, and lower on short ones.
 C36 [descriptive; supporting; support: empirical_quant E3 (E3.T2.r5)]
-  On the [[D12:M5 departmental data]], the [[D21:coverage]] of the 95% prediction interval of [[D7:VETS F]] is above the nominal level on long (0.982) and short (0.972) histories.
+  On the [[D12:M5 departmental data]], the [[D21:coverage]] of the 95% prediction interval of [[D7:VETS F]] is above the nominal level on long and on short histories.
 C37 [descriptive; supporting; support: empirical_quant E3 (E3.T2)]
   On the long histories of the [[D12:M5 departmental data]], [[D8:VETS D]] has higher [[D19:rPinballU]] and lower [[D20:rPinballL]] than ETS, on short histories both VETS models have higher rPinballU and rPinballL than all three ETS models, and VETS F has the highest values throughout.
 C50 [descriptive; supporting; assumption (statistical, unchecked)]
@@ -84,10 +81,10 @@ C15 [methodological; secondary; support: cited B12, cited B20]
 C16 [interpretive; secondary; support: cited B1, argument W6; warrant W6]
   For demand data, pure multiplicative [[D1:VETS]] models are more desirable than mixed models with additive and multiplicative components.
 C20 [descriptive; secondary; support: simulation E2 (E2.T4, E2.T5) artefacts A2]
-  On data generated by PIC(LS,S,S), the PIC(*,S,S) and PIC(*,S,N) variants have [[D16:rMAE]] 0.95 to 0.98 of PIC(N,N,N) for groups of 10 to 50 series, and on data generated by PIC(N,N,N) the PIC(*,S,S) variants have rMAE 1.52 to 1.53 for 2 series and 1.80 to 1.88 for 10 to 50, while the PIC(*,S,N) variants stay within 0.99 to 1.02; in both cases accuracy changes from 2 to 10 series and hardly from 10 to 50.
+  The effect of group size on the [[D16:rMAE]] of the variants, relative to PIC(N,N,N), appears from 2 to 10 series and hardly changes from 10 to 50, both on data generated by PIC(LS,S,S) and by PIC(N,N,N).
   scope: conditions: groups of 2, 10, 20, 30, 40 and 50 series
 C21 [descriptive; secondary; support: simulation E2 (E2.T6) artefacts A2]
-  Over all simulated data, the [[D21:coverage]] of the 95% interval is between 0.937 and 0.970 for every variant; on 56 in-sample quarters the PIC(*,S,S) variants have [[D19:rPinballU]] 1.23 to 1.31 relative to PIC(N,N,N) while the others are between 0.97 and 1.04, and on 16 quarters PIC(LS,S,N) and PIC(LS,N,N) have the lowest rPinballU (0.86).
+  Over all simulated data, the PIC(*,S,S) and PIC(*,S,N) variants come closer to 95% [[D21:coverage]] on longer histories, while the PIC(*,N,N) variants give narrower intervals with slightly lower coverage there; on longer histories the PIC(*,S,S) variants have higher [[D19:rPinballU]] and [[D20:rPinballL]] than PIC(N,N,N), and the other variants improve on it, most on shorter histories.
   scope: conditions: 56 or 16 in-sample quarters and 8 held out
 C24 [descriptive; secondary; support: simulation E2 (E2.T4) artefacts A2]
   On data generated by PIC(LS,S,S), common smoothing parameters typically lower the [[D16:rMAE]] of VETS(M,N,M;LN) slightly: PIC(LS,S,*) is typically at or below PIC(S,S,*), which is typically at or below PIC(N,S,*).
@@ -156,6 +153,7 @@ E1 [formal; foundation Linear state space models; matrix algebra] Construction o
   derivation: in the source
 E2 [simulation; runs 1000] The [[D4:nine PIC variants of VETS(M,N,M;LN)]] applied to [[D5:simulated VETS(M,N,M;LN) data]] from each of the nine variants, evaluated on the [[D6:simulation holdout]] against PIC(N,N,N) or the correct variant.
   setup: compared D4; data D5; design D6; measures D16, D17, D18, D19, D20, D21
+  E2.R1 reduction of rPinballU of PIC(LS,S,N) relative to PIC(N,N,N) = 0.35 share {DGP: PIC(LS,S,S), group size: 50 series}
   E2.T1 rMAE, rRMSE and rAME of the nine variants relative to PIC(N,N,N), over all simulated data, for 56 and 16 in-sample quarters
   | row | method | rMAE (56+8) | rRMSE (56+8) | rAME (56+8) | rMAE (16+8) | rRMSE (16+8) | rAME (16+8) |
   | r1 | PIC(LS,S,S) | 1.23 | 1.21 | 1.11 | 1.17 | 1.16 | 1.08 |
@@ -304,8 +302,8 @@ W4 [interpretive] A seasonal rise of the same percentage, such as 41%, is a natu
 W5 [deductive] Point forecasts of pure multiplicative VETS on logarithms are geometric means (equal to medians); the arithmetic means would follow from the log normal formula and grow even for a local level model, and point forecasts of pure multiplicative ETS do not correspond to conditional expectations either.
 W6 [deductive] Mixed models can produce negative point forecasts and prediction intervals, which demand data cannot take, while pure multiplicative models keep a positive sample space; the paper tests no mixed VETS model.
 W7 [deductive] In a mixed model, additive and multiplicative components multiply each other, so their interactions do not fit the linear state space form on either the original or the logarithmic scale.
-W8 [inductive; premises C19, C22] In the simulation, common seasonal components lose heavily when the series have individual seasonal patterns, so the authors restrict them to series with very similar seasonal patterns; no experiment varies the degree of seasonal homogeneity directly.
-W9 [inductive; premises C19, C21, C22] PIC(LS,S,N) and PIC(LS,N,N) are close to the correct variant in rMAE and have among the lowest pinball values across the simulated data-generating processes, which the authors call robust; robustness outside the simulated settings is not tested.
+W8 [inductive; premises C19] In the simulation, common seasonal components lose heavily when the series have individual seasonal patterns, so the authors restrict them to series with very similar seasonal patterns; no experiment varies the degree of seasonal homogeneity directly.
+W9 [inductive; premises C19, C21] PIC(LS,S,N) and PIC(LS,N,N) are close to the correct variant in rMAE and have among the lowest pinball values across the simulated data-generating processes, which the authors call robust; robustness outside the simulated settings is not tested.
 W10 [abductive; premises C44] The restriction chosen most often combines common smoothing parameters for level and seasonality with common seasonal initial values, so the authors attribute the accuracy gains to them; no experiment compares VETS with and without these restrictions on the M5 data.
 W11 [inductive; premises C7, C28] The restriction the selection procedure chooses most often on real data is the one the simulation found robust; the selection frequency does not measure robustness as such.
 W12 [inductive; premises C5] VETS, which estimates from the whole group, is more accurate than the univariate ETS models on these data; the differences are not statistically significant and other data are not tested.
