@@ -19,8 +19,7 @@
    "C4",
    "C5",
    "C67",
-   "C6",
-   "C7"
+   "C6"
   ],
   "contribution_record": "complete",
   "origin": "converted",
@@ -504,9 +503,9 @@
   },
   {
    "id": "C7",
-   "statement": "On the [[D12:M5 departmental data]], the [[D3:VETS-PIC selection procedure]] chooses PIC(LS,S,N) for 6 of the 11 groups of [[D8:VETS D]], PIC(L,L,N) for 2, and PIC(N,N,N), PIC(L,N,N) and PIC(LS,S,S) for one each.",
+   "statement": "On the [[D12:M5 departmental data]], the [[D3:VETS-PIC selection procedure]] chooses PIC(LS,S,N) for [[D8:VETS D]] more often than any other restriction.",
    "type": "descriptive",
-   "role": "principal",
+   "role": "secondary",
    "novelty": "no_prior_found",
    "support": [
     {
@@ -2361,6 +2360,10 @@
     }
    ],
    "warrant": "W11",
+   "depends_on": [
+    "C7",
+    "C28"
+   ],
    "source_spans": [
     "p14.8"
    ],
@@ -2386,27 +2389,6 @@
    "source_spans": [
     "p13.3",
     "p14.15"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C44",
-   "statement": "On the [[D12:M5 departmental data]], the restrictions chosen for VETS D are mainly common smoothing parameters for level and seasonality and common initial seasonal indices.",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E3",
-     "results": [
-      "E3.T3"
-     ]
-    }
-   ],
-   "source_spans": [
-    "p14.8",
-    "p15.1"
    ],
    "provenance": "extracted"
   },
@@ -4694,7 +4676,7 @@
    "id": "W10",
    "reasoning": "abductive",
    "premises": [
-    "C44"
+    "C7"
    ],
    "text": "The restriction chosen most often combines common smoothing parameters for level and seasonality with common seasonal initial values, so the authors attribute the accuracy gains to them; no experiment compares VETS with and without these restrictions on the M5 data."
   },
@@ -4752,7 +4734,8 @@
    "id": "W14",
    "reasoning": "interpretive",
    "premises": [
-    "C44"
+    "C7",
+    "C92"
    ],
    "text": "On the M5 data most groups needed no common components, so the components element could have been dropped; starting from the full framework and simplifying keeps the benefits with fewer models to evaluate."
   }

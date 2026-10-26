@@ -1,5 +1,5 @@
 CLAIMSET A new taxonomy for vector exponential smoothing and its application to seasonal time series
-licence CC-BY-4.0; converted from 10.1016/j.ejor.2022.04.040 version of record by Ivan Svetunkov, Huijing Chen, John E. Boylan; contributions C1, C2, C3, C4, C5, C67, C6, C7
+licence CC-BY-4.0; converted from 10.1016/j.ejor.2022.04.040 version of record by Ivan Svetunkov, Huijing Chen, John E. Boylan; contributions C1, C2, C3, C4, C5, C67, C6
 
 DEFINITIONS
 D1 VETS: Vector exponential smoothing: a state space model for a group of n time series with measurement matrix W, transition matrix F, persistence matrix G of smoothing parameters, state vector v_t with component lags l and error vector; pure additive, $y_t = W v_{t-l} + \epsilon_t$, $v_t = F v_{t-l} + G \epsilon_t$ with $\epsilon_t \sim N(0_n, \Sigma)$, written VETS(A,N,N), VETS(A,N,A) and so on; pure multiplicative, the same equations on the logarithms of data, states and errors, written VETS(M,N,N;LN), VETS(M,N,M;LN) and so on.
@@ -46,9 +46,6 @@ C67 [descriptive; principal; support: empirical_quant E3 (E3.T1.r9); assumes C50
   On the short histories of the [[D12:M5 departmental data]], [[D8:VETS D]] has the lowest geometric mean and median [[D16:rMAE]] of the five models over all series.
 C6 [descriptive; principal; support: empirical_quant E3 (E3.T2); assumes C50, C51, C52; limitations L5, L8, L9]
   On the long histories of the [[D12:M5 departmental data]], the [[D21:coverage]] of the 95% prediction interval of [[D8:VETS D]] is the closest to the nominal level of the five models.
-C7 [descriptive; principal; support: empirical_quant E3 (E3.T3); assumes C51, C52; limitations L2, L5, L9]
-  On the [[D12:M5 departmental data]], the [[D3:VETS-PIC selection procedure]] chooses PIC(LS,S,N) for 6 of the 11 groups of [[D8:VETS D]], PIC(L,L,N) for 2, and PIC(N,N,N), PIC(L,N,N) and PIC(LS,S,S) for one each.
-  scope: population: 11 groups of M5 departmental series
 C56 [descriptive; supporting; support: simulation E2 (E2.T2.r4, E2.T2.r5, E2.T2.r6) artefacts A2]
   In the simulation on 16 in-sample quarters, the [[D16:rMAE]] of each PIC(*,S,N) variant of VETS(M,N,M;LN) is close to that of the correct variant on data from every variant.
   scope: conditions: 16 in-sample quarters and 8 held out
@@ -79,6 +76,9 @@ C51 [descriptive; supporting; assumption (data, unchecked)]
   The M5 series are correctly grouped into seasonally homogeneous groups of the same department.
 C52 [descriptive; supporting; assumption (methodological, unchecked)]
   The classification of the M5 series by adam() into seasonal or non-seasonal and trended or non-trended is correct.
+C7 [descriptive; secondary; support: empirical_quant E3 (E3.T3); assumes C51, C52; limitations L2, L5, L9]
+  On the [[D12:M5 departmental data]], the [[D3:VETS-PIC selection procedure]] chooses PIC(LS,S,N) for [[D8:VETS D]] more often than any other restriction.
+  scope: population: 11 groups of M5 departmental series
 C11 [formal; secondary; support: formal_proof E1; verification unchecked]
   The group-seasonal model of Ouwehand et al. (2007) is a collection of univariate ETS(M,A,M) models with PIC(N,S,S) restrictions, with seasonal smoothing parameters $\gamma_i = \gamma w_i$.
   refines B15: A state space model extends ETS(M,A,M) to a group of series with a common seasonal component, a common seasonal smoothing parameter with individual weights, and common initial seasonal indices.
@@ -205,12 +205,10 @@ C42 [descriptive; secondary; support: empirical_quant E3 (E3.T4)]
   On the short histories of the [[D12:M5 departmental data]], [[D7:VETS F]] has the highest [[D21:coverage]] of the 95% prediction interval of the five models at horizons of 3, 6 and 12 months.
 C39 [interpretive; secondary; support: empirical_quant E3, argument W10; warrant W10]
   The accuracy gains of VETS on the [[D12:M5 departmental data]] arise mainly from the PIC restrictions on seasonal initial values and on smoothing parameters.
-C40 [interpretive; secondary; support: empirical_quant E3, simulation E2 artefacts A2, argument W11; warrant W11]
+C40 [interpretive; secondary; support: empirical_quant E3, simulation E2 artefacts A2, argument W11; uses C7, C28; warrant W11]
   The frequent choice of PIC(LS,S,N) on the [[D12:M5 departmental data]] confirms the simulation finding that PIC(LS,S,N) is one of the most robust variants.
 C43 [interpretive; secondary; support: empirical_quant E3, argument W12; warrant W12]
   Using cross-sectional information for estimation improves forecasting accuracy on the [[D12:M5 departmental data]].
-C44 [descriptive; secondary; support: empirical_quant E3 (E3.T3)]
-  On the [[D12:M5 departmental data]], the restrictions chosen for VETS D are mainly common smoothing parameters for level and seasonality and common initial seasonal indices.
 C92 [descriptive; secondary; support: empirical_quant E3 (E3.T3)]
   On the [[D12:M5 departmental data]], only one group of VETS D needs common seasonal components.
 C45 [interpretive; secondary; support: empirical_quant E3, argument W13; assumes C50, C51; warrant W13]
@@ -412,13 +410,13 @@ W6 [deductive] Mixed models can produce negative point forecasts and prediction 
 W7 [deductive] In a mixed model, additive and multiplicative components multiply each other, so their interactions do not fit the linear state space form on either the original or the logarithmic scale.
 W8 [inductive; premises C4, C57] In the simulation, common seasonal components lose heavily when the series have individual seasonal patterns, so the authors restrict them to series with very similar seasonal patterns; no experiment varies the degree of seasonal homogeneity directly.
 W9 [inductive; premises C2, C3] PIC(LS,S,N) and PIC(LS,N,N) are close to the correct variant in rMAE and have among the lowest pinball values across the simulated data-generating processes, which the authors call robust; robustness outside the simulated settings is not tested.
-W10 [abductive; premises C44] The restriction chosen most often combines common smoothing parameters for level and seasonality with common seasonal initial values, so the authors attribute the accuracy gains to them; no experiment compares VETS with and without these restrictions on the M5 data.
+W10 [abductive; premises C7] The restriction chosen most often combines common smoothing parameters for level and seasonality with common seasonal initial values, so the authors attribute the accuracy gains to them; no experiment compares VETS with and without these restrictions on the M5 data.
 W11 [inductive; premises C7, C28] The restriction the selection procedure chooses most often on real data is the one the simulation found robust; the selection frequency does not measure robustness as such.
 W12 [inductive; premises C5, C67] VETS, which estimates from the whole group, is more accurate than the univariate ETS models on these data; the differences are not statistically significant and other data are not tested.
 W13 [inductive; premises C5, C67, C6, C102] VETS D is the most accurate and has the coverage closest to nominal on long histories, and it is easier to estimate than VETS F, but on short histories its pinball values are worse than those of ETS; the recommendation extends one data set to real data in general.
 W15 [deductive; premises C14] The determinant of the covariance matrix, the generalised variance, falls when the variances fall, and for given variances it also falls as the correlations between series grow, so its minimisation favours both.
 W16 [inductive; premises C56, C57, C58, C59, C60, C61] The PIC(*,S,N) variants stay close to the correct variant in rMAE on data from every variant, while the more restrictive PIC(*,S,S) and the more flexible PIC(*,N,N) variants each lose clearly on some data; their pinball values are worse than the correct variant's on the most flexible data, but less so than those of PIC(*,S,S). Robustness outside the simulated settings is not tested.
-W14 [interpretive; premises C44] On the M5 data most groups needed no common components, so the components element could have been dropped; starting from the full framework and simplifying keeps the benefits with fewer models to evaluate.
+W14 [interpretive; premises C7, C92] On the M5 data most groups needed no common components, so the components element could have been dropped; starting from the full framework and simplifying keeps the benefits with fewer models to evaluate.
 
 LIMITATIONS
 L1 [model_specification; affects C1; reduces_transferability; mitigation none] Mixed VETS models, with both additive and multiplicative components, are not considered.
