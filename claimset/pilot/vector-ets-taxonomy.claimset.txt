@@ -86,13 +86,10 @@ C13 [interpretive; secondary; support: argument W5, cited B12, at p. 23; warrant
   Pure multiplicative [[D1:VETS]] should produce geometric means of the forecast distribution as point forecasts rather than arithmetic means.
 C15 [methodological; secondary; support: cited B12, cited B20]
   The smoothing parameters of [[D1:VETS]] need not be restricted to the interval (0, 1).
-C79 [formal; secondary; support: cited B12, cited B20]
-  A [[D1:VETS]] model is stable when all eigenvalues of its discount matrix $D = F - GW$ lie inside the unit circle.
+C79 [methodological; secondary; support: cited B12, cited B20]
+  The stability condition of Hyndman et al. (2008) and Snyder et al. (2017), that all eigenvalues of the discount matrix $D = F - GW$ lie inside the unit circle, applies to [[D1:VETS]].
 C16 [interpretive; secondary; support: cited B1, argument W6; warrant W6]
   For demand data, pure multiplicative [[D1:VETS]] models are more desirable than mixed models with additive and multiplicative components.
-C19 [descriptive; secondary; support: simulation E2 (E2.T2, E2.T3) artefacts A2]
-  In the simulation on 16 in-sample quarters, the PIC(*,N,N) variants of VETS(M,N,M;LN) lose much less [[D16:rMAE]] and [[D17:rRMSE]], relative to the correct variant, on data with common seasonal components than the PIC(*,S,S) variants lose on data with individual ones.
-  scope: conditions: 16 in-sample quarters and 8 held out
 C66 [descriptive; secondary; support: simulation E2 (E2.T2.r1, E2.T2.r2, E2.T2.r3) artefacts A2]
   In the simulation on 16 in-sample quarters, the PIC(*,S,S) variants of VETS(M,N,M;LN) have higher [[D16:rMAE]] than the correct variant on data from PIC(N,S,N).
   scope: conditions: 16 in-sample quarters and 8 held out
@@ -125,11 +122,11 @@ C21 [descriptive; secondary; support: simulation E2 (E2.T6) artefacts A2]
   Over all simulated data, the [[D21:coverage]] of the 95% prediction interval of the PIC(*,S,S) variants of VETS(M,N,M;LN) is closer to the nominal level on 56 than on 16 in-sample quarters.
   scope: conditions: 56 in-sample quarters and 8 held out; 16 in-sample quarters and 8 held out
 C84 [descriptive; secondary; support: simulation E2 (E2.T6) artefacts A2]
-  Over all simulated data, the [[D21:coverage]] of the 95% prediction interval of the PIC(*,S,N) variants of VETS(M,N,M;LN) is closer to the nominal level on 56 than on 16 in-sample quarters.
+  Over all simulated data, the [[D21:coverage]] of the 95% prediction interval of the PIC(*,S,N) variants of VETS(M,N,M;LN) is generally closer to the nominal level on 56 than on 16 in-sample quarters.
   scope: conditions: 56 in-sample quarters and 8 held out; 16 in-sample quarters and 8 held out
 C85 [descriptive; secondary; support: simulation E2 (E2.T6) artefacts A2]
-  Over all simulated data, the PIC(*,N,N) variants of VETS(M,N,M;LN) give narrower 95% prediction intervals with slightly lower [[D21:coverage]] on 56 than on 16 in-sample quarters.
-  scope: conditions: 56 in-sample quarters and 8 held out; 16 in-sample quarters and 8 held out
+  On 56 in-sample quarters over all simulated data, the [[D21:coverage]] of the 95% prediction interval of the PIC(*,N,N) variants of VETS(M,N,M;LN) is slightly below the nominal level and among the lowest of the nine variants.
+  scope: conditions: 56 in-sample quarters and 8 held out
 C86 [descriptive; secondary; support: simulation E2 (E2.T6) artefacts A2]
   On 56 in-sample quarters over all simulated data, the PIC(*,S,S) variants of VETS(M,N,M;LN) have higher [[D19:rPinballU]] and [[D20:rPinballL]] than PIC(N,N,N).
   scope: conditions: 56 in-sample quarters and 8 held out

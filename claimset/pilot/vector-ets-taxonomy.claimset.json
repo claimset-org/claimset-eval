@@ -795,8 +795,8 @@
   },
   {
    "id": "C79",
-   "statement": "A [[D1:VETS]] model is stable when all eigenvalues of its discount matrix $D = F - GW$ lie inside the unit circle.",
-   "type": "formal",
+   "statement": "The stability condition of Hyndman et al. (2008) and Snyder et al. (2017), that all eigenvalues of the discount matrix $D = F - GW$ lie inside the unit circle, applies to [[D1:VETS]].",
+   "type": "methodological",
    "role": "secondary",
    "novelty": "no_prior_found",
    "support": [
@@ -1023,35 +1023,6 @@
    ],
    "source_spans": [
     "p10.12"
-   ],
-   "provenance": "extracted",
-   "scope": {
-    "conditions": [
-     "16 in-sample quarters and 8 held out"
-    ]
-   }
-  },
-  {
-   "id": "C19",
-   "statement": "In the simulation on 16 in-sample quarters, the PIC(*,N,N) variants of VETS(M,N,M;LN) lose much less [[D16:rMAE]] and [[D17:rRMSE]], relative to the correct variant, on data with common seasonal components than the PIC(*,S,S) variants lose on data with individual ones.",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "simulation",
-     "evidence": "E2",
-     "results": [
-      "E2.T2",
-      "E2.T3"
-     ],
-     "artefacts": [
-      "A2"
-     ]
-    }
-   ],
-   "source_spans": [
-    "p9.7-p9.9"
    ],
    "provenance": "extracted",
    "scope": {
@@ -1430,7 +1401,7 @@
   },
   {
    "id": "C84",
-   "statement": "Over all simulated data, the [[D21:coverage]] of the 95% prediction interval of the PIC(*,S,N) variants of VETS(M,N,M;LN) is closer to the nominal level on 56 than on 16 in-sample quarters.",
+   "statement": "Over all simulated data, the [[D21:coverage]] of the 95% prediction interval of the PIC(*,S,N) variants of VETS(M,N,M;LN) is generally closer to the nominal level on 56 than on 16 in-sample quarters.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1459,7 +1430,7 @@
   },
   {
    "id": "C85",
-   "statement": "Over all simulated data, the PIC(*,N,N) variants of VETS(M,N,M;LN) give narrower 95% prediction intervals with slightly lower [[D21:coverage]] on 56 than on 16 in-sample quarters.",
+   "statement": "On 56 in-sample quarters over all simulated data, the [[D21:coverage]] of the 95% prediction interval of the PIC(*,N,N) variants of VETS(M,N,M;LN) is slightly below the nominal level and among the lowest of the nine variants.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1481,8 +1452,7 @@
    "provenance": "extracted",
    "scope": {
     "conditions": [
-     "56 in-sample quarters and 8 held out",
-     "16 in-sample quarters and 8 held out"
+     "56 in-sample quarters and 8 held out"
     ]
    }
   },
