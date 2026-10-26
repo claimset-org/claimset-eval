@@ -538,7 +538,7 @@
   },
   {
    "id": "C7",
-   "statement": "[[D1:CES]] has the single-source-of-error state-space form $y_t = l_{t-1} + \\varepsilon_t$, $l_t = l_{t-1} - (1 - \\alpha_1) c_{t-1} + (\\alpha_0 - \\alpha_1) \\varepsilon_t$, $c_t = l_{t-1} + (1 - \\alpha_0) c_{t-1} + (\\alpha_0 + \\alpha_1) \\varepsilon_t$, with level $l_t$ and [[D3:nonlinear trend component]] $c_t$, whose transition matrix contains the smoothing parameters.",
+   "statement": "[[D1:CES]] has the single-source-of-error state-space form $y_t = l_{t-1} + \\varepsilon_t$, $l_t = l_{t-1} - (1 - \\alpha_1) c_{t-1} + (\\alpha_0 - \\alpha_1) \\varepsilon_t$, $c_t = l_{t-1} + (1 - \\alpha_0) c_{t-1} + (\\alpha_0 + \\alpha_1) \\varepsilon_t$, with level $l_t$ and [[D3:nonlinear trend component]] $c_t$.",
    "type": "formal",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -556,6 +556,27 @@
    "source_spans": [
     "p4.4-p4.13",
     "p13.28-p14.3"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C73",
+   "statement": "The transition matrix of the [[D1:CES]] state-space form contains the smoothing parameters.",
+   "type": "formal",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E1"
+    }
+   ],
+   "verification": "unchecked",
+   "depends_on": [
+    "C7"
+   ],
+   "source_spans": [
+    "p4.12-p4.13"
    ],
    "provenance": "extracted"
   },
@@ -1053,9 +1074,32 @@
   },
   {
    "id": "C20",
-   "statement": "On the [[D7:M1, M3 and tourism data]], in Nemenyi tests at the 5% level, CES has the best mean rank of four methods, CES, [[D8:ETS]], [[D9:ARIMA]] and the [[D10:Theta method]] on [[D11:RMSSE]] and on [[D12:MASE]], though not all of the differences are statistically significant.",
+   "statement": "On the [[D7:M1, M3 and tourism data]], in Nemenyi tests at the 5% level, CES has the best mean rank of four methods, CES, [[D8:ETS]], [[D9:ARIMA]] and the [[D10:Theta method]] on [[D11:RMSSE]] and on [[D12:MASE]].",
    "type": "descriptive",
    "role": "supporting",
+   "novelty": "no_prior_found",
+   "scope": {
+    "conditions": [
+     "Nemenyi test on ranks of the error measures, significance level 0.05"
+    ]
+   },
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E2"
+    }
+   ],
+   "source_spans": [
+    "p9.14",
+    "p9.20"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C74",
+   "statement": "On the [[D7:M1, M3 and tourism data]], in Nemenyi tests at the 5% level, not all of the differences between CES and [[D8:ETS]], [[D9:ARIMA]] and the [[D10:Theta method]] on [[D11:RMSSE]] and [[D12:MASE]] are statistically significant.",
+   "type": "descriptive",
+   "role": "secondary",
    "novelty": "no_prior_found",
    "scope": {
     "conditions": [
@@ -1538,38 +1582,6 @@
      "forecasting scenarios for which CES is not appropriate, which the paper does not name"
     ]
    }
-  },
-  {
-   "id": "C31",
-   "statement": "The benchmark results show that CES can capture both level and trend time series without the selection between trend types that ETS requires.",
-   "type": "interpretive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E2",
-     "results": [
-      "E2.T1"
-     ]
-    },
-    {
-     "kind": "empirical_quant",
-     "evidence": "E8",
-     "results": [
-      "E8.T1"
-     ]
-    },
-    {
-     "kind": "argument",
-     "warrant": "W10"
-    }
-   ],
-   "warrant": "W10",
-   "source_spans": [
-    "p11.27"
-   ],
-   "provenance": "extracted"
   },
   {
    "id": "C32",
@@ -2591,12 +2603,6 @@
    "reasoning": "inductive",
    "premises": [],
    "text": "CES has lower RMSSE than ETS, ARIMA and the Theta method on the M1, M3, tourism and M4 data and lowers the errors of the combination it is included in, which the authors take as evidence that it is robust, while acknowledging that it does not suit every forecasting scenario. Robustness itself is not defined or tested: no experiment examines how the accuracy of CES varies across conditions or departures from its assumptions."
-  },
-  {
-   "id": "W10",
-   "reasoning": "inductive",
-   "premises": [],
-   "text": "CES, which has no separate trend forms, has lower RMSSE than ETS, which selects among trend forms, on competition data that contain both level and trended series, which the authors take to validate that CES handles both kinds of series by its smooth transition between trajectories. No experiment separates level from trended series to test this: the comparison is on the pooled competition data."
   },
   {
    "id": "W11",
