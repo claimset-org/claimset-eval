@@ -773,74 +773,6 @@
    "provenance": "extracted"
   },
   {
-   "id": "C53",
-   "statement": "Minimising the determinant of the estimated covariance matrix of the errors of [[D1:VETS]] typically lowers the variances of the series.",
-   "type": "interpretive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "argument",
-     "warrant": "W15"
-    }
-   ],
-   "warrant": "W15",
-   "depends_on": [
-    "C14"
-   ],
-   "source_spans": [
-    "p6.24"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C78",
-   "statement": "Minimising the determinant of the estimated covariance matrix of the errors of [[D1:VETS]] typically raises the covariances between the series.",
-   "type": "interpretive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "argument",
-     "warrant": "W15"
-    }
-   ],
-   "warrant": "W15",
-   "depends_on": [
-    "C14"
-   ],
-   "source_spans": [
-    "p6.24"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C14",
-   "statement": "Maximising the concentrated likelihood of pure additive [[D1:VETS]] minimises the determinant of the estimated covariance matrix of the errors.",
-   "type": "formal",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E4"
-    },
-    {
-     "kind": "cited",
-     "reference": "B20"
-    }
-   ],
-   "verification": "unchecked",
-   "assumptions": [
-    "C47",
-    "C49"
-   ],
-   "source_spans": [
-    "p6.19-p6.24"
-   ],
-   "provenance": "extracted"
-  },
-  {
    "id": "C15",
    "statement": "The smoothing parameters of [[D1:VETS]] need not be restricted to the interval (0, 1).",
    "type": "methodological",
@@ -4708,14 +4640,6 @@
     "C102"
    ],
    "text": "VETS D is the most accurate and has the coverage closest to nominal on long histories, and it is easier to estimate than VETS F, but on short histories its pinball values are worse than those of ETS; the recommendation extends one data set to real data in general."
-  },
-  {
-   "id": "W15",
-   "reasoning": "deductive",
-   "premises": [
-    "C14"
-   ],
-   "text": "The determinant of the covariance matrix, the generalised variance, falls when the variances fall, and for given variances it also falls as the correlations between series grow, so its minimisation favours both."
   },
   {
    "id": "W16",

@@ -84,8 +84,6 @@ C11 [formal; secondary; support: formal_proof E1; verification unchecked]
   refines B15: A state space model extends ETS(M,A,M) to a group of series with a common seasonal component, a common seasonal smoothing parameter with individual weights, and common initial seasonal indices.
 C13 [interpretive; secondary; support: argument W5, cited B12, at p. 23; warrant W5]
   Pure multiplicative [[D1:VETS]] should produce geometric means of the forecast distribution as point forecasts rather than arithmetic means.
-C14 [formal; secondary; support: formal_proof E4, cited B20; assumes C47, C49; verification unchecked]
-  Maximising the concentrated likelihood of pure additive [[D1:VETS]] minimises the determinant of the estimated covariance matrix of the errors.
 C15 [methodological; secondary; support: cited B12, cited B20]
   The smoothing parameters of [[D1:VETS]] need not be restricted to the interval (0, 1).
 C79 [formal; secondary; support: cited B12, cited B20]
@@ -243,10 +241,6 @@ C76 [methodological; secondary; support: argument W3; warrant W3]
   A [[D1:VETS]] model with k estimated parameters for n series is estimable only when k/n is lower than the number of observations per series.
 C12 [interpretive; secondary; support: argument W4; warrant W4]
   For seasonality shared across products whose sales differ in scale or unit, a multiplicative form of [[D1:VETS]] is more natural than an additive one.
-C53 [interpretive; secondary; support: argument W15; uses C14; warrant W15]
-  Minimising the determinant of the estimated covariance matrix of the errors of [[D1:VETS]] typically lowers the variances of the series.
-C78 [interpretive; secondary; support: argument W15; uses C14; warrant W15]
-  Minimising the determinant of the estimated covariance matrix of the errors of [[D1:VETS]] typically raises the covariances between the series.
 C17 [methodological; secondary; support: argument W7; warrant W7]
   Mixed [[D1:VETS]] models, with both additive and multiplicative components, would need a different formulation with complex interactions between the components.
 C46 [interpretive; secondary; support: argument W14; warrant W14]
@@ -414,7 +408,6 @@ W10 [abductive; premises C7] The restriction chosen most often combines common s
 W11 [inductive; premises C7, C28] The restriction the selection procedure chooses most often on real data is the one the simulation found robust; the selection frequency does not measure robustness as such.
 W12 [inductive; premises C5, C67] VETS, which estimates from the whole group, is more accurate than the univariate ETS models on these data; the differences are not statistically significant and other data are not tested.
 W13 [inductive; premises C5, C67, C6, C102] VETS D is the most accurate and has the coverage closest to nominal on long histories, and it is easier to estimate than VETS F, but on short histories its pinball values are worse than those of ETS; the recommendation extends one data set to real data in general.
-W15 [deductive; premises C14] The determinant of the covariance matrix, the generalised variance, falls when the variances fall, and for given variances it also falls as the correlations between series grow, so its minimisation favours both.
 W16 [inductive; premises C56, C57, C58, C59, C60, C61] The PIC(*,S,N) variants stay close to the correct variant in rMAE on data from every variant, while the more restrictive PIC(*,S,S) and the more flexible PIC(*,N,N) variants each lose clearly on some data; their pinball values are worse than the correct variant's on the most flexible data, but less so than those of PIC(*,S,S). Robustness outside the simulated settings is not tested.
 W14 [interpretive; premises C7, C92] On the M5 data most groups needed no common components, so the components element could have been dropped; starting from the full framework and simplifying keeps the benefits with fewer models to evaluate.
 
