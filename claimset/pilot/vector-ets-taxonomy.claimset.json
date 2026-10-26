@@ -1,5 +1,5 @@
 {
- "schema_version": "0.25",
+ "schema_version": "0.26",
  "paper": {
   "title": "A new taxonomy for vector exponential smoothing and its application to seasonal time series",
   "licence": "CC-BY-4.0",
@@ -18,6 +18,7 @@
    "C3",
    "C4",
    "C5",
+   "C67",
    "C6",
    "C7"
   ],
@@ -249,8 +250,11 @@
    "verification": "unchecked",
    "depends_on": [
     "C8",
+    "C73",
     "C9",
-    "C55"
+    "C74",
+    "C55",
+    "C75"
    ],
    "limitations": [
     "L1"
@@ -277,25 +281,31 @@
   },
   {
    "id": "C2",
-   "statement": "In the simulation, the PIC(*,S,N) variants of VETS(M,N,M;LN), with common initial seasonal indices and individual seasonal components, have [[D16:rMAE]] close to that of the correct method on data from every variant, unlike PIC(*,S,S), which is much worse on data with individual seasonal components, and PIC(*,N,N), which is somewhat worse on data with common ones, but on data with individual initial seasonal indices their [[D19:rPinballU]] is well above that of the correct method, more so than for PIC(*,N,N).",
-   "type": "descriptive",
+   "statement": "The PIC(*,S,N) variants of VETS(M,N,M;LN), with common initial seasonal indices and individual seasonal components, are the most robust of the nine [[D2:PIC taxonomy]] variants to model misspecification.",
+   "type": "interpretive",
    "role": "principal",
    "novelty": "no_prior_found",
    "support": [
     {
      "kind": "simulation",
      "evidence": "E2",
-     "results": [
-      "E2.T2",
-      "E2.T6"
-     ],
      "artefacts": [
       "A2"
      ]
+    },
+    {
+     "kind": "argument",
+     "warrant": "W16"
     }
    ],
+   "warrant": "W16",
    "depends_on": [
-    "C19"
+    "C56",
+    "C57",
+    "C58",
+    "C59",
+    "C60",
+    "C61"
    ],
    "limitations": [
     "L3",
@@ -305,9 +315,9 @@
     "L8"
    ],
    "source_spans": [
-    "p9.5-p9.8",
     "p10.5",
-    "p10.11-p10.13",
+    "p10.13",
+    "p12.3",
     "p12.5",
     "p15.2"
    ],
@@ -315,7 +325,7 @@
   },
   {
    "id": "C3",
-   "statement": "In the simulation on 16 in-sample quarters, common smoothing parameters lower the [[D19:rPinballU]] of the [[D2:PIC taxonomy]] variants of VETS(M,N,M;LN) on data from every PIC variant: within each group of variants with the same initial-value and component restrictions, PIC(LS,*,*) is below PIC(S,*,*), which is at or below PIC(N,*,*).",
+   "statement": "In the simulation on 16 in-sample quarters, common smoothing parameters lower the [[D19:rPinballU]] of the [[D2:PIC taxonomy]] variants of VETS(M,N,M;LN) on data from every PIC variant.",
    "type": "descriptive",
    "role": "principal",
    "novelty": "extension",
@@ -332,7 +342,8 @@
     }
    ],
    "depends_on": [
-    "C23"
+    "C62",
+    "C63"
    ],
    "limitations": [
     "L3",
@@ -351,7 +362,7 @@
    "source_spans": [
     "p10.14",
     "p11.7",
-    "p12.2-p12.4",
+    "p12.3-p12.4",
     "p15.3",
     "p15.5"
    ],
@@ -364,7 +375,7 @@
   },
   {
    "id": "C4",
-   "statement": "In the simulation, VETS(M,N,M;LN) with common seasonal components, PIC(*,S,S), has much higher [[D16:rMAE]] than the correct method on data with individual seasonal components and initial values, PIC(*,N,N), and higher rMAE on PIC(N,S,N) data.",
+   "statement": "In the simulation on 16 in-sample quarters, the PIC(*,S,S) variants of VETS(M,N,M;LN), with common seasonal components, have much higher [[D16:rMAE]] than the correct variant on data with individual seasonal components and initial values, from the PIC(*,N,N) variants.",
    "type": "descriptive",
    "role": "principal",
    "novelty": "no_prior_found",
@@ -382,10 +393,6 @@
      ]
     }
    ],
-   "depends_on": [
-    "C18",
-    "C19"
-   ],
    "limitations": [
     "L3",
     "L4",
@@ -396,11 +403,16 @@
     "p9.6",
     "p12.6"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "16 in-sample quarters and 8 held out"
+    ]
+   }
   },
   {
    "id": "C5",
-   "statement": "On the [[D12:M5 departmental data]], [[D8:VETS D]] has the lowest geometric mean and median [[D16:rMAE]] of the five models over all series, on long and on short histories, although in the [[D15:MCB test]] its differences from the other models are not statistically significant.",
+   "statement": "On the long histories of the [[D12:M5 departmental data]], [[D8:VETS D]] has the lowest geometric mean and median [[D16:rMAE]] of the five models over all series.",
    "type": "descriptive",
    "role": "principal",
    "novelty": "no_prior_found",
@@ -409,13 +421,9 @@
      "kind": "empirical_quant",
      "evidence": "E3",
      "results": [
-      "E3.T1.r4",
-      "E3.T1.r9"
+      "E3.T1.r4"
      ]
     }
-   ],
-   "depends_on": [
-    "C32"
    ],
    "assumptions": [
     "C50",
@@ -429,14 +437,44 @@
    ],
    "source_spans": [
     "p13.3",
-    "p13.5",
+    "p15.4"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C67",
+   "statement": "On the short histories of the [[D12:M5 departmental data]], [[D8:VETS D]] has the lowest geometric mean and median [[D16:rMAE]] of the five models over all series.",
+   "type": "descriptive",
+   "role": "principal",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3",
+     "results": [
+      "E3.T1.r9"
+     ]
+    }
+   ],
+   "assumptions": [
+    "C50",
+    "C51",
+    "C52"
+   ],
+   "limitations": [
+    "L5",
+    "L8",
+    "L9"
+   ],
+   "source_spans": [
+    "p13.3",
     "p15.4"
    ],
    "provenance": "extracted"
   },
   {
    "id": "C6",
-   "statement": "On the long histories of the [[D12:M5 departmental data]], the [[D21:coverage]] of the 95% prediction interval of [[D8:VETS D]] (0.947) is the closest to the nominal level of the five models.",
+   "statement": "On the long histories of the [[D12:M5 departmental data]], the [[D21:coverage]] of the 95% prediction interval of [[D8:VETS D]] is the closest to the nominal level of the five models.",
    "type": "descriptive",
    "role": "principal",
    "novelty": "no_prior_found",
@@ -448,11 +486,6 @@
       "E3.T2"
      ]
     }
-   ],
-   "depends_on": [
-    "C35",
-    "C36",
-    "C37"
    ],
    "assumptions": [
     "C50",
@@ -504,7 +537,7 @@
   },
   {
    "id": "C8",
-   "statement": "In a [[D2:PIC taxonomy]] model, a common component requires common initial values of that component, and a common level cannot be combined with individual trends.",
+   "statement": "In a [[D2:PIC taxonomy]] model, a common component requires common initial values of that component.",
    "type": "formal",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -518,14 +551,32 @@
    "warrant": "W1",
    "source_spans": [
     "p4.7",
-    "p5.4",
     "p5.24"
    ],
    "provenance": "extracted"
   },
   {
+   "id": "C73",
+   "statement": "In a [[D2:PIC taxonomy]] model, a common level cannot be combined with individual trends.",
+   "type": "formal",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "argument",
+     "warrant": "W1"
+    }
+   ],
+   "verification": "unchecked",
+   "warrant": "W1",
+   "source_spans": [
+    "p5.4"
+   ],
+   "provenance": "extracted"
+  },
+  {
    "id": "C9",
-   "statement": "In a [[D2:PIC taxonomy]] model, making a component common changes the measurement, transition and persistence matrices and leaves the number of estimated parameters unchanged.",
+   "statement": "In a [[D2:PIC taxonomy]] model, making a component common changes the measurement, transition and persistence matrices.",
    "type": "formal",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -544,8 +595,27 @@
    "provenance": "extracted"
   },
   {
+   "id": "C74",
+   "statement": "In a [[D2:PIC taxonomy]] model, making a component common leaves the number of estimated parameters unchanged.",
+   "type": "formal",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "argument",
+     "warrant": "W2"
+    }
+   ],
+   "verification": "unchecked",
+   "warrant": "W2",
+   "source_spans": [
+    "p5.9"
+   ],
+   "provenance": "extracted"
+  },
+  {
    "id": "C55",
-   "statement": "In a [[D2:PIC taxonomy]] model, making initial values common reduces the number of estimated parameters and leaves the matrices of the model unchanged.",
+   "statement": "In a [[D2:PIC taxonomy]] model, making initial values common reduces the number of estimated parameters.",
    "type": "formal",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -559,14 +629,32 @@
    "warrant": "W2",
    "source_spans": [
     "p4.6",
-    "p5.9",
+    "p5.9"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C75",
+   "statement": "In a [[D2:PIC taxonomy]] model, making initial values common leaves the matrices of the model unchanged.",
+   "type": "formal",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "argument",
+     "warrant": "W2"
+    }
+   ],
+   "verification": "unchecked",
+   "warrant": "W2",
+   "source_spans": [
     "p6.17"
    ],
    "provenance": "extracted"
   },
   {
    "id": "C10",
-   "statement": "A [[D1:VETS]] model with likelihood estimation of n series of seasonal period m has $k = n(n+1)/2 + \\sum_{a} \\eta^P_a + \\sum_{a \\in \\{L,T\\}} \\eta^I_a + (m-1)\\eta^I_S$ estimated parameters (n variances instead of the first term with a diagonal covariance matrix), and it is estimable when k/n is lower than the number of observations per series.",
+   "statement": "A [[D1:VETS]] model with likelihood estimation and a full covariance matrix of the errors, for n series of seasonal period m, has $k = n(n+1)/2 + \\sum_{a} \\eta^P_a + \\sum_{a \\in \\{L,T\\}} \\eta^I_a + (m-1)\\eta^I_S$ estimated parameters.",
    "type": "methodological",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -578,7 +666,43 @@
    ],
    "warrant": "W3",
    "source_spans": [
-    "p5.6-p5.13"
+    "p5.6-p5.11"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C77",
+   "statement": "With a diagonal covariance matrix of the errors, the first term of the parameter count of a [[D1:VETS]] model, n(n+1)/2, becomes n.",
+   "type": "methodological",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "argument",
+     "warrant": "W3"
+    }
+   ],
+   "warrant": "W3",
+   "source_spans": [
+    "p5.11"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C76",
+   "statement": "A [[D1:VETS]] model with k estimated parameters for n series is estimable only when k/n is lower than the number of observations per series.",
+   "type": "methodological",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "argument",
+     "warrant": "W3"
+    }
+   ],
+   "warrant": "W3",
+   "source_spans": [
+    "p5.12-p5.13"
    ],
    "provenance": "extracted"
   },
@@ -651,7 +775,28 @@
   },
   {
    "id": "C53",
-   "statement": "Minimising the determinant of the estimated covariance matrix of the errors of [[D1:VETS]] typically lowers the variances of the series and raises the covariances between them.",
+   "statement": "Minimising the determinant of the estimated covariance matrix of the errors of [[D1:VETS]] typically lowers the variances of the series.",
+   "type": "interpretive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "argument",
+     "warrant": "W15"
+    }
+   ],
+   "warrant": "W15",
+   "depends_on": [
+    "C14"
+   ],
+   "source_spans": [
+    "p6.24"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C78",
+   "statement": "Minimising the determinant of the estimated covariance matrix of the errors of [[D1:VETS]] typically raises the covariances between the series.",
    "type": "interpretive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -698,8 +843,29 @@
   },
   {
    "id": "C15",
-   "statement": "The smoothing parameters of [[D1:VETS]] need not be restricted to the interval (0, 1): the model is required only to be stable, with all eigenvalues of its discount matrix $D = F - GW$ inside the unit circle.",
+   "statement": "The smoothing parameters of [[D1:VETS]] need not be restricted to the interval (0, 1).",
    "type": "methodological",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "cited",
+     "reference": "B12"
+    },
+    {
+     "kind": "cited",
+     "reference": "B20"
+    }
+   ],
+   "source_spans": [
+    "p6.30"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C79",
+   "statement": "A [[D1:VETS]] model is stable when all eigenvalues of its discount matrix $D = F - GW$ lie inside the unit circle.",
+   "type": "formal",
    "role": "secondary",
    "novelty": "no_prior_found",
    "support": [
@@ -762,10 +928,381 @@
    "provenance": "extracted"
   },
   {
-   "id": "C18",
-   "statement": "Across all simulated data, the PIC(*,S,S) variants of VETS(M,N,M;LN) have higher [[D16:rMAE]], [[D17:rRMSE]] and [[D18:rAME]] than PIC(N,N,N) on both history lengths, while all other variants are about as accurate as PIC(N,N,N).",
+   "id": "C56",
+   "statement": "In the simulation on 16 in-sample quarters, the [[D16:rMAE]] of each PIC(*,S,N) variant of VETS(M,N,M;LN) is close to that of the correct variant on data from every variant.",
    "type": "descriptive",
    "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T2.r4",
+      "E2.T2.r5",
+      "E2.T2.r6"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p9.6",
+    "p10.5"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "16 in-sample quarters and 8 held out"
+    ]
+   }
+  },
+  {
+   "id": "C57",
+   "statement": "In the simulation on 16 in-sample quarters, the PIC(*,S,S) variants of VETS(M,N,M;LN) have higher [[D16:rMAE]] than the PIC(*,S,N) variants on data with individual seasonal components.",
+   "type": "descriptive",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T2"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p9.6"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "16 in-sample quarters and 8 held out"
+    ]
+   }
+  },
+  {
+   "id": "C58",
+   "statement": "In the simulation on 16 in-sample quarters, the PIC(*,N,N) variants of VETS(M,N,M;LN) have higher [[D16:rMAE]] than the PIC(*,S,N) variants on data with common seasonal components.",
+   "type": "descriptive",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T2"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p9.7-p9.8"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "16 in-sample quarters and 8 held out"
+    ]
+   }
+  },
+  {
+   "id": "C59",
+   "statement": "In the simulation on 16 in-sample quarters, the PIC(*,S,N) variants of VETS(M,N,M;LN) have higher [[D19:rPinballU]] than the correct variant on data with individual seasonal components and initial values, from the PIC(*,N,N) variants.",
+   "type": "descriptive",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T7.r4",
+      "E2.T7.r5",
+      "E2.T7.r6"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p10.11"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "16 in-sample quarters and 8 held out"
+    ]
+   }
+  },
+  {
+   "id": "C60",
+   "statement": "In the simulation on 16 in-sample quarters, the PIC(*,S,N) variants of VETS(M,N,M;LN) have lower [[D19:rPinballU]] than the PIC(*,S,S) variants on data with individual seasonal components and initial values, from the PIC(*,N,N) variants, except PIC(N,S,N) against PIC(LS,S,S) on data from PIC(S,N,N).",
+   "type": "descriptive",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T7"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p10.11"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "16 in-sample quarters and 8 held out"
+    ]
+   }
+  },
+  {
+   "id": "C61",
+   "statement": "In the simulation on 16 in-sample quarters, the PIC(*,N,N) variants of VETS(M,N,M;LN) have higher [[D19:rPinballU]] than the PIC(*,S,N) variants on data with common seasonal components, from the PIC(*,S,S) variants.",
+   "type": "descriptive",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T7"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p10.12"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "16 in-sample quarters and 8 held out"
+    ]
+   }
+  },
+  {
+   "id": "C19",
+   "statement": "In the simulation on 16 in-sample quarters, the PIC(*,N,N) variants of VETS(M,N,M;LN) lose much less [[D16:rMAE]] and [[D17:rRMSE]], relative to the correct variant, on data with common seasonal components than the PIC(*,S,S) variants lose on data with individual ones.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T2",
+      "E2.T3"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p9.7-p9.9"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "16 in-sample quarters and 8 held out"
+    ]
+   }
+  },
+  {
+   "id": "C66",
+   "statement": "In the simulation on 16 in-sample quarters, the PIC(*,S,S) variants of VETS(M,N,M;LN) have higher [[D16:rMAE]] than the correct variant on data from PIC(N,S,N).",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T2.r1",
+      "E2.T2.r2",
+      "E2.T2.r3"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "field_provenance": {
+    "statement": "inferred"
+   },
+   "source_spans": [
+    "p9.6"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "16 in-sample quarters and 8 held out"
+    ]
+   }
+  },
+  {
+   "id": "C62",
+   "statement": "In the simulation on 16 in-sample quarters, each PIC(LS,*,*) variant of VETS(M,N,M;LN), with common level and seasonal smoothing parameters, has [[D19:rPinballU]] at or below that of the PIC(S,*,*) variant with the same initial-value and component restrictions, on data from every variant.",
+   "type": "descriptive",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T7"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p10.14",
+    "p11.7"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "16 in-sample quarters and 8 held out"
+    ]
+   }
+  },
+  {
+   "id": "C63",
+   "statement": "In the simulation on 16 in-sample quarters, each PIC(S,*,*) variant of VETS(M,N,M;LN), with a common seasonal smoothing parameter, has [[D19:rPinballU]] at or below that of the PIC(N,*,*) variant with the same initial-value and component restrictions, on data from every variant.",
+   "type": "descriptive",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T7"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p10.14",
+    "p11.7"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "16 in-sample quarters and 8 held out"
+    ]
+   }
+  },
+  {
+   "id": "C24",
+   "statement": "On data generated by PIC(LS,S,S), common smoothing parameters slightly lower the [[D16:rMAE]] of the PIC(*,S,*) variants of VETS(M,N,M;LN).",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T4"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "depends_on": [
+    "C64",
+    "C65"
+   ],
+   "scope": {
+    "excludes": [
+     "data generated by PIC(N,N,N), where common smoothing parameters slightly raise rMAE"
+    ]
+   },
+   "source_spans": [
+    "p9.11"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C64",
+   "statement": "On data generated by PIC(LS,S,S), each PIC(LS,S,*) variant of VETS(M,N,M;LN) typically has [[D16:rMAE]] at or below that of the PIC(S,S,*) variant with the same component restrictions.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T4"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p9.11"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C65",
+   "statement": "On data generated by PIC(LS,S,S), each PIC(S,S,*) variant of VETS(M,N,M;LN) typically has [[D16:rMAE]] at or below that of the PIC(N,S,*) variant with the same component restrictions.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T4"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p9.11"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C18",
+   "statement": "On 56 in-sample quarters over all simulated data, the PIC(*,S,S) variants of VETS(M,N,M;LN) have higher [[D16:rMAE]], [[D17:rRMSE]] and [[D18:rAME]] than PIC(N,N,N).",
+   "type": "descriptive",
+   "role": "secondary",
    "novelty": "no_prior_found",
    "support": [
     {
@@ -785,23 +1322,22 @@
    "provenance": "extracted",
    "scope": {
     "conditions": [
-     "56 or 16 in-sample quarters and 8 held out"
+     "56 in-sample quarters and 8 held out"
     ]
    }
   },
   {
-   "id": "C19",
-   "statement": "When the variants are applied to data from other variants, the flexible PIC(*,N,N) variants lose much less [[D16:rMAE]] and [[D17:rRMSE]] on data with common seasonal components than the PIC(*,S,S) variants lose on data with individual ones.",
+   "id": "C80",
+   "statement": "On 16 in-sample quarters over all simulated data, the PIC(*,S,S) variants of VETS(M,N,M;LN) have higher [[D16:rMAE]], [[D17:rRMSE]] and [[D18:rAME]] than PIC(N,N,N).",
    "type": "descriptive",
-   "role": "supporting",
+   "role": "secondary",
    "novelty": "no_prior_found",
    "support": [
     {
      "kind": "simulation",
      "evidence": "E2",
      "results": [
-      "E2.T2",
-      "E2.T3"
+      "E2.T1"
      ],
      "artefacts": [
       "A2"
@@ -809,7 +1345,63 @@
     }
    ],
    "source_spans": [
-    "p9.5-p9.9"
+    "p8.12-p9.3"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "16 in-sample quarters and 8 held out"
+    ]
+   }
+  },
+  {
+   "id": "C81",
+   "statement": "On 56 in-sample quarters over all simulated data, the PIC(*,S,N), PIC(LS,N,N) and PIC(S,N,N) variants of VETS(M,N,M;LN) have [[D16:rMAE]], [[D17:rRMSE]] and [[D18:rAME]] close to those of PIC(N,N,N).",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T1"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p9.3"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "56 in-sample quarters and 8 held out"
+    ]
+   }
+  },
+  {
+   "id": "C82",
+   "statement": "On 16 in-sample quarters over all simulated data, the PIC(*,S,N), PIC(LS,N,N) and PIC(S,N,N) variants of VETS(M,N,M;LN) have [[D16:rMAE]], [[D17:rRMSE]] and [[D18:rAME]] close to those of PIC(N,N,N).",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T1"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p9.3"
    ],
    "provenance": "extracted",
    "scope": {
@@ -820,7 +1412,7 @@
   },
   {
    "id": "C20",
-   "statement": "The effect of group size on the [[D16:rMAE]] of the variants, relative to PIC(N,N,N), appears from 2 to 10 series and hardly changes from 10 to 50, both on data generated by PIC(LS,S,S) and by PIC(N,N,N).",
+   "statement": "On data generated by PIC(LS,S,S), the [[D16:rMAE]] of the variants of VETS(M,N,M;LN) relative to PIC(N,N,N) changes from groups of 2 to 10 series and hardly changes from 10 to 50.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -829,7 +1421,35 @@
      "kind": "simulation",
      "evidence": "E2",
      "results": [
-      "E2.T4",
+      "E2.T4"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p9.11",
+    "p10.3"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "groups of 2, 10, 20, 30, 40 and 50 series"
+    ]
+   }
+  },
+  {
+   "id": "C83",
+   "statement": "On data generated by PIC(N,N,N), the [[D16:rMAE]] of the variants of VETS(M,N,M;LN) relative to PIC(N,N,N) changes from groups of 2 to 10 series and hardly changes from 10 to 50.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
       "E2.T5"
      ],
      "artefacts": [
@@ -838,7 +1458,8 @@
     }
    ],
    "source_spans": [
-    "p9.10-p10.3"
+    "p9.12",
+    "p10.3"
    ],
    "provenance": "extracted",
    "scope": {
@@ -849,7 +1470,7 @@
   },
   {
    "id": "C21",
-   "statement": "Over all simulated data, the PIC(*,S,S) and PIC(*,S,N) variants come closer to 95% [[D21:coverage]] on longer histories, while the PIC(*,N,N) variants give narrower intervals with slightly lower coverage there; on longer histories the PIC(*,S,S) variants have higher [[D19:rPinballU]] and [[D20:rPinballL]] than PIC(N,N,N), and the other variants improve on it, most on shorter histories.",
+   "statement": "Over all simulated data, the [[D21:coverage]] of the 95% prediction interval of the PIC(*,S,S) variants of VETS(M,N,M;LN) is closer to the nominal level on 56 than on 16 in-sample quarters.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -866,21 +1487,169 @@
     }
    ],
    "source_spans": [
-    "p10.6-p10.9",
-    "p11.1"
+    "p10.7"
    ],
    "provenance": "extracted",
    "scope": {
     "conditions": [
-     "56 or 16 in-sample quarters and 8 held out"
+     "56 in-sample quarters and 8 held out",
+     "16 in-sample quarters and 8 held out"
+    ]
+   }
+  },
+  {
+   "id": "C84",
+   "statement": "Over all simulated data, the [[D21:coverage]] of the 95% prediction interval of the PIC(*,S,N) variants of VETS(M,N,M;LN) is closer to the nominal level on 56 than on 16 in-sample quarters.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T6"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p10.7"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "56 in-sample quarters and 8 held out",
+     "16 in-sample quarters and 8 held out"
+    ]
+   }
+  },
+  {
+   "id": "C85",
+   "statement": "Over all simulated data, the PIC(*,N,N) variants of VETS(M,N,M;LN) give narrower 95% prediction intervals with slightly lower [[D21:coverage]] on 56 than on 16 in-sample quarters.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T6"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p10.7"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "56 in-sample quarters and 8 held out",
+     "16 in-sample quarters and 8 held out"
+    ]
+   }
+  },
+  {
+   "id": "C86",
+   "statement": "On 56 in-sample quarters over all simulated data, the PIC(*,S,S) variants of VETS(M,N,M;LN) have higher [[D19:rPinballU]] and [[D20:rPinballL]] than PIC(N,N,N).",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T6"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p10.8-p10.9"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "56 in-sample quarters and 8 held out"
+    ]
+   }
+  },
+  {
+   "id": "C87",
+   "statement": "On 16 in-sample quarters over all simulated data, the variants of VETS(M,N,M;LN) with individual seasonal components and common smoothing parameters, PIC(LS,*,N) and PIC(S,*,N), have lower [[D19:rPinballU]] than PIC(N,N,N), and [[D20:rPinballL]] at or below it.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T6"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "field_provenance": {
+    "statement": "inferred"
+   },
+   "source_spans": [
+    "p10.9"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "16 in-sample quarters and 8 held out"
+    ]
+   }
+  },
+  {
+   "id": "C88",
+   "statement": "On 56 in-sample quarters over all simulated data, the PIC(LS,*,N) and PIC(S,*,N) variants of VETS(M,N,M;LN) have [[D19:rPinballU]] and [[D20:rPinballL]] close to those of PIC(N,N,N).",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T6"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "field_provenance": {
+    "statement": "inferred"
+   },
+   "source_spans": [
+    "p10.9"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "56 in-sample quarters and 8 held out"
     ]
    }
   },
   {
    "id": "C23",
-   "statement": "On data generated by PIC(LS,S,S), the advantage of PIC(LS,S,N) over PIC(N,N,N) in [[D19:rPinballU]] grows with group size, to a 35% lower value at 50 series, while on data generated by PIC(N,N,N) the PIC(*,N,N) variants have the lowest rPinballU, then PIC(*,S,N), then PIC(*,S,S).",
+   "statement": "On data generated by PIC(LS,S,S), the advantage of PIC(LS,S,N) over PIC(N,N,N) in [[D19:rPinballU]] grows with group size, to a 35% lower value at 50 series.",
    "type": "descriptive",
-   "role": "supporting",
+   "role": "secondary",
    "novelty": "no_prior_found",
    "support": [
     {
@@ -888,7 +1657,6 @@
      "evidence": "E2",
      "results": [
       "E2.T8",
-      "E2.T9",
       "E2.R1"
      ],
      "artefacts": [
@@ -897,7 +1665,7 @@
     }
    ],
    "source_spans": [
-    "p11.8-p12.1"
+    "p11.9-p11.10"
    ],
    "provenance": "extracted",
    "scope": {
@@ -907,8 +1675,8 @@
    }
   },
   {
-   "id": "C24",
-   "statement": "On data generated by PIC(LS,S,S), common smoothing parameters typically lower the [[D16:rMAE]] of VETS(M,N,M;LN) slightly: PIC(LS,S,*) is typically at or below PIC(S,S,*), which is typically at or below PIC(N,S,*).",
+   "id": "C91",
+   "statement": "On data generated by PIC(LS,S,S), PIC(LS,S,N) has [[D19:rPinballU]] at or slightly below that of the correct variant, PIC(LS,S,S), at every group size.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -917,22 +1685,82 @@
      "kind": "simulation",
      "evidence": "E2",
      "results": [
-      "E2.T4"
+      "E2.T8.r1",
+      "E2.T8.r4"
      ],
      "artefacts": [
       "A2"
      ]
     }
    ],
+   "source_spans": [
+    "p11.9-p11.10"
+   ],
+   "provenance": "extracted",
    "scope": {
-    "excludes": [
-     "data generated by PIC(N,N,N), where common smoothing parameters slightly raise rMAE"
+    "conditions": [
+     "groups of 2, 10, 20, 30, 40 and 50 series"
     ]
+   }
+  },
+  {
+   "id": "C89",
+   "statement": "On data generated by PIC(N,N,N), the PIC(*,N,N) variants of VETS(M,N,M;LN) have lower [[D19:rPinballU]] than the PIC(*,S,N) variants at every group size.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T9"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p11.11-p12.1"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "groups of 2, 10, 20, 30, 40 and 50 series"
+    ]
+   }
+  },
+  {
+   "id": "C90",
+   "statement": "On data generated by PIC(N,N,N), the PIC(*,S,N) variants of VETS(M,N,M;LN) have lower [[D19:rPinballU]] than the PIC(*,S,S) variants, except PIC(N,S,N) against PIC(LS,S,S) at 50 series.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "simulation",
+     "evidence": "E2",
+     "results": [
+      "E2.T9"
+     ],
+     "artefacts": [
+      "A2"
+     ]
+    }
+   ],
+   "field_provenance": {
+    "statement": "inferred"
    },
    "source_spans": [
-    "p9.11"
+    "p11.11-p12.1"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "scope": {
+    "conditions": [
+     "groups of 2, 10, 20, 30, 40 and 50 series"
+    ]
+   }
   },
   {
    "id": "C27",
@@ -961,7 +1789,7 @@
   },
   {
    "id": "C28",
-   "statement": "PIC(LS,S,N) and PIC(LS,N,N) are the most robust variants of VETS(M,N,M;LN) in the [[D2:PIC taxonomy]], in both forecasting accuracy and prediction intervals.",
+   "statement": "PIC(LS,S,N) is one of the most robust variants of VETS(M,N,M;LN) in the [[D2:PIC taxonomy]], in both forecasting accuracy and prediction intervals.",
    "type": "interpretive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -979,6 +1807,10 @@
     }
    ],
    "warrant": "W9",
+   "depends_on": [
+    "C2",
+    "C3"
+   ],
    "source_spans": [
     "p12.7",
     "p15.2",
@@ -987,29 +1819,105 @@
    "provenance": "extracted"
   },
   {
-   "id": "C32",
-   "statement": "On the [[D12:M5 departmental data]], in the [[D15:MCB test]] on [[D16:rMAE]], [[D7:VETS F]] on long histories has the lowest mean rank but does not differ significantly from VETS D, ETS LN, ETS (ADAM) and ETS on long histories and VETS D on short histories, and on short histories the three ETS models have worse mean ranks and outperform only VETS F, not significantly.",
-   "type": "descriptive",
-   "role": "supporting",
+   "id": "C94",
+   "statement": "PIC(LS,N,N) is one of the most robust variants of VETS(M,N,M;LN) in the [[D2:PIC taxonomy]], in both forecasting accuracy and prediction intervals.",
+   "type": "interpretive",
+   "role": "secondary",
    "novelty": "no_prior_found",
    "support": [
     {
-     "kind": "empirical_quant",
-     "evidence": "E3"
+     "kind": "simulation",
+     "evidence": "E2",
+     "artefacts": [
+      "A2"
+     ]
+    },
+    {
+     "kind": "argument",
+     "warrant": "W9"
     }
    ],
-   "assumptions": [
-    "C51",
-    "C52"
+   "warrant": "W9",
+   "depends_on": [
+    "C3"
    ],
    "source_spans": [
-    "p13.4-p13.5"
+    "p12.7"
    ],
    "provenance": "extracted"
   },
   {
    "id": "C33",
-   "statement": "On the [[D12:M5 departmental data]], [[D8:VETS D]] has the lowest geometric mean [[D16:rMAE]] on seasonal series on long and short histories, but on long histories ETS LN has a lower median on seasonal series, and on non-seasonal series VETS F and ETS LN have lower geometric means and ETS and ETS (ADAM) lower medians than VETS D; on short histories VETS F has the lowest geometric mean on non-seasonal series.",
+   "statement": "On the long histories of the [[D12:M5 departmental data]], [[D8:VETS D]] has the lowest geometric mean [[D16:rMAE]] of the five models on seasonal series, but not the lowest median.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3",
+     "results": [
+      "E3.T1"
+     ]
+    }
+   ],
+   "field_provenance": {
+    "statement": "inferred"
+   },
+   "source_spans": [
+    "p13.3"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C95",
+   "statement": "On the short histories of the [[D12:M5 departmental data]], [[D8:VETS D]] has the lowest geometric mean [[D16:rMAE]] of the five models on seasonal series, and the lowest median, tied with ETS LN.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3",
+     "results": [
+      "E3.T1"
+     ]
+    }
+   ],
+   "field_provenance": {
+    "statement": "inferred"
+   },
+   "source_spans": [
+    "p13.3"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C96",
+   "statement": "On the long histories of the [[D12:M5 departmental data]], [[D8:VETS D]] has neither the lowest geometric mean nor the lowest median [[D16:rMAE]] of the five models on non-seasonal series.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3",
+     "results": [
+      "E3.T1"
+     ]
+    }
+   ],
+   "field_provenance": {
+    "statement": "inferred"
+   },
+   "source_spans": [
+    "p13.3"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C97",
+   "statement": "On the short histories of the [[D12:M5 departmental data]], [[D8:VETS D]] has the lowest median [[D16:rMAE]] of the five models on non-seasonal series, but not the lowest geometric mean.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1051,10 +1959,159 @@
    "provenance": "extracted"
   },
   {
-   "id": "C35",
-   "statement": "On the [[D12:M5 departmental data]], the [[D21:coverage]] of the 95% prediction interval of ETS LN, ETS (ADAM) and ETS is below the nominal level on long and on short histories, and lower on short ones.",
+   "id": "C32",
+   "statement": "On the [[D12:M5 departmental data]], in the [[D15:MCB test]] on [[D16:rMAE]], [[D7:VETS F]] on long histories has the lowest mean rank of the five models on either history length.",
    "type": "descriptive",
-   "role": "supporting",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3"
+    }
+   ],
+   "assumptions": [
+    "C51",
+    "C52"
+   ],
+   "source_spans": [
+    "p13.4-p13.5"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C68",
+   "statement": "On the [[D12:M5 departmental data]], in the [[D15:MCB test]] on [[D16:rMAE]], the mean rank of [[D7:VETS F]] on long histories does not differ significantly from those of the other four models on long histories.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3"
+    }
+   ],
+   "assumptions": [
+    "C51",
+    "C52"
+   ],
+   "source_spans": [
+    "p13.5"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C69",
+   "statement": "On the [[D12:M5 departmental data]], in the [[D15:MCB test]] on [[D16:rMAE]], the mean rank of [[D7:VETS F]] on long histories does not differ significantly from that of [[D8:VETS D]] on short histories.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3"
+    }
+   ],
+   "assumptions": [
+    "C51",
+    "C52"
+   ],
+   "source_spans": [
+    "p13.5"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C70",
+   "statement": "On the [[D12:M5 departmental data]], in the [[D15:MCB test]] on [[D16:rMAE]], ETS LN, ETS (ADAM) and ETS on short histories have worse mean ranks than every other model and history length except [[D7:VETS F]] on short histories.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3"
+    }
+   ],
+   "assumptions": [
+    "C51",
+    "C52"
+   ],
+   "source_spans": [
+    "p13.5"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C71",
+   "statement": "On the [[D12:M5 departmental data]], in the [[D15:MCB test]] on [[D16:rMAE]], ETS LN, ETS (ADAM) and ETS on short histories have better mean ranks than [[D7:VETS F]] on short histories, but not significantly.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3"
+    }
+   ],
+   "assumptions": [
+    "C51",
+    "C52"
+   ],
+   "source_spans": [
+    "p13.5"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C35",
+   "statement": "On the long histories of the [[D12:M5 departmental data]], the [[D21:coverage]] of the 95% prediction interval of ETS LN, ETS (ADAM) and ETS is below the nominal level.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3",
+     "results": [
+      "E3.T2.r1",
+      "E3.T2.r2",
+      "E3.T2.r3"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p13.7"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C99",
+   "statement": "On the short histories of the [[D12:M5 departmental data]], the [[D21:coverage]] of the 95% prediction interval of ETS LN, ETS (ADAM) and ETS is below the nominal level.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3",
+     "results": [
+      "E3.T2.r1",
+      "E3.T2.r2",
+      "E3.T2.r3"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p13.7"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C100",
+   "statement": "On the [[D12:M5 departmental data]], the [[D21:coverage]] of the 95% prediction interval of ETS LN, ETS (ADAM) and ETS is lower on short than on long histories.",
+   "type": "descriptive",
+   "role": "secondary",
    "novelty": "no_prior_found",
    "support": [
     {
@@ -1074,9 +2131,29 @@
   },
   {
    "id": "C36",
-   "statement": "On the [[D12:M5 departmental data]], the [[D21:coverage]] of the 95% prediction interval of [[D7:VETS F]] is above the nominal level on long and on short histories.",
+   "statement": "On the long histories of the [[D12:M5 departmental data]], the [[D21:coverage]] of the 95% prediction interval of [[D7:VETS F]] is above the nominal level.",
    "type": "descriptive",
-   "role": "supporting",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3",
+     "results": [
+      "E3.T2.r5"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p13.8"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C101",
+   "statement": "On the short histories of the [[D12:M5 departmental data]], the [[D21:coverage]] of the 95% prediction interval of [[D7:VETS F]] is above the nominal level.",
+   "type": "descriptive",
+   "role": "secondary",
    "novelty": "no_prior_found",
    "support": [
     {
@@ -1094,9 +2171,30 @@
   },
   {
    "id": "C37",
-   "statement": "On the long histories of the [[D12:M5 departmental data]], [[D8:VETS D]] has higher [[D19:rPinballU]] and lower [[D20:rPinballL]] than ETS, on short histories both VETS models have higher rPinballU and rPinballL than all three ETS models, and VETS F has the highest values throughout.",
+   "statement": "On the long histories of the [[D12:M5 departmental data]], [[D8:VETS D]] has higher [[D19:rPinballU]] and lower [[D20:rPinballL]] than ETS.",
    "type": "descriptive",
-   "role": "supporting",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3",
+     "results": [
+      "E3.T2.r3",
+      "E3.T2.r4"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p13.9"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C102",
+   "statement": "On the short histories of the [[D12:M5 departmental data]], [[D8:VETS D]] has higher [[D19:rPinballU]] and [[D20:rPinballL]] than ETS LN, ETS (ADAM) and ETS.",
+   "type": "descriptive",
+   "role": "secondary",
    "novelty": "no_prior_found",
    "support": [
     {
@@ -1108,7 +2206,110 @@
     }
    ],
    "source_spans": [
-    "p13.8-p14.6"
+    "p14.6"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C104",
+   "statement": "On the long histories of the [[D12:M5 departmental data]], [[D7:VETS F]] has the highest [[D19:rPinballU]] and [[D20:rPinballL]] of the five models.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3",
+     "results": [
+      "E3.T2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p13.8"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C72",
+   "statement": "On the short histories of the [[D12:M5 departmental data]], [[D7:VETS F]] has the highest [[D19:rPinballU]] and [[D20:rPinballL]] of the five models.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3",
+     "results": [
+      "E3.T2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p13.8"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C41",
+   "statement": "On the long histories of the [[D12:M5 departmental data]], neither VETS model has the lowest [[D22:GMRAE]] of the five models at horizons of 3, 6 or 12 months.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3",
+     "results": [
+      "E3.T4"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p14.14"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C98",
+   "statement": "On the short histories of the [[D12:M5 departmental data]], a VETS model has the lowest [[D22:GMRAE]] of the five models at horizons of 3 and 12 months, but not at 6 months.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3",
+     "results": [
+      "E3.T4"
+     ]
+    }
+   ],
+   "field_provenance": {
+    "statement": "inferred"
+   },
+   "source_spans": [
+    "p14.14"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C42",
+   "statement": "On the short histories of the [[D12:M5 departmental data]], [[D7:VETS F]] has the highest [[D21:coverage]] of the 95% prediction interval of the five models at horizons of 3, 6 and 12 months.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3",
+     "results": [
+      "E3.T4"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p14.14"
    ],
    "provenance": "extracted"
   },
@@ -1166,49 +2367,6 @@
    "provenance": "extracted"
   },
   {
-   "id": "C41",
-   "statement": "On the long histories of the [[D12:M5 departmental data]], no VETS model has the lowest [[D22:GMRAE]] at horizons 3, 6 or 12 months (ETS (ADAM) at 3, ETS at 6 and 12), while on short histories VETS D has the lowest at 3 months, ETS at 6 and VETS F at 12.",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E3",
-     "results": [
-      "E3.T4"
-     ]
-    }
-   ],
-   "field_provenance": {
-    "statement": "inferred"
-   },
-   "source_spans": [
-    "p14.9-p14.14"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C42",
-   "statement": "On the short histories of the [[D12:M5 departmental data]], [[D7:VETS F]] has the highest [[D21:coverage]] of the 95% prediction interval of the five models at horizons 3, 6 and 12 months.",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E3",
-     "results": [
-      "E3.T4"
-     ]
-    }
-   ],
-   "source_spans": [
-    "p14.14"
-   ],
-   "provenance": "extracted"
-  },
-  {
    "id": "C43",
    "statement": "Using cross-sectional information for estimation improves forecasting accuracy on the [[D12:M5 departmental data]].",
    "type": "interpretive",
@@ -1233,7 +2391,28 @@
   },
   {
    "id": "C44",
-   "statement": "On the [[D12:M5 departmental data]], the restrictions chosen for VETS D are mainly common smoothing parameters for level and seasonality and common initial seasonal indices, and only one group needs common seasonal components.",
+   "statement": "On the [[D12:M5 departmental data]], the restrictions chosen for VETS D are mainly common smoothing parameters for level and seasonality and common initial seasonal indices.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3",
+     "results": [
+      "E3.T3"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p14.8",
+    "p15.1"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C92",
+   "statement": "On the [[D12:M5 departmental data]], only one group of VETS D needs common seasonal components.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1254,7 +2433,33 @@
   },
   {
    "id": "C45",
-   "statement": "On real data, VETS estimated with a diagonal covariance matrix is recommended over VETS with a full covariance matrix and over ETS, except when pinball values matter most and the history is short.",
+   "statement": "On real data, VETS estimated with a diagonal covariance matrix is recommended over VETS with a full covariance matrix.",
+   "type": "interpretive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E3"
+    },
+    {
+     "kind": "argument",
+     "warrant": "W13"
+    }
+   ],
+   "warrant": "W13",
+   "assumptions": [
+    "C50",
+    "C51"
+   ],
+   "source_spans": [
+    "p14.15"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C103",
+   "statement": "On real data, VETS estimated with a diagonal covariance matrix is recommended over ETS, except when pinball values matter most and the history is short.",
    "type": "interpretive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1280,8 +2485,26 @@
   },
   {
    "id": "C46",
-   "statement": "In practice the full PIC framework should be considered first and the elements that are not needed dropped, which reduces the number of models to evaluate.",
+   "statement": "In practice the full PIC framework should be considered first and the elements that are not needed dropped.",
    "type": "interpretive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "argument",
+     "warrant": "W14"
+    }
+   ],
+   "warrant": "W14",
+   "source_spans": [
+    "p15.1"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C93",
+   "statement": "Dropping the PIC elements that are not needed reduces the number of models to evaluate.",
+   "type": "methodological",
    "role": "secondary",
    "novelty": "no_prior_found",
    "support": [
@@ -3453,7 +4676,8 @@
    "id": "W8",
    "reasoning": "inductive",
    "premises": [
-    "C19"
+    "C4",
+    "C57"
    ],
    "text": "In the simulation, common seasonal components lose heavily when the series have individual seasonal patterns, so the authors restrict them to series with very similar seasonal patterns; no experiment varies the degree of seasonal homogeneity directly."
   },
@@ -3461,8 +4685,8 @@
    "id": "W9",
    "reasoning": "inductive",
    "premises": [
-    "C19",
-    "C21"
+    "C2",
+    "C3"
    ],
    "text": "PIC(LS,S,N) and PIC(LS,N,N) are close to the correct variant in rMAE and have among the lowest pinball values across the simulated data-generating processes, which the authors call robust; robustness outside the simulated settings is not tested."
   },
@@ -3487,7 +4711,8 @@
    "id": "W12",
    "reasoning": "inductive",
    "premises": [
-    "C5"
+    "C5",
+    "C67"
    ],
    "text": "VETS, which estimates from the whole group, is more accurate than the univariate ETS models on these data; the differences are not statistically significant and other data are not tested."
   },
@@ -3496,8 +4721,9 @@
    "reasoning": "inductive",
    "premises": [
     "C5",
+    "C67",
     "C6",
-    "C37"
+    "C102"
    ],
    "text": "VETS D is the most accurate and has the coverage closest to nominal on long histories, and it is easier to estimate than VETS F, but on short histories its pinball values are worse than those of ETS; the recommendation extends one data set to real data in general."
   },
@@ -3508,6 +4734,19 @@
     "C14"
    ],
    "text": "The determinant of the covariance matrix, the generalised variance, falls when the variances fall, and for given variances it also falls as the correlations between series grow, so its minimisation favours both."
+  },
+  {
+   "id": "W16",
+   "reasoning": "inductive",
+   "premises": [
+    "C56",
+    "C57",
+    "C58",
+    "C59",
+    "C60",
+    "C61"
+   ],
+   "text": "The PIC(*,S,N) variants stay close to the correct variant in rMAE on data from every variant, while the more restrictive PIC(*,S,S) and the more flexible PIC(*,N,N) variants each lose clearly on some data; their pinball values are worse than the correct variant's on the most flexible data, but less so than those of PIC(*,S,S). Robustness outside the simulated settings is not tested."
   },
   {
    "id": "W14",
@@ -3587,6 +4826,7 @@
    "statement": "The empirical evidence is one data set of 69 M5 series in 11 groups, each evaluated on a single 12-month holdout.",
    "affects": [
     "C5",
+    "C67",
     "C6",
     "C7"
    ],
@@ -3637,6 +4877,7 @@
     "C3",
     "C4",
     "C5",
+    "C67",
     "C6"
    ],
    "impact": "reduces_transferability",
@@ -3654,6 +4895,7 @@
    "statement": "The empirical evaluation uses monthly data only.",
    "affects": [
     "C5",
+    "C67",
     "C6",
     "C7"
    ],
@@ -3684,7 +4926,7 @@
    "id": "O2",
    "question": "Whether overfitting explains the narrower prediction intervals of the PIC(*,N,N) variants on longer histories is not established.",
    "claims": [
-    "C21"
+    "C85"
    ],
    "source_spans": [
     "p10.7"
@@ -3694,7 +4936,8 @@
    "id": "O3",
    "question": "Whether the wide prediction intervals of VETS F come from difficulties in estimating its many more parameters than ETS is not established.",
    "claims": [
-    "C36"
+    "C36",
+    "C101"
    ],
    "source_spans": [
     "p13.8"
