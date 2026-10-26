@@ -1092,34 +1092,6 @@
    }
   },
   {
-   "id": "C85",
-   "statement": "On 56 in-sample quarters over all simulated data, the [[D21:coverage]] of the 95% prediction interval of the PIC(*,N,N) variants of VETS(M,N,M;LN) is slightly below the nominal level and among the lowest of the nine variants.",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "simulation",
-     "evidence": "E2",
-     "results": [
-      "E2.T6"
-     ],
-     "artefacts": [
-      "A2"
-     ]
-    }
-   ],
-   "source_spans": [
-    "p10.7"
-   ],
-   "provenance": "extracted",
-   "scope": {
-    "conditions": [
-     "56 in-sample quarters and 8 held out"
-    ]
-   }
-  },
-  {
    "id": "C27",
    "statement": "PIC(*,S,S) variants, with common seasonal components, should be applied only to homogeneous series with very similar seasonal patterns.",
    "type": "interpretive",
@@ -4042,10 +4014,7 @@
   },
   {
    "id": "O2",
-   "question": "Whether overfitting explains the narrower prediction intervals of the PIC(*,N,N) variants on longer histories is not established.",
-   "claims": [
-    "C85"
-   ],
+   "question": "Whether overfitting explains the narrower prediction intervals and slightly lower coverage of the PIC(*,N,N) variants on longer histories (Table 9 of the paper, table E2.T6 here) is not established.",
    "source_spans": [
     "p10.7"
    ]

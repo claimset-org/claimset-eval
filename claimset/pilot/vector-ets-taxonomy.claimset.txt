@@ -90,9 +90,6 @@ C79 [methodological; secondary; support: cited B12, cited B20]
   The stability condition of Hyndman et al. (2008) and Snyder et al. (2017), that all eigenvalues of the discount matrix $D = F - GW$ lie inside the unit circle, applies to [[D1:VETS]].
 C16 [interpretive; secondary; support: cited B1, argument W6; warrant W6]
   For demand data, pure multiplicative [[D1:VETS]] models are more desirable than mixed models with additive and multiplicative components.
-C85 [descriptive; secondary; support: simulation E2 (E2.T6) artefacts A2]
-  On 56 in-sample quarters over all simulated data, the [[D21:coverage]] of the 95% prediction interval of the PIC(*,N,N) variants of VETS(M,N,M;LN) is slightly below the nominal level and among the lowest of the nine variants.
-  scope: conditions: 56 in-sample quarters and 8 held out
 C27 [interpretive; secondary; support: simulation E2 artefacts A2, argument W8; warrant W8]
   PIC(*,S,S) variants, with common seasonal components, should be applied only to homogeneous series with very similar seasonal patterns.
 C28 [interpretive; secondary; support: simulation E2 artefacts A2, argument W9; uses C2, C3; warrant W9]
@@ -345,7 +342,7 @@ L9 [sampling; affects C5, C67, C6, C7; reduces_transferability; mitigation none]
 
 OPEN QUESTIONS
 O1 [from C3] Whether common smoothing parameters reduce overfitting because they are averaged out across the series of the group is not established.
-O2 [from C85] Whether overfitting explains the narrower prediction intervals of the PIC(*,N,N) variants on longer histories is not established.
+O2 Whether overfitting explains the narrower prediction intervals and slightly lower coverage of the PIC(*,N,N) variants on longer histories (Table 9 of the paper, table E2.T6 here) is not established.
 O3 [from C36, C101] Whether the wide prediction intervals of VETS F come from difficulties in estimating its many more parameters than ETS is not established.
 O4 [from C2, C3, C4] Whether the simulation findings hold for monthly seasonality is not shown: the paper reports similar findings without giving them.
 O5 [from C2, C3, C4] Whether the simulation findings hold for error standard deviations below 0.3 is not shown: the paper reports similar results without giving them.
