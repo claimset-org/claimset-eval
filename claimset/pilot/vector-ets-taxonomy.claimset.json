@@ -432,8 +432,7 @@
    "limitations": [
     "L5",
     "L8",
-    "L9",
-    "L10"
+    "L9"
    ],
    "source_spans": [
     "p13.3",
@@ -464,8 +463,7 @@
    "limitations": [
     "L5",
     "L8",
-    "L9",
-    "L10"
+    "L9"
    ],
    "source_spans": [
     "p13.3",
@@ -495,8 +493,7 @@
    ],
    "limitations": [
     "L5",
-    "L8",
-    "L9"
+    "L8"
    ],
    "source_spans": [
     "p13.9"
@@ -524,8 +521,7 @@
    ],
    "limitations": [
     "L2",
-    "L5",
-    "L9"
+    "L5"
    ],
    "source_spans": [
     "p14.7-p14.8",
@@ -1483,7 +1479,7 @@
    ],
    "warrant": "W12",
    "limitations": [
-    "L10"
+    "L9"
    ],
    "source_spans": [
     "p13.3",
@@ -3897,7 +3893,7 @@
   {
    "id": "L5",
    "category": "sampling",
-   "statement": "The empirical evidence is one data set of 69 M5 series in 11 groups, each evaluated on a single 12-month holdout.",
+   "statement": "The empirical evidence is one monthly data set of 69 M5 series in 11 groups, each evaluated on a single 12-month holdout.",
    "affects": [
     "C5",
     "C67",
@@ -3907,7 +3903,8 @@
    "impact": "reduces_transferability",
    "mitigation": "none",
    "source_spans": [
-    "p12.9-p12.14"
+    "p12.9-p12.14",
+    "p15.6"
    ],
    "provenance": "inferred"
   },
@@ -3964,9 +3961,9 @@
    "provenance": "extracted"
   },
   {
-   "id": "L10",
+   "id": "L9",
    "category": "other",
-   "statement": "In the MCB test on rMAE, the differences between the mean ranks of the five models on the M5 data are not shown to be statistically significant: VETS F on long histories, with the lowest mean rank, does not differ significantly from the other models on long histories, and the ETS models on short histories rank better than VETS F there, but not significantly.",
+   "statement": "In the MCB test on rMAE, the differences between the five models on the M5 data are not shown to be statistically significant.",
    "affects": [
     "C5",
     "C67",
@@ -3976,24 +3973,6 @@
    "mitigation": "none",
    "source_spans": [
     "p13.4-p13.5"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "L9",
-   "category": "sampling",
-   "statement": "The empirical evaluation uses monthly data only.",
-   "affects": [
-    "C5",
-    "C67",
-    "C6",
-    "C7"
-   ],
-   "impact": "reduces_transferability",
-   "mitigation": "none",
-   "source_spans": [
-    "p12.9",
-    "p15.6"
    ],
    "provenance": "extracted"
   }

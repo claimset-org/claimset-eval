@@ -40,11 +40,11 @@ C3 [descriptive; principal; extension; support: simulation E2 (E2.T7) artefacts 
 C4 [descriptive; principal; support: simulation E2 (E2.T2.r1, E2.T2.r2, E2.T2.r3) artefacts A2; limitations L3, L4, L7, L8]
   In the simulation on 16 in-sample quarters, the PIC(*,S,S) variants of VETS(M,N,M;LN), with common seasonal components, have much higher [[D16:rMAE]] than the correct variant on data with individual seasonal components and initial values, from the PIC(*,N,N) variants.
   scope: conditions: 16 in-sample quarters and 8 held out
-C5 [descriptive; principal; support: empirical_quant E3 (E3.T1.r4); assumes C50, C51, C52; limitations L5, L8, L9, L10]
+C5 [descriptive; principal; support: empirical_quant E3 (E3.T1.r4); assumes C50, C51, C52; limitations L5, L8, L9]
   On the long histories of the [[D12:M5 departmental data]], [[D8:VETS D]] has the lowest geometric mean and median [[D16:rMAE]] of the five models over all series.
-C67 [descriptive; principal; support: empirical_quant E3 (E3.T1.r9); assumes C50, C51, C52; limitations L5, L8, L9, L10]
+C67 [descriptive; principal; support: empirical_quant E3 (E3.T1.r9); assumes C50, C51, C52; limitations L5, L8, L9]
   On the short histories of the [[D12:M5 departmental data]], [[D8:VETS D]] has the lowest geometric mean and median [[D16:rMAE]] of the five models over all series.
-C6 [descriptive; principal; support: empirical_quant E3 (E3.T2); assumes C50, C51, C52; limitations L5, L8, L9]
+C6 [descriptive; principal; support: empirical_quant E3 (E3.T2); assumes C50, C51, C52; limitations L5, L8]
   On the long histories of the [[D12:M5 departmental data]], the [[D21:coverage]] of the 95% prediction interval of [[D8:VETS D]] is the closest to the nominal level of the five models.
 C56 [descriptive; supporting; support: simulation E2 (E2.T2.r4, E2.T2.r5, E2.T2.r6) artefacts A2]
   In the simulation on 16 in-sample quarters, the [[D16:rMAE]] of each PIC(*,S,N) variant of VETS(M,N,M;LN) is close to that of the correct variant on data from every variant.
@@ -76,7 +76,7 @@ C51 [descriptive; supporting; assumption (data, unchecked)]
   The M5 series are correctly grouped into seasonally homogeneous groups of the same department.
 C52 [descriptive; supporting; assumption (methodological, unchecked)]
   The classification of the M5 series by adam() into seasonal or non-seasonal and trended or non-trended is correct.
-C7 [descriptive; secondary; support: empirical_quant E3 (E3.T3); assumes C51, C52; limitations L2, L5, L9]
+C7 [descriptive; secondary; support: empirical_quant E3 (E3.T3); assumes C51, C52; limitations L2, L5]
   On the [[D12:M5 departmental data]], the [[D3:VETS-PIC selection procedure]] chooses PIC(LS,S,N) for [[D8:VETS D]] more often than any other restriction.
   scope: population: 11 groups of M5 departmental series
 C11 [formal; secondary; support: formal_proof E1; verification unchecked]
@@ -122,7 +122,7 @@ C39 [interpretive; secondary; support: empirical_quant E3, argument W10; warrant
   The accuracy gains of VETS on the [[D12:M5 departmental data]] arise mainly from the PIC restrictions on seasonal initial values and on smoothing parameters.
 C40 [interpretive; secondary; support: empirical_quant E3, simulation E2 artefacts A2, argument W11; uses C7, C28; warrant W11]
   The frequent choice of PIC(LS,S,N) on the [[D12:M5 departmental data]] confirms the simulation finding that PIC(LS,S,N) is one of the most robust variants.
-C43 [interpretive; secondary; support: empirical_quant E3, argument W12; limitations L10; warrant W12]
+C43 [interpretive; secondary; support: empirical_quant E3, argument W12; limitations L9; warrant W12]
   Using cross-sectional information for estimation improves forecasting accuracy on the [[D12:M5 departmental data]].
 C92 [descriptive; secondary; support: empirical_quant E3 (E3.T3)]
   On the [[D12:M5 departmental data]], only one group of VETS D needs common seasonal components.
@@ -333,12 +333,11 @@ L1 [model_specification; affects C1; reduces_transferability; mitigation none] M
 L2 [sample_size; affects C7; reduces_precision; mitigation none] The non-seasonal groups of the M5 data are few and small, so no reliable conclusion can be drawn about the restrictions chosen for them.
 L3 [sampling; affects C2, C3, C4; reduces_transferability; mitigation none] The simulation covers only VETS(M,N,M;LN) on quarterly data, with smoothing parameters drawn from restricted ranges that do not cover the whole parameter space.
 L4 [model_specification; affects C2, C3, C4; reduces_transferability; mitigation none] The main simulation has no cross-correlated errors; they were tried only in a small experiment with groups of 2 and 10 series.
-L5 [sampling; affects C5, C67, C6, C7; reduces_transferability; mitigation none] The empirical evidence is one data set of 69 M5 series in 11 groups, each evaluated on a single 12-month holdout.
+L5 [sampling; affects C5, C67, C6, C7; reduces_transferability; mitigation none] The empirical evidence is one monthly data set of 69 M5 series in 11 groups, each evaluated on a single 12-month holdout.
 L6 [sample_size; affects C2, C3; reduces_transferability; mitigation none] Whether the restrictive variants are effective on histories as short as about one year is not known.
 L7 [sampling; affects C2, C3, C4; reduces_transferability; mitigation none] Groups of more than 50 series were not tested.
 L8 [model_specification; affects C2, C3, C4, C5, C67, C6; reduces_transferability; mitigation none] Models with a trend component are not analysed, neither in the simulation nor on the M5 data.
-L10 [other; affects C5, C67, C43; reduces_precision; mitigation none] In the MCB test on rMAE, the differences between the mean ranks of the five models on the M5 data are not shown to be statistically significant: VETS F on long histories, with the lowest mean rank, does not differ significantly from the other models on long histories, and the ETS models on short histories rank better than VETS F there, but not significantly.
-L9 [sampling; affects C5, C67, C6, C7; reduces_transferability; mitigation none] The empirical evaluation uses monthly data only.
+L9 [other; affects C5, C67, C43; reduces_precision; mitigation none] In the MCB test on rMAE, the differences between the five models on the M5 data are not shown to be statistically significant.
 
 OPEN QUESTIONS
 O1 [from C3] Whether common smoothing parameters reduce overfitting because they are averaged out across the series of the group is not established.
