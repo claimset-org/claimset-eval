@@ -2,10 +2,10 @@ CLAIMSET Complex exponential smoothing
 licence CC-BY-4.0; converted from 10.1002/nav.22074 version of record by Ivan Svetunkov, Nikolaos Kourentzes, John Keith Ord; contributions C2, C43, C3, C44, C45, C4, C46, C47, C19, C21, C6, C41
 
 DEFINITIONS
-D1 CES: Complex exponential smoothing: a forecasting method that combines each past observation $y_t$ and its forecast error $e_t$ into the complex variable $y_t + i e_t$ and forecasts with an exponentially weighted sum of these values, the weights being powers of $1 + i - (\alpha_0 + i\alpha_1)$ times the complex smoothing parameter $\alpha_0 + i\alpha_1$.
+D1 CES: Complex exponential smoothing: a forecasting method that combines each past observation $y_t$ and its forecast error $e_t$ into the complex variable $y_t + i e_t$ and forecasts with an exponentially weighted sum of these values, $\hat{y}_t + i\hat{e}_t = (\alpha_0 + i\alpha_1) \sum_{j=1}^{t-1} (1 + i - (\alpha_0 + i\alpha_1))^{j-1} (y_{t-j} + i e_{t-j})$, or recursively $\hat{y}_t + i\hat{e}_t = (\alpha_0 + i\alpha_1)(y_{t-1} + i e_{t-1}) + (1 - \alpha_0 + i - i\alpha_1)(\hat{y}_{t-1} + i\hat{e}_{t-1})$, where $\alpha_0 + i\alpha_1$ is the complex smoothing parameter and $\hat{e}_t$ carries the information on past forecast errors.
 D2 complex smoothing parameter: The smoothing parameter of CES, the complex number $\alpha_0 + i\alpha_1$; its real part $\alpha_0$ and imaginary part $\alpha_1$ are the two real parameters estimated, and they set how much of the past observations and of the past forecast errors is carried into the forecast.
 D3 nonlinear trend component: The state $c_t$ of the CES state-space model, which carries information on both its own previous value $c_{t-1}$ and the previous level $l_{t-1}$; it does not correspond to the trend component of exponential smoothing.
-D4 seasonal CES: CES extended with a second pair of level and nonlinear trend states taken at lag $m$, the seasonal period, with its own complex smoothing parameter $\beta_0 + i\beta_1$: $y_t = l_{0,t-1} + l_{1,t-m} + \varepsilon_t$, where $l_{0,t}, c_{0,t}$ follow the non-seasonal CES equations at lag 1 and $l_{1,t}, c_{1,t}$ the same equations at lag $m$.
+D4 seasonal CES: CES extended with a second pair of level and nonlinear trend states taken at lag $m$, the seasonal period, with its own complex smoothing parameter $\beta_0 + i\beta_1$: $y_t = l_{0,t-1} + l_{1,t-m} + \varepsilon_t$, $l_{0,t} = l_{0,t-1} - (1 - \alpha_1) c_{0,t-1} + (\alpha_0 - \alpha_1) \varepsilon_t$, $c_{0,t} = l_{0,t-1} + (1 - \alpha_0) c_{0,t-1} + (\alpha_0 + \alpha_1) \varepsilon_t$, $l_{1,t} = l_{1,t-m} - (1 - \beta_1) c_{1,t-m} + (\beta_0 - \beta_1) \varepsilon_t$, $c_{1,t} = l_{1,t-m} + (1 - \beta_0) c_{1,t-m} + (\beta_0 + \beta_1) \varepsilon_t$.
 D5 SCUM: Simple combination of univariate models: the median of the forecasts of ETS, ARIMA, the Theta method and CES. [source B13]
 D6 SCUM(noCES): The median of the forecasts of ETS, ARIMA and the Theta method: SCUM without CES.
 D7 M1, M3 and tourism data: The 5,315 yearly, quarterly, monthly and other time series of the M1, M3 and tourism forecasting competitions.
@@ -122,18 +122,10 @@ C8 [methodological; secondary; support: cited B1, at p. 68, own earlier work; as
   The [[D23:Akaike information criterion]] of seasonal and non-seasonal [[D1:CES]] can be computed from a Gaussian likelihood of the same form as that of additive exponential smoothing models.
 C14 [formal; secondary; support: cited B1, at p. 96, own earlier work; assumes C32, C37, C38; uses C7]
   The conditional variance of [[D1:CES]] $h$ steps ahead, given the level and the nonlinear trend component, can be calculated from its state-space form in the same way as for pure additive ETS models.
-C55 [descriptive; secondary; support: empirical_quant E7]
-  On M3 series 1664, all holdout observations lie inside the 95% prediction interval of [[D1:CES]].
-  scope: conditions: prediction interval level 0.95
 C16 [formal; secondary; support: formal_proof E6; uses C4; verification unchecked]
   [[D4:seasonal CES]] has an underlying SARIMA(2,0,2m+2)(2,0,0)$_m$ model.
-C59 [descriptive; secondary; support: empirical_quant E2]
-  On the [[D7:M1, M3 and tourism data]], in Nemenyi tests at the 5% level on [[D13:MSIS]], CES has the second best mean rank of the six methods, behind [[D5:SCUM]].
-  scope: conditions: Nemenyi test on ranks of the error measures, significance level 0.05
 C23 [descriptive; secondary; support: empirical_quant E9 (E9.T2); assumes C36]
   On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(A,N,A), but a higher mean MSIS.
-C64 [descriptive; secondary; support: empirical_quant E9 (E9.T2); assumes C36]
-  On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]], [[D12:MASE]] and [[D13:MSIS]] than ETS(A,A,A).
 C65 [descriptive; secondary; support: empirical_quant E9 (E9.T2); assumes C36]
   On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(A,Ad,A), but a higher mean MSIS.
 C66 [descriptive; secondary; support: empirical_quant E9 (E9.T2); assumes C36]

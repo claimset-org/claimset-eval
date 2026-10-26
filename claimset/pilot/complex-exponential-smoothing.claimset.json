@@ -1,5 +1,5 @@
 {
- "schema_version": "0.26",
+ "schema_version": "0.27",
  "paper": {
   "title": "Complex exponential smoothing",
   "licence": "CC-BY-4.0",
@@ -116,7 +116,7 @@
   {
    "id": "D1",
    "term": "CES",
-   "definition": "Complex exponential smoothing: a forecasting method that combines each past observation $y_t$ and its forecast error $e_t$ into the complex variable $y_t + i e_t$ and forecasts with an exponentially weighted sum of these values, the weights being powers of $1 + i - (\\alpha_0 + i\\alpha_1)$ times the complex smoothing parameter $\\alpha_0 + i\\alpha_1$."
+   "definition": "Complex exponential smoothing: a forecasting method that combines each past observation $y_t$ and its forecast error $e_t$ into the complex variable $y_t + i e_t$ and forecasts with an exponentially weighted sum of these values, $\\hat{y}_t + i\\hat{e}_t = (\\alpha_0 + i\\alpha_1) \\sum_{j=1}^{t-1} (1 + i - (\\alpha_0 + i\\alpha_1))^{j-1} (y_{t-j} + i e_{t-j})$, or recursively $\\hat{y}_t + i\\hat{e}_t = (\\alpha_0 + i\\alpha_1)(y_{t-1} + i e_{t-1}) + (1 - \\alpha_0 + i - i\\alpha_1)(\\hat{y}_{t-1} + i\\hat{e}_{t-1})$, where $\\alpha_0 + i\\alpha_1$ is the complex smoothing parameter and $\\hat{e}_t$ carries the information on past forecast errors."
   },
   {
    "id": "D2",
@@ -131,7 +131,7 @@
   {
    "id": "D4",
    "term": "seasonal CES",
-   "definition": "CES extended with a second pair of level and nonlinear trend states taken at lag $m$, the seasonal period, with its own complex smoothing parameter $\\beta_0 + i\\beta_1$: $y_t = l_{0,t-1} + l_{1,t-m} + \\varepsilon_t$, where $l_{0,t}, c_{0,t}$ follow the non-seasonal CES equations at lag 1 and $l_{1,t}, c_{1,t}$ the same equations at lag $m$."
+   "definition": "CES extended with a second pair of level and nonlinear trend states taken at lag $m$, the seasonal period, with its own complex smoothing parameter $\\beta_0 + i\\beta_1$: $y_t = l_{0,t-1} + l_{1,t-m} + \\varepsilon_t$, $l_{0,t} = l_{0,t-1} - (1 - \\alpha_1) c_{0,t-1} + (\\alpha_0 - \\alpha_1) \\varepsilon_t$, $c_{0,t} = l_{0,t-1} + (1 - \\alpha_0) c_{0,t-1} + (\\alpha_0 + \\alpha_1) \\varepsilon_t$, $l_{1,t} = l_{1,t-m} - (1 - \\beta_1) c_{1,t-m} + (\\beta_0 - \\beta_1) \\varepsilon_t$, $c_{1,t} = l_{1,t-m} + (1 - \\beta_0) c_{1,t-m} + (\\beta_0 + \\beta_1) \\varepsilon_t$."
   },
   {
    "id": "D5",
@@ -886,28 +886,6 @@
    "provenance": "extracted"
   },
   {
-   "id": "C55",
-   "statement": "On M3 series 1664, all holdout observations lie inside the 95% prediction interval of [[D1:CES]].",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E7"
-    }
-   ],
-   "source_spans": [
-    "p8.4"
-   ],
-   "provenance": "extracted",
-   "scope": {
-    "conditions": [
-     "prediction interval level 0.95"
-    ]
-   }
-  },
-  {
    "id": "C16",
    "statement": "[[D4:seasonal CES]] has an underlying SARIMA(2,0,2m+2)(2,0,0)$_m$ model.",
    "type": "formal",
@@ -1093,28 +1071,6 @@
    "source_spans": [
     "p9.14",
     "p9.20"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C59",
-   "statement": "On the [[D7:M1, M3 and tourism data]], in Nemenyi tests at the 5% level on [[D13:MSIS]], CES has the second best mean rank of the six methods, behind [[D5:SCUM]].",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "scope": {
-    "conditions": [
-     "Nemenyi test on ranks of the error measures, significance level 0.05"
-    ]
-   },
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E2"
-    }
-   ],
-   "source_spans": [
-    "p10.3"
    ],
    "provenance": "extracted"
   },
@@ -1308,29 +1264,6 @@
    "field_provenance": {
     "statement": "inferred"
    },
-   "source_spans": [
-    "p11.22"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C64",
-   "statement": "On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]], [[D12:MASE]] and [[D13:MSIS]] than ETS(A,A,A).",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E9",
-     "results": [
-      "E9.T2"
-     ]
-    }
-   ],
-   "assumptions": [
-    "C36"
-   ],
    "source_spans": [
     "p11.22"
    ],
