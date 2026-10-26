@@ -122,7 +122,7 @@
   {
    "id": "D3",
    "term": "VETS-PIC selection procedure",
-   "definition": "The proposed procedure for choosing the PIC restrictions of a VETS model by an information criterion: first the restrictions on initial values, then on smoothing parameters, then on components; the ETS components are chosen beforehand when the series are grouped. Implemented as auto.vets() in the legion package."
+   "definition": "The proposed procedure for choosing the PIC restrictions of a VETS model by an information criterion (the paper recommends the [[D23:multivariate AICc]] without saying which criterion its implementation uses): first the restrictions on initial values, then on smoothing parameters, then on components; the ETS components are chosen beforehand when the series are grouped. Implemented as auto.vets() in the legion package."
   },
   {
    "id": "D4",
