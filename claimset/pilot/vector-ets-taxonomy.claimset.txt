@@ -170,7 +170,6 @@ E1 [formal; foundation Linear state space models; matrix algebra] Construction o
   derivation: in the source
 E2 [simulation; runs 1000] The [[D4:nine PIC variants of VETS(M,N,M;LN)]] applied to [[D5:simulated VETS(M,N,M;LN) data]] from each of the nine variants, evaluated on the [[D6:simulation holdout]] against PIC(N,N,N) or the correct variant.
   setup: compared D4; data D5; design D6; measures D16, D17, D18, D19, D20, D21
-  E2.R1 reduction of rPinballU of PIC(LS,S,N) relative to PIC(N,N,N) = 0.35 share {DGP: PIC(LS,S,S), group size: 50 series}
   E2.T1 rMAE, rRMSE and rAME of the nine variants relative to PIC(N,N,N), over all simulated data, for 56 and 16 in-sample quarters
   | row | method | rMAE (56+8) | rRMSE (56+8) | rAME (56+8) | rMAE (16+8) | rRMSE (16+8) | rAME (16+8) |
   | r1 | PIC(LS,S,S) | 1.23 | 1.21 | 1.11 | 1.17 | 1.16 | 1.08 |

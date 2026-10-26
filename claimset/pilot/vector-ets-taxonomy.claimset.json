@@ -1743,18 +1743,6 @@
     "A2",
     "A6"
    ],
-   "results": [
-    {
-     "id": "R1",
-     "quantity": "reduction of rPinballU of PIC(LS,S,N) relative to PIC(N,N,N)",
-     "value": 0.35,
-     "unit": "share",
-     "conditions": {
-      "DGP": "PIC(LS,S,S)",
-      "group size": "50 series"
-     }
-    }
-   ],
    "tables": [
     {
      "id": "T1",
