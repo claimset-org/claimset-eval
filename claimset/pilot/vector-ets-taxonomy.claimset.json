@@ -308,10 +308,9 @@
    ],
    "limitations": [
     "L3",
-    "L4",
+    "L5",
     "L6",
-    "L7",
-    "L8"
+    "L7"
    ],
    "source_spans": [
     "p10.5",
@@ -346,10 +345,9 @@
    ],
    "limitations": [
     "L3",
-    "L4",
+    "L5",
     "L6",
-    "L7",
-    "L8"
+    "L7"
    ],
    "relations": [
     {
@@ -394,9 +392,8 @@
    ],
    "limitations": [
     "L3",
-    "L4",
-    "L7",
-    "L8"
+    "L6",
+    "L7"
    ],
    "source_spans": [
     "p9.6",
@@ -430,9 +427,9 @@
     "C52"
    ],
    "limitations": [
-    "L5",
-    "L8",
-    "L9"
+    "L4",
+    "L7",
+    "L8"
    ],
    "source_spans": [
     "p13.3",
@@ -461,9 +458,9 @@
     "C52"
    ],
    "limitations": [
-    "L5",
-    "L8",
-    "L9"
+    "L4",
+    "L7",
+    "L8"
    ],
    "source_spans": [
     "p13.3",
@@ -492,8 +489,8 @@
     "C52"
    ],
    "limitations": [
-    "L5",
-    "L8"
+    "L4",
+    "L7"
    ],
    "source_spans": [
     "p13.9"
@@ -521,7 +518,7 @@
    ],
    "limitations": [
     "L2",
-    "L5"
+    "L4"
    ],
    "source_spans": [
     "p14.7-p14.8",
@@ -1479,7 +1476,7 @@
    ],
    "warrant": "W12",
    "limitations": [
-    "L9"
+    "L8"
    ],
    "source_spans": [
     "p13.3",
@@ -3876,22 +3873,6 @@
   },
   {
    "id": "L4",
-   "category": "model_specification",
-   "statement": "The main simulation has no cross-correlated errors; they were tried only in a small experiment with groups of 2 and 10 series.",
-   "affects": [
-    "C2",
-    "C3",
-    "C4"
-   ],
-   "impact": "reduces_transferability",
-   "mitigation": "none",
-   "source_spans": [
-    "p8.5-p8.6"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "L5",
    "category": "sampling",
    "statement": "The empirical evidence is one monthly data set of 69 M5 series in 11 groups, each evaluated on a single 12-month holdout.",
    "affects": [
@@ -3909,7 +3890,7 @@
    "provenance": "inferred"
   },
   {
-   "id": "L6",
+   "id": "L5",
    "category": "sample_size",
    "statement": "Whether the restrictive variants are effective on histories as short as about one year is not known.",
    "affects": [
@@ -3924,7 +3905,7 @@
    "provenance": "extracted"
   },
   {
-   "id": "L7",
+   "id": "L6",
    "category": "sampling",
    "statement": "Groups of more than 50 series were not tested.",
    "affects": [
@@ -3940,7 +3921,7 @@
    "provenance": "extracted"
   },
   {
-   "id": "L8",
+   "id": "L7",
    "category": "model_specification",
    "statement": "Models with a trend component are not analysed, neither in the simulation nor on the M5 data.",
    "affects": [
@@ -3961,7 +3942,7 @@
    "provenance": "extracted"
   },
   {
-   "id": "L9",
+   "id": "L8",
    "category": "other",
    "statement": "In the MCB test on rMAE, the differences between the five models on the M5 data are not shown to be statistically significant.",
    "affects": [
