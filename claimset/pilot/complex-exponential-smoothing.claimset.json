@@ -881,24 +881,6 @@
    ]
   },
   {
-   "id": "C26",
-   "statement": "CES captures long-term relations better than ETS, ARIMA and the Theta method, and captures nonlinear trends without separating the series into level and trend.",
-   "type": "methodological",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "unstated"
-    }
-   ],
-   "source_spans": [
-    "p9.16-p9.17",
-    "p9.20",
-    "p11.27"
-   ],
-   "provenance": "extracted"
-  },
-  {
    "id": "C27",
    "statement": "Information criteria identify effectively when to switch between seasonal and non-seasonal [[D1:CES]].",
    "type": "interpretive",
@@ -2251,6 +2233,20 @@
    "id": "B24",
    "id_type": "reference",
    "target": "R Core Team (2021). R: A language and environment for statistical computing. R Foundation for Statistical Computing. https://www.R-project.org/"
+  }
+ ],
+ "open_questions": [
+  {
+   "id": "O1",
+   "question": "Whether CES improves the SCUM combination because it captures long-term relations better than ETS, ARIMA and the Theta method, and nonlinear trends without separating level and trend, is not established.",
+   "claims": [
+    "C6"
+   ],
+   "source_spans": [
+    "p9.16-p9.17",
+    "p9.20",
+    "p11.27"
+   ]
   }
  ]
 }

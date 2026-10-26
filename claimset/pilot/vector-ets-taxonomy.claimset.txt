@@ -133,18 +133,6 @@ C53 [interpretive; secondary; support: argument W15; uses C14; warrant W15]
   Minimising the determinant of the estimated covariance matrix of the errors of [[D1:VETS]] typically lowers the variances of the series and raises the covariances between them.
 C17 [methodological; secondary; support: argument W7; warrant W7]
   Mixed [[D1:VETS]] models, with both additive and multiplicative components, would need a different formulation with complex interactions between the components.
-C25 [descriptive; secondary; support: unstated]
-  Common smoothing parameters reduce overfitting, because they are averaged out across the series of the group.
-C26 [descriptive; secondary; support: unstated]
-  The narrower prediction intervals of the PIC(*,N,N) variants on longer histories may be due to overfitting.
-C29 [descriptive; secondary; support: unstated]
-  Simulations with monthly instead of quarterly seasonality give findings similar to the quarterly ones.
-C30 [descriptive; secondary; support: unstated]
-  Simulations with error standard deviations below 0.3 give results similar to those with 0.3.
-C31 [descriptive; secondary; support: unstated]
-  A small simulation with cross-correlated errors, for groups of 2 and 10 series, gives results consistent with the main simulation.
-C38 [descriptive; secondary; support: unstated]
-  The wide prediction intervals of [[D7:VETS F]] may be due to difficulties in estimating its many more parameters than ETS.
 C46 [interpretive; secondary; support: argument W14; warrant W14]
   In practice the full PIC framework should be considered first and the elements that are not needed dropped, which reduces the number of models to evaluate.
 
@@ -321,6 +309,14 @@ L6 [sample_size; affects C2, C3; reduces_transferability; mitigation none] Wheth
 L7 [sampling; affects C2, C3, C4; reduces_transferability; mitigation none] Groups of more than 50 series were not tested.
 L8 [model_specification; affects C2, C3, C4, C5, C6; reduces_transferability; mitigation none] Models with a trend component are not analysed, neither in the simulation nor on the M5 data.
 L9 [sampling; affects C5, C6, C7; reduces_transferability; mitigation none] The empirical evaluation uses monthly data only.
+
+OPEN QUESTIONS
+O1 [from C3] Whether common smoothing parameters reduce overfitting because they are averaged out across the series of the group is not established.
+O2 [from C21] Whether overfitting explains the narrower prediction intervals of the PIC(*,N,N) variants on longer histories is not established.
+O3 [from C36] Whether the wide prediction intervals of VETS F come from difficulties in estimating its many more parameters than ETS is not established.
+O4 [from C2, C3, C4] Whether the simulation findings hold for monthly seasonality is not shown: the paper reports similar findings without giving them.
+O5 [from C2, C3, C4] Whether the simulation findings hold for error standard deviations below 0.3 is not shown: the paper reports similar results without giving them.
+O6 [from C2, C3, C4] Whether the simulation findings hold with cross-correlated errors is not shown: the paper reports a small experiment with groups of 2 and 10 series as consistent without giving its results.
 
 ARTEFACTS
 A1 [data] M5 competition data (Walmart sales)

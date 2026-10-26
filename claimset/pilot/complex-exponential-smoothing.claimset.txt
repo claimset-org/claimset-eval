@@ -115,8 +115,6 @@ C18 [methodological; secondary; support: argument W4; warrant W4]
   Non-seasonal [[D1:CES]] has 5 estimated parameters, two smoothing parameters, two initial states and the error variance, and [[D4:seasonal CES]] has $4 + 2m + 2 + 1$: four smoothing parameters, $2m$ initial lagged values, two initial non-seasonal states and the error variance.
 C24 [methodological; supporting; support: argument W5; uses C11, C13, C22; warrant W5]
   [[D1:CES]] encompasses level and multiplicative trend processes and approximates additive trend processes well.
-C26 [methodological; secondary; support: unstated]
-  CES captures long-term relations better than ETS, ARIMA and the Theta method, and captures nonlinear trends without separating the series into level and trend.
 C39 [formal; secondary; support: argument W11; uses C16; limitations L2; warrant W11; verification unchecked]
   [[D4:seasonal CES]] is a stationary or a non-stationary model depending on the values of its complex smoothing parameters.
 
@@ -198,6 +196,9 @@ L2 [model_specification; affects C4, C16; reduces_precision; mitigation none] Th
 L3 [sample_size; affects C19, C21, C6, C41; reduces_transferability; mitigation none] The effect of the length of a time series on the accuracy of CES is not analysed.
 L4 [model_specification; affects C7; reduces_transferability; mitigation none] CES is formulated only with an additive error term; a version with a multiplicative error term is not developed.
 L5 [sampling; affects C21, C41; could_bias_magnitude; mitigation none] The 10 M4 series on which ETS broke down were excluded from the M4 comparison, so the series were selected on the failure of one of the compared methods.
+
+OPEN QUESTIONS
+O1 [from C6] Whether CES improves the SCUM combination because it captures long-term relations better than ETS, ARIMA and the Theta method, and nonlinear trends without separating level and trend, is not established.
 
 ARTEFACTS
 A1 [data] M1 competition data

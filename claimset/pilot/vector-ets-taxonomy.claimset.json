@@ -935,41 +935,6 @@
    "provenance": "extracted"
   },
   {
-   "id": "C25",
-   "statement": "Common smoothing parameters reduce overfitting, because they are averaged out across the series of the group.",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "unstated"
-    }
-   ],
-   "source_spans": [
-    "p11.7",
-    "p12.2",
-    "p12.4",
-    "p15.3"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C26",
-   "statement": "The narrower prediction intervals of the PIC(*,N,N) variants on longer histories may be due to overfitting.",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "unstated"
-    }
-   ],
-   "source_spans": [
-    "p10.7"
-   ],
-   "provenance": "extracted"
-  },
-  {
    "id": "C27",
    "statement": "PIC(*,S,S) variants, with common seasonal components, should be applied only to homogeneous series with very similar seasonal patterns.",
    "type": "interpretive",
@@ -1018,55 +983,6 @@
     "p12.7",
     "p15.2",
     "p15.5"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C29",
-   "statement": "Simulations with monthly instead of quarterly seasonality give findings similar to the quarterly ones.",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "unstated"
-    }
-   ],
-   "source_spans": [
-    "p8.3"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C30",
-   "statement": "Simulations with error standard deviations below 0.3 give results similar to those with 0.3.",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "unstated"
-    }
-   ],
-   "source_spans": [
-    "p8.5"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C31",
-   "statement": "A small simulation with cross-correlated errors, for groups of 2 and 10 series, gives results consistent with the main simulation.",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "unstated"
-    }
-   ],
-   "source_spans": [
-    "p8.6",
-    "p12.7"
    ],
    "provenance": "extracted"
   },
@@ -1193,22 +1109,6 @@
    ],
    "source_spans": [
     "p13.8-p14.6"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C38",
-   "statement": "The wide prediction intervals of [[D7:VETS F]] may be due to difficulties in estimating its many more parameters than ETS.",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "unstated"
-    }
-   ],
-   "source_spans": [
-    "p13.8"
    ],
    "provenance": "extracted"
   },
@@ -3764,6 +3664,78 @@
     "p15.6"
    ],
    "provenance": "extracted"
+  }
+ ],
+ "open_questions": [
+  {
+   "id": "O1",
+   "question": "Whether common smoothing parameters reduce overfitting because they are averaged out across the series of the group is not established.",
+   "claims": [
+    "C3"
+   ],
+   "source_spans": [
+    "p11.7",
+    "p12.2",
+    "p12.4",
+    "p15.3"
+   ]
+  },
+  {
+   "id": "O2",
+   "question": "Whether overfitting explains the narrower prediction intervals of the PIC(*,N,N) variants on longer histories is not established.",
+   "claims": [
+    "C21"
+   ],
+   "source_spans": [
+    "p10.7"
+   ]
+  },
+  {
+   "id": "O3",
+   "question": "Whether the wide prediction intervals of VETS F come from difficulties in estimating its many more parameters than ETS is not established.",
+   "claims": [
+    "C36"
+   ],
+   "source_spans": [
+    "p13.8"
+   ]
+  },
+  {
+   "id": "O4",
+   "question": "Whether the simulation findings hold for monthly seasonality is not shown: the paper reports similar findings without giving them.",
+   "claims": [
+    "C2",
+    "C3",
+    "C4"
+   ],
+   "source_spans": [
+    "p8.3"
+   ]
+  },
+  {
+   "id": "O5",
+   "question": "Whether the simulation findings hold for error standard deviations below 0.3 is not shown: the paper reports similar results without giving them.",
+   "claims": [
+    "C2",
+    "C3",
+    "C4"
+   ],
+   "source_spans": [
+    "p8.5"
+   ]
+  },
+  {
+   "id": "O6",
+   "question": "Whether the simulation findings hold with cross-correlated errors is not shown: the paper reports a small experiment with groups of 2 and 10 series as consistent without giving its results.",
+   "claims": [
+    "C2",
+    "C3",
+    "C4"
+   ],
+   "source_spans": [
+    "p8.6",
+    "p12.7"
+   ]
   }
  ],
  "artefacts": [
