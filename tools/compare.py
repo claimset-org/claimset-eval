@@ -6,7 +6,9 @@ expand ranges. The report gives, per kind of object, how much of the gold the ca
 much of the candidate is in the gold (precision), agreement on coding for matched pairs, and the links between
 claims mapped through the matching.
 
-    python3 tools/compare.py GOLD.json CANDIDATE.json [--text papers/text/X.txt] [--json OUT.json]
+    python3 tools/compare.py GOLD.json CANDIDATE.json [--text papers/text/X.txt] [--report report.json] [--json OUT.json]
+
+With the converter's report.json, its source flags count towards the errors of the source the gold corrects.
 """
 
 import argparse
@@ -298,6 +300,36 @@ def compare(gold, cand, text="", threshold=0.3):
     return rep
 
 
+# ---------- errors in the source ----------
+
+def _page(where):
+    m = re.match(r"p(\d+)\.", str(where or ""))
+    return int(m.group(1)) if m else None
+
+
+def source_errors(gold, cand, flags=None):
+    """The errors of the source that the gold records (its corrections), and whether the candidate found each: as a
+    correction of its own or as a source flag (the converter's report.json), at the same paragraph or on the same
+    page. The converter cannot ask the authors, so a flag counts as finding the error."""
+    errors = [c for c in ((gold.get("paper") or {}).get("converted_from") or {}).get("corrections") or []
+              if isinstance(c, dict)]
+    found = [c.get("where") for c in ((cand.get("paper") or {}).get("converted_from") or {}).get("corrections") or []
+             if isinstance(c, dict)]
+    found += [f.get("where") for f in flags or [] if isinstance(f, dict)]
+    rows = []
+    for e in errors:
+        where = e.get("where")
+        same = where in found
+        page = not same and _page(where) is not None and _page(where) in {_page(x) for x in found}
+        rows.append({"where": where, "printed": e.get("printed"), "found": "paragraph" if same else
+                     "page" if page else None})
+    n = len(rows)
+    return {"gold": n, "same paragraph": sum(r["found"] == "paragraph" for r in rows),
+            "same page": sum(r["found"] == "page" for r in rows),
+            "recall": None if not n else sum(bool(r["found"]) for r in rows) / n, "errors": rows,
+            "candidate flags": len(found)}
+
+
 # ---------- report ----------
 
 def pct(x):
@@ -328,6 +360,12 @@ def print_report(rep, out=sys.stdout):
     w(f"  table cells recovered {t['found']} of {t['gold cells']}; setup parts recovered {s['found']} of {s['gold parts']}\n")
     a = rep["limitations"]["affects links"]
     w(f"  limitation 'affects' links: recall {pct(a['recall'])}  precision {pct(a['precision'])}\n")
+    se = rep.get("source errors")
+    if se and se["gold"]:
+        w(f"SOURCE ERRORS gold {se['gold']}: found at the same paragraph {se['same paragraph']}, on the same page "
+          f"{se['same page']}  recall {pct(se['recall'])}; candidate corrections and flags {se['candidate flags']}\n")
+        for r in se["errors"]:
+            w(f"  {r['where']} {'missed' if not r['found'] else 'found (' + r['found'] + ')'}: {r['printed']}\n")
     if c["missed"]:
         w("\nGOLD CLAIMS WITHOUT A ONE-TO-ONE MATCH (* = not covered by any candidate claim either)\n")
         for m in c["missed"]:
@@ -356,6 +394,8 @@ def main(argv=None):
     ap.add_argument("--text", help="the paper's extracted text with [pN.M] markers, to compare source spans")
     ap.add_argument("--threshold", type=float, default=0.3, help="minimum similarity for a match (default 0.3)")
     ap.add_argument("--json", help="also write the full report as JSON to this file")
+    ap.add_argument("--report", help="the converter's report.json, whose source flags count as finding the "
+                                     "errors of the source that the gold corrects")
     a = ap.parse_args(argv)
     with open(a.gold, encoding="utf-8") as f:
         gold = json.load(f)
@@ -363,6 +403,11 @@ def main(argv=None):
         cand = json.load(f)
     text = open(a.text, encoding="utf-8").read() if a.text else ""
     rep = compare(gold, cand, text, a.threshold)
+    flags = None
+    if a.report:
+        with open(a.report, encoding="utf-8") as f:
+            flags = json.load(f).get("source_flags")
+    rep["source errors"] = source_errors(gold, cand, flags)
     print_report(rep)
     if a.json:
         with open(a.json, "w", encoding="utf-8") as f:

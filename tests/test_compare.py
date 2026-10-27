@@ -76,5 +76,22 @@ class CompareTest(unittest.TestCase):
         self.assertEqual(compare.hungarian([[0.5, 0.1, 0.9]]), {0: 1})
 
 
+
+class TestSourceErrors(unittest.TestCase):
+    def test_flags_and_corrections_count_as_finding_an_error(self):
+        from compare import source_errors
+        gold = {"paper": {"converted_from": {"corrections": [
+            {"field": "D4.definition", "where": "p6.4", "printed": "W_3 = Phi", "recorded": "W_3 = I_n", "reason": "r"},
+            {"field": "D4.definition", "where": "p6.12", "printed": "A = alpha 1_n'", "recorded": "A = alpha I_n",
+             "reason": "r"},
+            {"field": "C3.statement", "where": "p9.2", "printed": "x", "recorded": "y", "reason": "r"}]}}}
+        cand = {"paper": {"converted_from": {"corrections": [{"where": "p9.2"}]}}}
+        rep = source_errors(gold, cand, [{"where": "p6.4", "kind": "formula"}, {"where": "p6.9", "kind": "formula"}])
+        self.assertEqual([r["found"] for r in rep["errors"]], ["paragraph", "page", "paragraph"])
+        self.assertEqual(rep["recall"], 1.0)
+        rep = source_errors(gold, {}, [])
+        self.assertEqual(rep["recall"], 0.0)
+        self.assertIsNone(source_errors({}, {}, [])["recall"])
+
 if __name__ == "__main__":
     unittest.main()

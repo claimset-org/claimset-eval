@@ -1,5 +1,5 @@
 {
- "schema_version": "0.26",
+ "schema_version": "0.29",
  "paper": {
   "title": "Complex exponential smoothing",
   "licence": "CC-BY-4.0",
@@ -12,18 +12,18 @@
    ]
   },
   "contributions": [
+   "C1",
    "C2",
-   "C43",
    "C3",
-   "C44",
-   "C45",
    "C4",
-   "C46",
-   "C47",
-   "C19",
-   "C21",
+   "C5",
    "C6",
-   "C41"
+   "C7",
+   "C8",
+   "C9",
+   "C10",
+   "C11",
+   "C12"
   ],
   "contribution_record": "complete",
   "origin": "converted",
@@ -116,7 +116,7 @@
   {
    "id": "D1",
    "term": "CES",
-   "definition": "Complex exponential smoothing: a forecasting method that combines each past observation $y_t$ and its forecast error $e_t$ into the complex variable $y_t + i e_t$ and forecasts with an exponentially weighted sum of these values, the weights being powers of $1 + i - (\\alpha_0 + i\\alpha_1)$ times the complex smoothing parameter $\\alpha_0 + i\\alpha_1$."
+   "definition": "Complex exponential smoothing: a forecasting method that combines each past observation $y_t$ and its forecast error $e_t$ into the complex variable $y_t + i e_t$ and forecasts with an exponentially weighted sum of these values, $\\hat{y}_t + i\\hat{e}_t = (\\alpha_0 + i\\alpha_1) \\sum_{j=1}^{t-1} (1 + i - (\\alpha_0 + i\\alpha_1))^{j-1} (y_{t-j} + i e_{t-j})$, or recursively $\\hat{y}_t + i\\hat{e}_t = (\\alpha_0 + i\\alpha_1)(y_{t-1} + i e_{t-1}) + (1 - \\alpha_0 + i - i\\alpha_1)(\\hat{y}_{t-1} + i\\hat{e}_{t-1})$, where $\\alpha_0 + i\\alpha_1$ is the complex smoothing parameter and $\\hat{e}_t$ carries the information on past forecast errors."
   },
   {
    "id": "D2",
@@ -131,7 +131,7 @@
   {
    "id": "D4",
    "term": "seasonal CES",
-   "definition": "CES extended with a second pair of level and nonlinear trend states taken at lag $m$, the seasonal period, with its own complex smoothing parameter $\\beta_0 + i\\beta_1$: $y_t = l_{0,t-1} + l_{1,t-m} + \\varepsilon_t$, where $l_{0,t}, c_{0,t}$ follow the non-seasonal CES equations at lag 1 and $l_{1,t}, c_{1,t}$ the same equations at lag $m$."
+   "definition": "CES extended with a second pair of level and nonlinear trend states taken at lag $m$, the seasonal period, with its own complex smoothing parameter $\\beta_0 + i\\beta_1$: $y_t = l_{0,t-1} + l_{1,t-m} + \\varepsilon_t$, $l_{0,t} = l_{0,t-1} - (1 - \\alpha_1) c_{0,t-1} + (\\alpha_0 - \\alpha_1) \\varepsilon_t$, $c_{0,t} = l_{0,t-1} + (1 - \\alpha_0) c_{0,t-1} + (\\alpha_0 + \\alpha_1) \\varepsilon_t$, $l_{1,t} = l_{1,t-m} - (1 - \\beta_1) c_{1,t-m} + (\\beta_0 - \\beta_1) \\varepsilon_t$, $c_{1,t} = l_{1,t-m} + (1 - \\beta_0) c_{1,t-m} + (\\beta_0 + \\beta_1) \\varepsilon_t$."
   },
   {
    "id": "D5",
@@ -255,7 +255,7 @@
  ],
  "claims": [
   {
-   "id": "C2",
+   "id": "C1",
    "statement": "Depending on the value of its [[D2:complex smoothing parameter]], [[D1:CES]] is a stationary or a non-stationary model.",
    "type": "formal",
    "role": "principal",
@@ -268,17 +268,17 @@
    ],
    "verification": "unchecked",
    "depends_on": [
-    "C9",
-    "C10",
-    "C48",
-    "C11",
-    "C12",
-    "C49",
-    "C13",
-    "C15",
-    "C35",
-    "C72",
-    "C40"
+    "C17",
+    "C18",
+    "C19",
+    "C20",
+    "C23",
+    "C24",
+    "C25",
+    "C32",
+    "C21",
+    "C22",
+    "C33"
    ],
    "source_spans": [
     "p1.6",
@@ -322,7 +322,7 @@
    ]
   },
   {
-   "id": "C43",
+   "id": "C2",
    "statement": "[[D1:CES]] passes continuously from a stationary to a non-stationary model as its [[D2:complex smoothing parameter]] changes.",
    "type": "formal",
    "role": "principal",
@@ -335,9 +335,9 @@
    ],
    "verification": "unchecked",
    "depends_on": [
-    "C9",
-    "C10",
-    "C13"
+    "C17",
+    "C18",
+    "C25"
    ],
    "source_spans": [
     "p1.6",
@@ -352,687 +352,6 @@
   },
   {
    "id": "C3",
-   "statement": "[[D1:CES]] has an underlying ARMA(2,2) model whose coefficients $\\phi_1 = 2 - \\alpha_0$, $\\phi_2 = \\alpha_0 + \\alpha_1 - 2$, $\\theta_1 = 2 - 2\\alpha_0 + \\alpha_1$ and $\\theta_2 = 3\\alpha_0 + \\alpha_1 - 2 - \\alpha_0^2 - \\alpha_1^2$ are nonlinear functions of the same two parameters $\\alpha_0$ and $\\alpha_1$.",
-   "type": "formal",
-   "role": "principal",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E5"
-    }
-   ],
-   "verification": "unchecked",
-   "depends_on": [
-    "C7"
-   ],
-   "assumptions": [
-    "C34"
-   ],
-   "source_spans": [
-    "p5.16-p5.19",
-    "p6.3",
-    "p11.25",
-    "p14.4-p14.11"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C44",
-   "statement": "The parameter space of the ARMA(2,2) model underlying [[D1:CES]] differs from that of the general ARMA(2,2) model.",
-   "type": "formal",
-   "role": "principal",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E5"
-    }
-   ],
-   "verification": "unchecked",
-   "depends_on": [
-    "C3"
-   ],
-   "source_spans": [
-    "p5.16-p5.19",
-    "p6.3",
-    "p11.25",
-    "p14.4-p14.11"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C45",
-   "statement": "The parameter space of the ARMA(2,2) model underlying [[D1:CES]] is not restricted to stationary models.",
-   "type": "formal",
-   "role": "principal",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E5"
-    }
-   ],
-   "verification": "unchecked",
-   "depends_on": [
-    "C3"
-   ],
-   "source_spans": [
-    "p5.16-p5.19",
-    "p6.3",
-    "p11.25",
-    "p14.4-p14.11"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C4",
-   "statement": "[[D4:seasonal CES]] models seasonality with lag-$m$ level and nonlinear trend states instead of seasonal indices.",
-   "type": "methodological",
-   "role": "principal",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "argument",
-     "warrant": "W2"
-    }
-   ],
-   "warrant": "W2",
-   "limitations": [
-    "L2"
-   ],
-   "source_spans": [
-    "p6.11-p7.2",
-    "p7.6-p7.8",
-    "p11.26"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C46",
-   "statement": "[[D4:seasonal CES]] has no seasonal indices that need renormalising.",
-   "type": "methodological",
-   "role": "principal",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "argument",
-     "warrant": "W2"
-    }
-   ],
-   "source_spans": [
-    "p6.11-p7.2",
-    "p7.6-p7.8",
-    "p11.26"
-   ],
-   "provenance": "extracted",
-   "depends_on": [
-    "C4"
-   ],
-   "warrant": "W2"
-  },
-  {
-   "id": "C47",
-   "statement": "Model selection for [[D1:CES]] reduces to choosing between the seasonal and the non-seasonal model.",
-   "type": "methodological",
-   "role": "principal",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "argument",
-     "warrant": "W2"
-    }
-   ],
-   "source_spans": [
-    "p6.11-p7.2",
-    "p7.6-p7.8",
-    "p11.26"
-   ],
-   "provenance": "extracted",
-   "depends_on": [
-    "C4",
-    "C17",
-    "C24",
-    "C68",
-    "C69"
-   ],
-   "warrant": "W2",
-   "limitations": [
-    "L2"
-   ]
-  },
-  {
-   "id": "C6",
-   "statement": "On the [[D7:M1, M3 and tourism data]], [[D5:SCUM]] has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than [[D6:SCUM(noCES)]], but higher mean MSIS.",
-   "type": "descriptive",
-   "role": "principal",
-   "novelty": "no_prior_found",
-   "scope": {
-    "population": "time series of the M1, M3 and tourism forecasting competitions"
-   },
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E2",
-     "results": [
-      "E2.T1.r5",
-      "E2.T1.r6"
-     ]
-    }
-   ],
-   "limitations": [
-    "L3"
-   ],
-   "field_provenance": {
-    "statement": "inferred"
-   },
-   "source_spans": [
-    "p9.16",
-    "p9.21",
-    "p11.27"
-   ],
-   "provenance": "extracted",
-   "depends_on": [
-    "C42"
-   ]
-  },
-  {
-   "id": "C7",
-   "statement": "[[D1:CES]] has the single-source-of-error state-space form $y_t = l_{t-1} + \\varepsilon_t$, $l_t = l_{t-1} - (1 - \\alpha_1) c_{t-1} + (\\alpha_0 - \\alpha_1) \\varepsilon_t$, $c_t = l_{t-1} + (1 - \\alpha_0) c_{t-1} + (\\alpha_0 + \\alpha_1) \\varepsilon_t$, with level $l_t$ and [[D3:nonlinear trend component]] $c_t$, whose transition matrix contains the smoothing parameters.",
-   "type": "formal",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E1"
-    }
-   ],
-   "verification": "unchecked",
-   "assumptions": [
-    "C32",
-    "C34"
-   ],
-   "source_spans": [
-    "p4.4-p4.13",
-    "p13.28-p14.3"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C8",
-   "statement": "The [[D23:Akaike information criterion]] of seasonal and non-seasonal [[D1:CES]] can be computed from a Gaussian likelihood of the same form as that of additive exponential smoothing models.",
-   "type": "methodological",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "cited",
-     "reference": "B1",
-     "locator": "p. 68",
-     "self": true
-    }
-   ],
-   "assumptions": [
-    "C32",
-    "C33"
-   ],
-   "source_spans": [
-    "p4.14-p4.15",
-    "p7.6"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C9",
-   "statement": "[[D1:CES]] is stationary, with both eigenvalues of its transition matrix inside the unit circle, when $\\alpha_1 < 5 - 2\\alpha_0$, $\\alpha_1 < 1$ and $\\alpha_1 > 1 - \\alpha_0$.",
-   "type": "formal",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E3"
-    },
-    {
-     "kind": "cited",
-     "reference": "B1",
-     "locator": "p. 38",
-     "self": true
-    }
-   ],
-   "verification": "unchecked",
-   "source_spans": [
-    "p4.17-p4.19",
-    "p5.6",
-    "p14.14-p15.11"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C10",
-   "statement": "When $\\alpha_1 > 1$, both eigenvalues of the [[D1:CES]] transition matrix are real and one of them is greater than one.",
-   "type": "formal",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E3"
-    }
-   ],
-   "verification": "unchecked",
-   "source_spans": [
-    "p4.19"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C48",
-   "statement": "When $\\alpha_1 > 1$, [[D1:CES]] produces a non-stationary trajectory.",
-   "type": "formal",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E3"
-    }
-   ],
-   "verification": "unchecked",
-   "source_spans": [
-    "p4.19"
-   ],
-   "provenance": "extracted",
-   "depends_on": [
-    "C10"
-   ]
-  },
-  {
-   "id": "C11",
-   "statement": "When $\\alpha_1 = 1$, [[D1:CES]] is equivalent to ETS(A,N,N).",
-   "type": "formal",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E3"
-    }
-   ],
-   "verification": "unchecked",
-   "source_spans": [
-    "p4.19",
-    "p6.9-p6.10"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C12",
-   "statement": "[[D1:CES]] is stable, with all eigenvalues of its discount matrix inside the unit circle, when $(\\alpha_0 - 2.5)^2 + \\alpha_1^2 > 1.25$, $(\\alpha_0 - 0.5)^2 + (\\alpha_1 - 1)^2 > 0.25$ and $(\\alpha_0 - 1.5)^2 + (\\alpha_1 - 0.5)^2 < 1.5$.",
-   "type": "formal",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E4"
-    },
-    {
-     "kind": "cited",
-     "reference": "B1",
-     "locator": "pp. 172-173",
-     "self": true
-    }
-   ],
-   "verification": "unchecked",
-   "source_spans": [
-    "p4.21-p5.6",
-    "p15.12-p16.1"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C49",
-   "statement": "The stable region of [[D1:CES]] contains both stationary and non-stationary values of the [[D2:complex smoothing parameter]].",
-   "type": "formal",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E4"
-    }
-   ],
-   "verification": "unchecked",
-   "source_spans": [
-    "p4.21-p5.6",
-    "p15.12-p16.1"
-   ],
-   "provenance": "extracted",
-   "depends_on": [
-    "C9",
-    "C12"
-   ]
-  },
-  {
-   "id": "C13",
-   "statement": "The [[D1:CES]] point forecast $w'F^{h-1}v_t$ follows one of five trajectories set by the [[D2:complex smoothing parameter]]: a flat line, exponential growth, exponential decline, harmonic oscillation converging to zero, or diverging harmonic oscillation.",
-   "type": "formal",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E3"
-    }
-   ],
-   "verification": "unchecked",
-   "source_spans": [
-    "p5.7-p5.13",
-    "p6.1-p6.2"
-   ],
-   "provenance": "extracted",
-   "depends_on": [
-    "C50",
-    "C51",
-    "C52",
-    "C53",
-    "C54"
-   ]
-  },
-  {
-   "id": "C50",
-   "statement": "When $\\alpha_1 = 1$, the [[D1:CES]] point forecast is a flat line.",
-   "type": "formal",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E3"
-    }
-   ],
-   "verification": "unchecked",
-   "source_spans": [
-    "p5.7-p5.13",
-    "p6.1-p6.2"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C51",
-   "statement": "When $\\alpha_1 > 1$, the [[D1:CES]] point forecast grows exponentially.",
-   "type": "formal",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E3"
-    }
-   ],
-   "verification": "unchecked",
-   "source_spans": [
-    "p5.7-p5.13",
-    "p6.1-p6.2"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C52",
-   "statement": "When $(4 - \\alpha_0^2)/4 < \\alpha_1 < 1$, the [[D1:CES]] point forecast declines exponentially.",
-   "type": "formal",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E3"
-    }
-   ],
-   "verification": "unchecked",
-   "source_spans": [
-    "p5.7-p5.13",
-    "p6.1-p6.2"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C53",
-   "statement": "When $1 - \\alpha_0 < \\alpha_1 < (4 - \\alpha_0^2)/4$, the [[D1:CES]] point forecast is a harmonic oscillation converging to zero.",
-   "type": "formal",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E3"
-    }
-   ],
-   "verification": "unchecked",
-   "source_spans": [
-    "p5.7-p5.13",
-    "p6.1-p6.2"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C54",
-   "statement": "When $0 < \\alpha_1 < 1 - \\alpha_0$, the [[D1:CES]] point forecast is a diverging harmonic oscillation.",
-   "type": "formal",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E3"
-    }
-   ],
-   "verification": "unchecked",
-   "source_spans": [
-    "p5.7-p5.13",
-    "p6.1-p6.2"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C14",
-   "statement": "The conditional variance of [[D1:CES]] $h$ steps ahead, given the level and the nonlinear trend component, can be calculated from its state-space form in the same way as for pure additive ETS models.",
-   "type": "formal",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "cited",
-     "reference": "B1",
-     "locator": "p. 96",
-     "self": true
-    }
-   ],
-   "source_spans": [
-    "p5.14"
-   ],
-   "provenance": "extracted",
-   "depends_on": [
-    "C7"
-   ],
-   "assumptions": [
-    "C32",
-    "C37",
-    "C38"
-   ]
-  },
-  {
-   "id": "C15",
-   "statement": "On M3 series 1664, which graphical analysis and [[D24:ADF test]] and [[D25:KPSS test]] indicate is stationary, [[D1:CES]] estimates the stationary $\\alpha_0 + i\\alpha_1 = 0.99999 + 0.99884i$.",
-   "type": "descriptive",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E7",
-     "results": [
-      "E7.R1",
-      "E7.R2"
-     ]
-    }
-   ],
-   "source_spans": [
-    "p7.11-p7.12",
-    "p8.1-p8.2"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C55",
-   "statement": "On M3 series 1664, all holdout observations lie inside the 95% prediction interval of [[D1:CES]].",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E7"
-    }
-   ],
-   "source_spans": [
-    "p8.4"
-   ],
-   "provenance": "extracted",
-   "scope": {
-    "conditions": [
-     "prediction interval level 0.95"
-    ]
-   }
-  },
-  {
-   "id": "C16",
-   "statement": "[[D4:seasonal CES]] has an underlying SARIMA(2,0,2m+2)(2,0,0)$_m$ model.",
-   "type": "formal",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E6"
-    }
-   ],
-   "verification": "unchecked",
-   "source_spans": [
-    "p7.2",
-    "p16.2-p16.28"
-   ],
-   "provenance": "extracted",
-   "depends_on": [
-    "C4"
-   ]
-  },
-  {
-   "id": "C17",
-   "statement": "[[D4:seasonal CES]] can produce seasonality whose amplitude changes nonlinearly.",
-   "type": "methodological",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "argument",
-     "warrant": "W3"
-    }
-   ],
-   "warrant": "W3",
-   "source_spans": [
-    "p7.3",
-    "p11.26"
-   ],
-   "provenance": "extracted",
-   "depends_on": [
-    "C13"
-   ]
-  },
-  {
-   "id": "C56",
-   "statement": "[[D4:seasonal CES]] can produce all the trajectories of non-seasonal [[D1:CES]].",
-   "type": "methodological",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "argument",
-     "warrant": "W3"
-    }
-   ],
-   "source_spans": [
-    "p7.3",
-    "p11.26"
-   ],
-   "provenance": "extracted",
-   "depends_on": [
-    "C13"
-   ],
-   "warrant": "W3"
-  },
-  {
-   "id": "C57",
-   "statement": "[[D4:seasonal CES]] can model multiplicative or other shapes of seasonality when the level of the series does not change.",
-   "type": "methodological",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "argument",
-     "warrant": "W3"
-    }
-   ],
-   "source_spans": [
-    "p7.3",
-    "p11.26"
-   ],
-   "provenance": "extracted",
-   "depends_on": [
-    "C13"
-   ],
-   "warrant": "W3"
-  },
-  {
-   "id": "C18",
-   "statement": "Non-seasonal [[D1:CES]] has 5 estimated parameters: two smoothing parameters, two initial states and the error variance.",
-   "type": "methodological",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "argument",
-     "warrant": "W4"
-    }
-   ],
-   "warrant": "W4",
-   "source_spans": [
-    "p7.6-p7.7"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C58",
-   "statement": "[[D4:seasonal CES]] has $4 + 2m + 2 + 1$ estimated parameters: four smoothing parameters, $2m$ initial lagged values, two initial non-seasonal states and the error variance.",
-   "type": "methodological",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "argument",
-     "warrant": "W4"
-    }
-   ],
-   "source_spans": [
-    "p7.6-p7.7"
-   ],
-   "provenance": "extracted",
-   "warrant": "W4"
-  },
-  {
-   "id": "C19",
    "statement": "On the [[D7:M1, M3 and tourism data]], CES has the lowest mean [[D11:RMSSE]] and the lowest median RMSSE, [[D12:MASE]] and [[D13:MSIS]] of four methods, CES, [[D8:ETS]], [[D9:ARIMA]] and the [[D10:Theta method]], but not the lowest mean MASE, and the highest mean MSIS.",
    "type": "descriptive",
    "role": "principal",
@@ -1070,56 +389,11 @@
    ],
    "provenance": "extracted",
    "depends_on": [
-    "C20"
+    "C34"
    ]
   },
   {
-   "id": "C20",
-   "statement": "On the [[D7:M1, M3 and tourism data]], in Nemenyi tests at the 5% level, CES has the best mean rank of four methods, CES, [[D8:ETS]], [[D9:ARIMA]] and the [[D10:Theta method]] on [[D11:RMSSE]] and on [[D12:MASE]], though not all of the differences are statistically significant.",
-   "type": "descriptive",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "scope": {
-    "conditions": [
-     "Nemenyi test on ranks of the error measures, significance level 0.05"
-    ]
-   },
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E2"
-    }
-   ],
-   "source_spans": [
-    "p9.14",
-    "p9.20"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C59",
-   "statement": "On the [[D7:M1, M3 and tourism data]], in Nemenyi tests at the 5% level on [[D13:MSIS]], CES has the second best mean rank of the six methods, behind [[D5:SCUM]].",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "scope": {
-    "conditions": [
-     "Nemenyi test on ranks of the error measures, significance level 0.05"
-    ]
-   },
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E2"
-    }
-   ],
-   "source_spans": [
-    "p10.3"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C21",
+   "id": "C4",
    "statement": "On the M4 competition data, CES has the lowest mean and median [[D12:MASE]] and [[D11:RMSSE]] and the lowest median [[D13:MSIS]] of four methods, CES, [[D8:ETS]], [[D9:ARIMA]] and the [[D10:Theta method]], but not the lowest mean MSIS.",
    "type": "descriptive",
    "role": "principal",
@@ -1157,693 +431,193 @@
    "provenance": "extracted"
   },
   {
-   "id": "C22",
-   "statement": "On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(A,N,N), but a higher mean MSIS.",
-   "type": "descriptive",
-   "role": "supporting",
+   "id": "C5",
+   "statement": "[[D1:CES]] has an underlying ARMA(2,2) model whose coefficients $\\phi_1 = 2 - \\alpha_0$, $\\phi_2 = \\alpha_0 + \\alpha_1 - 2$, $\\theta_1 = 2 - 2\\alpha_0 + \\alpha_1$ and $\\theta_2 = 3\\alpha_0 + \\alpha_1 - 2 - \\alpha_0^2 - \\alpha_1^2$ are nonlinear functions of the same two parameters $\\alpha_0$ and $\\alpha_1$.",
+   "type": "formal",
+   "role": "principal",
    "novelty": "no_prior_found",
    "support": [
     {
-     "kind": "empirical_quant",
-     "evidence": "E9",
-     "results": [
-      "E9.T1"
-     ]
+     "kind": "formal_proof",
+     "evidence": "E5"
     }
    ],
-   "assumptions": [
-    "C36"
-   ],
-   "limitations": [
-    "L1"
-   ],
-   "field_provenance": {
-    "statement": "inferred"
-   },
-   "source_spans": [
-    "p10.10",
-    "p10.21",
-    "p11.21"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C60",
-   "statement": "On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(A,A,N), but a higher mean MSIS.",
-   "type": "descriptive",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E9",
-     "results": [
-      "E9.T1"
-     ]
-    }
-   ],
-   "assumptions": [
-    "C36"
-   ],
-   "source_spans": [
-    "p10.10",
-    "p10.21",
-    "p11.21"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C61",
-   "statement": "On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has a lower median [[D11:RMSSE]] than ETS(A,Ad,N), but higher mean RMSSE, mean and median [[D12:MASE]], and mean and median [[D13:MSIS]].",
-   "type": "descriptive",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E9",
-     "results": [
-      "E9.T1"
-     ]
-    }
-   ],
-   "assumptions": [
-    "C36"
-   ],
-   "source_spans": [
-    "p10.10",
-    "p10.21",
-    "p11.21"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C62",
-   "statement": "On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]], [[D12:MASE]] and [[D13:MSIS]] than ETS(M,M,N).",
-   "type": "descriptive",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E9",
-     "results": [
-      "E9.T1"
-     ]
-    }
-   ],
-   "assumptions": [
-    "C36"
-   ],
-   "source_spans": [
-    "p10.10",
-    "p10.21",
-    "p11.21"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C63",
-   "statement": "On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(M,Md,N), but a higher mean MSIS.",
-   "type": "descriptive",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E9",
-     "results": [
-      "E9.T1"
-     ]
-    }
-   ],
-   "assumptions": [
-    "C36"
-   ],
-   "source_spans": [
-    "p10.10",
-    "p10.21",
-    "p11.21"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C23",
-   "statement": "On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(A,N,A), but a higher mean MSIS.",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E9",
-     "results": [
-      "E9.T2"
-     ]
-    }
-   ],
-   "assumptions": [
-    "C36"
-   ],
-   "field_provenance": {
-    "statement": "inferred"
-   },
-   "source_spans": [
-    "p11.22"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C64",
-   "statement": "On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]], [[D12:MASE]] and [[D13:MSIS]] than ETS(A,A,A).",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E9",
-     "results": [
-      "E9.T2"
-     ]
-    }
-   ],
-   "assumptions": [
-    "C36"
-   ],
-   "source_spans": [
-    "p11.22"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C65",
-   "statement": "On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(A,Ad,A), but a higher mean MSIS.",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E9",
-     "results": [
-      "E9.T2"
-     ]
-    }
-   ],
-   "assumptions": [
-    "C36"
-   ],
-   "source_spans": [
-    "p11.22"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C66",
-   "statement": "On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(M,M,M), but a higher mean MSIS.",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E9",
-     "results": [
-      "E9.T2"
-     ]
-    }
-   ],
-   "assumptions": [
-    "C36"
-   ],
-   "source_spans": [
-    "p11.22"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C67",
-   "statement": "On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(M,Md,M), but a higher mean MSIS.",
-   "type": "descriptive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E9",
-     "results": [
-      "E9.T2"
-     ]
-    }
-   ],
-   "assumptions": [
-    "C36"
-   ],
-   "source_spans": [
-    "p11.22"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C24",
-   "statement": "[[D1:CES]] encompasses level processes.",
-   "type": "methodological",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "argument",
-     "warrant": "W5"
-    }
-   ],
-   "warrant": "W5",
+   "verification": "unchecked",
    "depends_on": [
-    "C11",
-    "C50",
-    "C22"
+    "C16"
    ],
-   "source_spans": [
-    "p1.6",
-    "p11.21",
-    "p11.24"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C68",
-   "statement": "[[D1:CES]] encompasses multiplicative trend processes.",
-   "type": "methodological",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "argument",
-     "warrant": "W5"
-    }
-   ],
-   "depends_on": [
-    "C51",
-    "C52",
-    "C62",
-    "C63"
-   ],
-   "source_spans": [
-    "p1.6",
-    "p11.21",
-    "p11.24"
-   ],
-   "provenance": "extracted",
-   "warrant": "W5"
-  },
-  {
-   "id": "C69",
-   "statement": "[[D1:CES]] approximates additive trend processes well.",
-   "type": "methodological",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "argument",
-     "warrant": "W5"
-    }
-   ],
-   "depends_on": [
-    "C60",
+   "assumptions": [
     "C61"
    ],
    "source_spans": [
-    "p1.6",
-    "p11.21",
-    "p11.24"
+    "p5.16-p5.19",
+    "p6.3",
+    "p11.25",
+    "p14.4-p14.11"
    ],
-   "provenance": "extracted",
-   "warrant": "W5"
+   "provenance": "extracted"
   },
   {
-   "id": "C25",
-   "statement": "When $\\alpha_1$ is close to 1, [[D1:CES]] behaves like simple exponential smoothing with smoothing parameter $\\alpha_0 - 1$.",
+   "id": "C6",
+   "statement": "The parameter space of the ARMA(2,2) model underlying [[D1:CES]] differs from that of the general ARMA(2,2) model.",
    "type": "formal",
-   "role": "secondary",
+   "role": "principal",
    "novelty": "no_prior_found",
    "support": [
     {
      "kind": "formal_proof",
-     "evidence": "E3"
+     "evidence": "E5"
     }
    ],
    "verification": "unchecked",
-   "source_spans": [
-    "p6.5-p6.10"
-   ],
-   "provenance": "extracted",
    "depends_on": [
-    "C11"
-   ]
+    "C5"
+   ],
+   "source_spans": [
+    "p5.16-p5.19",
+    "p6.3",
+    "p11.25",
+    "p14.4-p14.11"
+   ],
+   "provenance": "extracted"
   },
   {
-   "id": "C70",
-   "statement": "When $\\alpha_1$ is close to 1, the real part $\\alpha_0$ of the complex smoothing parameter of [[D1:CES]] is close to 1 for a stationary series, for which the smoothing parameter of simple exponential smoothing would be close to 0.",
+   "id": "C7",
+   "statement": "The parameter space of the ARMA(2,2) model underlying [[D1:CES]] is not restricted to stationary models.",
    "type": "formal",
-   "role": "secondary",
+   "role": "principal",
    "novelty": "no_prior_found",
    "support": [
     {
      "kind": "formal_proof",
-     "evidence": "E3"
+     "evidence": "E5"
     }
    ],
    "verification": "unchecked",
-   "source_spans": [
-    "p6.5-p6.10"
-   ],
-   "provenance": "extracted",
    "depends_on": [
-    "C25"
-   ]
+    "C5"
+   ],
+   "source_spans": [
+    "p5.16-p5.19",
+    "p6.3",
+    "p11.25",
+    "p14.4-p14.11"
+   ],
+   "provenance": "extracted"
   },
   {
-   "id": "C71",
-   "statement": "When $\\alpha_1$ is close to 1, the real part $\\alpha_0$ of the complex smoothing parameter of [[D1:CES]] is close to 2 for a random walk.",
-   "type": "formal",
-   "role": "secondary",
+   "id": "C8",
+   "statement": "[[D4:seasonal CES]] models seasonality with lag-$m$ level and nonlinear trend states instead of seasonal indices.",
+   "type": "methodological",
+   "role": "principal",
    "novelty": "no_prior_found",
    "support": [
-    {
-     "kind": "formal_proof",
-     "evidence": "E3"
-    }
-   ],
-   "verification": "unchecked",
-   "source_spans": [
-    "p6.5-p6.10"
-   ],
-   "provenance": "extracted",
-   "depends_on": [
-    "C25"
-   ]
-  },
-  {
-   "id": "C27",
-   "statement": "Information criteria identify effectively when to switch between seasonal and non-seasonal [[D1:CES]].",
-   "type": "interpretive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E9",
-     "results": [
-      "E9.T2"
-     ]
-    },
     {
      "kind": "argument",
-     "warrant": "W7"
+     "warrant": "W1"
     }
    ],
-   "warrant": "W7",
+   "warrant": "W1",
+   "limitations": [
+    "L2"
+   ],
    "source_spans": [
-    "p11.22",
+    "p6.11-p7.2",
+    "p7.6-p7.8",
     "p11.26"
    ],
    "provenance": "extracted"
   },
   {
-   "id": "C29",
-   "statement": "CES is a robust forecasting approach.",
-   "type": "interpretive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E2",
-     "results": [
-      "E2.T1"
-     ]
-    },
-    {
-     "kind": "empirical_quant",
-     "evidence": "E8",
-     "results": [
-      "E8.T1"
-     ]
-    },
-    {
-     "kind": "argument",
-     "warrant": "W8"
-    }
-   ],
-   "warrant": "W8",
-   "source_spans": [
-    "p11.28"
-   ],
-   "provenance": "extracted",
-   "scope": {
-    "excludes": [
-     "forecasting scenarios for which CES is not appropriate, which the paper does not name"
-    ]
-   }
-  },
-  {
-   "id": "C31",
-   "statement": "The benchmark results show that CES can capture both level and trend time series without the selection between trend types that ETS requires.",
-   "type": "interpretive",
-   "role": "secondary",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E2",
-     "results": [
-      "E2.T1"
-     ]
-    },
-    {
-     "kind": "empirical_quant",
-     "evidence": "E8",
-     "results": [
-      "E8.T1"
-     ]
-    },
-    {
-     "kind": "argument",
-     "warrant": "W10"
-    }
-   ],
-   "warrant": "W10",
-   "source_spans": [
-    "p11.27"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C32",
-   "statement": "The error term $\\varepsilon_t$ of [[D1:CES]] is additive white noise.",
-   "type": "descriptive",
-   "role": "supporting",
-   "support": [
-    {
-     "kind": "assumption"
-    }
-   ],
-   "assumption_category": "statistical",
-   "check": "unchecked",
-   "source_spans": [
-    "p4.5",
-    "p4.14"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C33",
-   "statement": "The error term $\\varepsilon_t$ of [[D1:CES]] is normally distributed.",
-   "type": "descriptive",
-   "role": "secondary",
-   "support": [
-    {
-     "kind": "assumption"
-    }
-   ],
-   "assumption_category": "statistical",
-   "check": "unchecked",
-   "source_spans": [
-    "p4.14-p4.15"
-   ],
-   "provenance": "inferred"
-  },
-  {
-   "id": "C34",
-   "statement": "There is no misspecification error, so the forecast error $e_t$ of [[D1:CES]] equals the model error $\\varepsilon_t$.",
-   "type": "descriptive",
-   "role": "supporting",
-   "support": [
-    {
-     "kind": "assumption"
-    }
-   ],
-   "assumption_category": "theoretical",
-   "check": "untestable",
-   "source_spans": [
-    "p4.5",
-    "p14.2"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C35",
-   "statement": "[[D1:CES]] is required to be stable, or at least forecastable.",
+   "id": "C9",
+   "statement": "[[D4:seasonal CES]] has no seasonal indices that need renormalising.",
    "type": "methodological",
-   "role": "supporting",
-   "support": [
-    {
-     "kind": "cited",
-     "reference": "B14",
-     "self": true
-    },
-    {
-     "kind": "cited",
-     "reference": "B1",
-     "self": true
-    }
-   ],
-   "source_spans": [
-    "p4.20",
-    "p5.4",
-    "p5.20"
-   ],
-   "provenance": "extracted",
-   "novelty": "no_prior_found"
-  },
-  {
-   "id": "C72",
-   "statement": "[[D1:CES]] is not required to be stationary.",
-   "type": "methodological",
-   "role": "supporting",
-   "support": [
-    {
-     "kind": "cited",
-     "reference": "B14",
-     "self": true
-    },
-    {
-     "kind": "cited",
-     "reference": "B1",
-     "self": true
-    }
-   ],
-   "source_spans": [
-    "p4.20",
-    "p5.4",
-    "p5.20"
-   ],
-   "provenance": "extracted",
-   "novelty": "no_prior_found"
-  },
-  {
-   "id": "C36",
-   "statement": "ETS model selection with es() from the smooth package identifies correctly which series of the [[D7:M1, M3 and tourism data]] are seasonal.",
-   "type": "descriptive",
-   "role": "supporting",
-   "support": [
-    {
-     "kind": "assumption"
-    }
-   ],
-   "assumption_category": "methodological",
-   "check": "unchecked",
-   "source_spans": [
-    "p10.21",
-    "p11.22"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C37",
-   "statement": "The error term $\\varepsilon_t$ of [[D1:CES]] has no autocorrelation.",
-   "type": "descriptive",
-   "role": "secondary",
-   "support": [
-    {
-     "kind": "assumption"
-    }
-   ],
-   "assumption_category": "statistical",
-   "check": "unchecked",
-   "source_spans": [
-    "p4.5",
-    "p5.14"
-   ],
-   "provenance": "inferred"
-  },
-  {
-   "id": "C38",
-   "statement": "The error term $\\varepsilon_t$ of [[D1:CES]] has constant variance.",
-   "type": "descriptive",
-   "role": "secondary",
-   "support": [
-    {
-     "kind": "assumption"
-    }
-   ],
-   "assumption_category": "statistical",
-   "check": "unchecked",
-   "source_spans": [
-    "p4.5",
-    "p5.14"
-   ],
-   "provenance": "inferred"
-  },
-  {
-   "id": "C40",
-   "statement": "On the trended M3 series 2721, [[D1:CES]] estimates the non-stationary $\\alpha_0 + i\\alpha_1 = 1.48098 + 1.00346i$.",
-   "type": "descriptive",
-   "role": "supporting",
-   "novelty": "no_prior_found",
-   "support": [
-    {
-     "kind": "empirical_quant",
-     "evidence": "E7",
-     "results": [
-      "E7.R3",
-      "E7.R4"
-     ]
-    }
-   ],
-   "source_spans": [
-    "p7.11",
-    "p7.13-p8.4"
-   ],
-   "provenance": "extracted"
-  },
-  {
-   "id": "C39",
-   "statement": "[[D4:seasonal CES]] is a stationary or a non-stationary model depending on the values of its complex smoothing parameters.",
-   "type": "formal",
-   "role": "secondary",
+   "role": "principal",
    "novelty": "no_prior_found",
    "support": [
     {
      "kind": "argument",
-     "warrant": "W11"
+     "warrant": "W1"
     }
    ],
-   "warrant": "W11",
-   "verification": "unchecked",
+   "source_spans": [
+    "p6.11-p7.2",
+    "p7.6-p7.8",
+    "p11.26"
+   ],
+   "provenance": "extracted",
    "depends_on": [
-    "C16"
+    "C8"
    ],
+   "warrant": "W1"
+  },
+  {
+   "id": "C10",
+   "statement": "Model selection for [[D1:CES]] reduces to choosing between the seasonal and the non-seasonal model.",
+   "type": "methodological",
+   "role": "principal",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "argument",
+     "warrant": "W1"
+    }
+   ],
+   "source_spans": [
+    "p6.11-p7.2",
+    "p7.6-p7.8",
+    "p11.26"
+   ],
+   "provenance": "extracted",
+   "depends_on": [
+    "C8",
+    "C31",
+    "C13",
+    "C14",
+    "C15"
+   ],
+   "warrant": "W1",
    "limitations": [
     "L2"
-   ],
-   "source_spans": [
-    "p7.2"
-   ],
-   "provenance": "extracted"
+   ]
   },
   {
-   "id": "C41",
+   "id": "C11",
+   "statement": "On the [[D7:M1, M3 and tourism data]], [[D5:SCUM]] has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than [[D6:SCUM(noCES)]], but higher mean MSIS.",
+   "type": "descriptive",
+   "role": "principal",
+   "novelty": "no_prior_found",
+   "scope": {
+    "population": "time series of the M1, M3 and tourism forecasting competitions"
+   },
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E2",
+     "results": [
+      "E2.T1.r5",
+      "E2.T1.r6"
+     ]
+    }
+   ],
+   "limitations": [
+    "L3"
+   ],
+   "field_provenance": {
+    "statement": "inferred"
+   },
+   "source_spans": [
+    "p9.16",
+    "p9.21",
+    "p11.27"
+   ],
+   "provenance": "extracted",
+   "depends_on": [
+    "C35"
+   ]
+  },
+  {
+   "id": "C12",
    "statement": "On the [[D17:M4 data without 10 series]], [[D5:SCUM]] has lower mean and median [[D12:MASE]], [[D11:RMSSE]] and [[D13:MSIS]] than [[D6:SCUM(noCES)]].",
    "type": "descriptive",
    "role": "principal",
@@ -1878,7 +652,497 @@
    "provenance": "extracted"
   },
   {
-   "id": "C42",
+   "id": "C13",
+   "statement": "[[D1:CES]] encompasses level processes.",
+   "type": "methodological",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "argument",
+     "warrant": "W2"
+    }
+   ],
+   "warrant": "W2",
+   "depends_on": [
+    "C20",
+    "C26",
+    "C36"
+   ],
+   "source_spans": [
+    "p1.6",
+    "p11.21",
+    "p11.24"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C14",
+   "statement": "[[D1:CES]] encompasses multiplicative trend processes.",
+   "type": "methodological",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "argument",
+     "warrant": "W2"
+    }
+   ],
+   "depends_on": [
+    "C27",
+    "C28",
+    "C39",
+    "C40"
+   ],
+   "source_spans": [
+    "p1.6",
+    "p11.21",
+    "p11.24"
+   ],
+   "provenance": "extracted",
+   "warrant": "W2"
+  },
+  {
+   "id": "C15",
+   "statement": "[[D1:CES]] approximates additive trend processes well.",
+   "type": "methodological",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "argument",
+     "warrant": "W2"
+    }
+   ],
+   "depends_on": [
+    "C37",
+    "C38"
+   ],
+   "source_spans": [
+    "p1.6",
+    "p11.21",
+    "p11.24"
+   ],
+   "provenance": "extracted",
+   "warrant": "W2"
+  },
+  {
+   "id": "C16",
+   "statement": "[[D1:CES]] has the single-source-of-error state-space form $y_t = l_{t-1} + \\varepsilon_t$, $l_t = l_{t-1} - (1 - \\alpha_1) c_{t-1} + (\\alpha_0 - \\alpha_1) \\varepsilon_t$, $c_t = l_{t-1} + (1 - \\alpha_0) c_{t-1} + (\\alpha_0 + \\alpha_1) \\varepsilon_t$, with level $l_t$ and [[D3:nonlinear trend component]] $c_t$.",
+   "type": "formal",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E1"
+    }
+   ],
+   "verification": "unchecked",
+   "assumptions": [
+    "C60",
+    "C61"
+   ],
+   "source_spans": [
+    "p4.4-p4.13",
+    "p13.28-p14.3"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C17",
+   "statement": "[[D1:CES]] is stationary, with both eigenvalues of its transition matrix inside the unit circle, when $\\alpha_1 < 5 - 2\\alpha_0$, $\\alpha_1 < 1$ and $\\alpha_1 > 1 - \\alpha_0$.",
+   "type": "formal",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E3"
+    },
+    {
+     "kind": "cited",
+     "reference": "B1",
+     "locator": "p. 38",
+     "self": true
+    }
+   ],
+   "verification": "unchecked",
+   "source_spans": [
+    "p4.17-p4.19",
+    "p5.6",
+    "p14.14-p15.11"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C18",
+   "statement": "When $\\alpha_1 > 1$, both eigenvalues of the [[D1:CES]] transition matrix are real and one of them is greater than one.",
+   "type": "formal",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E3"
+    }
+   ],
+   "verification": "unchecked",
+   "source_spans": [
+    "p4.19"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C19",
+   "statement": "When $\\alpha_1 > 1$, [[D1:CES]] produces a non-stationary trajectory.",
+   "type": "formal",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E3"
+    }
+   ],
+   "verification": "unchecked",
+   "source_spans": [
+    "p4.19"
+   ],
+   "provenance": "extracted",
+   "depends_on": [
+    "C18"
+   ]
+  },
+  {
+   "id": "C20",
+   "statement": "When $\\alpha_1 = 1$, [[D1:CES]] is equivalent to ETS(A,N,N).",
+   "type": "formal",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E3"
+    }
+   ],
+   "verification": "unchecked",
+   "source_spans": [
+    "p4.19",
+    "p6.9-p6.10"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C21",
+   "statement": "[[D1:CES]] is required to be stable, or at least forecastable.",
+   "type": "methodological",
+   "role": "supporting",
+   "support": [
+    {
+     "kind": "cited",
+     "reference": "B14",
+     "self": true
+    },
+    {
+     "kind": "cited",
+     "reference": "B1",
+     "self": true
+    }
+   ],
+   "source_spans": [
+    "p4.20",
+    "p5.4",
+    "p5.20"
+   ],
+   "provenance": "extracted",
+   "novelty": "no_prior_found"
+  },
+  {
+   "id": "C22",
+   "statement": "[[D1:CES]] is not required to be stationary.",
+   "type": "methodological",
+   "role": "supporting",
+   "support": [
+    {
+     "kind": "cited",
+     "reference": "B14",
+     "self": true
+    },
+    {
+     "kind": "cited",
+     "reference": "B1",
+     "self": true
+    }
+   ],
+   "source_spans": [
+    "p4.20",
+    "p5.4",
+    "p5.20"
+   ],
+   "provenance": "extracted",
+   "novelty": "no_prior_found"
+  },
+  {
+   "id": "C23",
+   "statement": "[[D1:CES]] is stable, with all eigenvalues of its discount matrix inside the unit circle, when $(\\alpha_0 - 2.5)^2 + \\alpha_1^2 > 1.25$, $(\\alpha_0 - 0.5)^2 + (\\alpha_1 - 1)^2 > 0.25$ and $(\\alpha_0 - 1.5)^2 + (\\alpha_1 - 0.5)^2 < 1.5$.",
+   "type": "formal",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E4"
+    },
+    {
+     "kind": "cited",
+     "reference": "B1",
+     "locator": "pp. 172-173",
+     "self": true
+    }
+   ],
+   "verification": "unchecked",
+   "source_spans": [
+    "p4.21-p5.6",
+    "p15.12-p16.1"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C24",
+   "statement": "The stable region of [[D1:CES]] contains both stationary and non-stationary values of the [[D2:complex smoothing parameter]].",
+   "type": "formal",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E4"
+    }
+   ],
+   "verification": "unchecked",
+   "source_spans": [
+    "p4.21-p5.6",
+    "p15.12-p16.1"
+   ],
+   "provenance": "extracted",
+   "depends_on": [
+    "C17",
+    "C23"
+   ]
+  },
+  {
+   "id": "C25",
+   "statement": "The [[D1:CES]] point forecast $w'F^{h-1}v_t$ follows one of five trajectories set by the [[D2:complex smoothing parameter]]: a flat line, exponential growth, exponential decline, harmonic oscillation converging to zero, or diverging harmonic oscillation.",
+   "type": "formal",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E3"
+    }
+   ],
+   "verification": "unchecked",
+   "source_spans": [
+    "p5.7-p5.13",
+    "p6.1-p6.2"
+   ],
+   "provenance": "extracted",
+   "depends_on": [
+    "C26",
+    "C27",
+    "C28",
+    "C29",
+    "C30"
+   ]
+  },
+  {
+   "id": "C26",
+   "statement": "When $\\alpha_1 = 1$, the [[D1:CES]] point forecast is a flat line.",
+   "type": "formal",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E3"
+    }
+   ],
+   "verification": "unchecked",
+   "source_spans": [
+    "p5.7-p5.13",
+    "p6.1-p6.2"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C27",
+   "statement": "When $\\alpha_1 > 1$, the [[D1:CES]] point forecast grows exponentially.",
+   "type": "formal",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E3"
+    }
+   ],
+   "verification": "unchecked",
+   "source_spans": [
+    "p5.7-p5.13",
+    "p6.1-p6.2"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C28",
+   "statement": "When $(4 - \\alpha_0^2)/4 < \\alpha_1 < 1$, the [[D1:CES]] point forecast declines exponentially.",
+   "type": "formal",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E3"
+    }
+   ],
+   "verification": "unchecked",
+   "source_spans": [
+    "p5.7-p5.13",
+    "p6.1-p6.2"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C29",
+   "statement": "When $1 - \\alpha_0 < \\alpha_1 < (4 - \\alpha_0^2)/4$, the [[D1:CES]] point forecast is a harmonic oscillation converging to zero.",
+   "type": "formal",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E3"
+    }
+   ],
+   "verification": "unchecked",
+   "source_spans": [
+    "p5.7-p5.13",
+    "p6.1-p6.2"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C30",
+   "statement": "When $0 < \\alpha_1 < 1 - \\alpha_0$, the [[D1:CES]] point forecast is a diverging harmonic oscillation.",
+   "type": "formal",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E3"
+    }
+   ],
+   "verification": "unchecked",
+   "source_spans": [
+    "p5.7-p5.13",
+    "p6.1-p6.2"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C31",
+   "statement": "[[D4:seasonal CES]] can produce seasonality whose amplitude changes nonlinearly.",
+   "type": "methodological",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "argument",
+     "warrant": "W3"
+    }
+   ],
+   "warrant": "W3",
+   "source_spans": [
+    "p7.3",
+    "p11.26"
+   ],
+   "provenance": "extracted",
+   "depends_on": [
+    "C25"
+   ]
+  },
+  {
+   "id": "C32",
+   "statement": "On M3 series 1664, which graphical analysis and [[D24:ADF test]] and [[D25:KPSS test]] indicate is stationary, [[D1:CES]] estimates the stationary $\\alpha_0 + i\\alpha_1 = 0.99999 + 0.99884i$.",
+   "type": "descriptive",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E7",
+     "results": [
+      "E7.R1",
+      "E7.R2"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p7.11-p7.12",
+    "p8.1-p8.2"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C33",
+   "statement": "On the trended M3 series 2721, [[D1:CES]] estimates the non-stationary $\\alpha_0 + i\\alpha_1 = 1.48098 + 1.00346i$.",
+   "type": "descriptive",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E7",
+     "results": [
+      "E7.R3",
+      "E7.R4"
+     ]
+    }
+   ],
+   "source_spans": [
+    "p7.11",
+    "p7.13-p8.4"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C34",
+   "statement": "On the [[D7:M1, M3 and tourism data]], in Nemenyi tests at the 5% level, CES has the best mean rank of four methods, CES, [[D8:ETS]], [[D9:ARIMA]] and the [[D10:Theta method]] on [[D11:RMSSE]] and on [[D12:MASE]].",
+   "type": "descriptive",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "scope": {
+    "conditions": [
+     "Nemenyi test on ranks of the error measures, significance level 0.05"
+    ]
+   },
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E2"
+    }
+   ],
+   "source_spans": [
+    "p9.14",
+    "p9.20"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C35",
    "statement": "On the [[D7:M1, M3 and tourism data]], in [[D22:Nemenyi test]]s at the 5% level [[D5:SCUM]] is statistically significantly better than every other method, including [[D6:SCUM(noCES)]], on RMSSE, MASE and MSIS.",
    "type": "descriptive",
    "role": "supporting",
@@ -1899,6 +1163,687 @@
     "p10.3"
    ],
    "provenance": "extracted"
+  },
+  {
+   "id": "C36",
+   "statement": "On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(A,N,N), but a higher mean MSIS.",
+   "type": "descriptive",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E9",
+     "results": [
+      "E9.T1"
+     ]
+    }
+   ],
+   "assumptions": [
+    "C65"
+   ],
+   "limitations": [
+    "L1"
+   ],
+   "field_provenance": {
+    "statement": "inferred"
+   },
+   "source_spans": [
+    "p10.10",
+    "p10.21",
+    "p11.21"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C37",
+   "statement": "On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(A,A,N), but a higher mean MSIS.",
+   "type": "descriptive",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E9",
+     "results": [
+      "E9.T1"
+     ]
+    }
+   ],
+   "assumptions": [
+    "C65"
+   ],
+   "source_spans": [
+    "p10.10",
+    "p10.21",
+    "p11.21"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C38",
+   "statement": "On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has a lower median [[D11:RMSSE]] than ETS(A,Ad,N), but higher mean RMSSE, mean and median [[D12:MASE]], and mean and median [[D13:MSIS]].",
+   "type": "descriptive",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E9",
+     "results": [
+      "E9.T1"
+     ]
+    }
+   ],
+   "assumptions": [
+    "C65"
+   ],
+   "source_spans": [
+    "p10.10",
+    "p10.21",
+    "p11.21"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C39",
+   "statement": "On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]], [[D12:MASE]] and [[D13:MSIS]] than ETS(M,M,N).",
+   "type": "descriptive",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E9",
+     "results": [
+      "E9.T1"
+     ]
+    }
+   ],
+   "assumptions": [
+    "C65"
+   ],
+   "source_spans": [
+    "p10.10",
+    "p10.21",
+    "p11.21"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C40",
+   "statement": "On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(M,Md,N), but a higher mean MSIS.",
+   "type": "descriptive",
+   "role": "supporting",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E9",
+     "results": [
+      "E9.T1"
+     ]
+    }
+   ],
+   "assumptions": [
+    "C65"
+   ],
+   "source_spans": [
+    "p10.10",
+    "p10.21",
+    "p11.21"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C41",
+   "statement": "The transition matrix of the [[D1:CES]] state-space form contains the smoothing parameters.",
+   "type": "formal",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E1"
+    }
+   ],
+   "verification": "unchecked",
+   "depends_on": [
+    "C16"
+   ],
+   "source_spans": [
+    "p4.12-p4.13"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C42",
+   "statement": "The [[D23:Akaike information criterion]] of seasonal and non-seasonal [[D1:CES]] can be computed from a Gaussian likelihood of the same form as that of additive exponential smoothing models.",
+   "type": "methodological",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "cited",
+     "reference": "B1",
+     "locator": "p. 68",
+     "self": true
+    }
+   ],
+   "assumptions": [
+    "C60",
+    "C64"
+   ],
+   "source_spans": [
+    "p4.14-p4.15",
+    "p7.6"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C43",
+   "statement": "The conditional variance of [[D1:CES]] $h$ steps ahead, given the level and the nonlinear trend component, can be calculated from its state-space form in the same way as for pure additive ETS models.",
+   "type": "formal",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "cited",
+     "reference": "B1",
+     "locator": "p. 96",
+     "self": true
+    }
+   ],
+   "source_spans": [
+    "p5.14"
+   ],
+   "provenance": "extracted",
+   "depends_on": [
+    "C16"
+   ],
+   "assumptions": [
+    "C60",
+    "C62",
+    "C63"
+   ]
+  },
+  {
+   "id": "C44",
+   "statement": "When $\\alpha_1$ is close to 1, [[D1:CES]] behaves like simple exponential smoothing with smoothing parameter $\\alpha_0 - 1$.",
+   "type": "formal",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E3"
+    }
+   ],
+   "verification": "unchecked",
+   "source_spans": [
+    "p6.5-p6.10"
+   ],
+   "provenance": "extracted",
+   "depends_on": [
+    "C20"
+   ]
+  },
+  {
+   "id": "C45",
+   "statement": "When $\\alpha_1$ is close to 1, the real part $\\alpha_0$ of the complex smoothing parameter of [[D1:CES]] is close to 1 for a stationary series, for which the smoothing parameter of simple exponential smoothing would be close to 0.",
+   "type": "formal",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E3"
+    }
+   ],
+   "verification": "unchecked",
+   "source_spans": [
+    "p6.5-p6.10"
+   ],
+   "provenance": "extracted",
+   "depends_on": [
+    "C44"
+   ]
+  },
+  {
+   "id": "C46",
+   "statement": "When $\\alpha_1$ is close to 1, the real part $\\alpha_0$ of the complex smoothing parameter of [[D1:CES]] is close to 2 for a random walk.",
+   "type": "formal",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E3"
+    }
+   ],
+   "verification": "unchecked",
+   "source_spans": [
+    "p6.5-p6.10"
+   ],
+   "provenance": "extracted",
+   "depends_on": [
+    "C44"
+   ]
+  },
+  {
+   "id": "C47",
+   "statement": "[[D4:seasonal CES]] has an underlying SARIMA(2,0,2m+2)(2,0,0)$_m$ model.",
+   "type": "formal",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "formal_proof",
+     "evidence": "E6"
+    }
+   ],
+   "verification": "unchecked",
+   "source_spans": [
+    "p7.2",
+    "p16.2-p16.28"
+   ],
+   "provenance": "extracted",
+   "depends_on": [
+    "C8"
+   ]
+  },
+  {
+   "id": "C48",
+   "statement": "[[D4:seasonal CES]] is a stationary or a non-stationary model depending on the values of its complex smoothing parameters.",
+   "type": "formal",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "argument",
+     "warrant": "W4"
+    }
+   ],
+   "warrant": "W4",
+   "verification": "unchecked",
+   "depends_on": [
+    "C47"
+   ],
+   "limitations": [
+    "L2"
+   ],
+   "source_spans": [
+    "p7.2"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C49",
+   "statement": "[[D4:seasonal CES]] can produce all the trajectories of non-seasonal [[D1:CES]].",
+   "type": "methodological",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "argument",
+     "warrant": "W3"
+    }
+   ],
+   "source_spans": [
+    "p7.3",
+    "p11.26"
+   ],
+   "provenance": "extracted",
+   "depends_on": [
+    "C25"
+   ],
+   "warrant": "W3"
+  },
+  {
+   "id": "C50",
+   "statement": "[[D4:seasonal CES]] can model multiplicative or other shapes of seasonality when the level of the series does not change.",
+   "type": "methodological",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "argument",
+     "warrant": "W3"
+    }
+   ],
+   "source_spans": [
+    "p7.3",
+    "p11.26"
+   ],
+   "provenance": "extracted",
+   "depends_on": [
+    "C25"
+   ],
+   "warrant": "W3"
+  },
+  {
+   "id": "C51",
+   "statement": "Non-seasonal [[D1:CES]] has 5 estimated parameters: two smoothing parameters, two initial states and the error variance.",
+   "type": "methodological",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "argument",
+     "warrant": "W5"
+    }
+   ],
+   "warrant": "W5",
+   "source_spans": [
+    "p7.6-p7.7"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C52",
+   "statement": "[[D4:seasonal CES]] has $4 + 2m + 2 + 1$ estimated parameters: four smoothing parameters, $2m$ initial lagged values, two initial non-seasonal states and the error variance.",
+   "type": "methodological",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "argument",
+     "warrant": "W5"
+    }
+   ],
+   "source_spans": [
+    "p7.6-p7.7"
+   ],
+   "provenance": "extracted",
+   "warrant": "W5"
+  },
+  {
+   "id": "C53",
+   "statement": "On the [[D7:M1, M3 and tourism data]], in Nemenyi tests at the 5% level, not all of the differences between CES and [[D8:ETS]], [[D9:ARIMA]] and the [[D10:Theta method]] on [[D11:RMSSE]] and [[D12:MASE]] are statistically significant.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "scope": {
+    "conditions": [
+     "Nemenyi test on ranks of the error measures, significance level 0.05"
+    ]
+   },
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E2"
+    }
+   ],
+   "source_spans": [
+    "p9.14",
+    "p9.20"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C54",
+   "statement": "On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(A,N,A), but a higher mean MSIS.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E9",
+     "results": [
+      "E9.T2"
+     ]
+    }
+   ],
+   "assumptions": [
+    "C65"
+   ],
+   "field_provenance": {
+    "statement": "inferred"
+   },
+   "source_spans": [
+    "p11.22"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C55",
+   "statement": "On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(A,Ad,A), but a higher mean MSIS.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E9",
+     "results": [
+      "E9.T2"
+     ]
+    }
+   ],
+   "assumptions": [
+    "C65"
+   ],
+   "source_spans": [
+    "p11.22"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C56",
+   "statement": "On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(M,M,M), but a higher mean MSIS.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E9",
+     "results": [
+      "E9.T2"
+     ]
+    }
+   ],
+   "assumptions": [
+    "C65"
+   ],
+   "source_spans": [
+    "p11.22"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C57",
+   "statement": "On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(M,Md,M), but a higher mean MSIS.",
+   "type": "descriptive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E9",
+     "results": [
+      "E9.T2"
+     ]
+    }
+   ],
+   "assumptions": [
+    "C65"
+   ],
+   "source_spans": [
+    "p11.22"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C58",
+   "statement": "Information criteria identify effectively when to switch between seasonal and non-seasonal [[D1:CES]].",
+   "type": "interpretive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E9",
+     "results": [
+      "E9.T2"
+     ]
+    },
+    {
+     "kind": "argument",
+     "warrant": "W6"
+    }
+   ],
+   "warrant": "W6",
+   "source_spans": [
+    "p11.22",
+    "p11.26"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C59",
+   "statement": "CES is a robust forecasting approach.",
+   "type": "interpretive",
+   "role": "secondary",
+   "novelty": "no_prior_found",
+   "support": [
+    {
+     "kind": "empirical_quant",
+     "evidence": "E2",
+     "results": [
+      "E2.T1"
+     ]
+    },
+    {
+     "kind": "empirical_quant",
+     "evidence": "E8",
+     "results": [
+      "E8.T1"
+     ]
+    },
+    {
+     "kind": "argument",
+     "warrant": "W7"
+    }
+   ],
+   "warrant": "W7",
+   "source_spans": [
+    "p11.28"
+   ],
+   "provenance": "extracted",
+   "scope": {
+    "excludes": [
+     "forecasting scenarios for which CES is not appropriate, which the paper does not name"
+    ]
+   }
+  },
+  {
+   "id": "C60",
+   "statement": "The error term $\\varepsilon_t$ of [[D1:CES]] is additive white noise.",
+   "type": "descriptive",
+   "role": "supporting",
+   "support": [
+    {
+     "kind": "assumption"
+    }
+   ],
+   "assumption_category": "statistical",
+   "check": "unchecked",
+   "source_spans": [
+    "p4.5",
+    "p4.14"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C61",
+   "statement": "There is no misspecification error, so the forecast error $e_t$ of [[D1:CES]] equals the model error $\\varepsilon_t$.",
+   "type": "descriptive",
+   "role": "supporting",
+   "support": [
+    {
+     "kind": "assumption"
+    }
+   ],
+   "assumption_category": "theoretical",
+   "check": "untestable",
+   "source_spans": [
+    "p4.5",
+    "p14.2"
+   ],
+   "provenance": "extracted"
+  },
+  {
+   "id": "C62",
+   "statement": "The error term $\\varepsilon_t$ of [[D1:CES]] has no autocorrelation.",
+   "type": "descriptive",
+   "role": "secondary",
+   "support": [
+    {
+     "kind": "assumption"
+    }
+   ],
+   "assumption_category": "statistical",
+   "check": "unchecked",
+   "source_spans": [
+    "p4.5",
+    "p5.14"
+   ],
+   "provenance": "inferred"
+  },
+  {
+   "id": "C63",
+   "statement": "The error term $\\varepsilon_t$ of [[D1:CES]] has constant variance.",
+   "type": "descriptive",
+   "role": "secondary",
+   "support": [
+    {
+     "kind": "assumption"
+    }
+   ],
+   "assumption_category": "statistical",
+   "check": "unchecked",
+   "source_spans": [
+    "p4.5",
+    "p5.14"
+   ],
+   "provenance": "inferred"
+  },
+  {
+   "id": "C64",
+   "statement": "The error term $\\varepsilon_t$ of [[D1:CES]] is normally distributed.",
+   "type": "descriptive",
+   "role": "secondary",
+   "support": [
+    {
+     "kind": "assumption"
+    }
+   ],
+   "assumption_category": "statistical",
+   "check": "unchecked",
+   "source_spans": [
+    "p4.14-p4.15"
+   ],
+   "provenance": "inferred"
+  },
+  {
+   "id": "C65",
+   "statement": "ETS model selection with es() from the smooth package identifies correctly which series of the [[D7:M1, M3 and tourism data]] are seasonal.",
+   "type": "descriptive",
+   "role": "supporting",
+   "support": [
+    {
+     "kind": "assumption"
+    }
+   ],
+   "assumption_category": "methodological",
+   "check": "unchecked",
+   "source_spans": [
+    "p10.21",
+    "p11.22"
+   ],
+   "provenance": "extracted"
   }
  ],
  "evidence": [
@@ -1908,8 +1853,8 @@
    "description": "Derivation of the state-space form of CES from the complex-valued method, representing complex variables as real vectors and matrices.",
    "foundation": "Complex numbers represented as real 2x2 matrices; linear algebra",
    "assumptions": [
-    "C32",
-    "C34"
+    "C60",
+    "C61"
    ],
    "source_spans": [
     "p4.4-p4.13",
@@ -2095,7 +2040,7 @@
    "description": "Analysis of the eigenvalues of the CES transition matrix: the stationarity condition, the non-stationary case, the special case equivalent to ETS(A,N,N), the five forecast trajectories and the connection with simple exponential smoothing.",
    "foundation": "Linear algebra: eigenvalues of the transition matrix of a linear state-space model",
    "assumptions": [
-    "C34"
+    "C61"
    ],
    "source_spans": [
     "p4.16-p4.20",
@@ -2120,7 +2065,7 @@
     "level": "public"
    },
    "assumptions": [
-    "C34"
+    "C61"
    ]
   },
   {
@@ -2129,7 +2074,7 @@
    "description": "Derivation of the ARMA(2,2) model underlying CES from its state-space form, by eliminating the nonlinear trend component.",
    "foundation": "Algebra of backshift-operator polynomials",
    "assumptions": [
-    "C34"
+    "C61"
    ],
    "source_spans": [
     "p5.16-p6.4",
@@ -2145,7 +2090,7 @@
    "description": "Derivation of the SARIMA model underlying seasonal CES from its state-space form.",
    "foundation": "Algebra of backshift-operator polynomials and matrix inversion",
    "assumptions": [
-    "C34"
+    "C61"
    ],
    "source_spans": [
     "p7.2",
@@ -2611,68 +2556,62 @@
  ],
  "warrants": [
   {
+   "id": "W1",
+   "reasoning": "deductive",
+   "premises": [
+    "C8",
+    "C31",
+    "C13",
+    "C14",
+    "C15"
+   ],
+   "text": "The seasonal model takes the level and nonlinear trend states at lag m instead of carrying a set of seasonal components, so there are no seasonal indices to renormalise. Since non-seasonal CES captures both level and trend series without a choice of trend form, the only choice left is whether to include the lag-m states."
+  },
+  {
    "id": "W2",
    "reasoning": "deductive",
    "premises": [
-    "C4",
-    "C17",
-    "C24",
-    "C68",
-    "C69"
+    "C20",
+    "C26",
+    "C27",
+    "C28"
    ],
-   "text": "The seasonal model takes the level and nonlinear trend states at lag m instead of carrying a set of seasonal components, so there are no seasonal indices to renormalise. Since non-seasonal CES captures both level and trend series without a choice of trend form, the only choice left is whether to include the lag-m states."
+   "text": "With the imaginary part of the smoothing parameter equal to one CES is the local level model ETS(A,N,N); with it above one the forecasts grow exponentially, as in multiplicative trend models; and the flexibility of its trajectories lets it follow trends that the level and trend classification of exponential smoothing captures only with separate models."
   },
   {
    "id": "W3",
    "reasoning": "deductive",
    "premises": [
-    "C13"
+    "C25"
    ],
    "text": "Seasonal CES consists of two CES parts, one at lag 1 and one at lag m, and each part follows one of the CES forecast trajectories, so the seasonal part can grow, decline or oscillate in its own way. The non-seasonal level can become negative while the lagged level stays positive, and the two levels evolve independently, so the seasonal part can change its amplitude and shape without any change in the level of the series."
   },
   {
    "id": "W4",
+   "reasoning": "analogical",
+   "premises": [
+    "C47",
+    "C5"
+   ],
+   "text": "Non-seasonal CES has an underlying ARMA(2,2) model that is stationary or not depending on its complex smoothing parameter; by analogy, the authors state the same of the SARIMA model underlying seasonal CES. No stationarity condition is derived for seasonal CES."
+  },
+  {
+   "id": "W5",
    "reasoning": "deductive",
    "premises": [],
    "text": "The count follows from the model equations: each complex smoothing parameter has two real parts, each pair of level and nonlinear trend states needs initial values (m of each for the lag-m pair), and the error variance is estimated."
   },
   {
-   "id": "W5",
-   "reasoning": "deductive",
-   "premises": [
-    "C11",
-    "C50",
-    "C51",
-    "C52"
-   ],
-   "text": "With the imaginary part of the smoothing parameter equal to one CES is the local level model ETS(A,N,N); with it above one the forecasts grow exponentially, as in multiplicative trend models; and the flexibility of its trajectories lets it follow trends that the level and trend classification of exponential smoothing captures only with separate models."
-  },
-  {
-   "id": "W7",
+   "id": "W6",
    "reasoning": "inductive",
    "premises": [],
    "text": "On the seasonal subset of the M1, M3 and tourism data, CES with its seasonal or non-seasonal form chosen by AICc has lower RMSSE and MASE than every seasonal ETS model, which the authors take to show that the criterion chooses the seasonal form when it is needed. This is an argument from the accuracy results only: no experiment compares the selection by information criteria with other ways of choosing between seasonal and non-seasonal CES."
   },
   {
-   "id": "W8",
+   "id": "W7",
    "reasoning": "inductive",
    "premises": [],
    "text": "CES has lower RMSSE than ETS, ARIMA and the Theta method on the M1, M3, tourism and M4 data and lowers the errors of the combination it is included in, which the authors take as evidence that it is robust, while acknowledging that it does not suit every forecasting scenario. Robustness itself is not defined or tested: no experiment examines how the accuracy of CES varies across conditions or departures from its assumptions."
-  },
-  {
-   "id": "W10",
-   "reasoning": "inductive",
-   "premises": [],
-   "text": "CES, which has no separate trend forms, has lower RMSSE than ETS, which selects among trend forms, on competition data that contain both level and trended series, which the authors take to validate that CES handles both kinds of series by its smooth transition between trajectories. No experiment separates level from trended series to test this: the comparison is on the pooled competition data."
-  },
-  {
-   "id": "W11",
-   "reasoning": "analogical",
-   "premises": [
-    "C16",
-    "C3"
-   ],
-   "text": "Non-seasonal CES has an underlying ARMA(2,2) model that is stationary or not depending on its complex smoothing parameter; by analogy, the authors state the same of the SARIMA model underlying seasonal CES. No stationarity condition is derived for seasonal CES."
   }
  ],
  "limitations": [
@@ -2681,12 +2620,12 @@
    "category": "model_specification",
    "statement": "CES produces very large errors on a few series: on M1 series 47 it fails to identify the trend and its MSIS is 523.034 against 25.590 for ETS(M,N,N), which inflates its mean MSIS, and on the non-seasonal subset it fails on two series.",
    "affects": [
-    "C19",
-    "C22",
-    "C60",
-    "C61",
-    "C62",
-    "C63"
+    "C3",
+    "C36",
+    "C37",
+    "C38",
+    "C39",
+    "C40"
    ],
    "impact": "could_bias_magnitude",
    "mitigation": "none",
@@ -2702,9 +2641,9 @@
    "category": "model_specification",
    "statement": "The parameter restrictions under which seasonal CES is stable are not derived.",
    "affects": [
-    "C4",
-    "C47",
-    "C16"
+    "C8",
+    "C10",
+    "C47"
    ],
    "impact": "reduces_precision",
    "mitigation": "none",
@@ -2718,10 +2657,10 @@
    "category": "sample_size",
    "statement": "The effect of the length of a time series on the accuracy of CES is not analysed.",
    "affects": [
-    "C19",
-    "C21",
-    "C6",
-    "C41"
+    "C3",
+    "C4",
+    "C11",
+    "C12"
    ],
    "impact": "reduces_transferability",
    "mitigation": "none",
@@ -2735,7 +2674,7 @@
    "category": "model_specification",
    "statement": "CES is formulated only with an additive error term; a version with a multiplicative error term is not developed.",
    "affects": [
-    "C7"
+    "C16"
    ],
    "impact": "reduces_transferability",
    "mitigation": "none",
@@ -2749,8 +2688,8 @@
    "category": "sampling",
    "statement": "The 10 M4 series on which ETS broke down were excluded from the M4 comparison, so the series were selected on the failure of one of the compared methods.",
    "affects": [
-    "C21",
-    "C41"
+    "C4",
+    "C12"
    ],
    "impact": "could_bias_magnitude",
    "mitigation": "none",
@@ -2943,7 +2882,7 @@
    "id": "O1",
    "question": "Whether CES improves the SCUM combination because it captures long-term relations better than ETS, ARIMA and the Theta method, and nonlinear trends without separating level and trend, is not established.",
    "claims": [
-    "C6"
+    "C11"
    ],
    "source_spans": [
     "p9.16-p9.17",
