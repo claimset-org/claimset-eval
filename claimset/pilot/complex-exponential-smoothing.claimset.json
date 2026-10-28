@@ -1,5 +1,5 @@
 {
- "schema_version": "0.29",
+ "schema_version": "0.31",
  "paper": {
   "title": "Complex exponential smoothing",
   "licence": "CC-BY-4.0",
@@ -116,141 +116,293 @@
   {
    "id": "D1",
    "term": "CES",
-   "definition": "Complex exponential smoothing: a forecasting method that combines each past observation $y_t$ and its forecast error $e_t$ into the complex variable $y_t + i e_t$ and forecasts with an exponentially weighted sum of these values, $\\hat{y}_t + i\\hat{e}_t = (\\alpha_0 + i\\alpha_1) \\sum_{j=1}^{t-1} (1 + i - (\\alpha_0 + i\\alpha_1))^{j-1} (y_{t-j} + i e_{t-j})$, or recursively $\\hat{y}_t + i\\hat{e}_t = (\\alpha_0 + i\\alpha_1)(y_{t-1} + i e_{t-1}) + (1 - \\alpha_0 + i - i\\alpha_1)(\\hat{y}_{t-1} + i\\hat{e}_{t-1})$, where $\\alpha_0 + i\\alpha_1$ is the complex smoothing parameter and $\\hat{e}_t$ carries the information on past forecast errors."
+   "definition": "Complex exponential smoothing: a forecasting method that combines each past observation $y_t$ and its forecast error $e_t$ into the complex variable $y_t + i e_t$ and forecasts with an exponentially weighted sum of these values, $\\hat{y}_t + i\\hat{e}_t = (\\alpha_0 + i\\alpha_1) \\sum_{j=1}^{t-1} (1 + i - (\\alpha_0 + i\\alpha_1))^{j-1} (y_{t-j} + i e_{t-j})$, or recursively $\\hat{y}_t + i\\hat{e}_t = (\\alpha_0 + i\\alpha_1)(y_{t-1} + i e_{t-1}) + (1 - \\alpha_0 + i - i\\alpha_1)(\\hat{y}_{t-1} + i\\hat{e}_{t-1})$, where $\\alpha_0 + i\\alpha_1$ is the complex smoothing parameter and $\\hat{e}_t$ carries the information on past forecast errors.",
+   "kind": "method"
   },
   {
    "id": "D2",
    "term": "complex smoothing parameter",
-   "definition": "The smoothing parameter of CES, the complex number $\\alpha_0 + i\\alpha_1$; its real part $\\alpha_0$ and imaginary part $\\alpha_1$ are the two real parameters estimated, and they set how much of the past observations and of the past forecast errors is carried into the forecast."
+   "definition": "The smoothing parameter of CES, the complex number $\\alpha_0 + i\\alpha_1$; its real part $\\alpha_0$ and imaginary part $\\alpha_1$ are the two real parameters estimated, and they set how much of the past observations and of the past forecast errors is carried into the forecast.",
+   "kind": "concept"
   },
   {
    "id": "D3",
    "term": "nonlinear trend component",
-   "definition": "The state $c_t$ of the CES state-space model, which carries information on both its own previous value $c_{t-1}$ and the previous level $l_{t-1}$; it does not correspond to the trend component of exponential smoothing."
+   "definition": "The state $c_t$ of the CES state-space model, which carries information on both its own previous value $c_{t-1}$ and the previous level $l_{t-1}$; it does not correspond to the trend component of exponential smoothing.",
+   "kind": "concept"
   },
   {
    "id": "D4",
    "term": "seasonal CES",
-   "definition": "CES extended with a second pair of level and nonlinear trend states taken at lag $m$, the seasonal period, with its own complex smoothing parameter $\\beta_0 + i\\beta_1$: $y_t = l_{0,t-1} + l_{1,t-m} + \\varepsilon_t$, $l_{0,t} = l_{0,t-1} - (1 - \\alpha_1) c_{0,t-1} + (\\alpha_0 - \\alpha_1) \\varepsilon_t$, $c_{0,t} = l_{0,t-1} + (1 - \\alpha_0) c_{0,t-1} + (\\alpha_0 + \\alpha_1) \\varepsilon_t$, $l_{1,t} = l_{1,t-m} - (1 - \\beta_1) c_{1,t-m} + (\\beta_0 - \\beta_1) \\varepsilon_t$, $c_{1,t} = l_{1,t-m} + (1 - \\beta_0) c_{1,t-m} + (\\beta_0 + \\beta_1) \\varepsilon_t$."
+   "definition": "CES extended with a second pair of level and nonlinear trend states taken at lag $m$, the seasonal period, with its own complex smoothing parameter $\\beta_0 + i\\beta_1$: $y_t = l_{0,t-1} + l_{1,t-m} + \\varepsilon_t$, $l_{0,t} = l_{0,t-1} - (1 - \\alpha_1) c_{0,t-1} + (\\alpha_0 - \\alpha_1) \\varepsilon_t$, $c_{0,t} = l_{0,t-1} + (1 - \\alpha_0) c_{0,t-1} + (\\alpha_0 + \\alpha_1) \\varepsilon_t$, $l_{1,t} = l_{1,t-m} - (1 - \\beta_1) c_{1,t-m} + (\\beta_0 - \\beta_1) \\varepsilon_t$, $c_{1,t} = l_{1,t-m} + (1 - \\beta_0) c_{1,t-m} + (\\beta_0 + \\beta_1) \\varepsilon_t$.",
+   "kind": "method"
   },
   {
    "id": "D5",
    "term": "SCUM",
    "definition": "Simple combination of univariate models: the median of the forecasts of ETS, ARIMA, the Theta method and CES.",
-   "source": "B13"
+   "source": "B13",
+   "kind": "method"
   },
   {
    "id": "D6",
    "term": "SCUM(noCES)",
-   "definition": "The median of the forecasts of ETS, ARIMA and the Theta method: SCUM without CES."
+   "definition": "The median of the forecasts of ETS, ARIMA and the Theta method: SCUM without CES.",
+   "kind": "method"
   },
   {
    "id": "D7",
-   "term": "M1, M3 and tourism data",
-   "definition": "The 5,315 yearly, quarterly, monthly and other time series of the M1, M3 and tourism forecasting competitions."
+   "term": "the six compared methods",
+   "kind": "method",
+   "members": [
+    "D17",
+    "D9",
+    "D10",
+    "D11",
+    "D5",
+    "D6"
+   ],
+   "definition": "The four compared methods and the two combinations, SCUM and SCUM(noCES)."
   },
   {
    "id": "D8",
-   "term": "ETS",
-   "definition": "Exponential smoothing in a state space framework with automatic selection among its models; here es() from the smooth package with model ZXZ, selecting by AICc.",
-   "source": "B2"
+   "term": "M1, M3 and tourism data",
+   "definition": "The 5,315 yearly, quarterly, monthly and other time series of the M1, M3 and tourism forecasting competitions.",
+   "kind": "data"
   },
   {
    "id": "D9",
-   "term": "ARIMA",
-   "definition": "Automatic state space ARIMA; here auto.ssarima() from the smooth package.",
-   "source": "B15"
+   "term": "ETS",
+   "definition": "Exponential smoothing in a state space framework with automatic selection among its models; here es() from the smooth package with model ZXZ, selecting by AICc.",
+   "source": "B2",
+   "kind": "method"
   },
   {
    "id": "D10",
-   "term": "Theta method",
-   "definition": "The Theta method of forecasting; here thetaf() from the forecast package 8.14.",
-   "source": "B16"
+   "term": "ARIMA",
+   "definition": "Automatic state space ARIMA; here auto.ssarima() from the smooth package.",
+   "source": "B15",
+   "kind": "method"
   },
   {
    "id": "D11",
-   "term": "RMSSE",
-   "definition": "Root mean squared scaled error: the root mean squared forecast error over the horizon, scaled by the mean absolute first difference of the in-sample data; reported as its mean and median over the series.",
-   "source": "B17"
+   "term": "Theta method",
+   "definition": "The Theta method of forecasting; here thetaf() from the forecast package 8.14.",
+   "source": "B16",
+   "kind": "method"
   },
   {
    "id": "D12",
-   "term": "MASE",
-   "definition": "Mean absolute scaled error: the mean absolute forecast error over the horizon, scaled by the mean absolute first difference of the in-sample data; reported as its mean and median over the series.",
-   "source": "B18"
+   "term": "the four compared methods",
+   "kind": "method",
+   "members": [
+    "D17",
+    "D9",
+    "D10",
+    "D11"
+   ],
+   "definition": "CES with automatic seasonal selection, ETS, ARIMA and the Theta method, as the benchmark runs them."
   },
   {
    "id": "D13",
-   "term": "MSIS",
-   "definition": "Mean scaled interval score: the interval score of a prediction interval averaged over the horizon and scaled by the mean absolute first difference of the in-sample data; here of the 95% prediction interval, reported as its mean and median over the series.",
-   "source": "B19"
+   "term": "the three benchmark methods",
+   "kind": "method",
+   "members": [
+    "D9",
+    "D10",
+    "D11"
+   ],
+   "definition": "ETS, ARIMA and the Theta method, as the benchmark runs them."
   },
   {
    "id": "D14",
-   "term": "CES with automatic seasonal selection",
-   "definition": "CES fitted by auto.ces() from the smooth package 3.1.2, which chooses between seasonal and non-seasonal CES by AICc."
+   "term": "RMSSE",
+   "definition": "Root mean squared scaled error: the root mean squared forecast error over the horizon, scaled by the mean absolute first difference of the in-sample data; reported as its mean and median over the series.",
+   "source": "B17",
+   "kind": "measure"
   },
   {
    "id": "D15",
-   "term": "non-seasonal special cases of ETS",
-   "definition": "The ETS models ETS(A,N,N), ETS(A,A,N), ETS(A,Ad,N), ETS(M,M,N) and ETS(M,Md,N), each fitted without model selection.",
-   "source": "B1"
+   "term": "MASE",
+   "definition": "Mean absolute scaled error: the mean absolute forecast error over the horizon, scaled by the mean absolute first difference of the in-sample data; reported as its mean and median over the series.",
+   "source": "B18",
+   "kind": "measure"
   },
   {
    "id": "D16",
-   "term": "seasonal special cases of ETS",
-   "definition": "The ETS models ETS(A,N,A), ETS(A,A,A), ETS(A,Ad,A), ETS(M,M,M) and ETS(M,Md,M), each fitted without model selection.",
-   "source": "B1"
+   "term": "MSIS",
+   "definition": "Mean scaled interval score: the interval score of a prediction interval averaged over the horizon and scaled by the mean absolute first difference of the in-sample data; here of the 95% prediction interval, reported as its mean and median over the series.",
+   "source": "B19",
+   "kind": "measure"
   },
   {
    "id": "D17",
-   "term": "M4 data without 10 series",
-   "definition": "The 100,000 series of the M4 competition (23,000 yearly, 24,000 quarterly, 48,000 monthly, 359 weekly, 4,227 daily and 414 hourly) except series 19357, 43160, 51552, 62738, 92370, 92435, 93159, 93196, 93412 and 93491, whose influential outliers and structural breaks made ETS break down.",
-   "source": "B9"
+   "term": "CES with automatic seasonal selection",
+   "definition": "CES fitted by auto.ces() from the smooth package 3.1.2, which chooses between seasonal and non-seasonal CES by AICc.",
+   "kind": "method"
   },
   {
    "id": "D18",
-   "term": "non-seasonal subset",
-   "definition": "The 3,262 series of the M1, M3 and tourism data for which ETS model selection by es() from the smooth package chooses a non-seasonal model."
+   "term": "non-seasonal special cases of ETS",
+   "definition": "The ETS models ETS(A,N,N), ETS(A,A,N), ETS(A,Ad,N), ETS(M,M,N) and ETS(M,Md,N), each fitted without model selection.",
+   "source": "B1",
+   "kind": "method",
+   "members": [
+    "D19",
+    "D20",
+    "D21",
+    "D22",
+    "D23"
+   ]
   },
   {
    "id": "D19",
-   "term": "seasonal subset",
-   "definition": "The 2,053 series of the M1, M3 and tourism data for which ETS model selection by es() from the smooth package chooses a seasonal model."
+   "term": "ETS(A,N,N)",
+   "kind": "method",
+   "definition": "The ETS model with additive error, no trend and no seasonality, fitted without model selection.",
+   "source": "B1"
   },
   {
    "id": "D20",
-   "term": "holdout at the M1, M3 and tourism horizons",
-   "definition": "Each series split into an in-sample part and a holdout of the length used in its competition: 6 observations for yearly, 8 for quarterly and other, and 18 for monthly series; forecasts made from the end of the in-sample part."
+   "term": "ETS(A,A,N)",
+   "kind": "method",
+   "definition": "The ETS model with additive error, additive trend and no seasonality, fitted without model selection.",
+   "source": "B1"
   },
   {
    "id": "D21",
-   "term": "holdout at the M4 horizons",
-   "definition": "Each series split into an in-sample part and a holdout of the length used in the M4 competition: 6 observations for yearly, 8 for quarterly, 18 for monthly, 13 for weekly, 14 for daily and 48 for hourly series; forecasts made from the end of the in-sample part."
+   "term": "ETS(A,Ad,N)",
+   "kind": "method",
+   "definition": "The ETS model with additive error, additive damped trend and no seasonality, fitted without model selection.",
+   "source": "B1"
   },
   {
    "id": "D22",
-   "term": "Nemenyi test",
-   "definition": "Post hoc Nemenyi test on the ranks of an error measure across series, comparing all methods at the 5% level; here rmcb() from the greybox package.",
-   "source": "B20"
+   "term": "ETS(M,M,N)",
+   "kind": "method",
+   "definition": "The ETS model with multiplicative error, multiplicative trend and no seasonality, fitted without model selection.",
+   "source": "B1"
   },
   {
    "id": "D23",
-   "term": "Akaike information criterion",
-   "definition": "A criterion for choosing among models fitted by maximum likelihood that penalises the maximised log-likelihood by the number of estimated parameters.",
-   "source": "B21"
+   "term": "ETS(M,Md,N)",
+   "kind": "method",
+   "definition": "The ETS model with multiplicative error, multiplicative damped trend and no seasonality, fitted without model selection.",
+   "source": "B1"
   },
   {
    "id": "D24",
-   "term": "ADF test",
-   "definition": "Augmented Dickey-Fuller test of the null hypothesis that a time series has a unit root.",
-   "source": "B22"
+   "term": "seasonal special cases of ETS",
+   "definition": "The ETS models ETS(A,N,A), ETS(A,A,A), ETS(A,Ad,A), ETS(M,M,M) and ETS(M,Md,M), each fitted without model selection.",
+   "source": "B1",
+   "kind": "method",
+   "members": [
+    "D25",
+    "D26",
+    "D27",
+    "D28",
+    "D29"
+   ]
   },
   {
    "id": "D25",
+   "term": "ETS(A,N,A)",
+   "kind": "method",
+   "definition": "The ETS model with additive error, no trend and additive seasonality, fitted without model selection.",
+   "source": "B1"
+  },
+  {
+   "id": "D26",
+   "term": "ETS(A,A,A)",
+   "kind": "method",
+   "definition": "The ETS model with additive error, additive trend and additive seasonality, fitted without model selection.",
+   "source": "B1"
+  },
+  {
+   "id": "D27",
+   "term": "ETS(A,Ad,A)",
+   "kind": "method",
+   "definition": "The ETS model with additive error, additive damped trend and additive seasonality, fitted without model selection.",
+   "source": "B1"
+  },
+  {
+   "id": "D28",
+   "term": "ETS(M,M,M)",
+   "kind": "method",
+   "definition": "The ETS model with multiplicative error, multiplicative trend and multiplicative seasonality, fitted without model selection.",
+   "source": "B1"
+  },
+  {
+   "id": "D29",
+   "term": "ETS(M,Md,M)",
+   "kind": "method",
+   "definition": "The ETS model with multiplicative error, multiplicative damped trend and multiplicative seasonality, fitted without model selection.",
+   "source": "B1"
+  },
+  {
+   "id": "D30",
+   "term": "M4 data without 10 series",
+   "definition": "The 100,000 series of the M4 competition (23,000 yearly, 24,000 quarterly, 48,000 monthly, 359 weekly, 4,227 daily and 414 hourly) except series 19357, 43160, 51552, 62738, 92370, 92435, 93159, 93196, 93412 and 93491, whose influential outliers and structural breaks made ETS break down.",
+   "source": "B9",
+   "kind": "data"
+  },
+  {
+   "id": "D31",
+   "term": "non-seasonal subset",
+   "definition": "The 3,262 series of the M1, M3 and tourism data for which ETS model selection by es() from the smooth package chooses a non-seasonal model.",
+   "kind": "data"
+  },
+  {
+   "id": "D32",
+   "term": "seasonal subset",
+   "definition": "The 2,053 series of the M1, M3 and tourism data for which ETS model selection by es() from the smooth package chooses a seasonal model.",
+   "kind": "data"
+  },
+  {
+   "id": "D33",
+   "term": "holdout at the M1, M3 and tourism horizons",
+   "definition": "Each series split into an in-sample part and a holdout of the length used in its competition: 6 observations for yearly, 8 for quarterly and other, and 18 for monthly series; forecasts made from the end of the in-sample part.",
+   "kind": "design"
+  },
+  {
+   "id": "D34",
+   "term": "holdout at the M4 horizons",
+   "definition": "Each series split into an in-sample part and a holdout of the length used in the M4 competition: 6 observations for yearly, 8 for quarterly, 18 for monthly, 13 for weekly, 14 for daily and 48 for hourly series; forecasts made from the end of the in-sample part.",
+   "kind": "design"
+  },
+  {
+   "id": "D35",
+   "term": "Nemenyi test",
+   "definition": "Post hoc Nemenyi test on the ranks of an error measure across series, comparing all methods at the 5% level; here rmcb() from the greybox package.",
+   "source": "B20",
+   "kind": "design"
+  },
+  {
+   "id": "D36",
+   "term": "Akaike information criterion",
+   "definition": "A criterion for choosing among models fitted by maximum likelihood that penalises the maximised log-likelihood by the number of estimated parameters.",
+   "source": "B21",
+   "kind": "measure"
+  },
+  {
+   "id": "D37",
+   "term": "ADF test",
+   "definition": "Augmented Dickey-Fuller test of the null hypothesis that a time series has a unit root.",
+   "source": "B22",
+   "kind": "design"
+  },
+  {
+   "id": "D38",
    "term": "KPSS test",
    "definition": "Kwiatkowski-Phillips-Schmidt-Shin test of the null hypothesis that a time series is stationary.",
-   "source": "B23"
+   "source": "B23",
+   "kind": "design"
+  },
+  {
+   "id": "D39",
+   "term": "M3 series 1664 and 2721",
+   "kind": "data",
+   "definition": "Two monthly series of the M3 competition: series 1664, which graphical analysis and the ADF and KPSS tests indicate is stationary, and the trended series 2721; each split into in-sample and holdout parts."
   }
  ],
  "claims": [
@@ -319,7 +471,14 @@
      "self": true,
      "note": "Even when the components of exponential smoothing are identified correctly, the estimated smoothing parameters and the weights they imply can give poor forecasts."
     }
-   ]
+   ],
+   "about": {
+    "subject": "D1",
+    "relation": "is stationary or non-stationary depending on",
+    "object": "D2",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C2",
@@ -348,11 +507,18 @@
     "p6.4",
     "p11.24"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D1",
+    "relation": "passes continuously between stationary and non-stationary as changes",
+    "object": "D2",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C3",
-   "statement": "On the [[D7:M1, M3 and tourism data]], CES has the lowest mean [[D11:RMSSE]] and the lowest median RMSSE, [[D12:MASE]] and [[D13:MSIS]] of four methods, CES, [[D8:ETS]], [[D9:ARIMA]] and the [[D10:Theta method]], but not the lowest mean MASE, and the highest mean MSIS.",
+   "statement": "On the [[D8:M1, M3 and tourism data]], [[D17:CES]] has the lowest mean [[D14:RMSSE]] and the lowest median RMSSE, [[D15:MASE]] and [[D16:MSIS]] of [[D12:four methods, CES, ETS, ARIMA and the Theta method]], but not the lowest mean MASE, and the highest mean MSIS.",
    "type": "descriptive",
    "role": "principal",
    "novelty": "no_prior_found",
@@ -390,11 +556,24 @@
    "provenance": "extracted",
    "depends_on": [
     "C34"
-   ]
+   ],
+   "about": {
+    "subject": "D17",
+    "relation": "has the lowest median errors and mean RMSSE, but not the lowest mean MASE or mean MSIS, of",
+    "object": [
+     "D14",
+     "D15",
+     "D16"
+    ],
+    "comparator": "D12",
+    "conditions": [
+     "D8"
+    ]
+   }
   },
   {
    "id": "C4",
-   "statement": "On the M4 competition data, CES has the lowest mean and median [[D12:MASE]] and [[D11:RMSSE]] and the lowest median [[D13:MSIS]] of four methods, CES, [[D8:ETS]], [[D9:ARIMA]] and the [[D10:Theta method]], but not the lowest mean MSIS.",
+   "statement": "On the [[D30:M4 competition data]], [[D17:CES]] has the lowest mean and median [[D15:MASE]] and [[D14:RMSSE]] and the lowest median [[D16:MSIS]] of [[D12:four methods, CES, ETS, ARIMA and the Theta method]], but not the lowest mean MSIS.",
    "type": "descriptive",
    "role": "principal",
    "novelty": "no_prior_found",
@@ -428,7 +607,20 @@
     "p9.22-p10.9",
     "p11.27"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D17",
+    "relation": "has the lowest mean and median MASE and RMSSE and median MSIS, but not the lowest mean MSIS, of",
+    "object": [
+     "D15",
+     "D14",
+     "D16"
+    ],
+    "comparator": "D12",
+    "conditions": [
+     "D30"
+    ]
+   }
   },
   {
    "id": "C5",
@@ -455,7 +647,14 @@
     "p11.25",
     "p14.4-p14.11"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D1",
+    "relation": "has an underlying",
+    "object": "ARMA(2,2) model with coefficients nonlinear in the two parameters",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C6",
@@ -479,7 +678,14 @@
     "p11.25",
     "p14.4-p14.11"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "the parameter space of the ARMA(2,2) model underlying CES",
+    "relation": "differs from",
+    "object": null,
+    "comparator": "the parameter space of the general ARMA(2,2) model",
+    "conditions": []
+   }
   },
   {
    "id": "C7",
@@ -503,7 +709,14 @@
     "p11.25",
     "p14.4-p14.11"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "the parameter space of the ARMA(2,2) model underlying CES",
+    "relation": "is not restricted to",
+    "object": "stationary models",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C8",
@@ -526,7 +739,14 @@
     "p7.6-p7.8",
     "p11.26"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D4",
+    "relation": "models seasonality with",
+    "object": "lag-m level and nonlinear trend states",
+    "comparator": "seasonal indices",
+    "conditions": []
+   }
   },
   {
    "id": "C9",
@@ -549,7 +769,14 @@
    "depends_on": [
     "C8"
    ],
-   "warrant": "W1"
+   "warrant": "W1",
+   "about": {
+    "subject": "D4",
+    "relation": "has no",
+    "object": "seasonal indices that need renormalising",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C10",
@@ -579,11 +806,18 @@
    "warrant": "W1",
    "limitations": [
     "L2"
-   ]
+   ],
+   "about": {
+    "subject": "model selection for CES",
+    "relation": "reduces to",
+    "object": "choosing between the seasonal and the non-seasonal model",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C11",
-   "statement": "On the [[D7:M1, M3 and tourism data]], [[D5:SCUM]] has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than [[D6:SCUM(noCES)]], but higher mean MSIS.",
+   "statement": "On the [[D8:M1, M3 and tourism data]], [[D5:SCUM]] has lower mean and median [[D14:RMSSE]] and [[D15:MASE]] and lower median [[D16:MSIS]] than [[D6:SCUM(noCES)]], but higher mean MSIS.",
    "type": "descriptive",
    "role": "principal",
    "novelty": "no_prior_found",
@@ -614,11 +848,24 @@
    "provenance": "extracted",
    "depends_on": [
     "C35"
-   ]
+   ],
+   "about": {
+    "subject": "D5",
+    "relation": "has lower errors, except mean MSIS, than",
+    "object": [
+     "D14",
+     "D15",
+     "D16"
+    ],
+    "comparator": "D6",
+    "conditions": [
+     "D8"
+    ]
+   }
   },
   {
    "id": "C12",
-   "statement": "On the [[D17:M4 data without 10 series]], [[D5:SCUM]] has lower mean and median [[D12:MASE]], [[D11:RMSSE]] and [[D13:MSIS]] than [[D6:SCUM(noCES)]].",
+   "statement": "On the [[D30:M4 data without 10 series]], [[D5:SCUM]] has lower mean and median [[D15:MASE]], [[D14:RMSSE]] and [[D16:MSIS]] than [[D6:SCUM(noCES)]].",
    "type": "descriptive",
    "role": "principal",
    "novelty": "no_prior_found",
@@ -649,7 +896,20 @@
     "p10.9",
     "p11.27"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D5",
+    "relation": "has lower mean and median errors than",
+    "object": [
+     "D15",
+     "D14",
+     "D16"
+    ],
+    "comparator": "D6",
+    "conditions": [
+     "D30"
+    ]
+   }
   },
   {
    "id": "C13",
@@ -674,7 +934,14 @@
     "p11.21",
     "p11.24"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D1",
+    "relation": "encompasses",
+    "object": "level processes",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C14",
@@ -700,7 +967,14 @@
     "p11.24"
    ],
    "provenance": "extracted",
-   "warrant": "W2"
+   "warrant": "W2",
+   "about": {
+    "subject": "D1",
+    "relation": "encompasses",
+    "object": "multiplicative trend processes",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C15",
@@ -724,7 +998,14 @@
     "p11.24"
    ],
    "provenance": "extracted",
-   "warrant": "W2"
+   "warrant": "W2",
+   "about": {
+    "subject": "D1",
+    "relation": "approximates well",
+    "object": "additive trend processes",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C16",
@@ -747,7 +1028,14 @@
     "p4.4-p4.13",
     "p13.28-p14.3"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D1",
+    "relation": "has the single-source-of-error state-space form",
+    "object": "a level and a nonlinear trend state",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C17",
@@ -773,7 +1061,18 @@
     "p5.6",
     "p14.14-p15.11"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D1",
+    "relation": "is stationary when",
+    "object": null,
+    "comparator": null,
+    "conditions": [
+     "α1 < 5 − 2α0",
+     "α1 < 1",
+     "α1 > 1 − α0"
+    ]
+   }
   },
   {
    "id": "C18",
@@ -791,7 +1090,16 @@
    "source_spans": [
     "p4.19"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "the eigenvalues of the CES transition matrix",
+    "relation": "are both real, one of them greater than one,",
+    "object": null,
+    "comparator": null,
+    "conditions": [
+     "α1 > 1"
+    ]
+   }
   },
   {
    "id": "C19",
@@ -812,11 +1120,20 @@
    "provenance": "extracted",
    "depends_on": [
     "C18"
-   ]
+   ],
+   "about": {
+    "subject": "D1",
+    "relation": "produces a non-stationary trajectory",
+    "object": null,
+    "comparator": null,
+    "conditions": [
+     "α1 > 1"
+    ]
+   }
   },
   {
    "id": "C20",
-   "statement": "When $\\alpha_1 = 1$, [[D1:CES]] is equivalent to ETS(A,N,N).",
+   "statement": "When $\\alpha_1 = 1$, [[D1:CES]] is equivalent to [[D19:ETS(A,N,N)]].",
    "type": "formal",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -831,7 +1148,16 @@
     "p4.19",
     "p6.9-p6.10"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D1",
+    "relation": "is equivalent to",
+    "object": "D19",
+    "comparator": null,
+    "conditions": [
+     "α1 = 1"
+    ]
+   }
   },
   {
    "id": "C21",
@@ -856,7 +1182,14 @@
     "p5.20"
    ],
    "provenance": "extracted",
-   "novelty": "no_prior_found"
+   "novelty": "no_prior_found",
+   "about": {
+    "subject": "D1",
+    "relation": "is required to be",
+    "object": "stable, or at least forecastable",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C22",
@@ -881,7 +1214,14 @@
     "p5.20"
    ],
    "provenance": "extracted",
-   "novelty": "no_prior_found"
+   "novelty": "no_prior_found",
+   "about": {
+    "subject": "D1",
+    "relation": "is not required to be",
+    "object": "stationary",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C23",
@@ -906,7 +1246,18 @@
     "p4.21-p5.6",
     "p15.12-p16.1"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D1",
+    "relation": "is stable when",
+    "object": null,
+    "comparator": null,
+    "conditions": [
+     "(α0 − 2.5)² + α1² > 1.25",
+     "(α0 − 0.5)² + (α1 − 1)² > 0.25",
+     "(α0 − 1.5)² + (α1 − 0.5)² < 1.5"
+    ]
+   }
   },
   {
    "id": "C24",
@@ -929,7 +1280,14 @@
    "depends_on": [
     "C17",
     "C23"
-   ]
+   ],
+   "about": {
+    "subject": "the stable region of CES",
+    "relation": "contains stationary and non-stationary values of",
+    "object": "D2",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C25",
@@ -955,7 +1313,14 @@
     "C28",
     "C29",
     "C30"
-   ]
+   ],
+   "about": {
+    "subject": "the CES point forecast",
+    "relation": "follows one of five trajectories set by",
+    "object": "D2",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C26",
@@ -974,7 +1339,16 @@
     "p5.7-p5.13",
     "p6.1-p6.2"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "the CES point forecast",
+    "relation": "is a flat line",
+    "object": null,
+    "comparator": null,
+    "conditions": [
+     "α1 = 1"
+    ]
+   }
   },
   {
    "id": "C27",
@@ -993,7 +1367,16 @@
     "p5.7-p5.13",
     "p6.1-p6.2"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "the CES point forecast",
+    "relation": "grows exponentially",
+    "object": null,
+    "comparator": null,
+    "conditions": [
+     "α1 > 1"
+    ]
+   }
   },
   {
    "id": "C28",
@@ -1012,7 +1395,16 @@
     "p5.7-p5.13",
     "p6.1-p6.2"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "the CES point forecast",
+    "relation": "declines exponentially",
+    "object": null,
+    "comparator": null,
+    "conditions": [
+     "(4 − α0²)/4 < α1 < 1"
+    ]
+   }
   },
   {
    "id": "C29",
@@ -1031,7 +1423,16 @@
     "p5.7-p5.13",
     "p6.1-p6.2"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "the CES point forecast",
+    "relation": "is a harmonic oscillation converging to zero",
+    "object": null,
+    "comparator": null,
+    "conditions": [
+     "1 − α0 < α1 < (4 − α0²)/4"
+    ]
+   }
   },
   {
    "id": "C30",
@@ -1050,7 +1451,16 @@
     "p5.7-p5.13",
     "p6.1-p6.2"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "the CES point forecast",
+    "relation": "is a diverging harmonic oscillation",
+    "object": null,
+    "comparator": null,
+    "conditions": [
+     "0 < α1 < 1 − α0"
+    ]
+   }
   },
   {
    "id": "C31",
@@ -1072,11 +1482,18 @@
    "provenance": "extracted",
    "depends_on": [
     "C25"
-   ]
+   ],
+   "about": {
+    "subject": "D4",
+    "relation": "can produce",
+    "object": "seasonality whose amplitude changes nonlinearly",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C32",
-   "statement": "On M3 series 1664, which graphical analysis and [[D24:ADF test]] and [[D25:KPSS test]] indicate is stationary, [[D1:CES]] estimates the stationary $\\alpha_0 + i\\alpha_1 = 0.99999 + 0.99884i$.",
+   "statement": "On M3 series 1664, which graphical analysis and [[D37:ADF test]] and [[D38:KPSS test]] indicate is stationary, [[D1:CES]] estimates the stationary [[D2:complex smoothing parameter]] $\\alpha_0 + i\\alpha_1 = 0.99999 + 0.99884i$.",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1094,11 +1511,20 @@
     "p7.11-p7.12",
     "p8.1-p8.2"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D1",
+    "relation": "estimates a stationary value of",
+    "object": "D2",
+    "comparator": null,
+    "conditions": [
+     "M3 series 1664, stationary by graphical analysis and the ADF and KPSS tests"
+    ]
+   }
   },
   {
    "id": "C33",
-   "statement": "On the trended M3 series 2721, [[D1:CES]] estimates the non-stationary $\\alpha_0 + i\\alpha_1 = 1.48098 + 1.00346i$.",
+   "statement": "On the trended M3 series 2721, [[D1:CES]] estimates the non-stationary [[D2:complex smoothing parameter]] $\\alpha_0 + i\\alpha_1 = 1.48098 + 1.00346i$.",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1116,11 +1542,20 @@
     "p7.11",
     "p7.13-p8.4"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D1",
+    "relation": "estimates a non-stationary value of",
+    "object": "D2",
+    "comparator": null,
+    "conditions": [
+     "the trended M3 series 2721"
+    ]
+   }
   },
   {
    "id": "C34",
-   "statement": "On the [[D7:M1, M3 and tourism data]], in Nemenyi tests at the 5% level, CES has the best mean rank of four methods, CES, [[D8:ETS]], [[D9:ARIMA]] and the [[D10:Theta method]] on [[D11:RMSSE]] and on [[D12:MASE]].",
+   "statement": "On the [[D8:M1, M3 and tourism data]], in [[D35:Nemenyi tests]] at the 5% level, [[D17:CES]] has the best mean rank of [[D12:four methods, CES, ETS, ARIMA and the Theta method]] on [[D14:RMSSE]] and on [[D15:MASE]].",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1139,11 +1574,23 @@
     "p9.14",
     "p9.20"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D17",
+    "relation": "has the best mean rank, in Nemenyi tests at the 5% level, of",
+    "object": [
+     "D14",
+     "D15"
+    ],
+    "comparator": "D12",
+    "conditions": [
+     "D8"
+    ]
+   }
   },
   {
    "id": "C35",
-   "statement": "On the [[D7:M1, M3 and tourism data]], in [[D22:Nemenyi test]]s at the 5% level [[D5:SCUM]] is statistically significantly better than every other method, including [[D6:SCUM(noCES)]], on RMSSE, MASE and MSIS.",
+   "statement": "On the [[D8:M1, M3 and tourism data]], in [[D35:Nemenyi test]]s at the 5% level [[D5:SCUM]] is statistically significantly better than every other method of [[D7:the six compared methods]], including [[D6:SCUM(noCES)]], on [[D14:RMSSE]], [[D15:MASE]] and [[D16:MSIS]].",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1162,11 +1609,24 @@
     "p9.20-p9.21",
     "p10.3"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D5",
+    "relation": "has a significantly better mean rank, in Nemenyi tests at the 5% level, than every other method of",
+    "object": [
+     "D14",
+     "D15",
+     "D16"
+    ],
+    "comparator": "D7",
+    "conditions": [
+     "D8"
+    ]
+   }
   },
   {
    "id": "C36",
-   "statement": "On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(A,N,N), but a higher mean MSIS.",
+   "statement": "On the [[D31:3262 non-seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has lower mean and median [[D14:RMSSE]] and [[D15:MASE]] and lower median [[D16:MSIS]] than [[D19:ETS(A,N,N)]], but a higher mean MSIS.",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1193,11 +1653,24 @@
     "p10.21",
     "p11.21"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D17",
+    "relation": "has lower errors, except mean MSIS, than",
+    "object": [
+     "D14",
+     "D15",
+     "D16"
+    ],
+    "comparator": "D19",
+    "conditions": [
+     "D31"
+    ]
+   }
   },
   {
    "id": "C37",
-   "statement": "On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(A,A,N), but a higher mean MSIS.",
+   "statement": "On the [[D31:3262 non-seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has lower mean and median [[D14:RMSSE]] and [[D15:MASE]] and lower median [[D16:MSIS]] than [[D20:ETS(A,A,N)]], but a higher mean MSIS.",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1218,11 +1691,24 @@
     "p10.21",
     "p11.21"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D17",
+    "relation": "has lower errors, except mean MSIS, than",
+    "object": [
+     "D14",
+     "D15",
+     "D16"
+    ],
+    "comparator": "D20",
+    "conditions": [
+     "D31"
+    ]
+   }
   },
   {
    "id": "C38",
-   "statement": "On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has a lower median [[D11:RMSSE]] than ETS(A,Ad,N), but higher mean RMSSE, mean and median [[D12:MASE]], and mean and median [[D13:MSIS]].",
+   "statement": "On the [[D31:3262 non-seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has a lower median [[D14:RMSSE]] than [[D21:ETS(A,Ad,N)]], but higher mean RMSSE, mean and median [[D15:MASE]], and mean and median [[D16:MSIS]].",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1243,11 +1729,24 @@
     "p10.21",
     "p11.21"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D17",
+    "relation": "has a lower median RMSSE, but higher other errors, than",
+    "object": [
+     "D14",
+     "D15",
+     "D16"
+    ],
+    "comparator": "D21",
+    "conditions": [
+     "D31"
+    ]
+   }
   },
   {
    "id": "C39",
-   "statement": "On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]], [[D12:MASE]] and [[D13:MSIS]] than ETS(M,M,N).",
+   "statement": "On the [[D31:3262 non-seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has lower mean and median [[D14:RMSSE]], [[D15:MASE]] and [[D16:MSIS]] than [[D22:ETS(M,M,N)]].",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1268,11 +1767,24 @@
     "p10.21",
     "p11.21"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D17",
+    "relation": "has lower mean and median errors than",
+    "object": [
+     "D14",
+     "D15",
+     "D16"
+    ],
+    "comparator": "D22",
+    "conditions": [
+     "D31"
+    ]
+   }
   },
   {
    "id": "C40",
-   "statement": "On the 3262 non-seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(M,Md,N), but a higher mean MSIS.",
+   "statement": "On the [[D31:3262 non-seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has lower mean and median [[D14:RMSSE]] and [[D15:MASE]] and lower median [[D16:MSIS]] than [[D23:ETS(M,Md,N)]], but a higher mean MSIS.",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1293,7 +1805,20 @@
     "p10.21",
     "p11.21"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D17",
+    "relation": "has lower errors, except mean MSIS, than",
+    "object": [
+     "D14",
+     "D15",
+     "D16"
+    ],
+    "comparator": "D23",
+    "conditions": [
+     "D31"
+    ]
+   }
   },
   {
    "id": "C41",
@@ -1314,11 +1839,18 @@
    "source_spans": [
     "p4.12-p4.13"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "the transition matrix of the CES state-space form",
+    "relation": "contains",
+    "object": "the smoothing parameters",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C42",
-   "statement": "The [[D23:Akaike information criterion]] of seasonal and non-seasonal [[D1:CES]] can be computed from a Gaussian likelihood of the same form as that of additive exponential smoothing models.",
+   "statement": "The [[D36:Akaike information criterion]] of seasonal and non-seasonal [[D1:CES]] can be computed from a Gaussian likelihood of the same form as that of additive exponential smoothing models.",
    "type": "methodological",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1338,7 +1870,14 @@
     "p4.14-p4.15",
     "p7.6"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D36",
+    "relation": "can be computed, for seasonal and non-seasonal CES, from",
+    "object": "a Gaussian likelihood of the same form as for additive exponential smoothing",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C43",
@@ -1365,7 +1904,14 @@
     "C60",
     "C62",
     "C63"
-   ]
+   ],
+   "about": {
+    "subject": "the conditional variance of CES h steps ahead",
+    "relation": "can be calculated, as for pure additive ETS models, from",
+    "object": "the CES state-space form",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C44",
@@ -1386,11 +1932,20 @@
    "provenance": "extracted",
    "depends_on": [
     "C20"
-   ]
+   ],
+   "about": {
+    "subject": "D1",
+    "relation": "behaves like",
+    "object": "simple exponential smoothing with smoothing parameter α0 − 1",
+    "comparator": null,
+    "conditions": [
+     "α1 close to 1"
+    ]
+   }
   },
   {
    "id": "C45",
-   "statement": "When $\\alpha_1$ is close to 1, the real part $\\alpha_0$ of the complex smoothing parameter of [[D1:CES]] is close to 1 for a stationary series, for which the smoothing parameter of simple exponential smoothing would be close to 0.",
+   "statement": "When $\\alpha_1$ is close to 1, the real part $\\alpha_0$ of the [[D2:complex smoothing parameter]] of [[D1:CES]] is close to 1 for a stationary series, for which the smoothing parameter of simple exponential smoothing would be close to 0.",
    "type": "formal",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1407,11 +1962,21 @@
    "provenance": "extracted",
    "depends_on": [
     "C44"
-   ]
+   ],
+   "about": {
+    "subject": "D2",
+    "relation": "has a real part close to 1",
+    "object": null,
+    "comparator": null,
+    "conditions": [
+     "α1 close to 1",
+     "a stationary series"
+    ]
+   }
   },
   {
    "id": "C46",
-   "statement": "When $\\alpha_1$ is close to 1, the real part $\\alpha_0$ of the complex smoothing parameter of [[D1:CES]] is close to 2 for a random walk.",
+   "statement": "When $\\alpha_1$ is close to 1, the real part $\\alpha_0$ of the [[D2:complex smoothing parameter]] of [[D1:CES]] is close to 2 for a random walk.",
    "type": "formal",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1428,7 +1993,17 @@
    "provenance": "extracted",
    "depends_on": [
     "C44"
-   ]
+   ],
+   "about": {
+    "subject": "D2",
+    "relation": "has a real part close to 2",
+    "object": null,
+    "comparator": null,
+    "conditions": [
+     "α1 close to 1",
+     "a random walk"
+    ]
+   }
   },
   {
    "id": "C47",
@@ -1450,7 +2025,14 @@
    "provenance": "extracted",
    "depends_on": [
     "C8"
-   ]
+   ],
+   "about": {
+    "subject": "D4",
+    "relation": "has an underlying",
+    "object": "SARIMA(2,0,2m+2)(2,0,0)_m model",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C48",
@@ -1475,7 +2057,14 @@
    "source_spans": [
     "p7.2"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D4",
+    "relation": "is stationary or non-stationary depending on",
+    "object": "its complex smoothing parameters",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C49",
@@ -1497,7 +2086,14 @@
    "depends_on": [
     "C25"
    ],
-   "warrant": "W3"
+   "warrant": "W3",
+   "about": {
+    "subject": "D4",
+    "relation": "can produce",
+    "object": "all the trajectories of non-seasonal CES",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C50",
@@ -1519,7 +2115,16 @@
    "depends_on": [
     "C25"
    ],
-   "warrant": "W3"
+   "warrant": "W3",
+   "about": {
+    "subject": "D4",
+    "relation": "can model",
+    "object": "multiplicative or other shapes of seasonality",
+    "comparator": null,
+    "conditions": [
+     "the level of the series does not change"
+    ]
+   }
   },
   {
    "id": "C51",
@@ -1537,7 +2142,14 @@
    "source_spans": [
     "p7.6-p7.7"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D1",
+    "relation": "has, without seasonality, 5 estimated parameters",
+    "object": null,
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C52",
@@ -1555,11 +2167,18 @@
     "p7.6-p7.7"
    ],
    "provenance": "extracted",
-   "warrant": "W5"
+   "warrant": "W5",
+   "about": {
+    "subject": "D4",
+    "relation": "has 4 + 2m + 2 + 1 estimated parameters",
+    "object": null,
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C53",
-   "statement": "On the [[D7:M1, M3 and tourism data]], in Nemenyi tests at the 5% level, not all of the differences between CES and [[D8:ETS]], [[D9:ARIMA]] and the [[D10:Theta method]] on [[D11:RMSSE]] and [[D12:MASE]] are statistically significant.",
+   "statement": "On the [[D8:M1, M3 and tourism data]], in [[D35:Nemenyi tests]] at the 5% level, not all of the differences between [[D17:CES]] and [[D13:ETS, ARIMA and the Theta method]] on [[D14:RMSSE]] and [[D15:MASE]] are statistically significant.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1578,11 +2197,23 @@
     "p9.14",
     "p9.20"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D17",
+    "relation": "does not differ significantly, in Nemenyi tests at the 5% level, from each of",
+    "object": [
+     "D14",
+     "D15"
+    ],
+    "comparator": "D13",
+    "conditions": [
+     "D8"
+    ]
+   }
   },
   {
    "id": "C54",
-   "statement": "On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(A,N,A), but a higher mean MSIS.",
+   "statement": "On the [[D32:2053 seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has lower mean and median [[D14:RMSSE]] and [[D15:MASE]] and lower median [[D16:MSIS]] than [[D25:ETS(A,N,A)]], but a higher mean MSIS.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1604,11 +2235,24 @@
    "source_spans": [
     "p11.22"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D17",
+    "relation": "has lower errors, except mean MSIS, than",
+    "object": [
+     "D14",
+     "D15",
+     "D16"
+    ],
+    "comparator": "D25",
+    "conditions": [
+     "D32"
+    ]
+   }
   },
   {
    "id": "C55",
-   "statement": "On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(A,Ad,A), but a higher mean MSIS.",
+   "statement": "On the [[D32:2053 seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has lower mean and median [[D14:RMSSE]] and [[D15:MASE]] and lower median [[D16:MSIS]] than [[D27:ETS(A,Ad,A)]], but a higher mean MSIS.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1627,11 +2271,24 @@
    "source_spans": [
     "p11.22"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D17",
+    "relation": "has lower errors, except mean MSIS, than",
+    "object": [
+     "D14",
+     "D15",
+     "D16"
+    ],
+    "comparator": "D27",
+    "conditions": [
+     "D32"
+    ]
+   }
   },
   {
    "id": "C56",
-   "statement": "On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(M,M,M), but a higher mean MSIS.",
+   "statement": "On the [[D32:2053 seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has lower mean and median [[D14:RMSSE]] and [[D15:MASE]] and lower median [[D16:MSIS]] than [[D28:ETS(M,M,M)]], but a higher mean MSIS.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1650,11 +2307,24 @@
    "source_spans": [
     "p11.22"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D17",
+    "relation": "has lower errors, except mean MSIS, than",
+    "object": [
+     "D14",
+     "D15",
+     "D16"
+    ],
+    "comparator": "D28",
+    "conditions": [
+     "D32"
+    ]
+   }
   },
   {
    "id": "C57",
-   "statement": "On the 2053 seasonal series of the [[D7:M1, M3 and tourism data]], CES has lower mean and median [[D11:RMSSE]] and [[D12:MASE]] and lower median [[D13:MSIS]] than ETS(M,Md,M), but a higher mean MSIS.",
+   "statement": "On the [[D32:2053 seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has lower mean and median [[D14:RMSSE]] and [[D15:MASE]] and lower median [[D16:MSIS]] than [[D29:ETS(M,Md,M)]], but a higher mean MSIS.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1673,7 +2343,20 @@
    "source_spans": [
     "p11.22"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "D17",
+    "relation": "has lower errors, except mean MSIS, than",
+    "object": [
+     "D14",
+     "D15",
+     "D16"
+    ],
+    "comparator": "D29",
+    "conditions": [
+     "D32"
+    ]
+   }
   },
   {
    "id": "C58",
@@ -1699,11 +2382,18 @@
     "p11.22",
     "p11.26"
    ],
-   "provenance": "extracted"
+   "provenance": "extracted",
+   "about": {
+    "subject": "information criteria",
+    "relation": "identify effectively when to switch between",
+    "object": "seasonal and non-seasonal CES",
+    "comparator": null,
+    "conditions": []
+   }
   },
   {
    "id": "C59",
-   "statement": "CES is a robust forecasting approach.",
+   "statement": "[[D17:CES]] is a robust forecasting approach.",
    "type": "interpretive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1736,6 +2426,13 @@
     "excludes": [
      "forecasting scenarios for which CES is not appropriate, which the paper does not name"
     ]
+   },
+   "about": {
+    "subject": "D17",
+    "relation": "is a robust forecasting approach",
+    "object": null,
+    "comparator": null,
+    "conditions": []
    }
   },
   {
@@ -1829,7 +2526,7 @@
   },
   {
    "id": "C65",
-   "statement": "ETS model selection with es() from the smooth package identifies correctly which series of the [[D7:M1, M3 and tourism data]] are seasonal.",
+   "statement": "ETS model selection with es() from the smooth package identifies correctly which series of the [[D8:M1, M3 and tourism data]] are seasonal.",
    "type": "descriptive",
    "role": "supporting",
    "support": [
@@ -1871,7 +2568,7 @@
    "data_origin": "secondary",
    "preregistered": false,
    "n": 5315,
-   "description": "[[D14:CES with automatic seasonal selection]] compared with ETS, ARIMA, the Theta method, SCUM and SCUM(noCES) on the [[D7:M1, M3 and tourism data]], by error measures on a single holdout per series, with Nemenyi tests of the differences.",
+   "description": "[[D17:CES with automatic seasonal selection]] compared with ETS, ARIMA, the Theta method, SCUM and SCUM(noCES) on the [[D8:M1, M3 and tourism data]], by error measures on a single holdout per series, with Nemenyi tests of the differences.",
    "artefacts": [
     "A1",
     "A2",
@@ -2012,25 +2709,25 @@
     "p10.1-p10.3"
    ],
    "setup": {
-    "compared": [
-     "D14",
-     "D8",
+    "studied": [
+     "D17",
      "D9",
      "D10",
+     "D11",
      "D5",
      "D6"
     ],
-    "data": [
-     "D7"
+    "cases": [
+     "D8"
     ],
-    "design": [
-     "D20",
-     "D22"
+    "procedure": [
+     "D33",
+     "D35"
     ],
-    "measures": [
-     "D11",
-     "D12",
-     "D13"
+    "lens": [
+     "D14",
+     "D15",
+     "D16"
     ]
    }
   },
@@ -2107,7 +2804,7 @@
    "data_origin": "secondary",
    "preregistered": false,
    "n": 2,
-   "description": "CES fitted with ces() from smooth to M3 series 1664 and 2721, each split into in-sample and holdout parts; stationarity of each series assessed by graphical analysis and [[D24:ADF test]] and [[D25:KPSS test]]; point forecasts and 95% prediction intervals.",
+   "description": "CES fitted with ces() from smooth to [[D39:M3 series 1664 and 2721]], each split into in-sample and holdout parts; stationarity of each series assessed by graphical analysis and [[D37:ADF test]] and [[D38:KPSS test]]; point forecasts and 95% prediction intervals.",
    "artefacts": [
     "A2",
     "A4",
@@ -2149,7 +2846,22 @@
    ],
    "source_spans": [
     "p7.10-p8.4"
-   ]
+   ],
+   "setup": {
+    "studied": [
+     "D1"
+    ],
+    "cases": [
+     "D39"
+    ],
+    "procedure": [
+     "D37",
+     "D38"
+    ],
+    "lens": [
+     "D2"
+    ]
+   }
   },
   {
    "id": "E8",
@@ -2158,7 +2870,7 @@
    "data_origin": "secondary",
    "preregistered": false,
    "n": 99990,
-   "description": "The same six methods compared on the [[D17:M4 data without 10 series]] by error measures on a single holdout per series, without a significance test.",
+   "description": "The same six methods compared on the [[D30:M4 data without 10 series]] by error measures on a single holdout per series, without a significance test.",
    "artefacts": [
     "A7",
     "A4",
@@ -2275,24 +2987,24 @@
     "p9.22-p10.9"
    ],
    "setup": {
-    "compared": [
-     "D14",
-     "D8",
+    "studied": [
+     "D17",
      "D9",
      "D10",
+     "D11",
      "D5",
      "D6"
     ],
-    "data": [
-     "D17"
+    "cases": [
+     "D30"
     ],
-    "design": [
-     "D21"
+    "procedure": [
+     "D34"
     ],
-    "measures": [
-     "D12",
-     "D11",
-     "D13"
+    "lens": [
+     "D15",
+     "D14",
+     "D16"
     ]
    }
   },
@@ -2303,7 +3015,7 @@
    "data_origin": "secondary",
    "preregistered": false,
    "n": 5315,
-   "description": "[[D14:CES with automatic seasonal selection]] compared with the [[D15:non-seasonal special cases of ETS]] on the [[D18:non-seasonal subset]] and with the [[D16:seasonal special cases of ETS]] on the [[D19:seasonal subset]], by error measures on a single holdout per series.",
+   "description": "[[D17:CES with automatic seasonal selection]] compared with the [[D18:non-seasonal special cases of ETS]] on the [[D31:non-seasonal subset]] and with the [[D24:seasonal special cases of ETS]] on the [[D32:seasonal subset]], by error measures on a single holdout per series.",
    "artefacts": [
     "A1",
     "A2",
@@ -2534,22 +3246,22 @@
     "p10.21-p11.22"
    ],
    "setup": {
-    "compared": [
+    "studied": [
+     "D17",
+     "D18",
+     "D24"
+    ],
+    "cases": [
+     "D31",
+     "D32"
+    ],
+    "procedure": [
+     "D33"
+    ],
+    "lens": [
      "D14",
      "D15",
      "D16"
-    ],
-    "data": [
-     "D18",
-     "D19"
-    ],
-    "design": [
-     "D20"
-    ],
-    "measures": [
-     "D11",
-     "D12",
-     "D13"
     ]
    }
   }
