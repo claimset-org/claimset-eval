@@ -2,45 +2,48 @@ CLAIMSET Complex exponential smoothing
 licence CC-BY-4.0; converted from 10.1002/nav.22074 version of record by Ivan Svetunkov, Nikolaos Kourentzes, John Keith Ord; contributions C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12
 
 DEFINITIONS
-D1 [method] CES: Complex exponential smoothing: a forecasting method that combines each past observation $y_t$ and its forecast error $e_t$ into the complex variable $y_t + i e_t$ and forecasts with an exponentially weighted sum of these values, $\hat{y}_t + i\hat{e}_t = (\alpha_0 + i\alpha_1) \sum_{j=1}^{t-1} (1 + i - (\alpha_0 + i\alpha_1))^{j-1} (y_{t-j} + i e_{t-j})$, or recursively $\hat{y}_t + i\hat{e}_t = (\alpha_0 + i\alpha_1)(y_{t-1} + i e_{t-1}) + (1 - \alpha_0 + i - i\alpha_1)(\hat{y}_{t-1} + i\hat{e}_{t-1})$, where $\alpha_0 + i\alpha_1$ is the complex smoothing parameter and $\hat{e}_t$ carries the information on past forecast errors.
-D2 [concept] complex smoothing parameter: The smoothing parameter of CES, the complex number $\alpha_0 + i\alpha_1$; its real part $\alpha_0$ and imaginary part $\alpha_1$ are the two real parameters estimated, and they set how much of the past observations and of the past forecast errors is carried into the forecast.
-D3 [concept] nonlinear trend component: The state $c_t$ of the CES state-space model, which carries information on both its own previous value $c_{t-1}$ and the previous level $l_{t-1}$; it does not correspond to the trend component of exponential smoothing.
-D4 [method] seasonal CES: CES extended with a second pair of level and nonlinear trend states taken at lag $m$, the seasonal period, with its own complex smoothing parameter $\beta_0 + i\beta_1$: $y_t = l_{0,t-1} + l_{1,t-m} + \varepsilon_t$, $l_{0,t} = l_{0,t-1} - (1 - \alpha_1) c_{0,t-1} + (\alpha_0 - \alpha_1) \varepsilon_t$, $c_{0,t} = l_{0,t-1} + (1 - \alpha_0) c_{0,t-1} + (\alpha_0 + \alpha_1) \varepsilon_t$, $l_{1,t} = l_{1,t-m} - (1 - \beta_1) c_{1,t-m} + (\beta_0 - \beta_1) \varepsilon_t$, $c_{1,t} = l_{1,t-m} + (1 - \beta_0) c_{1,t-m} + (\beta_0 + \beta_1) \varepsilon_t$.
-D5 [method] SCUM: Simple combination of univariate models: the median of the forecasts of ETS, ARIMA, the Theta method and CES. [source B13]
-D6 [method] SCUM(noCES): The median of the forecasts of ETS, ARIMA and the Theta method: SCUM without CES.
-D7 [method] the six compared methods: The four compared methods and the two combinations, SCUM and SCUM(noCES).
+D1 [method] CES: Complex exponential smoothing: a forecasting method that combines each past observation $y_t$ and its forecast error $e_t$ into the complex variable $y_t + i e_t$ and forecasts with an exponentially weighted sum of these values, $\hat{y}_t + i\hat{e}_t = (\alpha_0 + i\alpha_1) \sum_{j=1}^{t-1} (1 + i - (\alpha_0 + i\alpha_1))^{j-1} (y_{t-j} + i e_{t-j})$, or recursively $\hat{y}_t + i\hat{e}_t = (\alpha_0 + i\alpha_1)(y_{t-1} + i e_{t-1}) + (1 - \alpha_0 + i - i\alpha_1)(\hat{y}_{t-1} + i\hat{e}_{t-1})$, where $\alpha_0 + i\alpha_1$ is the [[D2:complex smoothing parameter]] and $\hat{e}_t$ carries the information on past forecast errors.
+D2 [concept] complex smoothing parameter: The smoothing parameter of [[D1:CES]], the complex number $\alpha_0 + i\alpha_1$; its real part $\alpha_0$ and imaginary part $\alpha_1$ are the two real parameters estimated, and they set how much of the past observations and of the past forecast errors is carried into the forecast. [part of D1]
+D3 [concept] nonlinear trend component: The state $c_t$ of the [[D1:CES]] state-space model, which carries information on both its own previous value $c_{t-1}$ and the previous level $l_{t-1}$; it does not correspond to the trend component of exponential smoothing. [part of D1]
+D4 [method] seasonal CES: [[D1:CES]] extended with a second pair of level and [[D3:nonlinear trend]] states taken at lag $m$, the seasonal period, with its own [[D2:complex smoothing parameter]] $\beta_0 + i\beta_1$: $y_t = l_{0,t-1} + l_{1,t-m} + \varepsilon_t$, $l_{0,t} = l_{0,t-1} - (1 - \alpha_1) c_{0,t-1} + (\alpha_0 - \alpha_1) \varepsilon_t$, $c_{0,t} = l_{0,t-1} + (1 - \alpha_0) c_{0,t-1} + (\alpha_0 + \alpha_1) \varepsilon_t$, $l_{1,t} = l_{1,t-m} - (1 - \beta_1) c_{1,t-m} + (\beta_0 - \beta_1) \varepsilon_t$, $c_{1,t} = l_{1,t-m} + (1 - \beta_0) c_{1,t-m} + (\beta_0 + \beta_1) \varepsilon_t$. [a kind of D1]
+D5 [method] SCUM: Simple combination of univariate models: the median of the forecasts of [[D9:ETS]], [[D10:ARIMA]], the [[D11:Theta method]] and [[D17:CES]]. [source B13]
+D6 [method] SCUM(noCES): The median of the forecasts of [[D9:ETS]], [[D10:ARIMA]] and the [[D11:Theta method]]: [[D5:SCUM]] without CES. [a kind of D5]
+D7 [method] the six compared methods: The [[D12:four compared methods]] and the two combinations, [[D5:SCUM]] and [[D6:SCUM(noCES)]]. [members D17, D9, D10, D11, D5, D6]
 D8 [data] M1, M3 and tourism data: The 5,315 yearly, quarterly, monthly and other time series of the M1, M3 and tourism forecasting competitions.
 D9 [method] ETS: Exponential smoothing in a state space framework with automatic selection among its models; here es() from the smooth package with model ZXZ, selecting by AICc. [source B2]
 D10 [method] ARIMA: Automatic state space ARIMA; here auto.ssarima() from the smooth package. [source B15]
 D11 [method] Theta method: The Theta method of forecasting; here thetaf() from the forecast package 8.14. [source B16]
-D12 [method] the four compared methods: CES with automatic seasonal selection, ETS, ARIMA and the Theta method, as the benchmark runs them.
-D13 [method] the three benchmark methods: ETS, ARIMA and the Theta method, as the benchmark runs them.
-D14 [measure] RMSSE: Root mean squared scaled error: the root mean squared forecast error over the horizon, scaled by the mean absolute first difference of the in-sample data; reported as its mean and median over the series. [source B17]
-D15 [measure] MASE: Mean absolute scaled error: the mean absolute forecast error over the horizon, scaled by the mean absolute first difference of the in-sample data; reported as its mean and median over the series. [source B18]
-D16 [measure] MSIS: Mean scaled interval score: the interval score of a prediction interval averaged over the horizon and scaled by the mean absolute first difference of the in-sample data; here of the 95% prediction interval, reported as its mean and median over the series. [source B19]
-D17 [method] CES with automatic seasonal selection: CES fitted by auto.ces() from the smooth package 3.1.2, which chooses between seasonal and non-seasonal CES by AICc.
-D18 [method] non-seasonal special cases of ETS: The ETS models ETS(A,N,N), ETS(A,A,N), ETS(A,Ad,N), ETS(M,M,N) and ETS(M,Md,N), each fitted without model selection. [source B1]
+D12 [method] the four compared methods: [[D17:CES with automatic seasonal selection]], [[D9:ETS]], [[D10:ARIMA]] and the [[D11:Theta method]], as the benchmark runs them. [members D17, D9, D10, D11]
+D13 [method] the three benchmark methods: [[D9:ETS]], [[D10:ARIMA]] and the [[D11:Theta method]], as the benchmark runs them. [members D9, D10, D11]
+D14 [variable] RMSSE: Root mean squared scaled error: the root mean squared forecast error over the horizon, scaled by the mean absolute first difference of the in-sample data; reported as its mean and median over the series. [source B17]
+D15 [variable] MASE: Mean absolute scaled error: the mean absolute forecast error over the horizon, scaled by the mean absolute first difference of the in-sample data; reported as its mean and median over the series. [source B18]
+D16 [variable] MSIS: Mean scaled interval score: the interval score of a prediction interval averaged over the horizon and scaled by the mean absolute first difference of the in-sample data; here of the 95% prediction interval, reported as its mean and median over the series. [source B19]
+D17 [method] CES with automatic seasonal selection: [[D1:CES]] fitted by auto.ces() from the smooth package 3.1.2, which chooses between [[D4:seasonal CES]] and non-seasonal CES by AICc. [a kind of D1]
+D18 [method] non-seasonal special cases of ETS: The ETS models [[D19:ETS(A,N,N)]], [[D20:ETS(A,A,N)]], [[D21:ETS(A,Ad,N)]], [[D22:ETS(M,M,N)]] and [[D23:ETS(M,Md,N)]], each fitted without model selection. [members D19, D20, D21, D22, D23] [source B1]
 D19 [method] ETS(A,N,N): The ETS model with additive error, no trend and no seasonality, fitted without model selection. [source B1]
 D20 [method] ETS(A,A,N): The ETS model with additive error, additive trend and no seasonality, fitted without model selection. [source B1]
 D21 [method] ETS(A,Ad,N): The ETS model with additive error, additive damped trend and no seasonality, fitted without model selection. [source B1]
 D22 [method] ETS(M,M,N): The ETS model with multiplicative error, multiplicative trend and no seasonality, fitted without model selection. [source B1]
 D23 [method] ETS(M,Md,N): The ETS model with multiplicative error, multiplicative damped trend and no seasonality, fitted without model selection. [source B1]
-D24 [method] seasonal special cases of ETS: The ETS models ETS(A,N,A), ETS(A,A,A), ETS(A,Ad,A), ETS(M,M,M) and ETS(M,Md,M), each fitted without model selection. [source B1]
+D24 [method] seasonal special cases of ETS: The ETS models [[D25:ETS(A,N,A)]], [[D26:ETS(A,A,A)]], [[D27:ETS(A,Ad,A)]], [[D28:ETS(M,M,M)]] and [[D29:ETS(M,Md,M)]], each fitted without model selection. [members D25, D26, D27, D28, D29] [source B1]
+D40 [method] CES and the non-seasonal special cases of ETS: [[D17:CES with automatic seasonal selection]] and the [[D18:non-seasonal special cases of ETS]], as compared on the [[D31:non-seasonal subset]]. [members D17, D19, D20, D21, D22, D23]
+D41 [method] CES and the seasonal special cases of ETS: [[D17:CES with automatic seasonal selection]] and the [[D24:seasonal special cases of ETS]], as compared on the [[D32:seasonal subset]]. [members D17, D25, D26, D27, D28, D29]
 D25 [method] ETS(A,N,A): The ETS model with additive error, no trend and additive seasonality, fitted without model selection. [source B1]
 D26 [method] ETS(A,A,A): The ETS model with additive error, additive trend and additive seasonality, fitted without model selection. [source B1]
 D27 [method] ETS(A,Ad,A): The ETS model with additive error, additive damped trend and additive seasonality, fitted without model selection. [source B1]
 D28 [method] ETS(M,M,M): The ETS model with multiplicative error, multiplicative trend and multiplicative seasonality, fitted without model selection. [source B1]
 D29 [method] ETS(M,Md,M): The ETS model with multiplicative error, multiplicative damped trend and multiplicative seasonality, fitted without model selection. [source B1]
 D30 [data] M4 data without 10 series: The 100,000 series of the M4 competition (23,000 yearly, 24,000 quarterly, 48,000 monthly, 359 weekly, 4,227 daily and 414 hourly) except series 19357, 43160, 51552, 62738, 92370, 92435, 93159, 93196, 93412 and 93491, whose influential outliers and structural breaks made ETS break down. [source B9]
-D31 [data] non-seasonal subset: The 3,262 series of the M1, M3 and tourism data for which ETS model selection by es() from the smooth package chooses a non-seasonal model.
-D32 [data] seasonal subset: The 2,053 series of the M1, M3 and tourism data for which ETS model selection by es() from the smooth package chooses a seasonal model.
+D31 [data] non-seasonal subset: The 3,262 series of the [[D8:M1, M3 and tourism data]] for which ETS model selection by es() from the smooth package chooses a non-seasonal model. [part of D8] [assumes C65]
+D32 [data] seasonal subset: The 2,053 series of the [[D8:M1, M3 and tourism data]] for which ETS model selection by es() from the smooth package chooses a seasonal model. [part of D8] [assumes C65]
+D42 [data] the seasonal and non-seasonal subsets: The [[D31:non-seasonal subset]] and the [[D32:seasonal subset]] of the [[D8:M1, M3 and tourism data]]. [members D31, D32]
 D33 [design] holdout at the M1, M3 and tourism horizons: Each series split into an in-sample part and a holdout of the length used in its competition: 6 observations for yearly, 8 for quarterly and other, and 18 for monthly series; forecasts made from the end of the in-sample part.
 D34 [design] holdout at the M4 horizons: Each series split into an in-sample part and a holdout of the length used in the M4 competition: 6 observations for yearly, 8 for quarterly, 18 for monthly, 13 for weekly, 14 for daily and 48 for hourly series; forecasts made from the end of the in-sample part.
 D35 [design] Nemenyi test: Post hoc Nemenyi test on the ranks of an error measure across series, comparing all methods at the 5% level; here rmcb() from the greybox package. [source B20]
 D36 [method] Akaike information criterion: A criterion for choosing among models fitted by maximum likelihood that penalises the maximised log-likelihood by the number of estimated parameters. [source B21]
 D37 [design] ADF test: Augmented Dickey-Fuller test of the null hypothesis that a time series has a unit root. [source B22]
 D38 [design] KPSS test: Kwiatkowski-Phillips-Schmidt-Shin test of the null hypothesis that a time series is stationary. [source B23]
-D39 [data] M3 series 1664 and 2721: Two monthly series of the M3 competition: series 1664, which graphical analysis and the ADF and KPSS tests indicate is stationary, and the trended series 2721; each split into in-sample and holdout parts.
+D39 [data] M3 series 1664 and 2721: Two monthly series of the M3 competition: series 1664, which graphical analysis and the [[D37:ADF]] and [[D38:KPSS tests]] indicate is stationary, and the trended series 2721; each split into in-sample and holdout parts.
 
 CLAIMS
 C1 [formal; principal; extension; support: formal_proof E3; uses C17, C18, C19, C20, C23, C24, C25, C32, C21, C22, C33; verification unchecked]
@@ -116,15 +119,15 @@ C34 [descriptive; supporting; support: empirical_quant E2]
 C35 [descriptive; supporting; support: empirical_quant E2]
   On the [[D8:M1, M3 and tourism data]], in [[D35:Nemenyi test]]s at the 5% level [[D5:SCUM]] is statistically significantly better than every other method of [[D7:the six compared methods]], including [[D6:SCUM(noCES)]], on [[D14:RMSSE]], [[D15:MASE]] and [[D16:MSIS]].
   scope: conditions: Nemenyi test on ranks of the error measures, significance level 0.05
-C36 [descriptive; supporting; support: empirical_quant E9 (E9.T1); assumes C65; limitations L1]
+C36 [descriptive; supporting; support: empirical_quant E9 (E9.T1); limitations L1; inherits C65]
   On the [[D31:3262 non-seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has lower mean and median [[D14:RMSSE]] and [[D15:MASE]] and lower median [[D16:MSIS]] than [[D19:ETS(A,N,N)]], but a higher mean MSIS.
-C37 [descriptive; supporting; support: empirical_quant E9 (E9.T1); assumes C65]
+C37 [descriptive; supporting; support: empirical_quant E9 (E9.T1); inherits C65]
   On the [[D31:3262 non-seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has lower mean and median [[D14:RMSSE]] and [[D15:MASE]] and lower median [[D16:MSIS]] than [[D20:ETS(A,A,N)]], but a higher mean MSIS.
-C38 [descriptive; supporting; support: empirical_quant E9 (E9.T1); assumes C65]
+C38 [descriptive; supporting; support: empirical_quant E9 (E9.T1); inherits C65]
   On the [[D31:3262 non-seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has a lower median [[D14:RMSSE]] than [[D21:ETS(A,Ad,N)]], but higher mean RMSSE, mean and median [[D15:MASE]], and mean and median [[D16:MSIS]].
-C39 [descriptive; supporting; support: empirical_quant E9 (E9.T1); assumes C65]
+C39 [descriptive; supporting; support: empirical_quant E9 (E9.T1); inherits C65]
   On the [[D31:3262 non-seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has lower mean and median [[D14:RMSSE]], [[D15:MASE]] and [[D16:MSIS]] than [[D22:ETS(M,M,N)]].
-C40 [descriptive; supporting; support: empirical_quant E9 (E9.T1); assumes C65]
+C40 [descriptive; supporting; support: empirical_quant E9 (E9.T1); inherits C65]
   On the [[D31:3262 non-seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has lower mean and median [[D14:RMSSE]] and [[D15:MASE]] and lower median [[D16:MSIS]] than [[D23:ETS(M,Md,N)]], but a higher mean MSIS.
 C60 [descriptive; supporting; assumption (statistical, unchecked)]
   The error term $\varepsilon_t$ of [[D1:CES]] is additive white noise.
@@ -149,15 +152,15 @@ C47 [formal; secondary; support: formal_proof E6; uses C8; verification unchecke
 C53 [descriptive; secondary; support: empirical_quant E2]
   On the [[D8:M1, M3 and tourism data]], in [[D35:Nemenyi tests]] at the 5% level, not all of the differences between [[D17:CES]] and [[D13:ETS, ARIMA and the Theta method]] on [[D14:RMSSE]] and [[D15:MASE]] are statistically significant.
   scope: conditions: Nemenyi test on ranks of the error measures, significance level 0.05
-C54 [descriptive; secondary; support: empirical_quant E9 (E9.T2); assumes C65]
+C54 [descriptive; secondary; support: empirical_quant E9 (E9.T2); inherits C65]
   On the [[D32:2053 seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has lower mean and median [[D14:RMSSE]] and [[D15:MASE]] and lower median [[D16:MSIS]] than [[D25:ETS(A,N,A)]], but a higher mean MSIS.
-C55 [descriptive; secondary; support: empirical_quant E9 (E9.T2); assumes C65]
+C55 [descriptive; secondary; support: empirical_quant E9 (E9.T2); inherits C65]
   On the [[D32:2053 seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has lower mean and median [[D14:RMSSE]] and [[D15:MASE]] and lower median [[D16:MSIS]] than [[D27:ETS(A,Ad,A)]], but a higher mean MSIS.
-C56 [descriptive; secondary; support: empirical_quant E9 (E9.T2); assumes C65]
+C56 [descriptive; secondary; support: empirical_quant E9 (E9.T2); inherits C65]
   On the [[D32:2053 seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has lower mean and median [[D14:RMSSE]] and [[D15:MASE]] and lower median [[D16:MSIS]] than [[D28:ETS(M,M,M)]], but a higher mean MSIS.
-C57 [descriptive; secondary; support: empirical_quant E9 (E9.T2); assumes C65]
+C57 [descriptive; secondary; support: empirical_quant E9 (E9.T2); inherits C65]
   On the [[D32:2053 seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has lower mean and median [[D14:RMSSE]] and [[D15:MASE]] and lower median [[D16:MSIS]] than [[D29:ETS(M,Md,M)]], but a higher mean MSIS.
-C58 [interpretive; secondary; support: empirical_quant E9 (E9.T2), argument W6; warrant W6]
+C58 [interpretive; secondary; support: empirical_quant E9 (E9.T2), argument W6; inherits C65; warrant W6]
   Information criteria identify effectively when to switch between seasonal and non-seasonal [[D1:CES]].
 C59 [interpretive; secondary; support: empirical_quant E2 (E2.T1), empirical_quant E8 (E8.T1), argument W7; warrant W7]
   [[D17:CES]] is a robust forecasting approach.
@@ -195,16 +198,16 @@ E1 [formal; foundation Complex numbers represented as real 2x2 matrices; linear 
   derivation: in the source
 E2 [quant; design benchmark; data_origin secondary; n 5315] [[D17:CES with automatic seasonal selection]] compared with ETS, ARIMA, the Theta method, SCUM and SCUM(noCES) on the [[D8:M1, M3 and tourism data]], by error measures on a single holdout per series, with Nemenyi tests of the differences.
   setup: studied D17, D9, D10, D11, D5, D6; cases D8; procedure D33, D35; lens D14, D15, D16
-  E2.R1 MSIS of CES on M1 series 47 = 523.034 {series: M1 series 47, method: CES}
-  E2.R2 MSIS of ETS(M,N,N) on M1 series 47 = 25.59 {series: M1 series 47, method: ETS(M,N,N)}
+  E2.R1 D16 = 523.034 {D7: D17, series: M1 series 47}
+  E2.R2 D16 = 25.59 {D7: D9, series: M1 series 47, ETS model selected: ETS(M,N,N)}
   E2.T1 Mean and median RMSSE, MASE and MSIS of six methods over the 5,315 series of the M1, M3 and tourism competitions
-  | row | method | mean RMSSE | mean MASE | mean MSIS | median RMSSE | median MASE | median MSIS |
-  | r1 | CES | 1.959 | 2.272 | 3.465 | 1.17 | 1.298 | 0.869 |
-  | r2 | ETS | 1.97 | 2.263 | 2.258 | 1.181 | 1.323 | 0.925 |
-  | r3 | ARIMA | 2.134 | 2.482 | 3.335 | 1.271 | 1.419 | 0.988 |
-  | r4 | Theta | 1.965 | 2.252 | 2.531 | 1.238 | 1.377 | 0.895 |
-  | r5 | SCUM | 1.867 | 2.146 | 2.333 | 1.128 | 1.256 | 0.844 |
-  | r6 | SCUM(noCES) | 1.911 | 2.191 | 2.223 | 1.143 | 1.279 | 0.859 |
+  | row | D7 | D14 {summary over series: mean} | D15 {summary over series: mean} | D16 {summary over series: mean} | D14 {summary over series: median} | D15 {summary over series: median} | D16 {summary over series: median} |
+  | r1 | D17 | 1.959 | 2.272 | 3.465 | 1.17 | 1.298 | 0.869 |
+  | r2 | D9 | 1.97 | 2.263 | 2.258 | 1.181 | 1.323 | 0.925 |
+  | r3 | D10 | 2.134 | 2.482 | 3.335 | 1.271 | 1.419 | 0.988 |
+  | r4 | D11 | 1.965 | 2.252 | 2.531 | 1.238 | 1.377 | 0.895 |
+  | r5 | D5 | 1.867 | 2.146 | 2.333 | 1.128 | 1.256 | 0.844 |
+  | r6 | D6 | 1.911 | 2.191 | 2.223 | 1.143 | 1.279 | 0.859 |
 E3 [formal; foundation Linear algebra: eigenvalues of the transition matrix of a linear state-space model] Analysis of the eigenvalues of the CES transition matrix: the stationarity condition, the non-stationary case, the special case equivalent to ETS(A,N,N), the five forecast trajectories and the connection with simple exponential smoothing.
   assumes C61
   derivation: in the source
@@ -219,38 +222,39 @@ E6 [formal; foundation Algebra of backshift-operator polynomials and matrix inve
   derivation: in the source
 E7 [quant; design other; data_origin secondary; n 2] CES fitted with ces() from smooth to [[D39:M3 series 1664 and 2721]], each split into in-sample and holdout parts; stationarity of each series assessed by graphical analysis and [[D37:ADF test]] and [[D38:KPSS test]]; point forecasts and 95% prediction intervals.
   setup: studied D1; cases D39; procedure D37, D38; lens D2
-  E7.R1 real part alpha_0 of the estimated complex smoothing parameter = 0.99999 {series: M3 series 1664}
-  E7.R2 imaginary part alpha_1 of the estimated complex smoothing parameter = 0.99884 {series: M3 series 1664}
-  E7.R3 real part alpha_0 of the estimated complex smoothing parameter = 1.48098 {series: M3 series 2721}
-  E7.R4 imaginary part alpha_1 of the estimated complex smoothing parameter = 1.00346 {series: M3 series 2721}
+  E7.R1 D2 = 0.99999 {part: real part alpha_0, series: M3 series 1664}
+  E7.R2 D2 = 0.99884 {part: imaginary part alpha_1, series: M3 series 1664}
+  E7.R3 D2 = 1.48098 {part: real part alpha_0, series: M3 series 2721}
+  E7.R4 D2 = 1.00346 {part: imaginary part alpha_1, series: M3 series 2721}
 E8 [quant; design benchmark; data_origin secondary; n 99990] The same six methods compared on the [[D30:M4 data without 10 series]] by error measures on a single holdout per series, without a significance test.
   setup: studied D17, D9, D10, D11, D5, D6; cases D30; procedure D34; lens D15, D14, D16
   E8.T1 Mean and median MASE, RMSSE and MSIS of six methods on the M4 competition data, excluding 10 series
-  | row | method | mean MASE | mean RMSSE | mean MSIS | median MASE | median RMSSE | median MSIS |
-  | r1 | CES | 2.921 | 2.339 | 2.379 | 1.803 | 1.529 | 0.592 |
-  | r2 | ETS | 3.31 | 2.688 | 4.751 | 1.831 | 1.542 | 0.632 |
-  | r3 | ARIMA | 3.037 | 2.436 | 2.272 | 1.903 | 1.606 | 0.617 |
-  | r4 | Theta | 2.98 | 2.394 | 2.13 | 1.865 | 1.574 | 0.597 |
-  | r5 | SCUM | 2.737 | 2.198 | 1.751 | 1.742 | 1.475 | 0.568 |
-  | r6 | SCUM(noCES) | 2.784 | 2.241 | 1.798 | 1.769 | 1.498 | 0.583 |
+  | row | D7 | D15 {summary over series: mean} | D14 {summary over series: mean} | D16 {summary over series: mean} | D15 {summary over series: median} | D14 {summary over series: median} | D16 {summary over series: median} |
+  | r1 | D17 | 2.921 | 2.339 | 2.379 | 1.803 | 1.529 | 0.592 |
+  | r2 | D9 | 3.31 | 2.688 | 4.751 | 1.831 | 1.542 | 0.632 |
+  | r3 | D10 | 3.037 | 2.436 | 2.272 | 1.903 | 1.606 | 0.617 |
+  | r4 | D11 | 2.98 | 2.394 | 2.13 | 1.865 | 1.574 | 0.597 |
+  | r5 | D5 | 2.737 | 2.198 | 1.751 | 1.742 | 1.475 | 0.568 |
+  | r6 | D6 | 2.784 | 2.241 | 1.798 | 1.769 | 1.498 | 0.583 |
 E9 [quant; design benchmark; data_origin secondary; n 5315] [[D17:CES with automatic seasonal selection]] compared with the [[D18:non-seasonal special cases of ETS]] on the [[D31:non-seasonal subset]] and with the [[D24:seasonal special cases of ETS]] on the [[D32:seasonal subset]], by error measures on a single holdout per series.
   setup: studied D17, D18, D24; cases D31, D32; procedure D33; lens D14, D15, D16
-  E9.T1 Mean and median RMSSE, MASE and MSIS of CES and five non-seasonal ETS models on the non-seasonal subset of the M1, M3 and tourism series {subset: non-seasonal series, series: 3262}
-  | row | method | mean RMSSE | mean MASE | mean MSIS | median RMSSE | median MASE | median MSIS |
-  | r1 | CES | 2.534 | 2.949 | 4.269 | 1.654 | 1.88 | 0.863 |
-  | r2 | ETS(A,N,N) | 2.823 | 3.234 | 3.104 | 1.95 | 2.228 | 0.917 |
-  | r3 | ETS(A,A,N) | 2.67 | 3.095 | 3.785 | 1.694 | 1.919 | 0.907 |
-  | r4 | ETS(A,Ad,N) | 2.502 | 2.907 | 3.769 | 1.66 | 1.863 | 0.854 |
-  | r5 | ETS(M,M,N) | 3.185 | 3.698 | 4.768 | 1.875 | 2.09 | 0.96 |
-  | r6 | ETS(M,Md,N) | 2.691 | 3.16 | 3.546 | 1.773 | 1.975 | 0.971 |
-  E9.T2 Mean and median RMSSE, MASE and MSIS of CES and five seasonal ETS models on the seasonal subset of the M1, M3 and tourism series {subset: seasonal series, series: 2053}
-  | row | method | mean RMSSE | mean MASE | mean MSIS | median RMSSE | median MASE | median MSIS |
-  | r1 | CES | 1.044 | 1.196 | 2.188 | 0.756 | 0.844 | 0.877 |
-  | r2 | ETS(A,N,A) | 1.142 | 1.297 | 2.037 | 0.803 | 0.894 | 0.92 |
-  | r3 | ETS(A,A,A) | 1.135 | 1.295 | 2.247 | 0.802 | 0.877 | 0.934 |
-  | r4 | ETS(A,Ad,A) | 1.094 | 1.245 | 2.155 | 0.797 | 0.876 | 0.946 |
-  | r5 | ETS(M,M,M) | 1.171 | 1.352 | 2.153 | 0.806 | 0.875 | 1.057 |
-  | r6 | ETS(M,Md,M) | 1.103 | 1.26 | 1.934 | 0.789 | 0.875 | 1.006 |
+  derived from E2 (subset)
+  E9.T1 Mean and median RMSSE, MASE and MSIS of CES and five non-seasonal ETS models on the non-seasonal subset of the M1, M3 and tourism series {D42: D31}
+  | row | D40 | D14 {summary over series: mean} | D15 {summary over series: mean} | D16 {summary over series: mean} | D14 {summary over series: median} | D15 {summary over series: median} | D16 {summary over series: median} |
+  | r1 | D17 | 2.534 | 2.949 | 4.269 | 1.654 | 1.88 | 0.863 |
+  | r2 | D19 | 2.823 | 3.234 | 3.104 | 1.95 | 2.228 | 0.917 |
+  | r3 | D20 | 2.67 | 3.095 | 3.785 | 1.694 | 1.919 | 0.907 |
+  | r4 | D21 | 2.502 | 2.907 | 3.769 | 1.66 | 1.863 | 0.854 |
+  | r5 | D22 | 3.185 | 3.698 | 4.768 | 1.875 | 2.09 | 0.96 |
+  | r6 | D23 | 2.691 | 3.16 | 3.546 | 1.773 | 1.975 | 0.971 |
+  E9.T2 Mean and median RMSSE, MASE and MSIS of CES and five seasonal ETS models on the seasonal subset of the M1, M3 and tourism series {D42: D32}
+  | row | D41 | D14 {summary over series: mean} | D15 {summary over series: mean} | D16 {summary over series: mean} | D14 {summary over series: median} | D15 {summary over series: median} | D16 {summary over series: median} |
+  | r1 | D17 | 1.044 | 1.196 | 2.188 | 0.756 | 0.844 | 0.877 |
+  | r2 | D25 | 1.142 | 1.297 | 2.037 | 0.803 | 0.894 | 0.92 |
+  | r3 | D26 | 1.135 | 1.295 | 2.247 | 0.802 | 0.877 | 0.934 |
+  | r4 | D27 | 1.094 | 1.245 | 2.155 | 0.797 | 0.876 | 0.946 |
+  | r5 | D28 | 1.171 | 1.352 | 2.153 | 0.806 | 0.875 | 1.057 |
+  | r6 | D29 | 1.103 | 1.26 | 1.934 | 0.789 | 0.875 | 1.006 |
 
 WARRANTS
 W1 [deductive; premises C8, C31, C13, C14, C15] The seasonal model takes the level and nonlinear trend states at lag m instead of carrying a set of seasonal components, so there are no seasonal indices to renormalise. Since non-seasonal CES captures both level and trend series without a choice of trend form, the only choice left is whether to include the lag-m states.
