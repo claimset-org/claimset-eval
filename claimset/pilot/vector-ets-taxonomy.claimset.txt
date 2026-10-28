@@ -52,10 +52,10 @@ C1 [formal; principal; extension; support: formal_proof E1; uses C9, C10, C11, C
   Every feasible model of the [[D4:PIC taxonomy]] for [[D2:pure additive VETS]] and [[D3:pure multiplicative VETS]] can be built by inserting the block values for its restrictions on components and parameters into the block measurement, transition and persistence matrices.
   extends B6: The vector innovations structural time series framework formulates vector exponential smoothing for pure additive models.
   extends B2: Vector exponential smoothing is extended to seasonal series, for pure additive models.
-C2 [descriptive; principal; support: simulation E2 (E2.T2.r1, E2.T2.r2, E2.T2.r3) artefacts A2; limitations L3, L6, L7]
+C2 [descriptive; principal; support: simulation E2 (E2.T2.r1, E2.T2.r2, E2.T2.r3) artefacts A2; limitations L3, L6, L7; inherits C56, C57]
   On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D16:PIC(*,S,S) variants]] of VETS(M,N,M;LN), with common seasonal components, have much higher [[D36:rMAE]] than the correct variant on data with individual seasonal components and initial values, from the PIC(*,N,N) variants.
   scope: conditions: 16 in-sample quarters and 8 held out
-C3 [interpretive; principal; support: simulation E2 artefacts A2, argument W1; uses C14, C15, C16, C17, C18, C19; limitations L3, L5, L6, L7; warrant W1]
+C3 [interpretive; principal; support: simulation E2 artefacts A2, argument W1; uses C14, C15, C16, C17, C18, C19; limitations L3, L5, L6, L7; inherits C56, C57; warrant W1]
   The [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN), with common initial seasonal indices and individual seasonal components, are the most robust of the [[D6:nine PIC variants]] of the [[D4:PIC taxonomy]] to model misspecification.
 C4 [descriptive; principal; extension; support: simulation E2 (E2.T7) artefacts A2; uses C20, C21; limitations L3, L5, L6, L7]
   On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, common smoothing parameters lower the [[D39:rPinballU]] of the [[D6:nine PIC variants]] of VETS(M,N,M;LN) on data from every PIC variant.
@@ -67,28 +67,28 @@ C6 [descriptive; principal; support: empirical_quant E3 (E3.T1.r9); limitations 
   On the [[D34:short histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has the lowest geometric mean and median [[D36:rMAE]] of [[D29:the five models]] over all series.
 C7 [descriptive; principal; support: empirical_quant E3 (E3.T2); limitations L4, L7; inherits C60, C58, C59, C56, C57]
   On the [[D33:long histories]] of the [[D32:M5 departmental data]], the [[D41:coverage]] of the 95% prediction interval of [[D25:VETS D]] is the closest to the nominal level of [[D29:the five models]].
-C14 [descriptive; supporting; support: simulation E2 (E2.T2.r4, E2.T2.r5, E2.T2.r6) artefacts A2]
+C14 [descriptive; supporting; support: simulation E2 (E2.T2.r4, E2.T2.r5, E2.T2.r6) artefacts A2; inherits C56, C57]
   On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D36:rMAE]] of each of the [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN) is close to that of the correct variant on data from every variant.
   scope: conditions: 16 in-sample quarters and 8 held out
-C15 [descriptive; supporting; support: simulation E2 (E2.T2) artefacts A2]
+C15 [descriptive; supporting; support: simulation E2 (E2.T2) artefacts A2; inherits C56, C57]
   On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D16:PIC(*,S,S) variants]] of VETS(M,N,M;LN) have higher [[D36:rMAE]] than the [[D17:PIC(*,S,N) variants]] on data with individual seasonal components.
   scope: conditions: 16 in-sample quarters and 8 held out
-C16 [descriptive; supporting; support: simulation E2 (E2.T2) artefacts A2]
+C16 [descriptive; supporting; support: simulation E2 (E2.T2) artefacts A2; inherits C56, C57]
   On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D18:PIC(*,N,N) variants]] of VETS(M,N,M;LN) have higher [[D36:rMAE]] than the [[D17:PIC(*,S,N) variants]] on data with common seasonal components.
   scope: conditions: 16 in-sample quarters and 8 held out
-C17 [descriptive; supporting; support: simulation E2 (E2.T7.r4, E2.T7.r5, E2.T7.r6) artefacts A2]
+C17 [descriptive; supporting; support: simulation E2 (E2.T7.r4, E2.T7.r5, E2.T7.r6) artefacts A2; inherits C56, C57]
   On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN) have higher [[D39:rPinballU]] than the correct variant on data with individual seasonal components and initial values, from the PIC(*,N,N) variants.
   scope: conditions: 16 in-sample quarters and 8 held out
-C18 [descriptive; supporting; support: simulation E2 (E2.T7) artefacts A2]
+C18 [descriptive; supporting; support: simulation E2 (E2.T7) artefacts A2; inherits C56, C57]
   On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN) generally have lower [[D39:rPinballU]] than the [[D16:PIC(*,S,S) variants]] on data with individual seasonal components and initial values, from the PIC(*,N,N) variants.
   scope: conditions: 16 in-sample quarters and 8 held out
-C19 [descriptive; supporting; support: simulation E2 (E2.T7) artefacts A2]
+C19 [descriptive; supporting; support: simulation E2 (E2.T7) artefacts A2; inherits C56, C57]
   On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D18:PIC(*,N,N) variants]] of VETS(M,N,M;LN) have higher [[D39:rPinballU]] than the [[D17:PIC(*,S,N) variants]] on data with common seasonal components, from the PIC(*,S,S) variants.
   scope: conditions: 16 in-sample quarters and 8 held out
-C20 [descriptive; supporting; support: simulation E2 (E2.T7) artefacts A2]
+C20 [descriptive; supporting; support: simulation E2 (E2.T7) artefacts A2; inherits C56, C57]
   On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, each of the [[D19:PIC(LS,*,*) variants]] of VETS(M,N,M;LN), with common level and seasonal smoothing parameters, has [[D39:rPinballU]] at or below that of the one of the [[D20:PIC(S,*,*) variants]] with the same initial-value and component restrictions, on data from every variant.
   scope: conditions: 16 in-sample quarters and 8 held out
-C21 [descriptive; supporting; support: simulation E2 (E2.T7) artefacts A2]
+C21 [descriptive; supporting; support: simulation E2 (E2.T7) artefacts A2; inherits C56, C57]
   On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, each of the [[D20:PIC(S,*,*) variants]] of VETS(M,N,M;LN), with a common seasonal smoothing parameter, has [[D39:rPinballU]] at or below that of the one of the [[D21:PIC(N,*,*) variants]] with the same initial-value and component restrictions, on data from every variant.
   scope: conditions: 16 in-sample quarters and 8 held out
 C56 [descriptive; supporting; assumption (statistical, unchecked)]
@@ -112,11 +112,11 @@ C30 [methodological; secondary; support: cited B12, cited B20]
   The smoothing parameters of [[D1:VETS]] need not be restricted to the interval (0, 1).
 C31 [methodological; secondary; support: cited B12, cited B20]
   The stability condition of Hyndman et al. (2008) and Snyder et al. (2017), that all eigenvalues of the discount matrix $D = F - GW$ lie inside the unit circle, applies to [[D1:VETS]].
-C32 [interpretive; secondary; support: simulation E2 artefacts A2, argument W9; warrant W9]
+C32 [interpretive; secondary; support: simulation E2 artefacts A2, argument W9; inherits C56, C57; warrant W9]
   [[D16:PIC(*,S,S) variants]], with common seasonal components, should be applied only to homogeneous series with very similar seasonal patterns.
-C33 [interpretive; secondary; support: simulation E2 artefacts A2, argument W10; uses C3, C4; warrant W10]
+C33 [interpretive; secondary; support: simulation E2 artefacts A2, argument W10; uses C3, C4; inherits C56, C57; warrant W10]
   [[D10:PIC(LS,S,N)]] is one of the most robust of the [[D6:nine PIC variants]] of VETS(M,N,M;LN) in the [[D4:PIC taxonomy]], in both forecasting accuracy and prediction intervals.
-C34 [interpretive; secondary; support: simulation E2 artefacts A2, argument W10; uses C4; warrant W10]
+C34 [interpretive; secondary; support: simulation E2 artefacts A2, argument W10; uses C4; inherits C56, C57; warrant W10]
   [[D13:PIC(LS,N,N)]] is one of the most robust of the [[D6:nine PIC variants]] of VETS(M,N,M;LN) in the [[D4:PIC taxonomy]], in both forecasting accuracy and prediction intervals.
 C35 [descriptive; secondary; support: empirical_quant E3 (E3.T1); inherits C60, C58, C59, C56, C57]
   On the [[D33:long histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has the lowest geometric mean [[D36:rMAE]] of [[D29:the five models]] on seasonal series, but not the lowest median.
@@ -126,28 +126,28 @@ C36 [descriptive; secondary; support: empirical_quant E3 (E3.T1); inherits C60, 
 C37 [descriptive; secondary; support: empirical_quant E3 (E3.T1); inherits C60, C58, C59, C56, C57]
   On the [[D34:short histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has the lowest median [[D36:rMAE]] of [[D29:the five models]] on non-seasonal series, but not the lowest geometric mean.
   qualifies C6
-C38 [interpretive; secondary; support: empirical_quant E3, argument W11; limitations L8; inherits C60, C58, C59, C56, C57; warrant W11]
+C38 [interpretive; secondary; support: empirical_quant E3, argument W11; limitations L8; inherits C58, C59; warrant W11]
   Using cross-sectional information for estimation improves forecasting accuracy on the [[D32:M5 departmental data]].
-C39 [descriptive; secondary; support: empirical_quant E3 (E3.T2.r5); inherits C60, C58, C59, C56, C57]
+C39 [descriptive; secondary; support: empirical_quant E3 (E3.T2.r5); inherits C58, C59, C56, C57]
   On the [[D33:long histories]] of the [[D32:M5 departmental data]], the [[D41:coverage]] of the 95% prediction interval of [[D24:VETS F]] is above the nominal level.
-C40 [descriptive; secondary; support: empirical_quant E3 (E3.T2.r5); inherits C60, C58, C59, C56, C57]
+C40 [descriptive; secondary; support: empirical_quant E3 (E3.T2.r5); inherits C58, C59, C56, C57]
   On the [[D34:short histories]] of the [[D32:M5 departmental data]], the [[D41:coverage]] of the 95% prediction interval of [[D24:VETS F]] is above the nominal level.
-C41 [descriptive; secondary; support: empirical_quant E3 (E3.T2); inherits C60, C58, C59, C56, C57]
+C41 [descriptive; secondary; support: empirical_quant E3 (E3.T2); inherits C58, C59, C56, C57]
   On the [[D33:long histories]] of the [[D32:M5 departmental data]], [[D24:VETS F]] has the highest [[D39:rPinballU]] and [[D40:rPinballL]] of [[D29:the five models]].
-C42 [descriptive; secondary; support: empirical_quant E3 (E3.T2); inherits C60, C58, C59, C56, C57]
+C42 [descriptive; secondary; support: empirical_quant E3 (E3.T2); inherits C58, C59, C56, C57]
   On the [[D34:short histories]] of the [[D32:M5 departmental data]], [[D24:VETS F]] has the highest [[D39:rPinballU]] and [[D40:rPinballL]] of [[D29:the five models]].
 C43 [descriptive; secondary; support: empirical_quant E3 (E3.T2.r3, E3.T2.r4); inherits C60, C58, C59, C56, C57]
   On the [[D33:long histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has higher [[D39:rPinballU]] and lower [[D40:rPinballL]] than [[D27:ETS]].
 C44 [descriptive; secondary; support: empirical_quant E3 (E3.T2); inherits C60, C58, C59, C56, C57]
   On the [[D34:short histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has higher [[D39:rPinballU]] and [[D40:rPinballL]] than [[D30:the three ETS models]], ETS LN, ETS (ADAM) and ETS.
-C45 [descriptive; secondary; support: empirical_quant E3 (E3.T3); limitations L2, L4; inherits C60, C58, C59, C56, C57]
+C45 [descriptive; secondary; support: empirical_quant E3 (E3.T3); limitations L2, L4; inherits C58, C59]
   On the [[D32:M5 departmental data]], the [[D5:VETS-PIC selection procedure]] chooses [[D10:PIC(LS,S,N)]] for [[D25:VETS D]] more often than any other restriction.
   scope: population: 11 groups of M5 departmental series
-C46 [interpretive; secondary; support: empirical_quant E3, argument W12; inherits C60, C58, C59, C56, C57; warrant W12]
+C46 [interpretive; secondary; support: empirical_quant E3, argument W12; inherits C58, C59; warrant W12]
   The accuracy gains of VETS on the [[D32:M5 departmental data]] arise mainly from the PIC restrictions on seasonal initial values and on smoothing parameters.
   explains C5
   explains C6
-C47 [interpretive; secondary; support: empirical_quant E3, simulation E2 artefacts A2, argument W13; uses C45, C33; inherits C60, C58, C59, C56, C57; warrant W13]
+C47 [interpretive; secondary; support: empirical_quant E3, simulation E2 artefacts A2, argument W13; uses C45, C33; inherits C58, C59; warrant W13]
   The frequent choice of PIC(LS,S,N) on the [[D32:M5 departmental data]] confirms the simulation finding that PIC(LS,S,N) is one of the most robust variants.
 C48 [descriptive; secondary; support: empirical_quant E3 (E3.T3); inherits C60, C58, C59, C56, C57]
   On the [[D32:M5 departmental data]], only one group of [[D25:VETS D]] needs common seasonal components.
@@ -157,9 +157,9 @@ C49 [descriptive; secondary; support: empirical_quant E3 (E3.T4); inherits C60, 
 C50 [descriptive; secondary; support: empirical_quant E3 (E3.T4); inherits C60, C58, C59, C56, C57]
   On the [[D34:short histories]] of the [[D32:M5 departmental data]], one of [[D31:the VETS models]] has the lowest [[D42:GMRAE]] of [[D29:the five models]] at horizons of 3 and 12 months, but not at 6 months.
 C51 [interpretive; secondary; support: empirical_quant E3, argument W14; inherits C60, C58, C59, C56, C57; warrant W14]
-  On real data, VETS estimated with a diagonal covariance matrix is recommended over VETS with a full covariance matrix.
+  On real data, [[D25:VETS D]], VETS estimated with a diagonal covariance matrix, is recommended over [[D24:VETS F]], VETS with a full covariance matrix.
 C52 [interpretive; secondary; support: empirical_quant E3, argument W14; inherits C60, C58, C59, C56, C57; warrant W14]
-  On real data, VETS estimated with a diagonal covariance matrix is recommended over ETS, except when pinball values matter most and the history is short.
+  On real data, [[D25:VETS D]], VETS estimated with a diagonal covariance matrix, is recommended over ETS, except when pinball values matter most and the history is short.
 C55 [descriptive; secondary; assumption (statistical, unchecked)]
   The error vector of [[D2:pure additive VETS]] is multivariate normal with zero mean and covariance matrix $\Sigma$.
 

@@ -1,5 +1,5 @@
 {
- "schema_version": "0.32",
+ "schema_version": "0.33",
  "paper": {
   "title": "A new taxonomy for vector exponential smoothing and its application to seasonal time series",
   "licence": "CC-BY-4.0",
@@ -2342,7 +2342,7 @@
   },
   {
    "id": "C51",
-   "statement": "On real data, VETS estimated with a diagonal covariance matrix is recommended over VETS with a full covariance matrix.",
+   "statement": "On real data, [[D25:VETS D]], VETS estimated with a diagonal covariance matrix, is recommended over [[D24:VETS F]], VETS with a full covariance matrix.",
    "type": "interpretive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -2362,10 +2362,10 @@
    ],
    "provenance": "extracted",
    "about": {
-    "subject": "VETS with a diagonal covariance matrix",
+    "subject": "D25",
     "relation": "is recommended over",
     "object": null,
-    "comparator": "VETS with a full covariance matrix",
+    "comparator": "D24",
     "conditions": [
      "real data"
     ]
@@ -2373,7 +2373,7 @@
   },
   {
    "id": "C52",
-   "statement": "On real data, VETS estimated with a diagonal covariance matrix is recommended over ETS, except when pinball values matter most and the history is short.",
+   "statement": "On real data, [[D25:VETS D]], VETS estimated with a diagonal covariance matrix, is recommended over ETS, except when pinball values matter most and the history is short.",
    "type": "interpretive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -2393,7 +2393,7 @@
    ],
    "provenance": "extracted",
    "about": {
-    "subject": "VETS with a diagonal covariance matrix",
+    "subject": "D25",
     "relation": "is recommended over",
     "object": null,
     "comparator": "univariate ETS",
