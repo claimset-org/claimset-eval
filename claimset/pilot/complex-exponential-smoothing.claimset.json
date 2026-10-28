@@ -1949,7 +1949,7 @@
   },
   {
    "id": "C43",
-   "statement": "The conditional variance of [[D1:CES]] $h$ steps ahead, given the level and the nonlinear trend component, can be calculated from its state-space form in the same way as for pure additive ETS models.",
+   "statement": "The conditional variance of [[D1:CES]] $h$ steps ahead, given the level and the [[D3:nonlinear trend component]], can be calculated from its state-space form in the same way as for pure additive ETS models.",
    "type": "formal",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -2589,7 +2589,7 @@
   },
   {
    "id": "C65",
-   "statement": "ETS model selection with es() from the smooth package identifies correctly which series of the [[D8:M1, M3 and tourism data]] are seasonal.",
+   "statement": "[[D9:ETS]] model selection with es() from the smooth package identifies correctly which series of the [[D8:M1, M3 and tourism data]] are seasonal.",
    "type": "descriptive",
    "role": "supporting",
    "support": [
@@ -2610,7 +2610,7 @@
   {
    "id": "E1",
    "profile": "formal",
-   "description": "Derivation of the state-space form of CES from the complex-valued method, representing complex variables as real vectors and matrices.",
+   "description": "Derivation of the state-space form of [[D1:CES]] from the complex-valued method, representing complex variables as real vectors and matrices.",
    "foundation": "Complex numbers represented as real 2x2 matrices; linear algebra",
    "assumptions": [
     "C60",
@@ -2631,7 +2631,7 @@
    "data_origin": "secondary",
    "preregistered": false,
    "n": 5315,
-   "description": "[[D17:CES with automatic seasonal selection]] compared with ETS, ARIMA, the Theta method, SCUM and SCUM(noCES) on the [[D8:M1, M3 and tourism data]], by error measures on a single holdout per series, with Nemenyi tests of the differences.",
+   "description": "[[D17:CES with automatic seasonal selection]] compared with [[D9:ETS]], [[D10:ARIMA]], the [[D11:Theta method]], [[D5:SCUM]] and [[D6:SCUM(noCES)]] on the [[D8:M1, M3 and tourism data]], by error measures on a single holdout per series, with Nemenyi tests of the differences.",
    "artefacts": [
     "A1",
     "A2",
@@ -2823,12 +2823,15 @@
      "D15",
      "D16"
     ]
+   },
+   "availability": {
+    "level": "public"
    }
   },
   {
    "id": "E3",
    "profile": "formal",
-   "description": "Analysis of the eigenvalues of the CES transition matrix: the stationarity condition, the non-stationary case, the special case equivalent to ETS(A,N,N), the five forecast trajectories and the connection with simple exponential smoothing.",
+   "description": "Analysis of the eigenvalues of the [[D1:CES]] transition matrix: the stationarity condition, the non-stationary case, the special case equivalent to [[D19:ETS(A,N,N)]], the five forecast trajectories and the connection with simple exponential smoothing.",
    "foundation": "Linear algebra: eigenvalues of the transition matrix of a linear state-space model",
    "assumptions": [
     "C61"
@@ -2846,7 +2849,7 @@
   {
    "id": "E4",
    "profile": "formal",
-   "description": "Derivation of the stability region of CES from the invertibility conditions of its underlying ARMA(2,2) model.",
+   "description": "Derivation of the stability region of [[D1:CES]] from the invertibility conditions of its underlying ARMA(2,2) model.",
    "foundation": "Invertibility conditions of ARMA(2,2) models; algebra of inequalities",
    "source_spans": [
     "p4.21-p5.6",
@@ -2862,7 +2865,7 @@
   {
    "id": "E5",
    "profile": "formal",
-   "description": "Derivation of the ARMA(2,2) model underlying CES from its state-space form, by eliminating the nonlinear trend component.",
+   "description": "Derivation of the ARMA(2,2) model underlying [[D1:CES]] from its state-space form, by eliminating the [[D3:nonlinear trend component]].",
    "foundation": "Algebra of backshift-operator polynomials",
    "assumptions": [
     "C61"
@@ -2878,7 +2881,7 @@
   {
    "id": "E6",
    "profile": "formal",
-   "description": "Derivation of the SARIMA model underlying seasonal CES from its state-space form.",
+   "description": "Derivation of the SARIMA model underlying [[D4:seasonal CES]] from its state-space form.",
    "foundation": "Algebra of backshift-operator polynomials and matrix inversion",
    "assumptions": [
     "C61"
@@ -2898,7 +2901,7 @@
    "data_origin": "secondary",
    "preregistered": false,
    "n": 2,
-   "description": "CES fitted with ces() from smooth to [[D39:M3 series 1664 and 2721]], each split into in-sample and holdout parts; stationarity of each series assessed by graphical analysis and [[D37:ADF test]] and [[D38:KPSS test]]; point forecasts and 95% prediction intervals.",
+   "description": "[[D1:CES]] fitted with ces() from smooth to [[D39:M3 series 1664 and 2721]], each split into in-sample and holdout parts; stationarity of each series assessed by graphical analysis and [[D37:ADF test]] and [[D38:KPSS test]]; point forecasts and 95% prediction intervals.",
    "artefacts": [
     "A2",
     "A4",
@@ -2959,6 +2962,9 @@
     "lens": [
      "D2"
     ]
+   },
+   "availability": {
+    "level": "public"
    }
   },
   {
@@ -3134,6 +3140,9 @@
      "D14",
      "D16"
     ]
+   },
+   "availability": {
+    "level": "public"
    }
   },
   {
@@ -3455,7 +3464,10 @@
      "evidence": "E2",
      "how": "subset"
     }
-   ]
+   ],
+   "availability": {
+    "level": "public"
+   }
   }
  ],
  "warrants": [
@@ -3608,19 +3620,28 @@
    "id": "A1",
    "kind": "data",
    "description": "M1 competition data",
-   "reference": "B6"
+   "reference": "B6",
+   "availability": {
+    "level": "public"
+   }
   },
   {
    "id": "A2",
    "kind": "data",
    "description": "M3 competition data",
-   "reference": "B7"
+   "reference": "B7",
+   "availability": {
+    "level": "public"
+   }
   },
   {
    "id": "A3",
    "kind": "data",
    "description": "Tourism forecasting competition data",
-   "reference": "B8"
+   "reference": "B8",
+   "availability": {
+    "level": "public"
+   }
   },
   {
    "id": "A4",
@@ -3628,14 +3649,20 @@
    "description": "smooth package for R (ces, auto.ces, es, auto.ssarima)",
    "uri": "https://github.com/config-i1/smooth",
    "version": "3.1.2",
-   "reference": "B10"
+   "reference": "B10",
+   "availability": {
+    "level": "public"
+   }
   },
   {
    "id": "A5",
    "kind": "software",
    "description": "forecast package for R (thetaf)",
    "version": "8.14",
-   "reference": "B11"
+   "reference": "B11",
+   "availability": {
+    "level": "public"
+   }
   },
   {
    "id": "A6",
@@ -3643,20 +3670,29 @@
    "description": "greybox package for R (rmcb, Nemenyi test)",
    "uri": "https://github.com/config-i1/greybox",
    "version": "0.7.0",
-   "reference": "B12"
+   "reference": "B12",
+   "availability": {
+    "level": "public"
+   }
   },
   {
    "id": "A7",
    "kind": "data",
    "description": "M4 competition data",
-   "reference": "B9"
+   "reference": "B9",
+   "availability": {
+    "level": "public"
+   }
   },
   {
    "id": "A8",
    "kind": "software",
    "description": "R, the environment for statistical computing in which the experiments were run",
    "uri": "https://www.R-project.org/",
-   "reference": "B24"
+   "reference": "B24",
+   "availability": {
+    "level": "public"
+   }
   }
  ],
  "references": [

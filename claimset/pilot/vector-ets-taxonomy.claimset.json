@@ -186,7 +186,7 @@
   {
    "id": "D6",
    "term": "nine PIC variants of VETS(M,N,M;LN)",
-   "definition": "VETS(M,N,M;LN) estimated by maximum likelihood with vets() from the legion package under the restrictions PIC(LS,S,S), PIC(S,S,S), PIC(N,S,S), PIC(LS,S,N), PIC(S,S,N), PIC(N,S,N), PIC(LS,N,N), PIC(S,N,N) and PIC(N,N,N).",
+   "definition": "VETS(M,N,M;LN) estimated by maximum likelihood with vets() from the legion package under the restrictions [[D7:PIC(LS,S,S)]], [[D8:PIC(S,S,S)]], [[D9:PIC(N,S,S)]], [[D10:PIC(LS,S,N)]], [[D11:PIC(S,S,N)]], [[D12:PIC(N,S,N)]], [[D13:PIC(LS,N,N)]], [[D14:PIC(S,N,N)]] and [[D15:PIC(N,N,N)]].",
    "kind": "method",
    "members": [
     "D7",
@@ -412,7 +412,7 @@
     "D27",
     "D28"
    ],
-   "definition": "[[D24:V[[D27:ETS]] F]], [[D25:VETS D]], [[D26:ETS LN]], [[D28:ETS (ADAM)]] and ETS, as compared on the M5 data."
+   "definition": "[[D24:VETS F]], [[D25:VETS D]], [[D26:ETS LN]], [[D28:ETS (ADAM)]] and [[D27:ETS]], as compared on the [[D32:M5 data]]."
   },
   {
    "id": "D30",
@@ -423,7 +423,7 @@
     "D27",
     "D28"
    ],
-   "definition": "[[D26:[[D27:ETS]] LN]], [[D28:ETS (ADAM)]] and ETS, as compared on the M5 data."
+   "definition": "[[D26:ETS LN]], [[D28:ETS (ADAM)]] and [[D27:ETS]], as compared on the [[D32:M5 data]]."
   },
   {
    "id": "D31",
@@ -471,7 +471,7 @@
   {
    "id": "D35",
    "term": "MCB test",
-   "definition": "Multiple comparisons with the best on the ranks of an error measure across series; here on rMAE, with rmcb() from the greybox package.",
+   "definition": "Multiple comparisons with the best on the ranks of an error measure across series; here on [[D36:rMAE]], with rmcb() from the greybox package.",
    "source": "B13",
    "kind": "design"
   },
@@ -587,7 +587,7 @@
   },
   {
    "id": "C2",
-   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D16:PIC(*,S,S) variants]] of VETS(M,N,M;LN), with common seasonal components, have much higher [[D36:rMAE]] than the correct variant on data with individual seasonal components and initial values, from the PIC(*,N,N) variants.",
+   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D16:PIC(*,S,S) variants]] of VETS(M,N,M;LN), with common seasonal components, have much higher [[D36:rMAE]] than the correct variant on data with individual seasonal components and initial values, from the [[D18:PIC(*,N,N) variants]].",
    "type": "descriptive",
    "role": "principal",
    "novelty": "no_prior_found",
@@ -1158,7 +1158,7 @@
   },
   {
    "id": "C17",
-   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN) have higher [[D39:rPinballU]] than the correct variant on data with individual seasonal components and initial values, from the PIC(*,N,N) variants.",
+   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN) have higher [[D39:rPinballU]] than the correct variant on data with individual seasonal components and initial values, from the [[D18:PIC(*,N,N) variants]].",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1201,7 +1201,7 @@
   },
   {
    "id": "C18",
-   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN) generally have lower [[D39:rPinballU]] than the [[D16:PIC(*,S,S) variants]] on data with individual seasonal components and initial values, from the PIC(*,N,N) variants.",
+   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN) generally have lower [[D39:rPinballU]] than the [[D16:PIC(*,S,S) variants]] on data with individual seasonal components and initial values, from the [[D18:PIC(*,N,N) variants]].",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1242,7 +1242,7 @@
   },
   {
    "id": "C19",
-   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D18:PIC(*,N,N) variants]] of VETS(M,N,M;LN) have higher [[D39:rPinballU]] than the [[D17:PIC(*,S,N) variants]] on data with common seasonal components, from the PIC(*,S,S) variants.",
+   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D18:PIC(*,N,N) variants]] of VETS(M,N,M;LN) have higher [[D39:rPinballU]] than the [[D17:PIC(*,S,N) variants]] on data with common seasonal components, from the [[D16:PIC(*,S,S) variants]].",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -2081,7 +2081,7 @@
   },
   {
    "id": "C44",
-   "statement": "On the [[D34:short histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has higher [[D39:rPinballU]] and [[D40:rPinballL]] than [[D30:the three ETS models]], ETS LN, ETS (ADAM) and ETS.",
+   "statement": "On the [[D34:short histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has higher [[D39:rPinballU]] and [[D40:rPinballL]] than [[D30:the three ETS models]], [[D26:ETS LN]], [[D28:ETS (ADAM)]] and [[D27:ETS]].",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -2196,7 +2196,7 @@
   },
   {
    "id": "C47",
-   "statement": "The frequent choice of PIC(LS,S,N) on the [[D32:M5 departmental data]] confirms the simulation finding that PIC(LS,S,N) is one of the most robust variants.",
+   "statement": "The frequent choice of [[D10:PIC(LS,S,N)]] on the [[D32:M5 departmental data]] confirms the simulation finding that PIC(LS,S,N) is one of the most robust variants.",
    "type": "interpretive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -2578,7 +2578,7 @@
   {
    "id": "E2",
    "profile": "simulation",
-   "description": "The [[D6:nine PIC variants of VETS(M,N,M;LN)]] applied to [[D22:simulated VETS(M,N,M;LN) data]] from each of the nine variants, evaluated on the [[D23:simulation holdout]] against PIC(N,N,N) or the correct variant.",
+   "description": "The [[D6:nine PIC variants of VETS(M,N,M;LN)]] applied to [[D22:simulated VETS(M,N,M;LN) data]] from each of the nine variants, evaluated on the [[D23:simulation holdout]] against [[D15:PIC(N,N,N)]] or the correct variant.",
    "setup": {
     "studied": [
      "D6"
@@ -4391,7 +4391,10 @@
    "source_spans": [
     "p7.1-p12.7",
     "p15.7-p15.9"
-   ]
+   ],
+   "availability": {
+    "level": "public"
+   }
   },
   {
    "id": "E3",
@@ -4400,7 +4403,7 @@
    "data_origin": "secondary",
    "preregistered": false,
    "n": 69,
-   "description": "[[D24:VETS F]] and [[D25:VETS D]] compared with [[D26:ETS LN]], [[D28:ETS (ADAM)]] and [[D27:ETS]] on the [[D32:M5 departmental data]], on long and short histories with the same 12-month holdout, by accuracy and prediction-interval measures and the MCB test.",
+   "description": "[[D24:VETS F]] and [[D25:VETS D]] compared with [[D26:ETS LN]], [[D28:ETS (ADAM)]] and [[D27:ETS]] on the [[D32:M5 departmental data]], on long and short histories with the same 12-month holdout, by accuracy and prediction-interval measures and the [[D35:MCB test]].",
    "setup": {
     "studied": [
      "D24",
@@ -5031,12 +5034,15 @@
    "source_spans": [
     "p12.8-p14.15",
     "p16.1-p16.14"
-   ]
+   ],
+   "availability": {
+    "level": "public"
+   }
   },
   {
    "id": "E4",
    "profile": "formal",
-   "description": "Derivation of the log-likelihood of pure additive and pure multiplicative VETS, the maximum likelihood estimate of the covariance matrix and the concentrated likelihood.",
+   "description": "Derivation of the log-likelihood of [[D2:pure additive VETS]] and [[D3:pure multiplicative VETS]], the maximum likelihood estimate of the covariance matrix and the concentrated likelihood.",
    "foundation": "Multivariate normal likelihood; matrix algebra",
    "assumptions": [
     "C55",
@@ -5381,7 +5387,10 @@
    "id": "A1",
    "kind": "data",
    "description": "M5 competition data (Walmart sales)",
-   "reference": "B17"
+   "reference": "B17",
+   "availability": {
+    "level": "public"
+   }
   },
   {
    "id": "A2",
@@ -5389,7 +5398,10 @@
    "description": "legion package for R (vets, auto.vets, sim.ves)",
    "version": "0.1.0",
    "uri": "https://www.github.com/config-i1/legion",
-   "reference": "B18"
+   "reference": "B18",
+   "availability": {
+    "level": "public"
+   }
   },
   {
    "id": "A3",
@@ -5397,13 +5409,19 @@
    "description": "smooth package for R (adam)",
    "version": "3.1.1",
    "uri": "https://www.github.com/config-i1/smooth",
-   "reference": "B16"
+   "reference": "B16",
+   "availability": {
+    "level": "public"
+   }
   },
   {
    "id": "A4",
    "kind": "software",
    "description": "forecast package for R (ets)",
-   "reference": "B14"
+   "reference": "B14",
+   "availability": {
+    "level": "public"
+   }
   },
   {
    "id": "A5",
@@ -5411,14 +5429,20 @@
    "description": "greybox package for R (rmcb)",
    "version": "0.6.9",
    "uri": "https://www.github.com/config-i1/greybox",
-   "reference": "B11"
+   "reference": "B11",
+   "availability": {
+    "level": "public"
+   }
   },
   {
    "id": "A6",
    "kind": "software",
    "description": "R, the environment in which the experiments were run",
    "uri": "https://www.R-project.org/",
-   "reference": "B21"
+   "reference": "B21",
+   "availability": {
+    "level": "public"
+   }
   }
  ],
  "references": [

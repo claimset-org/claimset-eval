@@ -142,13 +142,13 @@ C63 [descriptive; supporting; assumption (statistical, unchecked)]
 C64 [descriptive; supporting; assumption (statistical, unchecked)]
   The error term $\varepsilon_t$ of [[D1:CES]] is normally distributed.
 C65 [descriptive; supporting; assumption (methodological, unchecked)]
-  ETS model selection with es() from the smooth package identifies correctly which series of the [[D8:M1, M3 and tourism data]] are seasonal.
+  [[D9:ETS]] model selection with es() from the smooth package identifies correctly which series of the [[D8:M1, M3 and tourism data]] are seasonal.
 C41 [formal; secondary; support: formal_proof E1; uses C16; verification unchecked]
   The transition matrix of the [[D1:CES]] state-space form contains the smoothing parameters.
 C42 [methodological; secondary; support: cited B1, at p. 68, own earlier work; assumes C60, C64]
   The [[D36:Akaike information criterion]] of seasonal and non-seasonal [[D1:CES]] can be computed from a Gaussian likelihood of the same form as that of additive exponential smoothing models.
 C43 [formal; secondary; support: cited B1, at p. 96, own earlier work; assumes C60, C62, C63; uses C16]
-  The conditional variance of [[D1:CES]] $h$ steps ahead, given the level and the nonlinear trend component, can be calculated from its state-space form in the same way as for pure additive ETS models.
+  The conditional variance of [[D1:CES]] $h$ steps ahead, given the level and the [[D3:nonlinear trend component]], can be calculated from its state-space form in the same way as for pure additive ETS models.
 C44 [formal; secondary; support: formal_proof E3; uses C20; verification unchecked]
   When $\alpha_1$ is close to 1, [[D1:CES]] behaves like simple exponential smoothing with smoothing parameter $\alpha_0 - 1$.
 C45 [formal; secondary; support: formal_proof E3; uses C44; verification unchecked]
@@ -196,10 +196,10 @@ C52 [methodological; secondary; support: argument W5; warrant W5]
   [[D4:seasonal CES]] has $4 + 2m + 2 + 1$ estimated parameters: four smoothing parameters, $2m$ initial lagged values, two initial non-seasonal states and the error variance.
 
 EVIDENCE
-E1 [formal; foundation Complex numbers represented as real 2x2 matrices; linear algebra] Derivation of the state-space form of CES from the complex-valued method, representing complex variables as real vectors and matrices.
+E1 [formal; foundation Complex numbers represented as real 2x2 matrices; linear algebra] Derivation of the state-space form of [[D1:CES]] from the complex-valued method, representing complex variables as real vectors and matrices.
   assumes C60, C61
   derivation: in the source
-E2 [quant; design benchmark; data_origin secondary; n 5315] [[D17:CES with automatic seasonal selection]] compared with ETS, ARIMA, the Theta method, SCUM and SCUM(noCES) on the [[D8:M1, M3 and tourism data]], by error measures on a single holdout per series, with Nemenyi tests of the differences.
+E2 [quant; design benchmark; data_origin secondary; n 5315] [[D17:CES with automatic seasonal selection]] compared with [[D9:ETS]], [[D10:ARIMA]], the [[D11:Theta method]], [[D5:SCUM]] and [[D6:SCUM(noCES)]] on the [[D8:M1, M3 and tourism data]], by error measures on a single holdout per series, with Nemenyi tests of the differences.
   setup: studied D17, D9, D10, D11, D5, D6; cases D8; procedure D33, D35; lens D14, D15, D16
   E2.R1 D16 = 523.034 {D7: D17, series: M1 series 47}
   E2.R2 D16 = 25.59 {D7: D9, series: M1 series 47, ETS model selected: ETS(M,N,N)}
@@ -211,19 +211,19 @@ E2 [quant; design benchmark; data_origin secondary; n 5315] [[D17:CES with autom
   | r4 | D11 | 1.965 | 2.252 | 2.531 | 1.238 | 1.377 | 0.895 |
   | r5 | D5 | 1.867 | 2.146 | 2.333 | 1.128 | 1.256 | 0.844 |
   | r6 | D6 | 1.911 | 2.191 | 2.223 | 1.143 | 1.279 | 0.859 |
-E3 [formal; foundation Linear algebra: eigenvalues of the transition matrix of a linear state-space model] Analysis of the eigenvalues of the CES transition matrix: the stationarity condition, the non-stationary case, the special case equivalent to ETS(A,N,N), the five forecast trajectories and the connection with simple exponential smoothing.
+E3 [formal; foundation Linear algebra: eigenvalues of the transition matrix of a linear state-space model] Analysis of the eigenvalues of the [[D1:CES]] transition matrix: the stationarity condition, the non-stationary case, the special case equivalent to [[D19:ETS(A,N,N)]], the five forecast trajectories and the connection with simple exponential smoothing.
   assumes C61
   derivation: in the source
-E4 [formal; foundation Invertibility conditions of ARMA(2,2) models; algebra of inequalities] Derivation of the stability region of CES from the invertibility conditions of its underlying ARMA(2,2) model.
+E4 [formal; foundation Invertibility conditions of ARMA(2,2) models; algebra of inequalities] Derivation of the stability region of [[D1:CES]] from the invertibility conditions of its underlying ARMA(2,2) model.
   assumes C61
   derivation: in the source
-E5 [formal; foundation Algebra of backshift-operator polynomials] Derivation of the ARMA(2,2) model underlying CES from its state-space form, by eliminating the nonlinear trend component.
+E5 [formal; foundation Algebra of backshift-operator polynomials] Derivation of the ARMA(2,2) model underlying [[D1:CES]] from its state-space form, by eliminating the [[D3:nonlinear trend component]].
   assumes C61
   derivation: in the source
-E6 [formal; foundation Algebra of backshift-operator polynomials and matrix inversion] Derivation of the SARIMA model underlying seasonal CES from its state-space form.
+E6 [formal; foundation Algebra of backshift-operator polynomials and matrix inversion] Derivation of the SARIMA model underlying [[D4:seasonal CES]] from its state-space form.
   assumes C61
   derivation: in the source
-E7 [quant; design other; data_origin secondary; n 2] CES fitted with ces() from smooth to [[D39:M3 series 1664 and 2721]], each split into in-sample and holdout parts; stationarity of each series assessed by graphical analysis and [[D37:ADF test]] and [[D38:KPSS test]]; point forecasts and 95% prediction intervals.
+E7 [quant; design other; data_origin secondary; n 2] [[D1:CES]] fitted with ces() from smooth to [[D39:M3 series 1664 and 2721]], each split into in-sample and holdout parts; stationarity of each series assessed by graphical analysis and [[D37:ADF test]] and [[D38:KPSS test]]; point forecasts and 95% prediction intervals.
   setup: studied D1; cases D39; procedure D37, D38; lens D2
   E7.R1 D2 = 0.99999 {part: real part alpha_0, series: M3 series 1664}
   E7.R2 D2 = 0.99884 {part: imaginary part alpha_1, series: M3 series 1664}

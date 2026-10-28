@@ -7,7 +7,7 @@ D2 [method] pure additive VETS: [[D1:VETS]] on the original data, written VETS(A
 D3 [method] pure multiplicative VETS: [[D1:VETS]] on the logarithms of data, states and errors, written VETS(M,N,N;LN), VETS(M,N,M;LN) and so on: $\log y_t = W \log v_{t-l} + \log \epsilon_t$, $\log v_t = F \log v_{t-l} + G \log \epsilon_t$, the logarithm taken element-wise, with $\log \epsilon_t \sim N(0_n, \Sigma)$. [a kind of D1] [assumes C56]
 D4 [concept] PIC taxonomy: A classification of [[D1:VETS]] models by which of their Parameters, Initial values and Components are common to all series of the group rather than individual, written VETS(...)PIC(P,I,C): P lists the common smoothing parameters (L level, T trend, S seasonal) and D for a common damping parameter, I the common initial values (L, T, S), C the common components (L, T, S); N means none is common. PIC(N,N,N) has everything individual. A model of the taxonomy is built from block matrices for level (1), trend (2) and seasonal (3) components: $W = (W_1 \; W_2 \; W_3)$, $F = \begin{pmatrix} F_{1,1} & F_{1,2} & F_{1,3} \\ F_{2,1} & F_{2,2} & F_{2,3} \\ F_{3,1} & F_{3,2} & F_{3,3} \end{pmatrix}$, $G = \begin{pmatrix} G_1 \\ G_2 \\ G_3 \end{pmatrix}$, with the values: individual level $F_{1,1} = I_n$, $W_1 = I_n$, $G_1 = A$; individual trend $F_{2,2} = \Phi$, $W_2 = \Phi$, $G_2 = B$; individual seasonal $F_{3,3} = I_n$, $W_3 = I_n$, $G_3 = \Gamma$; common level $F_{1,1} = 1$, $W_1 = 1_n$, $G_1 = \alpha_n'$; common trend $F_{2,2} = \phi$, $W_2 = \phi 1_n$, $G_2 = \beta_n'$; common seasonal $F_{3,3} = 1$, $W_3 = 1_n$, $G_3 = \gamma_n'$; level and trend both individual $F_{1,2} = \Phi$, $F_{2,1} = O_n$; individual level with common trend $F_{1,2} = \phi 1_n$, $F_{2,1} = 0_n'$; both common $F_{1,2} = \phi$, $F_{2,1} = 0$; every block between level and seasonal or between trend and seasonal is zero: $O_n$ when both are individual, $0_n'$ or $0_n$ when one is common, $0$ when both are. Individual smoothing and damping parameters give $A = \mathrm{diag}(\alpha_1, \ldots, \alpha_n)$, $B = \mathrm{diag}(\beta_1, \ldots, \beta_n)$, $\Gamma = \mathrm{diag}(\gamma_1, \ldots, \gamma_n)$, $\Phi = \mathrm{diag}(\phi_1, \ldots, \phi_n)$ (not stated in the paper); common ones give $A = \alpha I_n$, $B = \beta I_n$, $\Gamma = \gamma I_n$, $\Phi = \phi I_n$ and $\alpha_n = \alpha 1_n$, $\beta_n = \beta 1_n$, $\gamma_n = \gamma 1_n$, $\phi_n = \phi 1_n$. A common component is one state shared by all series ($l_{1,t} = \cdots = l_{n,t} = l_t$, and so for trend and seasonal); common initial values only set the starting states equal and leave the matrices unchanged. A common level with individual trends is not feasible.
 D5 [method] VETS-PIC selection procedure: The proposed procedure for choosing the [[D4:PIC]] restrictions of a [[D1:VETS]] model by an information criterion (the paper recommends the [[D43:multivariate AICc]] without saying which criterion its implementation uses): first the restrictions on initial values, then on smoothing parameters, then on components; the ETS components are chosen beforehand when the series are grouped. Implemented as auto.vets() in the legion package.
-D6 [method] nine PIC variants of VETS(M,N,M;LN): VETS(M,N,M;LN) estimated by maximum likelihood with vets() from the legion package under the restrictions PIC(LS,S,S), PIC(S,S,S), PIC(N,S,S), PIC(LS,S,N), PIC(S,S,N), PIC(N,S,N), PIC(LS,N,N), PIC(S,N,N) and PIC(N,N,N). [members D7, D8, D9, D10, D11, D12, D13, D14, D15]
+D6 [method] nine PIC variants of VETS(M,N,M;LN): VETS(M,N,M;LN) estimated by maximum likelihood with vets() from the legion package under the restrictions [[D7:PIC(LS,S,S)]], [[D8:PIC(S,S,S)]], [[D9:PIC(N,S,S)]], [[D10:PIC(LS,S,N)]], [[D11:PIC(S,S,N)]], [[D12:PIC(N,S,N)]], [[D13:PIC(LS,N,N)]], [[D14:PIC(S,N,N)]] and [[D15:PIC(N,N,N)]]. [members D7, D8, D9, D10, D11, D12, D13, D14, D15]
 D7 [method] PIC(LS,S,S): VETS(M,N,M;LN) with PIC(LS,S,S) restrictions: common level and seasonal smoothing parameters, common initial seasonal indices and a common seasonal component; one of the [[D6:nine PIC variants]]. [a kind of D3]
 D8 [method] PIC(S,S,S): VETS(M,N,M;LN) with PIC(S,S,S) restrictions: a common seasonal smoothing parameter, common initial seasonal indices and a common seasonal component; one of the [[D6:nine PIC variants]]. [a kind of D3]
 D9 [method] PIC(N,S,S): VETS(M,N,M;LN) with PIC(N,S,S) restrictions: individual smoothing parameters, common initial seasonal indices and a common seasonal component; one of the [[D6:nine PIC variants]]. [a kind of D3]
@@ -30,14 +30,14 @@ D25 [method] VETS D: [[D24:VETS F]] with a diagonal covariance matrix of the err
 D26 [method] ETS LN: ETS(A,N,N) or ETS(A,N,A) fitted to the logarithms of each series by adam() from the smooth package with distribution = "dnorm", the forecasts exponentiated. [source B19]
 D27 [method] ETS: ETS(M,N,N) or ETS(M,N,M) fitted to each series by ets() from the forecast package. [source B14]
 D28 [method] ETS (ADAM): ETS(M,N,N) or ETS(M,N,M) fitted to each series by adam() from the smooth package with distribution = "dnorm". [source B19]
-D29 [method] the five models: [[D24:V[[D27:ETS]] F]], [[D25:VETS D]], [[D26:ETS LN]], [[D28:ETS (ADAM)]] and ETS, as compared on the M5 data. [members D24, D25, D26, D27, D28]
-D30 [method] the three ETS models: [[D26:[[D27:ETS]] LN]], [[D28:ETS (ADAM)]] and ETS, as compared on the M5 data. [members D26, D27, D28]
+D29 [method] the five models: [[D24:VETS F]], [[D25:VETS D]], [[D26:ETS LN]], [[D28:ETS (ADAM)]] and [[D27:ETS]], as compared on the [[D32:M5 data]]. [members D24, D25, D26, D27, D28]
+D30 [method] the three ETS models: [[D26:ETS LN]], [[D28:ETS (ADAM)]] and [[D27:ETS]], as compared on the [[D32:M5 data]]. [members D26, D27, D28]
 D31 [method] the VETS models: [[D24:VETS F]] and [[D25:VETS D]]. [members D24, D25]
 D32 [data] M5 departmental data: The M5 competition series aggregated to monthly frequency and to department-store level: 70 series of 63 observations; 69 used, in 7 seasonal groups (57 series) and 4 non-seasonal groups (12 series) of the same department, classified by adam() from the smooth package; a group of one series removed; trended models excluded. [assumes C58, C59] [source B17]
 D33 [design] M5 long holdout: The first 51 observations of each M5 series used for estimation and the last 12 held out.
 D34 [design] M5 short holdout: The last 36 observations of each M5 series used: 24 for estimation and the last 12 held out (the same holdout as the long one).
 D44 [design] the two M5 histories: The [[D33:M5 long holdout]] and the [[D34:M5 short holdout]]: long and short histories with the same 12-month holdout. [members D33, D34]
-D35 [design] MCB test: Multiple comparisons with the best on the ranks of an error measure across series; here on rMAE, with rmcb() from the greybox package. [source B13]
+D35 [design] MCB test: Multiple comparisons with the best on the ranks of an error measure across series; here on [[D36:rMAE]], with rmcb() from the greybox package. [source B13]
 D36 [variable] rMAE: Relative mean absolute error: the mean absolute forecast error over the horizon divided by that of a benchmark method, aggregated over series by the geometric mean (in the M5 analysis also by the median). [source B5]
 D37 [variable] rRMSE: Relative root mean squared error: the root mean squared forecast error over the horizon divided by that of a benchmark method, aggregated over series by the geometric mean.
 D38 [variable] rAME: Relative absolute mean error: the absolute value of the mean forecast error over the horizon divided by that of a benchmark method, aggregated over series by the geometric mean; a measure of bias.
@@ -53,7 +53,7 @@ C1 [formal; principal; extension; support: formal_proof E1; uses C9, C10, C11, C
   extends B6: The vector innovations structural time series framework formulates vector exponential smoothing for pure additive models.
   extends B2: Vector exponential smoothing is extended to seasonal series, for pure additive models.
 C2 [descriptive; principal; support: simulation E2 (E2.T2.r1, E2.T2.r2, E2.T2.r3) artefacts A2; limitations L3, L6, L7; inherits C56, C57]
-  On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D16:PIC(*,S,S) variants]] of VETS(M,N,M;LN), with common seasonal components, have much higher [[D36:rMAE]] than the correct variant on data with individual seasonal components and initial values, from the PIC(*,N,N) variants.
+  On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D16:PIC(*,S,S) variants]] of VETS(M,N,M;LN), with common seasonal components, have much higher [[D36:rMAE]] than the correct variant on data with individual seasonal components and initial values, from the [[D18:PIC(*,N,N) variants]].
   scope: conditions: 16 in-sample quarters and 8 held out
 C3 [interpretive; principal; support: simulation E2 artefacts A2, argument W1; uses C14, C15, C16, C17, C18, C19; limitations L3, L5, L6, L7; inherits C56, C57; warrant W1]
   The [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN), with common initial seasonal indices and individual seasonal components, are the most robust of the [[D6:nine PIC variants]] of the [[D4:PIC taxonomy]] to model misspecification.
@@ -77,13 +77,13 @@ C16 [descriptive; supporting; support: simulation E2 (E2.T2) artefacts A2; inher
   On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D18:PIC(*,N,N) variants]] of VETS(M,N,M;LN) have higher [[D36:rMAE]] than the [[D17:PIC(*,S,N) variants]] on data with common seasonal components.
   scope: conditions: 16 in-sample quarters and 8 held out
 C17 [descriptive; supporting; support: simulation E2 (E2.T7.r4, E2.T7.r5, E2.T7.r6) artefacts A2; inherits C56, C57]
-  On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN) have higher [[D39:rPinballU]] than the correct variant on data with individual seasonal components and initial values, from the PIC(*,N,N) variants.
+  On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN) have higher [[D39:rPinballU]] than the correct variant on data with individual seasonal components and initial values, from the [[D18:PIC(*,N,N) variants]].
   scope: conditions: 16 in-sample quarters and 8 held out
 C18 [descriptive; supporting; support: simulation E2 (E2.T7) artefacts A2; inherits C56, C57]
-  On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN) generally have lower [[D39:rPinballU]] than the [[D16:PIC(*,S,S) variants]] on data with individual seasonal components and initial values, from the PIC(*,N,N) variants.
+  On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN) generally have lower [[D39:rPinballU]] than the [[D16:PIC(*,S,S) variants]] on data with individual seasonal components and initial values, from the [[D18:PIC(*,N,N) variants]].
   scope: conditions: 16 in-sample quarters and 8 held out
 C19 [descriptive; supporting; support: simulation E2 (E2.T7) artefacts A2; inherits C56, C57]
-  On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D18:PIC(*,N,N) variants]] of VETS(M,N,M;LN) have higher [[D39:rPinballU]] than the [[D17:PIC(*,S,N) variants]] on data with common seasonal components, from the PIC(*,S,S) variants.
+  On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D18:PIC(*,N,N) variants]] of VETS(M,N,M;LN) have higher [[D39:rPinballU]] than the [[D17:PIC(*,S,N) variants]] on data with common seasonal components, from the [[D16:PIC(*,S,S) variants]].
   scope: conditions: 16 in-sample quarters and 8 held out
 C20 [descriptive; supporting; support: simulation E2 (E2.T7) artefacts A2; inherits C56, C57]
   On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, each of the [[D19:PIC(LS,*,*) variants]] of VETS(M,N,M;LN), with common level and seasonal smoothing parameters, has [[D39:rPinballU]] at or below that of the one of the [[D20:PIC(S,*,*) variants]] with the same initial-value and component restrictions, on data from every variant.
@@ -139,7 +139,7 @@ C42 [descriptive; secondary; support: empirical_quant E3 (E3.T2); inherits C58, 
 C43 [descriptive; secondary; support: empirical_quant E3 (E3.T2.r3, E3.T2.r4); inherits C60, C58, C59, C56, C57]
   On the [[D33:long histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has higher [[D39:rPinballU]] and lower [[D40:rPinballL]] than [[D27:ETS]].
 C44 [descriptive; secondary; support: empirical_quant E3 (E3.T2); inherits C60, C58, C59, C56, C57]
-  On the [[D34:short histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has higher [[D39:rPinballU]] and [[D40:rPinballL]] than [[D30:the three ETS models]], ETS LN, ETS (ADAM) and ETS.
+  On the [[D34:short histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has higher [[D39:rPinballU]] and [[D40:rPinballL]] than [[D30:the three ETS models]], [[D26:ETS LN]], [[D28:ETS (ADAM)]] and [[D27:ETS]].
 C45 [descriptive; secondary; support: empirical_quant E3 (E3.T3); limitations L2, L4; inherits C58, C59]
   On the [[D32:M5 departmental data]], the [[D5:VETS-PIC selection procedure]] chooses [[D10:PIC(LS,S,N)]] for [[D25:VETS D]] more often than any other restriction.
   scope: population: 11 groups of M5 departmental series
@@ -148,7 +148,7 @@ C46 [interpretive; secondary; support: empirical_quant E3, argument W12; inherit
   explains C5
   explains C6
 C47 [interpretive; secondary; support: empirical_quant E3, simulation E2 artefacts A2, argument W13; uses C45, C33; inherits C58, C59; warrant W13]
-  The frequent choice of PIC(LS,S,N) on the [[D32:M5 departmental data]] confirms the simulation finding that PIC(LS,S,N) is one of the most robust variants.
+  The frequent choice of [[D10:PIC(LS,S,N)]] on the [[D32:M5 departmental data]] confirms the simulation finding that PIC(LS,S,N) is one of the most robust variants.
 C48 [descriptive; secondary; support: empirical_quant E3 (E3.T3); inherits C60, C58, C59, C56, C57]
   On the [[D32:M5 departmental data]], only one group of [[D25:VETS D]] needs common seasonal components.
 C49 [descriptive; secondary; support: empirical_quant E3 (E3.T4); inherits C60, C58, C59, C56, C57]
@@ -194,7 +194,7 @@ C54 [methodological; secondary; support: argument W15; warrant W15]
 EVIDENCE
 E1 [formal; foundation Linear state space models; matrix algebra] Construction of VETS-PIC models: the restrictions of each PIC element on the block measurement, transition and persistence matrices, with a worked example and the reformulation of the Ouwehand et al. (2007) seasonal component.
   derivation: in the source
-E2 [simulation; runs 1000] The [[D6:nine PIC variants of VETS(M,N,M;LN)]] applied to [[D22:simulated VETS(M,N,M;LN) data]] from each of the nine variants, evaluated on the [[D23:simulation holdout]] against PIC(N,N,N) or the correct variant.
+E2 [simulation; runs 1000] The [[D6:nine PIC variants of VETS(M,N,M;LN)]] applied to [[D22:simulated VETS(M,N,M;LN) data]] from each of the nine variants, evaluated on the [[D23:simulation holdout]] against [[D15:PIC(N,N,N)]] or the correct variant.
   setup: studied D6; cases D22; procedure D23; lens D36, D37, D38, D39, D40, D41
   E2.T1 rMAE, rRMSE and rAME of the nine variants relative to PIC(N,N,N), over all simulated data, for 56 and 16 in-sample quarters
   | row | D6 | D36 {in-sample quarters: 56, comparator: D15} | D37 {in-sample quarters: 56, comparator: D15} | D38 {in-sample quarters: 56, comparator: D15} | D36 {in-sample quarters: 16, comparator: D15} | D37 {in-sample quarters: 16, comparator: D15} | D38 {in-sample quarters: 16, comparator: D15} |
@@ -296,7 +296,7 @@ E2 [simulation; runs 1000] The [[D6:nine PIC variants of VETS(M,N,M;LN)]] applie
   | r8 | D14 | 0.96 | 0.91 | 0.91 | 0.91 | 0.89 | 0.88 |
   | r9 | D15 | 1 | 1 | 1 | 1 | 1 | 1 |
   parameters: A2
-E3 [quant; design benchmark; data_origin secondary; n 69] [[D24:VETS F]] and [[D25:VETS D]] compared with [[D26:ETS LN]], [[D28:ETS (ADAM)]] and [[D27:ETS]] on the [[D32:M5 departmental data]], on long and short histories with the same 12-month holdout, by accuracy and prediction-interval measures and the MCB test.
+E3 [quant; design benchmark; data_origin secondary; n 69] [[D24:VETS F]] and [[D25:VETS D]] compared with [[D26:ETS LN]], [[D28:ETS (ADAM)]] and [[D27:ETS]] on the [[D32:M5 departmental data]], on long and short histories with the same 12-month holdout, by accuracy and prediction-interval measures and the [[D35:MCB test]].
   setup: studied D24, D25, D26, D27, D28; cases D32; procedure D5, D33, D34, D35; lens D36, D39, D40, D41, D42
   E3.T1 Geometric mean and median rMAE (benchmark Naive) of the five models, overall and on seasonal and non-seasonal series, on long and short histories {comparator: the Naive method}
   | row | D44 | D29 | D36 {series: overall, summary over series: geometric mean} | D36 {series: overall, summary over series: median} | D36 {series: seasonal, summary over series: geometric mean} | D36 {series: seasonal, summary over series: median} | D36 {series: non-seasonal, summary over series: geometric mean} | D36 {series: non-seasonal, summary over series: median} |
@@ -332,7 +332,7 @@ E3 [quant; design benchmark; data_origin secondary; n 69] [[D24:VETS F]] and [[D
   | r8 | D34 | D27 | 1.058 | 0.946 | 0.936 | 0.87 | 0.855 | 0.913 |
   | r9 | D34 | D25 | 1.037 | 1.112 | 0.938 | 0.87 | 0.841 | 0.899 |
   | r10 | D34 | D24 | 1.065 | 1.031 | 0.872 | 0.957 | 0.942 | 0.942 |
-E4 [formal; foundation Multivariate normal likelihood; matrix algebra] Derivation of the log-likelihood of pure additive and pure multiplicative VETS, the maximum likelihood estimate of the covariance matrix and the concentrated likelihood.
+E4 [formal; foundation Multivariate normal likelihood; matrix algebra] Derivation of the log-likelihood of [[D2:pure additive VETS]] and [[D3:pure multiplicative VETS]], the maximum likelihood estimate of the covariance matrix and the concentrated likelihood.
   assumes C55, C56, C57
   derivation: in the source
 
