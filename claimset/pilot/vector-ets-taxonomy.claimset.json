@@ -180,7 +180,7 @@
   {
    "id": "D5",
    "term": "VETS-PIC selection procedure",
-   "definition": "The proposed procedure for choosing the [[D4:PIC]] restrictions of a [[D1:VETS]] model by an information criterion (the paper recommends the [[D43:multivariate AICc]] without saying which criterion its implementation uses): first the restrictions on initial values, then on smoothing parameters, then on components; the ETS components are chosen beforehand when the series are grouped. Implemented as auto.vets() in the legion package.",
+   "definition": "The proposed procedure for choosing the [[D4:PIC]] restrictions of a [[D1:VETS]] model by an information criterion (the paper recommends the [[D44:multivariate AICc]] without saying which criterion its implementation uses): first the restrictions on initial values, then on smoothing parameters, then on components; the ETS components are chosen beforehand when the series are grouped. Implemented as auto.vets() in the legion package.",
    "kind": "method"
   },
   {
@@ -459,7 +459,7 @@
    "kind": "design"
   },
   {
-   "id": "D44",
+   "id": "D35",
    "term": "the two M5 histories",
    "kind": "design",
    "definition": "The [[D33:M5 long holdout]] and the [[D34:M5 short holdout]]: long and short histories with the same 12-month holdout.",
@@ -469,58 +469,58 @@
    ]
   },
   {
-   "id": "D35",
+   "id": "D36",
    "term": "MCB test",
-   "definition": "Multiple comparisons with the best on the ranks of an error measure across series; here on [[D36:rMAE]], with rmcb() from the greybox package.",
+   "definition": "Multiple comparisons with the best on the ranks of an error measure across series; here on [[D37:rMAE]], with rmcb() from the greybox package.",
    "source": "B13",
    "kind": "design"
   },
   {
-   "id": "D36",
+   "id": "D37",
    "term": "rMAE",
    "definition": "Relative mean absolute error: the mean absolute forecast error over the horizon divided by that of a benchmark method, aggregated over series by the geometric mean (in the M5 analysis also by the median).",
    "source": "B5",
    "kind": "variable"
   },
   {
-   "id": "D37",
+   "id": "D38",
    "term": "rRMSE",
    "definition": "Relative root mean squared error: the root mean squared forecast error over the horizon divided by that of a benchmark method, aggregated over series by the geometric mean.",
    "kind": "variable"
   },
   {
-   "id": "D38",
+   "id": "D39",
    "term": "rAME",
    "definition": "Relative absolute mean error: the absolute value of the mean forecast error over the horizon divided by that of a benchmark method, aggregated over series by the geometric mean; a measure of bias.",
    "kind": "variable"
   },
   {
-   "id": "D39",
+   "id": "D40",
    "term": "rPinballU",
    "definition": "Relative pinball value of the upper bound of the 95% prediction interval: its pinball loss divided by that of a benchmark method, aggregated over series by the geometric mean.",
    "kind": "variable"
   },
   {
-   "id": "D40",
+   "id": "D41",
    "term": "rPinballL",
-   "definition": "Relative pinball value of the lower bound of the 95% prediction interval, defined as [[D39:rPinballU]].",
+   "definition": "Relative pinball value of the lower bound of the 95% prediction interval, defined as [[D40:rPinballU]].",
    "kind": "variable"
   },
   {
-   "id": "D41",
+   "id": "D42",
    "term": "coverage",
    "definition": "The share of holdout observations inside the 95% prediction interval, averaged over series by the arithmetic mean.",
    "kind": "variable"
   },
   {
-   "id": "D42",
+   "id": "D43",
    "term": "GMRAE",
    "definition": "Geometric mean relative absolute error: the absolute error of a forecast at one horizon divided by that of the Naive forecast, aggregated over series by the geometric mean.",
    "source": "B8",
    "kind": "variable"
   },
   {
-   "id": "D43",
+   "id": "D44",
    "term": "multivariate AICc",
    "definition": "The Akaike information criterion corrected for small samples in multivariate models.",
    "source": "B3",
@@ -587,7 +587,7 @@
   },
   {
    "id": "C2",
-   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D16:PIC(*,S,S) variants]] of VETS(M,N,M;LN), with common seasonal components, have much higher [[D36:rMAE]] than the correct variant on data with individual seasonal components and initial values, from the [[D18:PIC(*,N,N) variants]].",
+   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D16:PIC(*,S,S) variants]] of VETS(M,N,M;LN), with common seasonal components, have much higher [[D37:rMAE]] than the correct variant on data with individual seasonal components and initial values, from the [[D18:PIC(*,N,N) variants]].",
    "type": "descriptive",
    "role": "principal",
    "novelty": "no_prior_found",
@@ -624,7 +624,7 @@
     "subject": "D16",
     "relation": "has much higher error than",
     "object": [
-     "D36"
+     "D37"
     ],
     "comparator": "the correct variant",
     "conditions": [
@@ -686,7 +686,7 @@
   },
   {
    "id": "C4",
-   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, common smoothing parameters lower the [[D39:rPinballU]] of the [[D6:nine PIC variants]] of VETS(M,N,M;LN) on data from every PIC variant.",
+   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, common smoothing parameters lower the [[D40:rPinballU]] of the [[D6:nine PIC variants]] of VETS(M,N,M;LN) on data from every PIC variant.",
    "type": "descriptive",
    "role": "principal",
    "novelty": "extension",
@@ -736,7 +736,7 @@
     "subject": "common smoothing parameters",
     "relation": "lower",
     "object": [
-     "D39"
+     "D40"
     ],
     "comparator": "individual smoothing parameters",
     "conditions": [
@@ -749,7 +749,7 @@
   },
   {
    "id": "C5",
-   "statement": "On the [[D33:long histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has the lowest geometric mean and median [[D36:rMAE]] of [[D29:the five models]] over all series.",
+   "statement": "On the [[D33:long histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has the lowest geometric mean and median [[D37:rMAE]] of [[D29:the five models]] over all series.",
    "type": "descriptive",
    "role": "principal",
    "novelty": "no_prior_found",
@@ -776,7 +776,7 @@
     "subject": "D25",
     "relation": "has the lowest geometric mean and median error of",
     "object": [
-     "D36"
+     "D37"
     ],
     "comparator": "D29",
     "conditions": [
@@ -787,7 +787,7 @@
   },
   {
    "id": "C6",
-   "statement": "On the [[D34:short histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has the lowest geometric mean and median [[D36:rMAE]] of [[D29:the five models]] over all series.",
+   "statement": "On the [[D34:short histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has the lowest geometric mean and median [[D37:rMAE]] of [[D29:the five models]] over all series.",
    "type": "descriptive",
    "role": "principal",
    "novelty": "no_prior_found",
@@ -814,7 +814,7 @@
     "subject": "D25",
     "relation": "has the lowest geometric mean and median error of",
     "object": [
-     "D36"
+     "D37"
     ],
     "comparator": "D29",
     "conditions": [
@@ -825,7 +825,7 @@
   },
   {
    "id": "C7",
-   "statement": "On the [[D33:long histories]] of the [[D32:M5 departmental data]], the [[D41:coverage]] of the 95% prediction interval of [[D25:VETS D]] is the closest to the nominal level of [[D29:the five models]].",
+   "statement": "On the [[D33:long histories]] of the [[D32:M5 departmental data]], the [[D42:coverage]] of the 95% prediction interval of [[D25:VETS D]] is the closest to the nominal level of [[D29:the five models]].",
    "type": "descriptive",
    "role": "principal",
    "novelty": "no_prior_found",
@@ -850,7 +850,7 @@
     "subject": "D25",
     "relation": "has the coverage closest to the nominal level of",
     "object": [
-     "D41"
+     "D42"
     ],
     "comparator": "D29",
     "conditions": [
@@ -1032,7 +1032,7 @@
   },
   {
    "id": "C14",
-   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D36:rMAE]] of each of the [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN) is close to that of the correct variant on data from every variant.",
+   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D37:rMAE]] of each of the [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN) is close to that of the correct variant on data from every variant.",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1064,7 +1064,7 @@
     "subject": "D17",
     "relation": "has error close to that of",
     "object": [
-     "D36"
+     "D37"
     ],
     "comparator": "the correct variant",
     "conditions": [
@@ -1076,7 +1076,7 @@
   },
   {
    "id": "C15",
-   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D16:PIC(*,S,S) variants]] of VETS(M,N,M;LN) have higher [[D36:rMAE]] than the [[D17:PIC(*,S,N) variants]] on data with individual seasonal components.",
+   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D16:PIC(*,S,S) variants]] of VETS(M,N,M;LN) have higher [[D37:rMAE]] than the [[D17:PIC(*,S,N) variants]] on data with individual seasonal components.",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1105,7 +1105,7 @@
     "subject": "D16",
     "relation": "has higher error than",
     "object": [
-     "D36"
+     "D37"
     ],
     "comparator": "D17",
     "conditions": [
@@ -1117,7 +1117,7 @@
   },
   {
    "id": "C16",
-   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D18:PIC(*,N,N) variants]] of VETS(M,N,M;LN) have higher [[D36:rMAE]] than the [[D17:PIC(*,S,N) variants]] on data with common seasonal components.",
+   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D18:PIC(*,N,N) variants]] of VETS(M,N,M;LN) have higher [[D37:rMAE]] than the [[D17:PIC(*,S,N) variants]] on data with common seasonal components.",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1146,7 +1146,7 @@
     "subject": "D18",
     "relation": "has higher error than",
     "object": [
-     "D36"
+     "D37"
     ],
     "comparator": "D17",
     "conditions": [
@@ -1158,7 +1158,7 @@
   },
   {
    "id": "C17",
-   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN) have higher [[D39:rPinballU]] than the correct variant on data with individual seasonal components and initial values, from the [[D18:PIC(*,N,N) variants]].",
+   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN) have higher [[D40:rPinballU]] than the correct variant on data with individual seasonal components and initial values, from the [[D18:PIC(*,N,N) variants]].",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1189,7 +1189,7 @@
     "subject": "D17",
     "relation": "has higher error than",
     "object": [
-     "D39"
+     "D40"
     ],
     "comparator": "the correct variant",
     "conditions": [
@@ -1201,7 +1201,7 @@
   },
   {
    "id": "C18",
-   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN) generally have lower [[D39:rPinballU]] than the [[D16:PIC(*,S,S) variants]] on data with individual seasonal components and initial values, from the [[D18:PIC(*,N,N) variants]].",
+   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN) generally have lower [[D40:rPinballU]] than the [[D16:PIC(*,S,S) variants]] on data with individual seasonal components and initial values, from the [[D18:PIC(*,N,N) variants]].",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1230,7 +1230,7 @@
     "subject": "D17",
     "relation": "generally has lower error than",
     "object": [
-     "D39"
+     "D40"
     ],
     "comparator": "D16",
     "conditions": [
@@ -1242,7 +1242,7 @@
   },
   {
    "id": "C19",
-   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D18:PIC(*,N,N) variants]] of VETS(M,N,M;LN) have higher [[D39:rPinballU]] than the [[D17:PIC(*,S,N) variants]] on data with common seasonal components, from the [[D16:PIC(*,S,S) variants]].",
+   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D18:PIC(*,N,N) variants]] of VETS(M,N,M;LN) have higher [[D40:rPinballU]] than the [[D17:PIC(*,S,N) variants]] on data with common seasonal components, from the [[D16:PIC(*,S,S) variants]].",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1271,7 +1271,7 @@
     "subject": "D18",
     "relation": "has higher error than",
     "object": [
-     "D39"
+     "D40"
     ],
     "comparator": "D17",
     "conditions": [
@@ -1283,7 +1283,7 @@
   },
   {
    "id": "C20",
-   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, each of the [[D19:PIC(LS,*,*) variants]] of VETS(M,N,M;LN), with common level and seasonal smoothing parameters, has [[D39:rPinballU]] at or below that of the one of the [[D20:PIC(S,*,*) variants]] with the same initial-value and component restrictions, on data from every variant.",
+   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, each of the [[D19:PIC(LS,*,*) variants]] of VETS(M,N,M;LN), with common level and seasonal smoothing parameters, has [[D40:rPinballU]] at or below that of the one of the [[D20:PIC(S,*,*) variants]] with the same initial-value and component restrictions, on data from every variant.",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1313,7 +1313,7 @@
     "subject": "D19",
     "relation": "each has error at or below that, with the same other restrictions, of",
     "object": [
-     "D39"
+     "D40"
     ],
     "comparator": "D20",
     "conditions": [
@@ -1325,7 +1325,7 @@
   },
   {
    "id": "C21",
-   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, each of the [[D20:PIC(S,*,*) variants]] of VETS(M,N,M;LN), with a common seasonal smoothing parameter, has [[D39:rPinballU]] at or below that of the one of the [[D21:PIC(N,*,*) variants]] with the same initial-value and component restrictions, on data from every variant.",
+   "statement": "On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, each of the [[D20:PIC(S,*,*) variants]] of VETS(M,N,M;LN), with a common seasonal smoothing parameter, has [[D40:rPinballU]] at or below that of the one of the [[D21:PIC(N,*,*) variants]] with the same initial-value and component restrictions, on data from every variant.",
    "type": "descriptive",
    "role": "supporting",
    "novelty": "no_prior_found",
@@ -1355,7 +1355,7 @@
     "subject": "D20",
     "relation": "each has error at or below that, with the same other restrictions, of",
     "object": [
-     "D39"
+     "D40"
     ],
     "comparator": "D21",
     "conditions": [
@@ -1760,7 +1760,7 @@
   },
   {
    "id": "C35",
-   "statement": "On the [[D33:long histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has the lowest geometric mean [[D36:rMAE]] of [[D29:the five models]] on seasonal series, but not the lowest median.",
+   "statement": "On the [[D33:long histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has the lowest geometric mean [[D37:rMAE]] of [[D29:the five models]] on seasonal series, but not the lowest median.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1784,7 +1784,7 @@
     "subject": "D25",
     "relation": "has the lowest geometric mean, but not the lowest median, error of",
     "object": [
-     "D36"
+     "D37"
     ],
     "comparator": "D29",
     "conditions": [
@@ -1796,7 +1796,7 @@
   },
   {
    "id": "C36",
-   "statement": "On the [[D33:long histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has neither the lowest geometric mean nor the lowest median [[D36:rMAE]] of [[D29:the five models]] on non-seasonal series.",
+   "statement": "On the [[D33:long histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has neither the lowest geometric mean nor the lowest median [[D37:rMAE]] of [[D29:the five models]] on non-seasonal series.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1820,7 +1820,7 @@
     "subject": "D25",
     "relation": "has neither the lowest geometric mean nor the lowest median error of",
     "object": [
-     "D36"
+     "D37"
     ],
     "comparator": "D29",
     "conditions": [
@@ -1839,7 +1839,7 @@
   },
   {
    "id": "C37",
-   "statement": "On the [[D34:short histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has the lowest median [[D36:rMAE]] of [[D29:the five models]] on non-seasonal series, but not the lowest geometric mean.",
+   "statement": "On the [[D34:short histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has the lowest median [[D37:rMAE]] of [[D29:the five models]] on non-seasonal series, but not the lowest geometric mean.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1863,7 +1863,7 @@
     "subject": "D25",
     "relation": "has the lowest median, but not the lowest geometric mean, error of",
     "object": [
-     "D36"
+     "D37"
     ],
     "comparator": "D29",
     "conditions": [
@@ -1917,7 +1917,7 @@
   },
   {
    "id": "C39",
-   "statement": "On the [[D33:long histories]] of the [[D32:M5 departmental data]], the [[D41:coverage]] of the 95% prediction interval of [[D24:VETS F]] is above the nominal level.",
+   "statement": "On the [[D33:long histories]] of the [[D32:M5 departmental data]], the [[D42:coverage]] of the 95% prediction interval of [[D24:VETS F]] is above the nominal level.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1938,7 +1938,7 @@
     "subject": "D24",
     "relation": "has coverage above the nominal level",
     "object": [
-     "D41"
+     "D42"
     ],
     "comparator": null,
     "conditions": [
@@ -1949,7 +1949,7 @@
   },
   {
    "id": "C40",
-   "statement": "On the [[D34:short histories]] of the [[D32:M5 departmental data]], the [[D41:coverage]] of the 95% prediction interval of [[D24:VETS F]] is above the nominal level.",
+   "statement": "On the [[D34:short histories]] of the [[D32:M5 departmental data]], the [[D42:coverage]] of the 95% prediction interval of [[D24:VETS F]] is above the nominal level.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -1970,7 +1970,7 @@
     "subject": "D24",
     "relation": "has coverage above the nominal level",
     "object": [
-     "D41"
+     "D42"
     ],
     "comparator": null,
     "conditions": [
@@ -1981,7 +1981,7 @@
   },
   {
    "id": "C41",
-   "statement": "On the [[D33:long histories]] of the [[D32:M5 departmental data]], [[D24:VETS F]] has the highest [[D39:rPinballU]] and [[D40:rPinballL]] of [[D29:the five models]].",
+   "statement": "On the [[D33:long histories]] of the [[D32:M5 departmental data]], [[D24:VETS F]] has the highest [[D40:rPinballU]] and [[D41:rPinballL]] of [[D29:the five models]].",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -2002,8 +2002,8 @@
     "subject": "D24",
     "relation": "has the highest error of",
     "object": [
-     "D39",
-     "D40"
+     "D40",
+     "D41"
     ],
     "comparator": "D29",
     "conditions": [
@@ -2014,7 +2014,7 @@
   },
   {
    "id": "C42",
-   "statement": "On the [[D34:short histories]] of the [[D32:M5 departmental data]], [[D24:VETS F]] has the highest [[D39:rPinballU]] and [[D40:rPinballL]] of [[D29:the five models]].",
+   "statement": "On the [[D34:short histories]] of the [[D32:M5 departmental data]], [[D24:VETS F]] has the highest [[D40:rPinballU]] and [[D41:rPinballL]] of [[D29:the five models]].",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -2035,8 +2035,8 @@
     "subject": "D24",
     "relation": "has the highest error of",
     "object": [
-     "D39",
-     "D40"
+     "D40",
+     "D41"
     ],
     "comparator": "D29",
     "conditions": [
@@ -2047,7 +2047,7 @@
   },
   {
    "id": "C43",
-   "statement": "On the [[D33:long histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has higher [[D39:rPinballU]] and lower [[D40:rPinballL]] than [[D27:ETS]].",
+   "statement": "On the [[D33:long histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has higher [[D40:rPinballU]] and lower [[D41:rPinballL]] than [[D27:ETS]].",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -2069,8 +2069,8 @@
     "subject": "D25",
     "relation": "has higher rPinballU but lower rPinballL than",
     "object": [
-     "D39",
-     "D40"
+     "D40",
+     "D41"
     ],
     "comparator": "D27",
     "conditions": [
@@ -2081,7 +2081,7 @@
   },
   {
    "id": "C44",
-   "statement": "On the [[D34:short histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has higher [[D39:rPinballU]] and [[D40:rPinballL]] than [[D30:the three ETS models]], [[D26:ETS LN]], [[D28:ETS (ADAM)]] and [[D27:ETS]].",
+   "statement": "On the [[D34:short histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has higher [[D40:rPinballU]] and [[D41:rPinballL]] than [[D30:the three ETS models]], [[D26:ETS LN]], [[D28:ETS (ADAM)]] and [[D27:ETS]].",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -2102,8 +2102,8 @@
     "subject": "D25",
     "relation": "has higher error than",
     "object": [
-     "D39",
-     "D40"
+     "D40",
+     "D41"
     ],
     "comparator": "D30",
     "conditions": [
@@ -2268,7 +2268,7 @@
   },
   {
    "id": "C49",
-   "statement": "On the [[D33:long histories]] of the [[D32:M5 departmental data]], neither of [[D31:the VETS models]] has the lowest [[D42:GMRAE]] of [[D29:the five models]] at horizons of 3, 6 or 12 months.",
+   "statement": "On the [[D33:long histories]] of the [[D32:M5 departmental data]], neither of [[D31:the VETS models]] has the lowest [[D43:GMRAE]] of [[D29:the five models]] at horizons of 3, 6 or 12 months.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -2289,7 +2289,7 @@
     "subject": "D31",
     "relation": "do not include the model with the lowest error, at horizons of 3, 6 or 12 months, of",
     "object": [
-     "D42"
+     "D43"
     ],
     "comparator": "D29",
     "conditions": [
@@ -2307,7 +2307,7 @@
   },
   {
    "id": "C50",
-   "statement": "On the [[D34:short histories]] of the [[D32:M5 departmental data]], one of [[D31:the VETS models]] has the lowest [[D42:GMRAE]] of [[D29:the five models]] at horizons of 3 and 12 months, but not at 6 months.",
+   "statement": "On the [[D34:short histories]] of the [[D32:M5 departmental data]], one of [[D31:the VETS models]] has the lowest [[D43:GMRAE]] of [[D29:the five models]] at horizons of 3 and 12 months, but not at 6 months.",
    "type": "descriptive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -2331,7 +2331,7 @@
     "subject": "D31",
     "relation": "include the model with the lowest error at horizons of 3 and 12 months, but not at 6 months, of",
     "object": [
-     "D42"
+     "D43"
     ],
     "comparator": "D29",
     "conditions": [
@@ -2590,12 +2590,12 @@
      "D23"
     ],
     "lens": [
-     "D36",
      "D37",
      "D38",
      "D39",
      "D40",
-     "D41"
+     "D41",
+     "D42"
     ]
    },
    "model": "VETS(M,N,M;LN)",
@@ -2614,13 +2614,6 @@
      ],
      "columns": [
       {
-       "variable": "D36",
-       "conditions": {
-        "in-sample quarters": 56,
-        "comparator": "D15"
-       }
-      },
-      {
        "variable": "D37",
        "conditions": {
         "in-sample quarters": 56,
@@ -2635,9 +2628,9 @@
        }
       },
       {
-       "variable": "D36",
+       "variable": "D39",
        "conditions": {
-        "in-sample quarters": 16,
+        "in-sample quarters": 56,
         "comparator": "D15"
        }
       },
@@ -2650,6 +2643,13 @@
       },
       {
        "variable": "D38",
+       "conditions": {
+        "in-sample quarters": 16,
+        "comparator": "D15"
+       }
+      },
+      {
+       "variable": "D39",
        "conditions": {
         "in-sample quarters": 16,
         "comparator": "D15"
@@ -2796,63 +2796,63 @@
      ],
      "columns": [
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "data-generating variant": "D7",
         "comparator": "D7"
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "data-generating variant": "D8",
         "comparator": "D8"
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "data-generating variant": "D9",
         "comparator": "D9"
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "data-generating variant": "D10",
         "comparator": "D10"
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "data-generating variant": "D11",
         "comparator": "D11"
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "data-generating variant": "D12",
         "comparator": "D12"
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "data-generating variant": "D13",
         "comparator": "D13"
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "data-generating variant": "D14",
         "comparator": "D14"
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "data-generating variant": "D15",
         "comparator": "D15"
@@ -3029,63 +3029,63 @@
      ],
      "columns": [
       {
-       "variable": "D37",
+       "variable": "D38",
        "conditions": {
         "data-generating variant": "D7",
         "comparator": "D7"
        }
       },
       {
-       "variable": "D37",
+       "variable": "D38",
        "conditions": {
         "data-generating variant": "D8",
         "comparator": "D8"
        }
       },
       {
-       "variable": "D37",
+       "variable": "D38",
        "conditions": {
         "data-generating variant": "D9",
         "comparator": "D9"
        }
       },
       {
-       "variable": "D37",
+       "variable": "D38",
        "conditions": {
         "data-generating variant": "D10",
         "comparator": "D10"
        }
       },
       {
-       "variable": "D37",
+       "variable": "D38",
        "conditions": {
         "data-generating variant": "D11",
         "comparator": "D11"
        }
       },
       {
-       "variable": "D37",
+       "variable": "D38",
        "conditions": {
         "data-generating variant": "D12",
         "comparator": "D12"
        }
       },
       {
-       "variable": "D37",
+       "variable": "D38",
        "conditions": {
         "data-generating variant": "D13",
         "comparator": "D13"
        }
       },
       {
-       "variable": "D37",
+       "variable": "D38",
        "conditions": {
         "data-generating variant": "D14",
         "comparator": "D14"
        }
       },
       {
-       "variable": "D37",
+       "variable": "D38",
        "conditions": {
         "data-generating variant": "D15",
         "comparator": "D15"
@@ -3266,37 +3266,37 @@
      ],
      "columns": [
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "series per group": 2
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "series per group": 10
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "series per group": 20
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "series per group": 30
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "series per group": 40
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "series per group": 50
        }
@@ -3446,37 +3446,37 @@
      ],
      "columns": [
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "series per group": 2
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "series per group": 10
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "series per group": 20
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "series per group": 30
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "series per group": 40
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "series per group": 50
        }
@@ -3622,13 +3622,6 @@
      ],
      "columns": [
       {
-       "variable": "D39",
-       "conditions": {
-        "in-sample quarters": 56,
-        "comparator": "D15"
-       }
-      },
-      {
        "variable": "D40",
        "conditions": {
         "in-sample quarters": 56,
@@ -3637,18 +3630,18 @@
       },
       {
        "variable": "D41",
+       "conditions": {
+        "in-sample quarters": 56,
+        "comparator": "D15"
+       }
+      },
+      {
+       "variable": "D42",
        "conditions": {
         "in-sample quarters": 56
        }
       },
       {
-       "variable": "D39",
-       "conditions": {
-        "in-sample quarters": 16,
-        "comparator": "D15"
-       }
-      },
-      {
        "variable": "D40",
        "conditions": {
         "in-sample quarters": 16,
@@ -3657,6 +3650,13 @@
       },
       {
        "variable": "D41",
+       "conditions": {
+        "in-sample quarters": 16,
+        "comparator": "D15"
+       }
+      },
+      {
+       "variable": "D42",
        "conditions": {
         "in-sample quarters": 16
        }
@@ -3802,63 +3802,63 @@
      ],
      "columns": [
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "data-generating variant": "D7",
         "comparator": "D7"
        }
       },
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "data-generating variant": "D8",
         "comparator": "D8"
        }
       },
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "data-generating variant": "D9",
         "comparator": "D9"
        }
       },
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "data-generating variant": "D10",
         "comparator": "D10"
        }
       },
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "data-generating variant": "D11",
         "comparator": "D11"
        }
       },
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "data-generating variant": "D12",
         "comparator": "D12"
        }
       },
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "data-generating variant": "D13",
         "comparator": "D13"
        }
       },
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "data-generating variant": "D14",
         "comparator": "D14"
        }
       },
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "data-generating variant": "D15",
         "comparator": "D15"
@@ -4039,37 +4039,37 @@
      ],
      "columns": [
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "series per group": 2
        }
       },
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "series per group": 10
        }
       },
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "series per group": 20
        }
       },
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "series per group": 30
        }
       },
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "series per group": 40
        }
       },
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "series per group": 50
        }
@@ -4219,37 +4219,37 @@
      ],
      "columns": [
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "series per group": 2
        }
       },
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "series per group": 10
        }
       },
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "series per group": 20
        }
       },
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "series per group": 30
        }
       },
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "series per group": 40
        }
       },
       {
-       "variable": "D39",
+       "variable": "D40",
        "conditions": {
         "series per group": 50
        }
@@ -4403,7 +4403,7 @@
    "data_origin": "secondary",
    "preregistered": false,
    "n": 69,
-   "description": "[[D24:VETS F]] and [[D25:VETS D]] compared with [[D26:ETS LN]], [[D28:ETS (ADAM)]] and [[D27:ETS]] on the [[D32:M5 departmental data]], on long and short histories with the same 12-month holdout, by accuracy and prediction-interval measures and the [[D35:MCB test]].",
+   "description": "[[D24:VETS F]] and [[D25:VETS D]] compared with [[D26:ETS LN]], [[D28:ETS (ADAM)]] and [[D27:ETS]] on the [[D32:M5 departmental data]], on long and short histories with the same 12-month holdout, by accuracy and prediction-interval measures and the [[D36:MCB test]].",
    "setup": {
     "studied": [
      "D24",
@@ -4419,14 +4419,14 @@
      "D5",
      "D33",
      "D34",
-     "D35"
+     "D36"
     ],
     "lens": [
-     "D36",
-     "D39",
+     "D37",
      "D40",
      "D41",
-     "D42"
+     "D42",
+     "D43"
     ]
    },
    "artefacts": [
@@ -4442,47 +4442,47 @@
      "id": "T1",
      "description": "Geometric mean and median rMAE (benchmark Naive) of the five models, overall and on seasonal and non-seasonal series, on long and short histories",
      "row_labels": [
-      "D44",
+      "D35",
       "D29"
      ],
      "columns": [
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "series": "overall",
         "summary over series": "geometric mean"
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "series": "overall",
         "summary over series": "median"
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "series": "seasonal",
         "summary over series": "geometric mean"
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "series": "seasonal",
         "summary over series": "median"
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "series": "non-seasonal",
         "summary over series": "geometric mean"
        }
       },
       {
-       "variable": "D36",
+       "variable": "D37",
        "conditions": {
         "series": "non-seasonal",
         "summary over series": "median"
@@ -4656,42 +4656,42 @@
      ],
      "columns": [
       {
-       "variable": "D41",
+       "variable": "D42",
        "conditions": {
-        "D44": "D33"
-       }
-      },
-      {
-       "variable": "D39",
-       "conditions": {
-        "D44": "D33",
-        "comparator": "ETS on the long histories"
+        "D35": "D33"
        }
       },
       {
        "variable": "D40",
        "conditions": {
-        "D44": "D33",
+        "D35": "D33",
         "comparator": "ETS on the long histories"
        }
       },
       {
        "variable": "D41",
        "conditions": {
-        "D44": "D34"
+        "D35": "D33",
+        "comparator": "ETS on the long histories"
        }
       },
       {
-       "variable": "D39",
+       "variable": "D42",
        "conditions": {
-        "D44": "D34",
-        "comparator": "ETS on the long histories"
+        "D35": "D34"
        }
       },
       {
        "variable": "D40",
        "conditions": {
-        "D44": "D34",
+        "D35": "D34",
+        "comparator": "ETS on the long histories"
+       }
+      },
+      {
+       "variable": "D41",
+       "conditions": {
+        "D35": "D34",
         "comparator": "ETS on the long histories"
        }
       }
@@ -4833,42 +4833,42 @@
      "id": "T4",
      "description": "GMRAE (benchmark Naive) and coverage of the 95% interval of the five models at horizons 3, 6 and 12 months, on long and short histories",
      "row_labels": [
-      "D44",
+      "D35",
       "D29"
      ],
      "columns": [
       {
-       "variable": "D42",
+       "variable": "D43",
        "conditions": {
         "horizon (months)": 3
        }
       },
       {
-       "variable": "D42",
+       "variable": "D43",
        "conditions": {
         "horizon (months)": 6
        }
       },
       {
-       "variable": "D42",
+       "variable": "D43",
        "conditions": {
         "horizon (months)": 12
        }
       },
       {
-       "variable": "D41",
+       "variable": "D42",
        "conditions": {
         "horizon (months)": 3
        }
       },
       {
-       "variable": "D41",
+       "variable": "D42",
        "conditions": {
         "horizon (months)": 6
        }
       },
       {
-       "variable": "D41",
+       "variable": "D42",
        "conditions": {
         "horizon (months)": 12
        }
