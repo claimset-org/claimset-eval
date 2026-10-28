@@ -3647,12 +3647,13 @@
    "id": "A4",
    "kind": "software",
    "description": "smooth package for R (ces, auto.ces, es, auto.ssarima)",
-   "uri": "https://github.com/config-i1/smooth",
+   "uri": "https://cran.r-project.org/src/contrib/Archive/smooth/smooth_3.1.2.tar.gz",
    "version": "3.1.2",
    "reference": "B10",
    "availability": {
     "level": "public"
-   }
+   },
+   "licence": "GPL-2.0-or-later"
   },
   {
    "id": "A5",
@@ -3662,18 +3663,21 @@
    "reference": "B11",
    "availability": {
     "level": "public"
-   }
+   },
+   "licence": "GPL-3.0-only",
+   "uri": "https://cran.r-project.org/src/contrib/Archive/forecast/forecast_8.14.tar.gz"
   },
   {
    "id": "A6",
    "kind": "software",
    "description": "greybox package for R (rmcb, Nemenyi test)",
-   "uri": "https://github.com/config-i1/greybox",
+   "uri": "https://cran.r-project.org/src/contrib/Archive/greybox/greybox_0.7.0.tar.gz",
    "version": "0.7.0",
    "reference": "B12",
    "availability": {
     "level": "public"
-   }
+   },
+   "licence": "GPL-2.0-or-later"
   },
   {
    "id": "A7",
@@ -3692,7 +3696,8 @@
    "reference": "B24",
    "availability": {
     "level": "public"
-   }
+   },
+   "licence": "GPL-2.0-only OR GPL-3.0-only"
   }
  ],
  "references": [

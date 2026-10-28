@@ -5397,22 +5397,24 @@
    "kind": "software",
    "description": "legion package for R (vets, auto.vets, sim.ves)",
    "version": "0.1.0",
-   "uri": "https://www.github.com/config-i1/legion",
+   "uri": "https://cran.r-project.org/src/contrib/Archive/legion/legion_0.1.0.tar.gz",
    "reference": "B18",
    "availability": {
     "level": "public"
-   }
+   },
+   "licence": "GPL-2.0-or-later"
   },
   {
    "id": "A3",
    "kind": "software",
    "description": "smooth package for R (adam)",
    "version": "3.1.1",
-   "uri": "https://www.github.com/config-i1/smooth",
+   "uri": "https://cran.r-project.org/src/contrib/Archive/smooth/smooth_3.1.1.tar.gz",
    "reference": "B16",
    "availability": {
     "level": "public"
-   }
+   },
+   "licence": "GPL-2.0-or-later"
   },
   {
    "id": "A4",
@@ -5421,18 +5423,20 @@
    "reference": "B14",
    "availability": {
     "level": "public"
-   }
+   },
+   "licence": "GPL-3.0-only"
   },
   {
    "id": "A5",
    "kind": "software",
    "description": "greybox package for R (rmcb)",
    "version": "0.6.9",
-   "uri": "https://www.github.com/config-i1/greybox",
+   "uri": "https://cran.r-project.org/src/contrib/Archive/greybox/greybox_0.6.9.tar.gz",
    "reference": "B11",
    "availability": {
     "level": "public"
-   }
+   },
+   "licence": "GPL-2.0-or-later"
   },
   {
    "id": "A6",
@@ -5442,7 +5446,8 @@
    "reference": "B21",
    "availability": {
     "level": "public"
-   }
+   },
+   "licence": "GPL-2.0-only OR GPL-3.0-only"
   }
  ],
  "references": [
