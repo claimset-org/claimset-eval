@@ -1,5 +1,5 @@
 {
- "schema_version": "0.31",
+ "schema_version": "0.32",
  "paper": {
   "title": "A new taxonomy for vector exponential smoothing and its application to seasonal time series",
   "licence": "CC-BY-4.0",
@@ -142,30 +142,45 @@
    "id": "D1",
    "term": "VETS",
    "definition": "Vector exponential smoothing: a state space model for a group of n time series $y_t = (y_{1,t}, \\ldots, y_{n,t})'$, with measurement matrix $W$, transition matrix $F$, persistence matrix $G$ of smoothing parameters, state vector $v_t$ with component lags $l$ and error vector $\\epsilon_t$, in one of two forms, [[D2:pure additive VETS]] or [[D3:pure multiplicative VETS]].",
-   "kind": "method"
+   "kind": "method",
+   "assumptions": [
+    "C57"
+   ]
   },
   {
    "id": "D2",
    "term": "pure additive VETS",
-   "definition": "VETS on the original data, written VETS(A,N,N), VETS(A,N,A) and so on: $y_t = W v_{t-l} + \\epsilon_t$, $v_t = F v_{t-l} + G \\epsilon_t$, with $\\epsilon_t \\sim N(0_n, \\Sigma)$.",
-   "kind": "method"
+   "definition": "[[D1:VETS]] on the original data, written VETS(A,N,N), VETS(A,N,A) and so on: $y_t = W v_{t-l} + \\epsilon_t$, $v_t = F v_{t-l} + G \\epsilon_t$, with $\\epsilon_t \\sim N(0_n, \\Sigma)$.",
+   "kind": "method",
+   "broader": [
+    "D1"
+   ],
+   "assumptions": [
+    "C55"
+   ]
   },
   {
    "id": "D3",
    "term": "pure multiplicative VETS",
-   "definition": "VETS on the logarithms of data, states and errors, written VETS(M,N,N;LN), VETS(M,N,M;LN) and so on: $\\log y_t = W \\log v_{t-l} + \\log \\epsilon_t$, $\\log v_t = F \\log v_{t-l} + G \\log \\epsilon_t$, the logarithm taken element-wise, with $\\log \\epsilon_t \\sim N(0_n, \\Sigma)$.",
-   "kind": "method"
+   "definition": "[[D1:VETS]] on the logarithms of data, states and errors, written VETS(M,N,N;LN), VETS(M,N,M;LN) and so on: $\\log y_t = W \\log v_{t-l} + \\log \\epsilon_t$, $\\log v_t = F \\log v_{t-l} + G \\log \\epsilon_t$, the logarithm taken element-wise, with $\\log \\epsilon_t \\sim N(0_n, \\Sigma)$.",
+   "kind": "method",
+   "broader": [
+    "D1"
+   ],
+   "assumptions": [
+    "C56"
+   ]
   },
   {
    "id": "D4",
    "term": "PIC taxonomy",
-   "definition": "A classification of VETS models by which of their Parameters, Initial values and Components are common to all series of the group rather than individual, written VETS(...)PIC(P,I,C): P lists the common smoothing parameters (L level, T trend, S seasonal) and D for a common damping parameter, I the common initial values (L, T, S), C the common components (L, T, S); N means none is common. PIC(N,N,N) has everything individual. A model of the taxonomy is built from block matrices for level (1), trend (2) and seasonal (3) components: $W = (W_1 \\; W_2 \\; W_3)$, $F = \\begin{pmatrix} F_{1,1} & F_{1,2} & F_{1,3} \\\\ F_{2,1} & F_{2,2} & F_{2,3} \\\\ F_{3,1} & F_{3,2} & F_{3,3} \\end{pmatrix}$, $G = \\begin{pmatrix} G_1 \\\\ G_2 \\\\ G_3 \\end{pmatrix}$, with the values: individual level $F_{1,1} = I_n$, $W_1 = I_n$, $G_1 = A$; individual trend $F_{2,2} = \\Phi$, $W_2 = \\Phi$, $G_2 = B$; individual seasonal $F_{3,3} = I_n$, $W_3 = I_n$, $G_3 = \\Gamma$; common level $F_{1,1} = 1$, $W_1 = 1_n$, $G_1 = \\alpha_n'$; common trend $F_{2,2} = \\phi$, $W_2 = \\phi 1_n$, $G_2 = \\beta_n'$; common seasonal $F_{3,3} = 1$, $W_3 = 1_n$, $G_3 = \\gamma_n'$; level and trend both individual $F_{1,2} = \\Phi$, $F_{2,1} = O_n$; individual level with common trend $F_{1,2} = \\phi 1_n$, $F_{2,1} = 0_n'$; both common $F_{1,2} = \\phi$, $F_{2,1} = 0$; every block between level and seasonal or between trend and seasonal is zero: $O_n$ when both are individual, $0_n'$ or $0_n$ when one is common, $0$ when both are. Individual smoothing and damping parameters give $A = \\mathrm{diag}(\\alpha_1, \\ldots, \\alpha_n)$, $B = \\mathrm{diag}(\\beta_1, \\ldots, \\beta_n)$, $\\Gamma = \\mathrm{diag}(\\gamma_1, \\ldots, \\gamma_n)$, $\\Phi = \\mathrm{diag}(\\phi_1, \\ldots, \\phi_n)$ (not stated in the paper); common ones give $A = \\alpha I_n$, $B = \\beta I_n$, $\\Gamma = \\gamma I_n$, $\\Phi = \\phi I_n$ and $\\alpha_n = \\alpha 1_n$, $\\beta_n = \\beta 1_n$, $\\gamma_n = \\gamma 1_n$, $\\phi_n = \\phi 1_n$. A common component is one state shared by all series ($l_{1,t} = \\cdots = l_{n,t} = l_t$, and so for trend and seasonal); common initial values only set the starting states equal and leave the matrices unchanged. A common level with individual trends is not feasible.",
+   "definition": "A classification of [[D1:VETS]] models by which of their Parameters, Initial values and Components are common to all series of the group rather than individual, written VETS(...)PIC(P,I,C): P lists the common smoothing parameters (L level, T trend, S seasonal) and D for a common damping parameter, I the common initial values (L, T, S), C the common components (L, T, S); N means none is common. PIC(N,N,N) has everything individual. A model of the taxonomy is built from block matrices for level (1), trend (2) and seasonal (3) components: $W = (W_1 \\; W_2 \\; W_3)$, $F = \\begin{pmatrix} F_{1,1} & F_{1,2} & F_{1,3} \\\\ F_{2,1} & F_{2,2} & F_{2,3} \\\\ F_{3,1} & F_{3,2} & F_{3,3} \\end{pmatrix}$, $G = \\begin{pmatrix} G_1 \\\\ G_2 \\\\ G_3 \\end{pmatrix}$, with the values: individual level $F_{1,1} = I_n$, $W_1 = I_n$, $G_1 = A$; individual trend $F_{2,2} = \\Phi$, $W_2 = \\Phi$, $G_2 = B$; individual seasonal $F_{3,3} = I_n$, $W_3 = I_n$, $G_3 = \\Gamma$; common level $F_{1,1} = 1$, $W_1 = 1_n$, $G_1 = \\alpha_n'$; common trend $F_{2,2} = \\phi$, $W_2 = \\phi 1_n$, $G_2 = \\beta_n'$; common seasonal $F_{3,3} = 1$, $W_3 = 1_n$, $G_3 = \\gamma_n'$; level and trend both individual $F_{1,2} = \\Phi$, $F_{2,1} = O_n$; individual level with common trend $F_{1,2} = \\phi 1_n$, $F_{2,1} = 0_n'$; both common $F_{1,2} = \\phi$, $F_{2,1} = 0$; every block between level and seasonal or between trend and seasonal is zero: $O_n$ when both are individual, $0_n'$ or $0_n$ when one is common, $0$ when both are. Individual smoothing and damping parameters give $A = \\mathrm{diag}(\\alpha_1, \\ldots, \\alpha_n)$, $B = \\mathrm{diag}(\\beta_1, \\ldots, \\beta_n)$, $\\Gamma = \\mathrm{diag}(\\gamma_1, \\ldots, \\gamma_n)$, $\\Phi = \\mathrm{diag}(\\phi_1, \\ldots, \\phi_n)$ (not stated in the paper); common ones give $A = \\alpha I_n$, $B = \\beta I_n$, $\\Gamma = \\gamma I_n$, $\\Phi = \\phi I_n$ and $\\alpha_n = \\alpha 1_n$, $\\beta_n = \\beta 1_n$, $\\gamma_n = \\gamma 1_n$, $\\phi_n = \\phi 1_n$. A common component is one state shared by all series ($l_{1,t} = \\cdots = l_{n,t} = l_t$, and so for trend and seasonal); common initial values only set the starting states equal and leave the matrices unchanged. A common level with individual trends is not feasible.",
    "kind": "concept"
   },
   {
    "id": "D5",
    "term": "VETS-PIC selection procedure",
-   "definition": "The proposed procedure for choosing the PIC restrictions of a VETS model by an information criterion (the paper recommends the [[D43:multivariate AICc]] without saying which criterion its implementation uses): first the restrictions on initial values, then on smoothing parameters, then on components; the ETS components are chosen beforehand when the series are grouped. Implemented as auto.vets() in the legion package.",
+   "definition": "The proposed procedure for choosing the [[D4:PIC]] restrictions of a [[D1:VETS]] model by an information criterion (the paper recommends the [[D43:multivariate AICc]] without saying which criterion its implementation uses): first the restrictions on initial values, then on smoothing parameters, then on components; the ETS components are chosen beforehand when the series are grouped. Implemented as auto.vets() in the legion package.",
    "kind": "method"
   },
   {
@@ -189,61 +204,88 @@
    "id": "D7",
    "term": "PIC(LS,S,S)",
    "kind": "method",
-   "definition": "VETS(M,N,M;LN) with PIC(LS,S,S) restrictions: common level and seasonal smoothing parameters, common initial seasonal indices and a common seasonal component; one of the nine PIC variants."
+   "definition": "VETS(M,N,M;LN) with PIC(LS,S,S) restrictions: common level and seasonal smoothing parameters, common initial seasonal indices and a common seasonal component; one of the [[D6:nine PIC variants]].",
+   "broader": [
+    "D3"
+   ]
   },
   {
    "id": "D8",
    "term": "PIC(S,S,S)",
    "kind": "method",
-   "definition": "VETS(M,N,M;LN) with PIC(S,S,S) restrictions: a common seasonal smoothing parameter, common initial seasonal indices and a common seasonal component; one of the nine PIC variants."
+   "definition": "VETS(M,N,M;LN) with PIC(S,S,S) restrictions: a common seasonal smoothing parameter, common initial seasonal indices and a common seasonal component; one of the [[D6:nine PIC variants]].",
+   "broader": [
+    "D3"
+   ]
   },
   {
    "id": "D9",
    "term": "PIC(N,S,S)",
    "kind": "method",
-   "definition": "VETS(M,N,M;LN) with PIC(N,S,S) restrictions: individual smoothing parameters, common initial seasonal indices and a common seasonal component; one of the nine PIC variants."
+   "definition": "VETS(M,N,M;LN) with PIC(N,S,S) restrictions: individual smoothing parameters, common initial seasonal indices and a common seasonal component; one of the [[D6:nine PIC variants]].",
+   "broader": [
+    "D3"
+   ]
   },
   {
    "id": "D10",
    "term": "PIC(LS,S,N)",
    "kind": "method",
-   "definition": "VETS(M,N,M;LN) with PIC(LS,S,N) restrictions: common level and seasonal smoothing parameters, common initial seasonal indices and individual components; one of the nine PIC variants."
+   "definition": "VETS(M,N,M;LN) with PIC(LS,S,N) restrictions: common level and seasonal smoothing parameters, common initial seasonal indices and individual components; one of the [[D6:nine PIC variants]].",
+   "broader": [
+    "D3"
+   ]
   },
   {
    "id": "D11",
    "term": "PIC(S,S,N)",
    "kind": "method",
-   "definition": "VETS(M,N,M;LN) with PIC(S,S,N) restrictions: a common seasonal smoothing parameter, common initial seasonal indices and individual components; one of the nine PIC variants."
+   "definition": "VETS(M,N,M;LN) with PIC(S,S,N) restrictions: a common seasonal smoothing parameter, common initial seasonal indices and individual components; one of the [[D6:nine PIC variants]].",
+   "broader": [
+    "D3"
+   ]
   },
   {
    "id": "D12",
    "term": "PIC(N,S,N)",
    "kind": "method",
-   "definition": "VETS(M,N,M;LN) with PIC(N,S,N) restrictions: individual smoothing parameters, common initial seasonal indices and individual components; one of the nine PIC variants."
+   "definition": "VETS(M,N,M;LN) with PIC(N,S,N) restrictions: individual smoothing parameters, common initial seasonal indices and individual components; one of the [[D6:nine PIC variants]].",
+   "broader": [
+    "D3"
+   ]
   },
   {
    "id": "D13",
    "term": "PIC(LS,N,N)",
    "kind": "method",
-   "definition": "VETS(M,N,M;LN) with PIC(LS,N,N) restrictions: common level and seasonal smoothing parameters, individual initial values and individual components; one of the nine PIC variants."
+   "definition": "VETS(M,N,M;LN) with PIC(LS,N,N) restrictions: common level and seasonal smoothing parameters, individual initial values and individual components; one of the [[D6:nine PIC variants]].",
+   "broader": [
+    "D3"
+   ]
   },
   {
    "id": "D14",
    "term": "PIC(S,N,N)",
    "kind": "method",
-   "definition": "VETS(M,N,M;LN) with PIC(S,N,N) restrictions: a common seasonal smoothing parameter, individual initial values and individual components; one of the nine PIC variants."
+   "definition": "VETS(M,N,M;LN) with PIC(S,N,N) restrictions: a common seasonal smoothing parameter, individual initial values and individual components; one of the [[D6:nine PIC variants]].",
+   "broader": [
+    "D3"
+   ]
   },
   {
    "id": "D15",
    "term": "PIC(N,N,N)",
    "kind": "method",
-   "definition": "VETS(M,N,M;LN) with PIC(N,N,N) restrictions: individual smoothing parameters, individual initial values and individual components; one of the nine PIC variants."
+   "definition": "VETS(M,N,M;LN) with PIC(N,N,N) restrictions: individual smoothing parameters, individual initial values and individual components; one of the [[D6:nine PIC variants]].",
+   "broader": [
+    "D3"
+   ]
   },
   {
    "id": "D16",
    "term": "PIC(*,S,S) variants",
    "kind": "method",
-   "definition": "The three variants with common initial seasonal indices and a common seasonal component: PIC(LS,S,S), PIC(S,S,S) and PIC(N,S,S).",
+   "definition": "The three variants with common initial seasonal indices and a common seasonal component: [[D7:PIC(LS,S,S)]], [[D8:PIC(S,S,S)]] and [[D9:PIC(N,S,S)]].",
    "members": [
     "D7",
     "D8",
@@ -254,7 +296,7 @@
    "id": "D17",
    "term": "PIC(*,S,N) variants",
    "kind": "method",
-   "definition": "The three variants with common initial seasonal indices and individual components: PIC(LS,S,N), PIC(S,S,N) and PIC(N,S,N).",
+   "definition": "The three variants with common initial seasonal indices and individual components: [[D10:PIC(LS,S,N)]], [[D11:PIC(S,S,N)]] and [[D12:PIC(N,S,N)]].",
    "members": [
     "D10",
     "D11",
@@ -265,7 +307,7 @@
    "id": "D18",
    "term": "PIC(*,N,N) variants",
    "kind": "method",
-   "definition": "The three variants with individual initial values and components: PIC(LS,N,N), PIC(S,N,N) and PIC(N,N,N).",
+   "definition": "The three variants with individual initial values and components: [[D13:PIC(LS,N,N)]], [[D14:PIC(S,N,N)]] and [[D15:PIC(N,N,N)]].",
    "members": [
     "D13",
     "D14",
@@ -308,7 +350,7 @@
   {
    "id": "D22",
    "term": "simulated VETS(M,N,M;LN) data",
-   "definition": "Groups of 2, 10, 20, 30, 40 or 50 quarterly series of 24 or 64 observations generated with sim.ves() from the legion package 0.1.0 from each of the nine PIC variants of VETS(M,N,M;LN) (VETS(A,N,A) data exponentiated): initial level drawn from [4, 10], seasonal indices drawn from (-1, 1) and normalised, independent normal errors with standard deviation 0.3, smoothing parameters alpha = 0.3 and gamma = 0.1 for PIC(LS,*,*), alpha in [0, 0.3] and gamma = 0.1 for PIC(S,*,*), alpha in [0, 0.3] and gamma in [0, 1 - alpha] for PIC(N,*,*); 1000 iterations.",
+   "definition": "Groups of 2, 10, 20, 30, 40 or 50 quarterly series of 24 or 64 observations generated with sim.ves() from the legion package 0.1.0 from each of the [[D6:nine PIC variants of VETS(M,N,M;LN)]] (VETS(A,N,A) data exponentiated): initial level drawn from [4, 10], seasonal indices drawn from (-1, 1) and normalised, independent normal errors with standard deviation 0.3, smoothing parameters alpha = 0.3 and gamma = 0.1 for PIC(LS,*,*), alpha in [0, 0.3] and gamma = 0.1 for PIC(S,*,*), alpha in [0, 0.3] and gamma in [0, 1 - alpha] for PIC(N,*,*); 1000 iterations.",
    "kind": "data"
   },
   {
@@ -320,14 +362,23 @@
   {
    "id": "D24",
    "term": "VETS F",
-   "definition": "VETS(M,N,M;LN) for seasonal groups and VETS(M,N,N;LN) for non-seasonal groups, with a full covariance matrix of the errors and the PIC restrictions chosen by auto.vets() from the legion package.",
-   "kind": "method"
+   "definition": "VETS(M,N,M;LN) for seasonal groups and VETS(M,N,N;LN) for non-seasonal groups, with a full covariance matrix of the errors and the PIC restrictions chosen by the [[D5:VETS-PIC selection procedure]], auto.vets() from the legion package.",
+   "kind": "method",
+   "broader": [
+    "D3"
+   ]
   },
   {
    "id": "D25",
    "term": "VETS D",
-   "definition": "VETS F with a diagonal covariance matrix of the errors (loss = \"diagonal\").",
-   "kind": "method"
+   "definition": "[[D24:VETS F]] with a diagonal covariance matrix of the errors (loss = \"diagonal\").",
+   "kind": "method",
+   "broader": [
+    "D3"
+   ],
+   "assumptions": [
+    "C60"
+   ]
   },
   {
    "id": "D26",
@@ -361,7 +412,7 @@
     "D27",
     "D28"
    ],
-   "definition": "VETS F, VETS D, ETS LN, ETS (ADAM) and ETS, as compared on the M5 data."
+   "definition": "[[D24:V[[D27:ETS]] F]], [[D25:VETS D]], [[D26:ETS LN]], [[D28:ETS (ADAM)]] and ETS, as compared on the M5 data."
   },
   {
    "id": "D30",
@@ -372,7 +423,7 @@
     "D27",
     "D28"
    ],
-   "definition": "ETS LN, ETS (ADAM) and ETS, as compared on the M5 data."
+   "definition": "[[D26:[[D27:ETS]] LN]], [[D28:ETS (ADAM)]] and ETS, as compared on the M5 data."
   },
   {
    "id": "D31",
@@ -382,14 +433,18 @@
     "D24",
     "D25"
    ],
-   "definition": "VETS F and VETS D."
+   "definition": "[[D24:VETS F]] and [[D25:VETS D]]."
   },
   {
    "id": "D32",
    "term": "M5 departmental data",
    "definition": "The M5 competition series aggregated to monthly frequency and to department-store level: 70 series of 63 observations; 69 used, in 7 seasonal groups (57 series) and 4 non-seasonal groups (12 series) of the same department, classified by adam() from the smooth package; a group of one series removed; trended models excluded.",
    "source": "B17",
-   "kind": "data"
+   "kind": "data",
+   "assumptions": [
+    "C58",
+    "C59"
+   ]
   },
   {
    "id": "D33",
@@ -404,6 +459,16 @@
    "kind": "design"
   },
   {
+   "id": "D44",
+   "term": "the two M5 histories",
+   "kind": "design",
+   "definition": "The [[D33:M5 long holdout]] and the [[D34:M5 short holdout]]: long and short histories with the same 12-month holdout.",
+   "members": [
+    "D33",
+    "D34"
+   ]
+  },
+  {
    "id": "D35",
    "term": "MCB test",
    "definition": "Multiple comparisons with the best on the ranks of an error measure across series; here on rMAE, with rmcb() from the greybox package.",
@@ -415,51 +480,54 @@
    "term": "rMAE",
    "definition": "Relative mean absolute error: the mean absolute forecast error over the horizon divided by that of a benchmark method, aggregated over series by the geometric mean (in the M5 analysis also by the median).",
    "source": "B5",
-   "kind": "measure"
+   "kind": "variable"
   },
   {
    "id": "D37",
    "term": "rRMSE",
    "definition": "Relative root mean squared error: the root mean squared forecast error over the horizon divided by that of a benchmark method, aggregated over series by the geometric mean.",
-   "kind": "measure"
+   "kind": "variable"
   },
   {
    "id": "D38",
    "term": "rAME",
    "definition": "Relative absolute mean error: the absolute value of the mean forecast error over the horizon divided by that of a benchmark method, aggregated over series by the geometric mean; a measure of bias.",
-   "kind": "measure"
+   "kind": "variable"
   },
   {
    "id": "D39",
    "term": "rPinballU",
    "definition": "Relative pinball value of the upper bound of the 95% prediction interval: its pinball loss divided by that of a benchmark method, aggregated over series by the geometric mean.",
-   "kind": "measure"
+   "kind": "variable"
   },
   {
    "id": "D40",
    "term": "rPinballL",
-   "definition": "Relative pinball value of the lower bound of the 95% prediction interval, defined as rPinballU.",
-   "kind": "measure"
+   "definition": "Relative pinball value of the lower bound of the 95% prediction interval, defined as [[D39:rPinballU]].",
+   "kind": "variable"
   },
   {
    "id": "D41",
    "term": "coverage",
    "definition": "The share of holdout observations inside the 95% prediction interval, averaged over series by the arithmetic mean.",
-   "kind": "measure"
+   "kind": "variable"
   },
   {
    "id": "D42",
    "term": "GMRAE",
    "definition": "Geometric mean relative absolute error: the absolute error of a forecast at one horizon divided by that of the Naive forecast, aggregated over series by the geometric mean.",
    "source": "B8",
-   "kind": "measure"
+   "kind": "variable"
   },
   {
    "id": "D43",
    "term": "multivariate AICc",
    "definition": "The Akaike information criterion corrected for small samples in multivariate models.",
    "source": "B3",
-   "kind": "measure"
+   "kind": "method",
+   "part_of": [
+    "D5"
+   ]
   }
  ],
  "claims": [
@@ -694,11 +762,6 @@
      ]
     }
    ],
-   "assumptions": [
-    "C60",
-    "C59",
-    "C58"
-   ],
    "limitations": [
     "L4",
     "L7",
@@ -737,11 +800,6 @@
      ]
     }
    ],
-   "assumptions": [
-    "C60",
-    "C59",
-    "C58"
-   ],
    "limitations": [
     "L4",
     "L7",
@@ -779,11 +837,6 @@
       "E3.T2"
      ]
     }
-   ],
-   "assumptions": [
-    "C60",
-    "C59",
-    "C58"
    ],
    "limitations": [
     "L4",
@@ -1775,7 +1828,14 @@
      "D33",
      "non-seasonal series"
     ]
-   }
+   },
+   "relations": [
+    {
+     "type": "qualifies",
+     "target": "C5",
+     "id_type": "local"
+    }
+   ]
   },
   {
    "id": "C37",
@@ -1811,7 +1871,14 @@
      "D34",
      "non-seasonal series"
     ]
-   }
+   },
+   "relations": [
+    {
+     "type": "qualifies",
+     "target": "C6",
+     "id_type": "local"
+    }
+   ]
   },
   {
    "id": "C38",
@@ -2060,10 +2127,6 @@
      ]
     }
    ],
-   "assumptions": [
-    "C59",
-    "C58"
-   ],
    "limitations": [
     "L2",
     "L4"
@@ -2117,7 +2180,19 @@
     "conditions": [
      "D32"
     ]
-   }
+   },
+   "relations": [
+    {
+     "type": "explains",
+     "target": "C5",
+     "id_type": "local"
+    },
+    {
+     "type": "explains",
+     "target": "C6",
+     "id_type": "local"
+    }
+   ]
   },
   {
    "id": "C47",
@@ -2221,7 +2296,14 @@
      "D32",
      "D33"
     ]
-   }
+   },
+   "relations": [
+    {
+     "type": "qualifies",
+     "target": "C5",
+     "id_type": "local"
+    }
+   ]
   },
   {
    "id": "C50",
@@ -2275,10 +2357,6 @@
     }
    ],
    "warrant": "W14",
-   "assumptions": [
-    "C60",
-    "C59"
-   ],
    "source_spans": [
     "p14.15"
    ],
@@ -2310,10 +2388,6 @@
     }
    ],
    "warrant": "W14",
-   "assumptions": [
-    "C60",
-    "C59"
-   ],
    "source_spans": [
     "p14.15"
    ],
@@ -2403,7 +2477,7 @@
    "id": "C56",
    "statement": "The logarithm of the error vector of [[D3:pure multiplicative VETS]] is multivariate normal with zero mean and covariance matrix $\\Sigma$.",
    "type": "descriptive",
-   "role": "secondary",
+   "role": "supporting",
    "support": [
     {
      "kind": "assumption"
@@ -2421,7 +2495,7 @@
    "id": "C57",
    "statement": "The errors of [[D1:VETS]] are serially uncorrelated over time.",
    "type": "descriptive",
-   "role": "secondary",
+   "role": "supporting",
    "support": [
     {
      "kind": "assumption"
@@ -2536,21 +2610,57 @@
      "id": "T1",
      "description": "rMAE, rRMSE and rAME of the nine variants relative to PIC(N,N,N), over all simulated data, for 56 and 16 in-sample quarters",
      "row_labels": [
-      "method"
+      "D6"
      ],
      "columns": [
-      "rMAE (56+8)",
-      "rRMSE (56+8)",
-      "rAME (56+8)",
-      "rMAE (16+8)",
-      "rRMSE (16+8)",
-      "rAME (16+8)"
+      {
+       "variable": "D36",
+       "conditions": {
+        "in-sample quarters": 56,
+        "comparator": "D15"
+       }
+      },
+      {
+       "variable": "D37",
+       "conditions": {
+        "in-sample quarters": 56,
+        "comparator": "D15"
+       }
+      },
+      {
+       "variable": "D38",
+       "conditions": {
+        "in-sample quarters": 56,
+        "comparator": "D15"
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "in-sample quarters": 16,
+        "comparator": "D15"
+       }
+      },
+      {
+       "variable": "D37",
+       "conditions": {
+        "in-sample quarters": 16,
+        "comparator": "D15"
+       }
+      },
+      {
+       "variable": "D38",
+       "conditions": {
+        "in-sample quarters": 16,
+        "comparator": "D15"
+       }
+      }
      ],
      "rows": [
       {
        "id": "r1",
        "label": [
-        "PIC(LS,S,S)"
+        "D7"
        ],
        "values": [
         1.23,
@@ -2564,7 +2674,7 @@
       {
        "id": "r2",
        "label": [
-        "PIC(S,S,S)"
+        "D8"
        ],
        "values": [
         1.23,
@@ -2578,7 +2688,7 @@
       {
        "id": "r3",
        "label": [
-        "PIC(N,S,S)"
+        "D9"
        ],
        "values": [
         1.24,
@@ -2592,7 +2702,7 @@
       {
        "id": "r4",
        "label": [
-        "PIC(LS,S,N)"
+        "D10"
        ],
        "values": [
         0.99,
@@ -2606,7 +2716,7 @@
       {
        "id": "r5",
        "label": [
-        "PIC(S,S,N)"
+        "D11"
        ],
        "values": [
         0.99,
@@ -2620,7 +2730,7 @@
       {
        "id": "r6",
        "label": [
-        "PIC(N,S,N)"
+        "D12"
        ],
        "values": [
         1.0,
@@ -2634,7 +2744,7 @@
       {
        "id": "r7",
        "label": [
-        "PIC(LS,N,N)"
+        "D13"
        ],
        "values": [
         1.0,
@@ -2648,7 +2758,7 @@
       {
        "id": "r8",
        "label": [
-        "PIC(S,N,N)"
+        "D14"
        ],
        "values": [
         1.0,
@@ -2662,7 +2772,7 @@
       {
        "id": "r9",
        "label": [
-        "PIC(N,N,N)"
+        "D15"
        ],
        "values": [
         1.0,
@@ -2682,24 +2792,78 @@
      "id": "T2",
      "description": "rMAE of the nine variants (rows) on data from each variant (columns), relative to the correct variant, 16 in-sample quarters",
      "row_labels": [
-      "method"
+      "D6"
      ],
      "columns": [
-      "DGP PIC(LS,S,S)",
-      "DGP PIC(S,S,S)",
-      "DGP PIC(N,S,S)",
-      "DGP PIC(LS,S,N)",
-      "DGP PIC(S,S,N)",
-      "DGP PIC(N,S,N)",
-      "DGP PIC(LS,N,N)",
-      "DGP PIC(S,N,N)",
-      "DGP PIC(N,N,N)"
+      {
+       "variable": "D36",
+       "conditions": {
+        "data-generating variant": "D7",
+        "comparator": "D7"
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "data-generating variant": "D8",
+        "comparator": "D8"
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "data-generating variant": "D9",
+        "comparator": "D9"
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "data-generating variant": "D10",
+        "comparator": "D10"
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "data-generating variant": "D11",
+        "comparator": "D11"
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "data-generating variant": "D12",
+        "comparator": "D12"
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "data-generating variant": "D13",
+        "comparator": "D13"
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "data-generating variant": "D14",
+        "comparator": "D14"
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "data-generating variant": "D15",
+        "comparator": "D15"
+       }
+      }
      ],
      "rows": [
       {
        "id": "r1",
        "label": [
-        "PIC(LS,S,S)"
+        "D7"
        ],
        "values": [
         1.0,
@@ -2716,7 +2880,7 @@
       {
        "id": "r2",
        "label": [
-        "PIC(S,S,S)"
+        "D8"
        ],
        "values": [
         1.01,
@@ -2733,7 +2897,7 @@
       {
        "id": "r3",
        "label": [
-        "PIC(N,S,S)"
+        "D9"
        ],
        "values": [
         1.01,
@@ -2750,7 +2914,7 @@
       {
        "id": "r4",
        "label": [
-        "PIC(LS,S,N)"
+        "D10"
        ],
        "values": [
         1.02,
@@ -2767,7 +2931,7 @@
       {
        "id": "r5",
        "label": [
-        "PIC(S,S,N)"
+        "D11"
        ],
        "values": [
         1.02,
@@ -2784,7 +2948,7 @@
       {
        "id": "r6",
        "label": [
-        "PIC(N,S,N)"
+        "D12"
        ],
        "values": [
         1.03,
@@ -2801,7 +2965,7 @@
       {
        "id": "r7",
        "label": [
-        "PIC(LS,N,N)"
+        "D13"
        ],
        "values": [
         1.11,
@@ -2818,7 +2982,7 @@
       {
        "id": "r8",
        "label": [
-        "PIC(S,N,N)"
+        "D14"
        ],
        "values": [
         1.08,
@@ -2835,7 +2999,7 @@
       {
        "id": "r9",
        "label": [
-        "PIC(N,N,N)"
+        "D15"
        ],
        "values": [
         1.07,
@@ -2852,30 +3016,87 @@
      ],
      "source_spans": [
       "p9.1"
-     ]
+     ],
+     "conditions": {
+      "in-sample quarters": 16
+     }
     },
     {
      "id": "T3",
      "description": "rRMSE of the nine variants (rows) on data from each variant (columns), relative to the correct variant, 16 in-sample quarters",
      "row_labels": [
-      "method"
+      "D6"
      ],
      "columns": [
-      "DGP PIC(LS,S,S)",
-      "DGP PIC(S,S,S)",
-      "DGP PIC(N,S,S)",
-      "DGP PIC(LS,S,N)",
-      "DGP PIC(S,S,N)",
-      "DGP PIC(N,S,N)",
-      "DGP PIC(LS,N,N)",
-      "DGP PIC(S,N,N)",
-      "DGP PIC(N,N,N)"
+      {
+       "variable": "D37",
+       "conditions": {
+        "data-generating variant": "D7",
+        "comparator": "D7"
+       }
+      },
+      {
+       "variable": "D37",
+       "conditions": {
+        "data-generating variant": "D8",
+        "comparator": "D8"
+       }
+      },
+      {
+       "variable": "D37",
+       "conditions": {
+        "data-generating variant": "D9",
+        "comparator": "D9"
+       }
+      },
+      {
+       "variable": "D37",
+       "conditions": {
+        "data-generating variant": "D10",
+        "comparator": "D10"
+       }
+      },
+      {
+       "variable": "D37",
+       "conditions": {
+        "data-generating variant": "D11",
+        "comparator": "D11"
+       }
+      },
+      {
+       "variable": "D37",
+       "conditions": {
+        "data-generating variant": "D12",
+        "comparator": "D12"
+       }
+      },
+      {
+       "variable": "D37",
+       "conditions": {
+        "data-generating variant": "D13",
+        "comparator": "D13"
+       }
+      },
+      {
+       "variable": "D37",
+       "conditions": {
+        "data-generating variant": "D14",
+        "comparator": "D14"
+       }
+      },
+      {
+       "variable": "D37",
+       "conditions": {
+        "data-generating variant": "D15",
+        "comparator": "D15"
+       }
+      }
      ],
      "rows": [
       {
        "id": "r1",
        "label": [
-        "PIC(LS,S,S)"
+        "D7"
        ],
        "values": [
         1.0,
@@ -2892,7 +3113,7 @@
       {
        "id": "r2",
        "label": [
-        "PIC(S,S,S)"
+        "D8"
        ],
        "values": [
         1.01,
@@ -2909,7 +3130,7 @@
       {
        "id": "r3",
        "label": [
-        "PIC(N,S,S)"
+        "D9"
        ],
        "values": [
         1.01,
@@ -2926,7 +3147,7 @@
       {
        "id": "r4",
        "label": [
-        "PIC(LS,S,N)"
+        "D10"
        ],
        "values": [
         1.02,
@@ -2943,7 +3164,7 @@
       {
        "id": "r5",
        "label": [
-        "PIC(S,S,N)"
+        "D11"
        ],
        "values": [
         1.02,
@@ -2960,7 +3181,7 @@
       {
        "id": "r6",
        "label": [
-        "PIC(N,S,N)"
+        "D12"
        ],
        "values": [
         1.03,
@@ -2977,7 +3198,7 @@
       {
        "id": "r7",
        "label": [
-        "PIC(LS,N,N)"
+        "D13"
        ],
        "values": [
         1.11,
@@ -2994,7 +3215,7 @@
       {
        "id": "r8",
        "label": [
-        "PIC(S,N,N)"
+        "D14"
        ],
        "values": [
         1.08,
@@ -3011,7 +3232,7 @@
       {
        "id": "r9",
        "label": [
-        "PIC(N,N,N)"
+        "D15"
        ],
        "values": [
         1.07,
@@ -3028,30 +3249,64 @@
      ],
      "source_spans": [
       "p9.2"
-     ]
+     ],
+     "conditions": {
+      "in-sample quarters": 16
+     }
     },
     {
      "id": "T4",
      "description": "rMAE of the nine variants relative to PIC(N,N,N) by group size, on data from PIC(LS,S,S)",
      "conditions": {
-      "DGP": "PIC(LS,S,S)"
+      "data-generating variant": "D7",
+      "comparator": "D15"
      },
      "row_labels": [
-      "method"
+      "D6"
      ],
      "columns": [
-      "2 series",
-      "10 series",
-      "20 series",
-      "30 series",
-      "40 series",
-      "50 series"
+      {
+       "variable": "D36",
+       "conditions": {
+        "series per group": 2
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "series per group": 10
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "series per group": 20
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "series per group": 30
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "series per group": 40
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "series per group": 50
+       }
+      }
      ],
      "rows": [
       {
        "id": "r1",
        "label": [
-        "PIC(LS,S,S)"
+        "D7"
        ],
        "values": [
         0.97,
@@ -3065,7 +3320,7 @@
       {
        "id": "r2",
        "label": [
-        "PIC(S,S,S)"
+        "D8"
        ],
        "values": [
         0.98,
@@ -3079,7 +3334,7 @@
       {
        "id": "r3",
        "label": [
-        "PIC(N,S,S)"
+        "D9"
        ],
        "values": [
         0.98,
@@ -3093,7 +3348,7 @@
       {
        "id": "r4",
        "label": [
-        "PIC(LS,S,N)"
+        "D10"
        ],
        "values": [
         1.0,
@@ -3107,7 +3362,7 @@
       {
        "id": "r5",
        "label": [
-        "PIC(S,S,N)"
+        "D11"
        ],
        "values": [
         0.99,
@@ -3121,7 +3376,7 @@
       {
        "id": "r6",
        "label": [
-        "PIC(N,S,N)"
+        "D12"
        ],
        "values": [
         0.99,
@@ -3135,7 +3390,7 @@
       {
        "id": "r7",
        "label": [
-        "PIC(LS,N,N)"
+        "D13"
        ],
        "values": [
         1.01,
@@ -3149,7 +3404,7 @@
       {
        "id": "r8",
        "label": [
-        "PIC(S,N,N)"
+        "D14"
        ],
        "values": [
         1.0,
@@ -3163,7 +3418,7 @@
       {
        "id": "r9",
        "label": [
-        "PIC(N,N,N)"
+        "D15"
        ],
        "values": [
         1.0,
@@ -3183,24 +3438,55 @@
      "id": "T5",
      "description": "rMAE of the nine variants relative to PIC(N,N,N) by group size, on data from PIC(N,N,N)",
      "conditions": {
-      "DGP": "PIC(N,N,N)"
+      "data-generating variant": "D15",
+      "comparator": "D15"
      },
      "row_labels": [
-      "method"
+      "D6"
      ],
      "columns": [
-      "2 series",
-      "10 series",
-      "20 series",
-      "30 series",
-      "40 series",
-      "50 series"
+      {
+       "variable": "D36",
+       "conditions": {
+        "series per group": 2
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "series per group": 10
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "series per group": 20
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "series per group": 30
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "series per group": 40
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "series per group": 50
+       }
+      }
      ],
      "rows": [
       {
        "id": "r1",
        "label": [
-        "PIC(LS,S,S)"
+        "D7"
        ],
        "values": [
         1.53,
@@ -3214,7 +3500,7 @@
       {
        "id": "r2",
        "label": [
-        "PIC(S,S,S)"
+        "D8"
        ],
        "values": [
         1.52,
@@ -3228,7 +3514,7 @@
       {
        "id": "r3",
        "label": [
-        "PIC(N,S,S)"
+        "D9"
        ],
        "values": [
         1.53,
@@ -3242,7 +3528,7 @@
       {
        "id": "r4",
        "label": [
-        "PIC(LS,S,N)"
+        "D10"
        ],
        "values": [
         1.0,
@@ -3256,7 +3542,7 @@
       {
        "id": "r5",
        "label": [
-        "PIC(S,S,N)"
+        "D11"
        ],
        "values": [
         1.0,
@@ -3270,7 +3556,7 @@
       {
        "id": "r6",
        "label": [
-        "PIC(N,S,N)"
+        "D12"
        ],
        "values": [
         0.99,
@@ -3284,7 +3570,7 @@
       {
        "id": "r7",
        "label": [
-        "PIC(LS,N,N)"
+        "D13"
        ],
        "values": [
         1.01,
@@ -3298,7 +3584,7 @@
       {
        "id": "r8",
        "label": [
-        "PIC(S,N,N)"
+        "D14"
        ],
        "values": [
         1.01,
@@ -3312,7 +3598,7 @@
       {
        "id": "r9",
        "label": [
-        "PIC(N,N,N)"
+        "D15"
        ],
        "values": [
         1.0,
@@ -3332,21 +3618,55 @@
      "id": "T6",
      "description": "rPinballU, rPinballL relative to PIC(N,N,N) and coverage of the 95% interval of the nine variants over all simulated data, for 56 and 16 in-sample quarters",
      "row_labels": [
-      "method"
+      "D6"
      ],
      "columns": [
-      "rPinballU (56+8)",
-      "rPinballL (56+8)",
-      "coverage (56+8)",
-      "rPinballU (16+8)",
-      "rPinballL (16+8)",
-      "coverage (16+8)"
+      {
+       "variable": "D39",
+       "conditions": {
+        "in-sample quarters": 56,
+        "comparator": "D15"
+       }
+      },
+      {
+       "variable": "D40",
+       "conditions": {
+        "in-sample quarters": 56,
+        "comparator": "D15"
+       }
+      },
+      {
+       "variable": "D41",
+       "conditions": {
+        "in-sample quarters": 56
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "in-sample quarters": 16,
+        "comparator": "D15"
+       }
+      },
+      {
+       "variable": "D40",
+       "conditions": {
+        "in-sample quarters": 16,
+        "comparator": "D15"
+       }
+      },
+      {
+       "variable": "D41",
+       "conditions": {
+        "in-sample quarters": 16
+       }
+      }
      ],
      "rows": [
       {
        "id": "r1",
        "label": [
-        "PIC(LS,S,S)"
+        "D7"
        ],
        "values": [
         1.23,
@@ -3360,7 +3680,7 @@
       {
        "id": "r2",
        "label": [
-        "PIC(S,S,S)"
+        "D8"
        ],
        "values": [
         1.31,
@@ -3374,7 +3694,7 @@
       {
        "id": "r3",
        "label": [
-        "PIC(N,S,S)"
+        "D9"
        ],
        "values": [
         1.29,
@@ -3388,7 +3708,7 @@
       {
        "id": "r4",
        "label": [
-        "PIC(LS,S,N)"
+        "D10"
        ],
        "values": [
         0.97,
@@ -3402,7 +3722,7 @@
       {
        "id": "r5",
        "label": [
-        "PIC(S,S,N)"
+        "D11"
        ],
        "values": [
         1.01,
@@ -3416,7 +3736,7 @@
       {
        "id": "r6",
        "label": [
-        "PIC(N,S,N)"
+        "D12"
        ],
        "values": [
         1.04,
@@ -3430,7 +3750,7 @@
       {
        "id": "r7",
        "label": [
-        "PIC(LS,N,N)"
+        "D13"
        ],
        "values": [
         1.0,
@@ -3444,7 +3764,7 @@
       {
        "id": "r8",
        "label": [
-        "PIC(S,N,N)"
+        "D14"
        ],
        "values": [
         1.01,
@@ -3458,7 +3778,7 @@
       {
        "id": "r9",
        "label": [
-        "PIC(N,N,N)"
+        "D15"
        ],
        "values": [
         1.0,
@@ -3478,24 +3798,78 @@
      "id": "T7",
      "description": "rPinballU of the nine variants (rows) on data from each variant (columns), relative to the correct variant, 16 in-sample quarters",
      "row_labels": [
-      "method"
+      "D6"
      ],
      "columns": [
-      "DGP PIC(LS,S,S)",
-      "DGP PIC(S,S,S)",
-      "DGP PIC(N,S,S)",
-      "DGP PIC(LS,S,N)",
-      "DGP PIC(S,S,N)",
-      "DGP PIC(N,S,N)",
-      "DGP PIC(LS,N,N)",
-      "DGP PIC(S,N,N)",
-      "DGP PIC(N,N,N)"
+      {
+       "variable": "D39",
+       "conditions": {
+        "data-generating variant": "D7",
+        "comparator": "D7"
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "data-generating variant": "D8",
+        "comparator": "D8"
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "data-generating variant": "D9",
+        "comparator": "D9"
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "data-generating variant": "D10",
+        "comparator": "D10"
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "data-generating variant": "D11",
+        "comparator": "D11"
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "data-generating variant": "D12",
+        "comparator": "D12"
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "data-generating variant": "D13",
+        "comparator": "D13"
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "data-generating variant": "D14",
+        "comparator": "D14"
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "data-generating variant": "D15",
+        "comparator": "D15"
+       }
+      }
      ],
      "rows": [
       {
        "id": "r1",
        "label": [
-        "PIC(LS,S,S)"
+        "D7"
        ],
        "values": [
         1.0,
@@ -3512,7 +3886,7 @@
       {
        "id": "r2",
        "label": [
-        "PIC(S,S,S)"
+        "D8"
        ],
        "values": [
         1.06,
@@ -3529,7 +3903,7 @@
       {
        "id": "r3",
        "label": [
-        "PIC(N,S,S)"
+        "D9"
        ],
        "values": [
         1.09,
@@ -3546,7 +3920,7 @@
       {
        "id": "r4",
        "label": [
-        "PIC(LS,S,N)"
+        "D10"
        ],
        "values": [
         0.98,
@@ -3563,7 +3937,7 @@
       {
        "id": "r5",
        "label": [
-        "PIC(S,S,N)"
+        "D11"
        ],
        "values": [
         1.03,
@@ -3580,7 +3954,7 @@
       {
        "id": "r6",
        "label": [
-        "PIC(N,S,N)"
+        "D12"
        ],
        "values": [
         1.1,
@@ -3597,7 +3971,7 @@
       {
        "id": "r7",
        "label": [
-        "PIC(LS,N,N)"
+        "D13"
        ],
        "values": [
         1.17,
@@ -3614,7 +3988,7 @@
       {
        "id": "r8",
        "label": [
-        "PIC(S,N,N)"
+        "D14"
        ],
        "values": [
         1.24,
@@ -3631,7 +4005,7 @@
       {
        "id": "r9",
        "label": [
-        "PIC(N,N,N)"
+        "D15"
        ],
        "values": [
         1.39,
@@ -3648,30 +4022,64 @@
      ],
      "source_spans": [
       "p11.2"
-     ]
+     ],
+     "conditions": {
+      "in-sample quarters": 16
+     }
     },
     {
      "id": "T8",
      "description": "rPinballU of the nine variants relative to PIC(N,N,N) by group size, on data from PIC(LS,S,S)",
      "conditions": {
-      "DGP": "PIC(LS,S,S)"
+      "data-generating variant": "D7",
+      "comparator": "D15"
      },
      "row_labels": [
-      "method"
+      "D6"
      ],
      "columns": [
-      "2 series",
-      "10 series",
-      "20 series",
-      "30 series",
-      "40 series",
-      "50 series"
+      {
+       "variable": "D39",
+       "conditions": {
+        "series per group": 2
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "series per group": 10
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "series per group": 20
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "series per group": 30
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "series per group": 40
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "series per group": 50
+       }
+      }
      ],
      "rows": [
       {
        "id": "r1",
        "label": [
-        "PIC(LS,S,S)"
+        "D7"
        ],
        "values": [
         0.87,
@@ -3685,7 +4093,7 @@
       {
        "id": "r2",
        "label": [
-        "PIC(S,S,S)"
+        "D8"
        ],
        "values": [
         0.89,
@@ -3699,7 +4107,7 @@
       {
        "id": "r3",
        "label": [
-        "PIC(N,S,S)"
+        "D9"
        ],
        "values": [
         0.9,
@@ -3713,7 +4121,7 @@
       {
        "id": "r4",
        "label": [
-        "PIC(LS,S,N)"
+        "D10"
        ],
        "values": [
         0.87,
@@ -3727,7 +4135,7 @@
       {
        "id": "r5",
        "label": [
-        "PIC(S,S,N)"
+        "D11"
        ],
        "values": [
         0.88,
@@ -3741,7 +4149,7 @@
       {
        "id": "r6",
        "label": [
-        "PIC(N,S,N)"
+        "D12"
        ],
        "values": [
         0.89,
@@ -3755,7 +4163,7 @@
       {
        "id": "r7",
        "label": [
-        "PIC(LS,N,N)"
+        "D13"
        ],
        "values": [
         0.91,
@@ -3769,7 +4177,7 @@
       {
        "id": "r8",
        "label": [
-        "PIC(S,N,N)"
+        "D14"
        ],
        "values": [
         0.96,
@@ -3783,7 +4191,7 @@
       {
        "id": "r9",
        "label": [
-        "PIC(N,N,N)"
+        "D15"
        ],
        "values": [
         1.0,
@@ -3803,24 +4211,55 @@
      "id": "T9",
      "description": "rPinballU of the nine variants relative to PIC(N,N,N) by group size, on data from PIC(N,N,N)",
      "conditions": {
-      "DGP": "PIC(N,N,N)"
+      "data-generating variant": "D15",
+      "comparator": "D15"
      },
      "row_labels": [
-      "method"
+      "D6"
      ],
      "columns": [
-      "2 series",
-      "10 series",
-      "20 series",
-      "30 series",
-      "40 series",
-      "50 series"
+      {
+       "variable": "D39",
+       "conditions": {
+        "series per group": 2
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "series per group": 10
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "series per group": 20
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "series per group": 30
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "series per group": 40
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "series per group": 50
+       }
+      }
      ],
      "rows": [
       {
        "id": "r1",
        "label": [
-        "PIC(LS,S,S)"
+        "D7"
        ],
        "values": [
         1.6,
@@ -3834,7 +4273,7 @@
       {
        "id": "r2",
        "label": [
-        "PIC(S,S,S)"
+        "D8"
        ],
        "values": [
         1.66,
@@ -3848,7 +4287,7 @@
       {
        "id": "r3",
        "label": [
-        "PIC(N,S,S)"
+        "D9"
        ],
        "values": [
         1.72,
@@ -3862,7 +4301,7 @@
       {
        "id": "r4",
        "label": [
-        "PIC(LS,S,N)"
+        "D10"
        ],
        "values": [
         1.23,
@@ -3876,7 +4315,7 @@
       {
        "id": "r5",
        "label": [
-        "PIC(S,S,N)"
+        "D11"
        ],
        "values": [
         1.3,
@@ -3890,7 +4329,7 @@
       {
        "id": "r6",
        "label": [
-        "PIC(N,S,N)"
+        "D12"
        ],
        "values": [
         1.33,
@@ -3904,7 +4343,7 @@
       {
        "id": "r7",
        "label": [
-        "PIC(LS,N,N)"
+        "D13"
        ],
        "values": [
         0.93,
@@ -3918,7 +4357,7 @@
       {
        "id": "r8",
        "label": [
-        "PIC(S,N,N)"
+        "D14"
        ],
        "values": [
         0.96,
@@ -3932,7 +4371,7 @@
       {
        "id": "r9",
        "label": [
-        "PIC(N,N,N)"
+        "D15"
        ],
        "values": [
         1.0,
@@ -4000,23 +4439,59 @@
      "id": "T1",
      "description": "Geometric mean and median rMAE (benchmark Naive) of the five models, overall and on seasonal and non-seasonal series, on long and short histories",
      "row_labels": [
-      "history",
-      "model"
+      "D44",
+      "D29"
      ],
      "columns": [
-      "overall geometric mean",
-      "overall median",
-      "seasonal geometric mean",
-      "seasonal median",
-      "non-seasonal geometric mean",
-      "non-seasonal median"
+      {
+       "variable": "D36",
+       "conditions": {
+        "series": "overall",
+        "summary over series": "geometric mean"
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "series": "overall",
+        "summary over series": "median"
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "series": "seasonal",
+        "summary over series": "geometric mean"
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "series": "seasonal",
+        "summary over series": "median"
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "series": "non-seasonal",
+        "summary over series": "geometric mean"
+       }
+      },
+      {
+       "variable": "D36",
+       "conditions": {
+        "series": "non-seasonal",
+        "summary over series": "median"
+       }
+      }
      ],
      "rows": [
       {
        "id": "r1",
        "label": [
-        "long",
-        "ETS LN"
+        "D33",
+        "D26"
        ],
        "values": [
         0.917,
@@ -4030,8 +4505,8 @@
       {
        "id": "r2",
        "label": [
-        "long",
-        "ETS (ADAM)"
+        "D33",
+        "D28"
        ],
        "values": [
         0.955,
@@ -4045,8 +4520,8 @@
       {
        "id": "r3",
        "label": [
-        "long",
-        "ETS"
+        "D33",
+        "D27"
        ],
        "values": [
         0.933,
@@ -4060,8 +4535,8 @@
       {
        "id": "r4",
        "label": [
-        "long",
-        "VETS D"
+        "D33",
+        "D25"
        ],
        "values": [
         0.894,
@@ -4075,8 +4550,8 @@
       {
        "id": "r5",
        "label": [
-        "long",
-        "VETS F"
+        "D33",
+        "D24"
        ],
        "values": [
         0.906,
@@ -4090,8 +4565,8 @@
       {
        "id": "r6",
        "label": [
-        "short",
-        "ETS LN"
+        "D34",
+        "D26"
        ],
        "values": [
         0.997,
@@ -4105,8 +4580,8 @@
       {
        "id": "r7",
        "label": [
-        "short",
-        "ETS (ADAM)"
+        "D34",
+        "D28"
        ],
        "values": [
         0.991,
@@ -4120,8 +4595,8 @@
       {
        "id": "r8",
        "label": [
-        "short",
-        "ETS"
+        "D34",
+        "D27"
        ],
        "values": [
         1.0,
@@ -4135,8 +4610,8 @@
       {
        "id": "r9",
        "label": [
-        "short",
-        "VETS D"
+        "D34",
+        "D25"
        ],
        "values": [
         0.936,
@@ -4150,8 +4625,8 @@
       {
        "id": "r10",
        "label": [
-        "short",
-        "VETS F"
+        "D34",
+        "D24"
        ],
        "values": [
         1.011,
@@ -4165,27 +4640,64 @@
      ],
      "source_spans": [
       "p11.3-p11.6"
-     ]
+     ],
+     "conditions": {
+      "comparator": "the Naive method"
+     }
     },
     {
      "id": "T2",
      "description": "Coverage of the 95% prediction interval and rPinballU and rPinballL (benchmark ETS on long histories) of the five models, on long and short histories",
      "row_labels": [
-      "model"
+      "D29"
      ],
      "columns": [
-      "coverage (long)",
-      "rPinballU (long)",
-      "rPinballL (long)",
-      "coverage (short)",
-      "rPinballU (short)",
-      "rPinballL (short)"
+      {
+       "variable": "D41",
+       "conditions": {
+        "D44": "D33"
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "D44": "D33",
+        "comparator": "ETS on the long histories"
+       }
+      },
+      {
+       "variable": "D40",
+       "conditions": {
+        "D44": "D33",
+        "comparator": "ETS on the long histories"
+       }
+      },
+      {
+       "variable": "D41",
+       "conditions": {
+        "D44": "D34"
+       }
+      },
+      {
+       "variable": "D39",
+       "conditions": {
+        "D44": "D34",
+        "comparator": "ETS on the long histories"
+       }
+      },
+      {
+       "variable": "D40",
+       "conditions": {
+        "D44": "D34",
+        "comparator": "ETS on the long histories"
+       }
+      }
      ],
      "rows": [
       {
        "id": "r1",
        "label": [
-        "ETS LN"
+        "D26"
        ],
        "values": [
         0.934,
@@ -4199,7 +4711,7 @@
       {
        "id": "r2",
        "label": [
-        "ETS (ADAM)"
+        "D28"
        ],
        "values": [
         0.925,
@@ -4213,7 +4725,7 @@
       {
        "id": "r3",
        "label": [
-        "ETS"
+        "D27"
        ],
        "values": [
         0.937,
@@ -4227,7 +4739,7 @@
       {
        "id": "r4",
        "label": [
-        "VETS D"
+        "D25"
        ],
        "values": [
         0.947,
@@ -4241,7 +4753,7 @@
       {
        "id": "r5",
        "label": [
-        "VETS F"
+        "D24"
        ],
        "values": [
         0.982,
@@ -4262,11 +4774,36 @@
      "description": "Number of the 11 VETS D models for which the selection procedure chose each PIC restriction",
      "row_labels": [],
      "columns": [
-      "PIC(N,N,N)",
-      "PIC(L,N,N)",
-      "PIC(L,L,N)",
-      "PIC(LS,S,N)",
-      "PIC(LS,S,S)"
+      {
+       "variable": "number of the 11 groups for which the restriction is chosen",
+       "conditions": {
+        "PIC restriction": "PIC(N,N,N)"
+       }
+      },
+      {
+       "variable": "number of the 11 groups for which the restriction is chosen",
+       "conditions": {
+        "PIC restriction": "PIC(L,N,N)"
+       }
+      },
+      {
+       "variable": "number of the 11 groups for which the restriction is chosen",
+       "conditions": {
+        "PIC restriction": "PIC(L,L,N)"
+       }
+      },
+      {
+       "variable": "number of the 11 groups for which the restriction is chosen",
+       "conditions": {
+        "PIC restriction": "PIC(LS,S,N)"
+       }
+      },
+      {
+       "variable": "number of the 11 groups for which the restriction is chosen",
+       "conditions": {
+        "PIC restriction": "PIC(LS,S,S)"
+       }
+      }
      ],
      "rows": [
       {
@@ -4283,29 +4820,63 @@
      ],
      "source_spans": [
       "p14.4-p14.5"
-     ]
+     ],
+     "conditions": {
+      "D29": "D25",
+      "chosen by": "D5"
+     }
     },
     {
      "id": "T4",
      "description": "GMRAE (benchmark Naive) and coverage of the 95% interval of the five models at horizons 3, 6 and 12 months, on long and short histories",
      "row_labels": [
-      "history",
-      "model"
+      "D44",
+      "D29"
      ],
      "columns": [
-      "GMRAE h3",
-      "GMRAE h6",
-      "GMRAE h12",
-      "coverage h3",
-      "coverage h6",
-      "coverage h12"
+      {
+       "variable": "D42",
+       "conditions": {
+        "horizon (months)": 3
+       }
+      },
+      {
+       "variable": "D42",
+       "conditions": {
+        "horizon (months)": 6
+       }
+      },
+      {
+       "variable": "D42",
+       "conditions": {
+        "horizon (months)": 12
+       }
+      },
+      {
+       "variable": "D41",
+       "conditions": {
+        "horizon (months)": 3
+       }
+      },
+      {
+       "variable": "D41",
+       "conditions": {
+        "horizon (months)": 6
+       }
+      },
+      {
+       "variable": "D41",
+       "conditions": {
+        "horizon (months)": 12
+       }
+      }
      ],
      "rows": [
       {
        "id": "r1",
        "label": [
-        "long",
-        "ETS LN"
+        "D33",
+        "D26"
        ],
        "values": [
         0.748,
@@ -4319,8 +4890,8 @@
       {
        "id": "r2",
        "label": [
-        "long",
-        "ETS (ADAM)"
+        "D33",
+        "D28"
        ],
        "values": [
         0.716,
@@ -4334,8 +4905,8 @@
       {
        "id": "r3",
        "label": [
-        "long",
-        "ETS"
+        "D33",
+        "D27"
        ],
        "values": [
         0.888,
@@ -4349,8 +4920,8 @@
       {
        "id": "r4",
        "label": [
-        "long",
-        "VETS D"
+        "D33",
+        "D25"
        ],
        "values": [
         0.897,
@@ -4364,8 +4935,8 @@
       {
        "id": "r5",
        "label": [
-        "long",
-        "VETS F"
+        "D33",
+        "D24"
        ],
        "values": [
         0.923,
@@ -4379,8 +4950,8 @@
       {
        "id": "r6",
        "label": [
-        "short",
-        "ETS LN"
+        "D34",
+        "D26"
        ],
        "values": [
         1.162,
@@ -4394,8 +4965,8 @@
       {
        "id": "r7",
        "label": [
-        "short",
-        "ETS (ADAM)"
+        "D34",
+        "D28"
        ],
        "values": [
         1.17,
@@ -4409,8 +4980,8 @@
       {
        "id": "r8",
        "label": [
-        "short",
-        "ETS"
+        "D34",
+        "D27"
        ],
        "values": [
         1.058,
@@ -4424,8 +4995,8 @@
       {
        "id": "r9",
        "label": [
-        "short",
-        "VETS D"
+        "D34",
+        "D25"
        ],
        "values": [
         1.037,
@@ -4439,8 +5010,8 @@
       {
        "id": "r10",
        "label": [
-        "short",
-        "VETS F"
+        "D34",
+        "D24"
        ],
        "values": [
         1.065,
