@@ -459,7 +459,7 @@
    "term": "multivariate AICc",
    "definition": "The Akaike information criterion corrected for small samples in multivariate models.",
    "source": "B3",
-   "kind": "measure"
+   "kind": "method"
   }
  ],
  "claims": [

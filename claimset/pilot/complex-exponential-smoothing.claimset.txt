@@ -37,7 +37,7 @@ D32 [data] seasonal subset: The 2,053 series of the M1, M3 and tourism data for 
 D33 [design] holdout at the M1, M3 and tourism horizons: Each series split into an in-sample part and a holdout of the length used in its competition: 6 observations for yearly, 8 for quarterly and other, and 18 for monthly series; forecasts made from the end of the in-sample part.
 D34 [design] holdout at the M4 horizons: Each series split into an in-sample part and a holdout of the length used in the M4 competition: 6 observations for yearly, 8 for quarterly, 18 for monthly, 13 for weekly, 14 for daily and 48 for hourly series; forecasts made from the end of the in-sample part.
 D35 [design] Nemenyi test: Post hoc Nemenyi test on the ranks of an error measure across series, comparing all methods at the 5% level; here rmcb() from the greybox package. [source B20]
-D36 [measure] Akaike information criterion: A criterion for choosing among models fitted by maximum likelihood that penalises the maximised log-likelihood by the number of estimated parameters. [source B21]
+D36 [method] Akaike information criterion: A criterion for choosing among models fitted by maximum likelihood that penalises the maximised log-likelihood by the number of estimated parameters. [source B21]
 D37 [design] ADF test: Augmented Dickey-Fuller test of the null hypothesis that a time series has a unit root. [source B22]
 D38 [design] KPSS test: Kwiatkowski-Phillips-Schmidt-Shin test of the null hypothesis that a time series is stationary. [source B23]
 D39 [data] M3 series 1664 and 2721: Two monthly series of the M3 competition: series 1664, which graphical analysis and the ADF and KPSS tests indicate is stationary, and the trended series 2721; each split into in-sample and holdout parts.

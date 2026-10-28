@@ -44,7 +44,7 @@ D39 [measure] rPinballU: Relative pinball value of the upper bound of the 95% pr
 D40 [measure] rPinballL: Relative pinball value of the lower bound of the 95% prediction interval, defined as rPinballU.
 D41 [measure] coverage: The share of holdout observations inside the 95% prediction interval, averaged over series by the arithmetic mean.
 D42 [measure] GMRAE: Geometric mean relative absolute error: the absolute error of a forecast at one horizon divided by that of the Naive forecast, aggregated over series by the geometric mean. [source B8]
-D43 [measure] multivariate AICc: The Akaike information criterion corrected for small samples in multivariate models. [source B3]
+D43 [method] multivariate AICc: The Akaike information criterion corrected for small samples in multivariate models. [source B3]
 
 CLAIMS
 C1 [formal; principal; extension; support: formal_proof E1; uses C9, C10, C11, C12, C8, C13; limitations L1; verification unchecked]

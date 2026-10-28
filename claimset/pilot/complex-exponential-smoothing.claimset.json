@@ -382,7 +382,7 @@
    "term": "Akaike information criterion",
    "definition": "A criterion for choosing among models fitted by maximum likelihood that penalises the maximised log-likelihood by the number of estimated parameters.",
    "source": "B21",
-   "kind": "measure"
+   "kind": "method"
   },
   {
    "id": "D37",
