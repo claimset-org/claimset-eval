@@ -3652,8 +3652,7 @@
    "reference": "B10",
    "availability": {
     "level": "public"
-   },
-   "licence": "GPL-2.0-or-later"
+   }
   },
   {
    "id": "A5",
@@ -3664,7 +3663,6 @@
    "availability": {
     "level": "public"
    },
-   "licence": "GPL-3.0-only",
    "uri": "https://cran.r-project.org/src/contrib/Archive/forecast/forecast_8.14.tar.gz"
   },
   {
@@ -3676,8 +3674,7 @@
    "reference": "B12",
    "availability": {
     "level": "public"
-   },
-   "licence": "GPL-2.0-or-later"
+   }
   },
   {
    "id": "A7",
@@ -3696,8 +3693,7 @@
    "reference": "B24",
    "availability": {
     "level": "public"
-   },
-   "licence": "GPL-2.0-only OR GPL-3.0-only"
+   }
   }
  ],
  "references": [

@@ -5401,8 +5401,7 @@
    "reference": "B18",
    "availability": {
     "level": "public"
-   },
-   "licence": "GPL-2.0-or-later"
+   }
   },
   {
    "id": "A3",
@@ -5413,8 +5412,7 @@
    "reference": "B16",
    "availability": {
     "level": "public"
-   },
-   "licence": "GPL-2.0-or-later"
+   }
   },
   {
    "id": "A4",
@@ -5423,8 +5421,7 @@
    "reference": "B14",
    "availability": {
     "level": "public"
-   },
-   "licence": "GPL-3.0-only"
+   }
   },
   {
    "id": "A5",
@@ -5435,8 +5432,7 @@
    "reference": "B11",
    "availability": {
     "level": "public"
-   },
-   "licence": "GPL-2.0-or-later"
+   }
   },
   {
    "id": "A6",
@@ -5446,8 +5442,7 @@
    "reference": "B21",
    "availability": {
     "level": "public"
-   },
-   "licence": "GPL-2.0-only OR GPL-3.0-only"
+   }
   }
  ],
  "references": [
