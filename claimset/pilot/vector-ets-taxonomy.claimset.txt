@@ -122,8 +122,10 @@ C35 [descriptive; secondary; support: empirical_quant E3 (E3.T1); inherits C60, 
   On the [[D33:long histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has the lowest geometric mean [[D36:rMAE]] of [[D29:the five models]] on seasonal series, but not the lowest median.
 C36 [descriptive; secondary; support: empirical_quant E3 (E3.T1); inherits C60, C58, C59, C56, C57]
   On the [[D33:long histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has neither the lowest geometric mean nor the lowest median [[D36:rMAE]] of [[D29:the five models]] on non-seasonal series.
+  qualifies C5
 C37 [descriptive; secondary; support: empirical_quant E3 (E3.T1); inherits C60, C58, C59, C56, C57]
   On the [[D34:short histories]] of the [[D32:M5 departmental data]], [[D25:VETS D]] has the lowest median [[D36:rMAE]] of [[D29:the five models]] on non-seasonal series, but not the lowest geometric mean.
+  qualifies C6
 C38 [interpretive; secondary; support: empirical_quant E3, argument W11; limitations L8; inherits C60, C58, C59, C56, C57; warrant W11]
   Using cross-sectional information for estimation improves forecasting accuracy on the [[D32:M5 departmental data]].
 C39 [descriptive; secondary; support: empirical_quant E3 (E3.T2.r5); inherits C60, C58, C59, C56, C57]
@@ -143,12 +145,15 @@ C45 [descriptive; secondary; support: empirical_quant E3 (E3.T3); limitations L2
   scope: population: 11 groups of M5 departmental series
 C46 [interpretive; secondary; support: empirical_quant E3, argument W12; inherits C60, C58, C59, C56, C57; warrant W12]
   The accuracy gains of VETS on the [[D32:M5 departmental data]] arise mainly from the PIC restrictions on seasonal initial values and on smoothing parameters.
+  explains C5
+  explains C6
 C47 [interpretive; secondary; support: empirical_quant E3, simulation E2 artefacts A2, argument W13; uses C45, C33; inherits C60, C58, C59, C56, C57; warrant W13]
   The frequent choice of PIC(LS,S,N) on the [[D32:M5 departmental data]] confirms the simulation finding that PIC(LS,S,N) is one of the most robust variants.
 C48 [descriptive; secondary; support: empirical_quant E3 (E3.T3); inherits C60, C58, C59, C56, C57]
   On the [[D32:M5 departmental data]], only one group of [[D25:VETS D]] needs common seasonal components.
 C49 [descriptive; secondary; support: empirical_quant E3 (E3.T4); inherits C60, C58, C59, C56, C57]
   On the [[D33:long histories]] of the [[D32:M5 departmental data]], neither of [[D31:the VETS models]] has the lowest [[D42:GMRAE]] of [[D29:the five models]] at horizons of 3, 6 or 12 months.
+  qualifies C5
 C50 [descriptive; secondary; support: empirical_quant E3 (E3.T4); inherits C60, C58, C59, C56, C57]
   On the [[D34:short histories]] of the [[D32:M5 departmental data]], one of [[D31:the VETS models]] has the lowest [[D42:GMRAE]] of [[D29:the five models]] at horizons of 3 and 12 months, but not at 6 months.
 C51 [interpretive; secondary; support: empirical_quant E3, argument W14; inherits C60, C58, C59, C56, C57; warrant W14]

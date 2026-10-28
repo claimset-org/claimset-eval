@@ -117,13 +117,19 @@
    "id": "D1",
    "term": "CES",
    "definition": "Complex exponential smoothing: a forecasting method that combines each past observation $y_t$ and its forecast error $e_t$ into the complex variable $y_t + i e_t$ and forecasts with an exponentially weighted sum of these values, $\\hat{y}_t + i\\hat{e}_t = (\\alpha_0 + i\\alpha_1) \\sum_{j=1}^{t-1} (1 + i - (\\alpha_0 + i\\alpha_1))^{j-1} (y_{t-j} + i e_{t-j})$, or recursively $\\hat{y}_t + i\\hat{e}_t = (\\alpha_0 + i\\alpha_1)(y_{t-1} + i e_{t-1}) + (1 - \\alpha_0 + i - i\\alpha_1)(\\hat{y}_{t-1} + i\\hat{e}_{t-1})$, where $\\alpha_0 + i\\alpha_1$ is the [[D2:complex smoothing parameter]] and $\\hat{e}_t$ carries the information on past forecast errors.",
-   "kind": "method"
+   "kind": "method",
+   "assumptions": [
+    "C60",
+    "C62",
+    "C63",
+    "C64"
+   ]
   },
   {
    "id": "D2",
    "term": "complex smoothing parameter",
    "definition": "The smoothing parameter of [[D1:CES]], the complex number $\\alpha_0 + i\\alpha_1$; its real part $\\alpha_0$ and imaginary part $\\alpha_1$ are the two real parameters estimated, and they set how much of the past observations and of the past forecast errors is carried into the forecast.",
-   "kind": "concept",
+   "kind": "variable",
    "part_of": [
     "D1"
    ]
@@ -1385,7 +1391,19 @@
     "object": "D2",
     "comparator": null,
     "conditions": []
-   }
+   },
+   "relations": [
+    {
+     "type": "explains",
+     "target": "C36",
+     "id_type": "local"
+    },
+    {
+     "type": "explains",
+     "target": "C37",
+     "id_type": "local"
+    }
+   ]
   },
   {
    "id": "C26",
@@ -2259,7 +2277,14 @@
     "conditions": [
      "D8"
     ]
-   }
+   },
+   "relations": [
+    {
+     "type": "qualifies",
+     "target": "C3",
+     "id_type": "local"
+    }
+   ]
   },
   {
    "id": "C54",
@@ -2513,7 +2538,7 @@
    "id": "C62",
    "statement": "The error term $\\varepsilon_t$ of [[D1:CES]] has no autocorrelation.",
    "type": "descriptive",
-   "role": "secondary",
+   "role": "supporting",
    "support": [
     {
      "kind": "assumption"
@@ -2531,7 +2556,7 @@
    "id": "C63",
    "statement": "The error term $\\varepsilon_t$ of [[D1:CES]] has constant variance.",
    "type": "descriptive",
-   "role": "secondary",
+   "role": "supporting",
    "support": [
     {
      "kind": "assumption"
@@ -2549,7 +2574,7 @@
    "id": "C64",
    "statement": "The error term $\\varepsilon_t$ of [[D1:CES]] is normally distributed.",
    "type": "descriptive",
-   "role": "secondary",
+   "role": "supporting",
    "support": [
     {
      "kind": "assumption"

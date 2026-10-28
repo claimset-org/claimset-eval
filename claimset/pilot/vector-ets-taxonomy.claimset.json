@@ -1828,7 +1828,14 @@
      "D33",
      "non-seasonal series"
     ]
-   }
+   },
+   "relations": [
+    {
+     "type": "qualifies",
+     "target": "C5",
+     "id_type": "local"
+    }
+   ]
   },
   {
    "id": "C37",
@@ -1864,7 +1871,14 @@
      "D34",
      "non-seasonal series"
     ]
-   }
+   },
+   "relations": [
+    {
+     "type": "qualifies",
+     "target": "C6",
+     "id_type": "local"
+    }
+   ]
   },
   {
    "id": "C38",
@@ -2166,7 +2180,19 @@
     "conditions": [
      "D32"
     ]
-   }
+   },
+   "relations": [
+    {
+     "type": "explains",
+     "target": "C5",
+     "id_type": "local"
+    },
+    {
+     "type": "explains",
+     "target": "C6",
+     "id_type": "local"
+    }
+   ]
   },
   {
    "id": "C47",
@@ -2270,7 +2296,14 @@
      "D32",
      "D33"
     ]
-   }
+   },
+   "relations": [
+    {
+     "type": "qualifies",
+     "target": "C5",
+     "id_type": "local"
+    }
+   ]
   },
   {
    "id": "C50",
