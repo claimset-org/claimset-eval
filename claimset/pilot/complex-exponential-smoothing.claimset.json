@@ -1,5 +1,5 @@
 {
- "schema_version": "0.33",
+ "schema_version": "0.34",
  "paper": {
   "title": "Complex exponential smoothing",
   "licence": "CC-BY-4.0",
@@ -2423,7 +2423,7 @@
   },
   {
    "id": "C58",
-   "statement": "Information criteria identify effectively when to switch between seasonal and non-seasonal [[D1:CES]].",
+   "statement": "Information criteria can effectively identify when to switch between seasonal and non-seasonal [[D1:CES]].",
    "type": "interpretive",
    "role": "secondary",
    "novelty": "no_prior_found",
@@ -2448,7 +2448,7 @@
    "provenance": "extracted",
    "about": {
     "subject": "information criteria",
-    "relation": "identify effectively when to switch between",
+    "relation": "can effectively identify when to switch between",
     "object": "seasonal and non-seasonal CES",
     "comparator": null,
     "conditions": []

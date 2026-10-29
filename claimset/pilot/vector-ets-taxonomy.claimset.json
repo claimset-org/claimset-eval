@@ -1,5 +1,5 @@
 {
- "schema_version": "0.33",
+ "schema_version": "0.34",
  "paper": {
   "title": "A new taxonomy for vector exponential smoothing and its application to seasonal time series",
   "licence": "CC-BY-4.0",
@@ -636,7 +636,7 @@
   },
   {
    "id": "C3",
-   "statement": "The [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN), with common initial seasonal indices and individual seasonal components, are the most robust of the [[D6:nine PIC variants]] of the [[D4:PIC taxonomy]] to model misspecification.",
+   "statement": "The [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN), with common initial seasonal indices and individual seasonal components, can be considered the most robust of the [[D6:nine PIC variants]] of the [[D4:PIC taxonomy]] to model misspecification.",
    "type": "interpretive",
    "role": "principal",
    "novelty": "no_prior_found",
@@ -678,7 +678,7 @@
    "provenance": "extracted",
    "about": {
     "subject": "D17",
-    "relation": "are the most robust to model misspecification of",
+    "relation": "can be considered the most robust to model misspecification of",
     "object": null,
     "comparator": "D6",
     "conditions": []

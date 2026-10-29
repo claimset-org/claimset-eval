@@ -56,7 +56,7 @@ C2 [descriptive; principal; support: simulation E2 (E2.T2.r1, E2.T2.r2, E2.T2.r3
   On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, the [[D16:PIC(*,S,S) variants]] of VETS(M,N,M;LN), with common seasonal components, have much higher [[D37:rMAE]] than the correct variant on data with individual seasonal components and initial values, from the [[D18:PIC(*,N,N) variants]].
   scope: conditions: 16 in-sample quarters and 8 held out
 C3 [interpretive; principal; support: simulation E2 artefacts A2, argument W1; uses C14, C15, C16, C17, C18, C19; limitations L3, L5, L6, L7; inherits C56, C57; warrant W1]
-  The [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN), with common initial seasonal indices and individual seasonal components, are the most robust of the [[D6:nine PIC variants]] of the [[D4:PIC taxonomy]] to model misspecification.
+  The [[D17:PIC(*,S,N) variants]] of VETS(M,N,M;LN), with common initial seasonal indices and individual seasonal components, can be considered the most robust of the [[D6:nine PIC variants]] of the [[D4:PIC taxonomy]] to model misspecification.
 C4 [descriptive; principal; extension; support: simulation E2 (E2.T7) artefacts A2; uses C20, C21; limitations L3, L5, L6, L7]
   On the [[D22:simulated VETS(M,N,M;LN) data]] with 16 in-sample quarters, common smoothing parameters lower the [[D40:rPinballU]] of the [[D6:nine PIC variants]] of VETS(M,N,M;LN) on data from every PIC variant.
   scope: conditions: 16 in-sample quarters and 8 held out
