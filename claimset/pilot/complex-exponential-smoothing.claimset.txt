@@ -170,7 +170,7 @@ C56 [descriptive; secondary; support: empirical_quant E9 (E9.T2); inherits C65, 
 C57 [descriptive; secondary; support: empirical_quant E9 (E9.T2); inherits C65, C60, C62, C63, C64]
   On the [[D34:2053 seasonal series]] of the [[D8:M1, M3 and tourism data]], [[D17:CES]] has lower mean and median [[D14:RMSSE]] and [[D15:MASE]] and lower median [[D16:MSIS]] than [[D31:ETS(M,Md,M)]], but a higher mean MSIS.
 C58 [interpretive; secondary; support: empirical_quant E9 (E9.T2), argument W6; inherits C65; warrant W6]
-  Information criteria identify effectively when to switch between seasonal and non-seasonal [[D1:CES]].
+  Information criteria can effectively identify when to switch between seasonal and non-seasonal [[D1:CES]].
 C59 [interpretive; secondary; support: empirical_quant E2 (E2.T1), empirical_quant E8 (E8.T1), argument W7; inherits C60, C62, C63, C64; warrant W7]
   [[D17:CES]] is a robust forecasting approach.
   scope: excludes: forecasting scenarios for which CES is not appropriate, which the paper does not name
